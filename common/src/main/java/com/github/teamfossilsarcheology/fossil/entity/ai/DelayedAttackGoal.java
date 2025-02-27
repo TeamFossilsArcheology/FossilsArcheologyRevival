@@ -165,12 +165,12 @@ public class DelayedAttackGoal<T extends Prehistoric> extends Goal {
             if (currentTime > attackEndTick + 20) {
                 ServerAnimationInfo animationInfo = mob.startAttack();
                 if (animationInfo.usesAttackBox && enemy instanceof ServerPlayer player) {
-                    MessageHandler.SYNC_CHANNEL.sendToPlayers(List.of(player), new S2CActivateAttackBoxesMessage(mob, animationInfo.animation.animationLength));
+                    MessageHandler.SYNC_CHANNEL.sendToPlayers(List.of(player), new S2CActivateAttackBoxesMessage(mob, animationInfo.animation.length()));
                     doingHeavyAttack = true;
                 } else {
                     attackDamageTick = (long) (currentTime + animationInfo.actionDelay + 5);
                 }
-                attackEndTick = (long) (currentTime + animationInfo.animation.animationLength + 5);
+                attackEndTick = (long) (currentTime + animationInfo.animation.length());
                 if (attackDamageTick > attackEndTick) attackDamageTick = attackEndTick;
             }
             if (attackDamageTick > 0 && currentTime == attackDamageTick) {

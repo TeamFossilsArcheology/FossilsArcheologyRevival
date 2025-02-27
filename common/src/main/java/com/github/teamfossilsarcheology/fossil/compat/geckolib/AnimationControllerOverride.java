@@ -1,29 +1,19 @@
 package com.github.teamfossilsarcheology.fossil.compat.geckolib;
 
-import org.apache.commons.lang3.tuple.Pair;
-import software.bernie.geckolib3.core.ConstantValue;
-import software.bernie.geckolib3.core.builder.Animation;
+import software.bernie.geckolib.core.molang.MolangParser;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.keyframe.AnimationPoint;
-import software.bernie.geckolib3.core.keyframe.BoneAnimationQueue;
-import software.bernie.geckolib3.core.keyframe.KeyFrame;
-import software.bernie.geckolib3.core.keyframe.KeyFrameLocation;
-import software.bernie.geckolib3.core.molang.MolangParser;
-import software.bernie.geckolib3.core.processor.IBone;
-import software.bernie.geckolib3.core.snapshot.BoneSnapshot;
-import software.bernie.shadowed.eliotlash.mclib.math.IValue;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Map;
 
 public class AnimationControllerOverride {
-    private static final KeyFrame<IValue> ZERO_KEYFRAME = new KeyFrame<>(0.0, new ConstantValue(0), new ConstantValue(0));
+    //private static final KeyFrame<IValue> ZERO_KEYFRAME = new KeyFrame<>(0.0, new ConstantValue(0), new ConstantValue(0));
 
     /**
      * Adds transition logic to {@link software.bernie.geckolib3.core.controller.AnimationController#process(double, AnimationEvent, List, Map, MolangParser, boolean) AnimationController#process}
      * with the goal of adding a transition animation for bones that have no animation points in the new animation.
      */
-    public static void fixTransitions(List<IBone> modelRendererList, Animation currentAnimation, Map<String, BoneSnapshot> boneSnapshots,
+    /* public static void fixTransitions(List<IBone> modelRendererList, Animation currentAnimation, Map<String, BoneSnapshot> boneSnapshots,
                                       double adjustedTick, boolean firstTick, Map<String, Pair<IBone, BoneSnapshot>> boneSnapshotCollection,
                                       double transitionLengthTicks, Map<String, BoneAnimationQueue> boneAnimationQueues) {
         Set<String> previousBones = new HashSet<>(boneSnapshots.keySet());
@@ -78,5 +68,5 @@ public class AnimationControllerOverride {
                         boneSnapshot.scaleValueZ - initialSnapshot.scaleValueZ, point.animationStartValue));
             }
         }
-    }
+    }*/
 }

@@ -28,7 +28,7 @@ public class FossilItem extends Item {
     private final @Nullable TimePeriod timePeriod;
 
     public FossilItem(@Nullable TimePeriod timePeriod) {
-        super(new Properties().tab(ModTabs.FA_OTHER_ITEM_TAB));
+        super(new Properties().arch$tab(ModTabs.FA_OTHER_ITEM_TAB));
         this.timePeriod = timePeriod;
     }
 
@@ -50,13 +50,12 @@ public class FossilItem extends Item {
             return InteractionResult.FAIL;
         }
         if (level instanceof ServerLevel serverLevel) {
-            PrehistoricSkeleton fossil = ModEntities.SKELETON.get().create(serverLevel, null, null, context.getPlayer(), blockPos, MobSpawnType.SPAWN_EGG, true, false);
+            PrehistoricSkeleton fossil = ModEntities.SKELETON.get().spawn(serverLevel, blockPos, MobSpawnType.SPAWN_EGG);
             if (fossil == null) {
                 return InteractionResult.FAIL;
             }
             fossil.moveTo(fossil.getX(), fossil.getY(), fossil.getZ(), -context.getPlayer().yHeadRot, 0);
             fossil.setType(info);
-            serverLevel.addFreshEntity(fossil);
             level.playSound(null, fossil.getX(), fossil.getY(), fossil.getZ(), SoundEvents.SKELETON_AMBIENT, SoundSource.BLOCKS, 0.75f, 0.8f);
             fossil.gameEvent(GameEvent.ENTITY_PLACE, context.getPlayer());
         }

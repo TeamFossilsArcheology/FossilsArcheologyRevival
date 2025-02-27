@@ -1,0 +1,13 @@
+{
+  "type": "fossil:ask_disk",
+  "config": {
+    "magma": false,
+    "radius": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 11,
+        "min_inclusive": 6
+      }
+    }
+  }
+}

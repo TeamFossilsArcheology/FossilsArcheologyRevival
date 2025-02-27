@@ -17,7 +17,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import software.bernie.geckolib3.core.util.Color;
+import software.bernie.geckolib.core.object.Color;
 
 import static com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation.PathingDebug.*;
 

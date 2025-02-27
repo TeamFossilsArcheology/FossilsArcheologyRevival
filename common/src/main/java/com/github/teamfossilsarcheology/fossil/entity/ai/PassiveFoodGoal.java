@@ -38,7 +38,7 @@ public class PassiveFoodGoal extends MoveToFoodGoal {
         if (entity.level.getGameTime() > animEndTick) {
             AnimationInfo animationInfo = entity.nextEatingAnimation();
             entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, animationInfo, AnimationCategory.EAT);
-            animEndTick = (long) (entity.level.getGameTime() + animationInfo.animation.animationLength);
+            animEndTick = (long) (entity.level.getGameTime() + animationInfo.animation.length());
         }
     }
 

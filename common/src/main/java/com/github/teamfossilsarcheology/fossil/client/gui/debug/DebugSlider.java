@@ -99,7 +99,7 @@ public class DebugSlider extends AbstractSliderButton {
     }
 
     private void setValueFromMouse(double mouseX) {
-        this.setSliderValue((mouseX - (this.x + 4)) / (this.width - 8), false);
+        this.setSliderValue((mouseX - (this.getX() + 4)) / (this.width - 8), false);
     }
 
     public void setSliderValue(double value, boolean force) {

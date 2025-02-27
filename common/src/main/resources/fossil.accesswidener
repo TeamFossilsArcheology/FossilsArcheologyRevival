@@ -2,7 +2,7 @@ accessWidener   v2  named
 accessible method net/minecraft/client/gui/screens/MenuScreens register (Lnet/minecraft/world/inventory/MenuType;Lnet/minecraft/client/gui/screens/MenuScreens$ScreenConstructor;)V
 accessible class net/minecraft/client/gui/screens/MenuScreens$ScreenConstructor
 accessible field net/minecraft/client/gui/screens/inventory/CreativeModeInventoryScreen scrollOffs F
-accessible method net/minecraft/world/level/pathfinder/WalkNodeEvaluator hasPositiveMalus (Lnet/minecraft/core/BlockPos;)Z
+accessible field net/minecraft/client/gui/screens/inventory/CreativeModeInventoryScreen selectedTab Lnet/minecraft/world/item/CreativeModeTab;
 accessible method net/minecraft/world/level/pathfinder/Path setDebug ([Lnet/minecraft/world/level/pathfinder/Node;[Lnet/minecraft/world/level/pathfinder/Node;Ljava/util/Set;)V
 accessible field net/minecraft/world/entity/Mob goalSelector Lnet/minecraft/world/entity/ai/goal/GoalSelector;
 accessible field net/minecraft/world/level/levelgen/structure/pools/StructureTemplatePool templates Lit/unimi/dsi/fastutil/objects/ObjectArrayList;
@@ -11,16 +11,13 @@ mutable field net/minecraft/world/level/levelgen/structure/pools/StructureTempla
 accessible field net/minecraft/world/item/Item$Properties maxStackSize I
 accessible field net/minecraft/world/entity/Entity portalTime I
 accessible field net/minecraft/world/entity/Entity portalEntrancePos Lnet/minecraft/core/BlockPos;
-accessible field net/minecraft/world/level/chunk/ChunkGenerator ringPositions Ljava/util/Map;
-accessible field net/minecraft/world/level/chunk/ChunkGenerator placementsForStructure Ljava/util/Map;
-accessible field net/minecraft/world/level/chunk/ChunkGenerator hasGeneratedPositions Z
 accessible class net/minecraft/world/level/levelgen/structure/pools/JigsawPlacement$PieceState
 accessible method net/minecraft/world/level/levelgen/structure/pools/JigsawPlacement$PieceState <init> (Lnet/minecraft/world/level/levelgen/structure/PoolElementStructurePiece;Lorg/apache/commons/lang3/mutable/MutableObject;I)V
 accessible class net/minecraft/world/entity/ai/control/MoveControl$Operation
 extendable method net/minecraft/client/gui/components/AbstractSelectionList getEntryAtPosition (DD)Lnet/minecraft/client/gui/components/AbstractSelectionList$Entry;
-accessible field net/minecraft/world/entity/Entity DATA_CUSTOM_NAME Lnet/minecraft/network/syncher/EntityDataAccessor;
 extendable method net/minecraft/world/entity/LivingEntity getCurrentSwingDuration ()I
+accessible field net/minecraft/world/entity/Entity DATA_CUSTOM_NAME Lnet/minecraft/network/syncher/EntityDataAccessor;
 accessible field net/minecraft/world/entity/Entity dimensions Lnet/minecraft/world/entity/EntityDimensions;
 accessible field net/minecraft/world/entity/Entity eyeHeight F
 accessible field net/minecraft/world/level/Level threadSafeRandom Lnet/minecraft/util/RandomSource;
-accessible method net/minecraft/world/entity/ai/village/poi/PoiTypes registerBlockStates (Lnet/minecraft/core/Holder;)V
+accessible method net/minecraft/world/entity/ai/village/poi/PoiTypes registerBlockStates (Lnet/minecraft/core/Holder;Ljava/util/Set;)V

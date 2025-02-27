@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.recipe;
 
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -28,7 +28,7 @@ public class CultureVatRecipeBuilder extends WithFuelRecipeBuilder {
 
     @Override
     protected ResourceLocation getDefaultRecipeId() {
-        return new ResourceLocation(modId, "culture_vat/" + Registry.ITEM.getKey(itemInput.asItem()).getPath());
+        return new ResourceLocation(modId, "culture_vat/" + BuiltInRegistries.ITEM.getKey(itemInput.asItem()).getPath());
     }
 
     public static class Result extends WithFuelRecipeBuilder.Result {

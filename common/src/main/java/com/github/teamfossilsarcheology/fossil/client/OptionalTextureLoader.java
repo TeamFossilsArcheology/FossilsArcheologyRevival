@@ -24,7 +24,7 @@ public class OptionalTextureLoader extends ClientResourceLoader<Pair<Set<String>
     protected @NotNull Pair<Set<String>, Set<String>> prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
         ImmutableSet.Builder<String> babySetBuilder = ImmutableSet.builder();
         ImmutableSet.Builder<String> teenSetBuilder = ImmutableSet.builder();
-        for (ResourceLocation resourceLocation : listResources(resourceManager)) {
+        for (ResourceLocation resourceLocation : listResources(resourceManager).keySet()) {
             String path = resourceLocation.getPath();
             String entityName = path.split("/")[2];
             if (path.contains("baby")) {

@@ -19,14 +19,14 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming.*;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.animal.horse.AbstractChestedHorse;
 
 public class ModEntities {
-    private static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(FossilMod.MOD_ID, Registry.ENTITY_TYPE_REGISTRY);
+    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(FossilMod.MOD_ID, Registries.ENTITY_TYPE);
 
     public static final RegistrySupplier<EntityType<ToyBall>> TOY_BALL = registerMisc("toy_ball", ToyBall::new, 0.5f, 0.5f, 5, 3);
     public static final RegistrySupplier<EntityType<ToyTetheredLog>> TOY_TETHERED_LOG = registerMisc("toy_tethered_log", ToyTetheredLog::new, 0.6f, 1.9375f, 5, 20);
@@ -129,12 +129,15 @@ public class ModEntities {
     private static <T extends Entity> RegistrySupplier<EntityType<T>> registerMisc(String name, EntityType.EntityFactory<T> factory, float width, float height, int trackRange, int updateInterval) {
         return ENTITIES.register(name, () -> EntityType.Builder.of(factory, MobCategory.MISC).sized(width, height).clientTrackingRange(trackRange).updateInterval(updateInterval).build(name));
     }
+
     private static <T extends Entity> RegistrySupplier<EntityType<T>> registerDino(String name, EntityType.EntityFactory<T> factory, float width, float height) {
         return ENTITIES.register(name, () -> EntityType.Builder.of(factory, MobCategory.CREATURE).sized(width, height).clientTrackingRange(8).build(name));
     }
+
     private static <T extends Entity> RegistrySupplier<EntityType<T>> registerAquatic(String name, EntityType.EntityFactory<T> factory, float width, float height) {
         return ENTITIES.register(name, () -> EntityType.Builder.of(factory, MobCategory.WATER_CREATURE).sized(width, height).clientTrackingRange(8).build(name));
     }
+
     private static <T extends Entity> RegistrySupplier<EntityType<T>> registerFish(String name, EntityType.EntityFactory<T> factory, float width, float height) {
         return ENTITIES.register(name, () -> EntityType.Builder.of(factory, MobCategory.WATER_CREATURE).sized(width, height).clientTrackingRange(8).build(name));
     }

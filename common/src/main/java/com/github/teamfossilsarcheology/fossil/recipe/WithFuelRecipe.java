@@ -2,7 +2,7 @@ package com.github.teamfossilsarcheology.fossil.recipe;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -106,7 +106,7 @@ public abstract class WithFuelRecipe implements Recipe<WithFuelRecipe.ContainerW
             Ingredient fuel = Ingredient.fromJson(jsonElement);
             String result = GsonHelper.getAsString(serializedRecipe, "result");
             ItemStack output = new ItemStack(
-                    Registry.ITEM.getOptional(new ResourceLocation(result)).orElseThrow(() -> new IllegalStateException("Item: " + result + " does not exist")));
+                    BuiltInRegistries.ITEM.getOptional(new ResourceLocation(result)).orElseThrow(() -> new IllegalStateException("Item: " + result + " does not exist")));
             int duration = GsonHelper.getAsInt(serializedRecipe, "duration", 300);
             return constructor.construct(recipeId, input, fuel, output, duration);
         }

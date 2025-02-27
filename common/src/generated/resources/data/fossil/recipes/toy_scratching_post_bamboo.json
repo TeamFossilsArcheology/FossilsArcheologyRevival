@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "X": {
+      "item": "minecraft:bamboo_slab"
+    }
+  },
+  "pattern": [
+    "WWW",
+    "WSW",
+    " X "
+  ],
+  "result": {
+    "item": "fossil:toy_scratching_post_bamboo"
+  }
+}

@@ -49,16 +49,16 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.Animation;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.Optional;
 
-import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.LOOP;
-import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.PLAY_ONCE;
+import static software.bernie.geckolib.core.animation.Animation.LoopType.LOOP;
+import static software.bernie.geckolib.core.animation.Animation.LoopType.PLAY_ONCE;
 
 
 public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnimal {
@@ -351,15 +351,15 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         AnimationLogic<Prehistoric> animationLogic = getAnimationLogic();
-        var ctrl = new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, event -> {
-            AnimationController<Meganeura> controller = event.getController();
-            if (animationLogic.tryNextAnimation(controller)) {
+        var ctrl = new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, state -> {
+            AnimationController<Meganeura> controller = state.getController();
+            if (animationLogic.tryNextAnimation(state, controller)) {
                 return PlayState.CONTINUE;
             }
             Optional<AnimationLogic.ActiveAnimationInfo> activeAnimation = animationLogic.getActiveAnimation(controller.getName());
-            ILoopType loopType = null;
+            Animation.LoopType loopType = null;
             if (activeAnimation.isPresent() && activeAnimation.get().forced() && !animationLogic.isAnimationDone(controller.getName())) {
                 loopType = activeAnimation.get().loop() ? LOOP : PLAY_ONCE;
             } else {
@@ -367,7 +367,7 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
                     animationLogic.addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
                 } else if (sitSystem.isSitting()) {
                     animationLogic.addActiveAnimation(controller.getName(), AnimationCategory.SIT);
-                } else if (event.isMoving()) {
+                } else if (state.isMoving()) {
                     if (isBaby()) {
                         if (isInWater()) {
                             animationLogic.addActiveAnimation(controller.getName(), AnimationCategory.SWIM);
@@ -392,13 +392,13 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
                 if (loopType == null) {
                     loopType = newAnimation.get().loop() ? LOOP : PLAY_ONCE;
                 }
-                controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName(), loopType));
+                controller.setAnimation(RawAnimation.begin().then(newAnimation.get().animationName(), loopType));
             }
             return PlayState.CONTINUE;
         });
         registerEatingListeners(ctrl);
-        data.addAnimationController(ctrl);
-        data.addAnimationController(new PausableAnimationController<>(
+        controllerRegistrar.add(ctrl);
+        controllerRegistrar.add(new PausableAnimationController<>(
                 this, AnimationLogic.ATTACK_CTRL, 0, getAnimationLogic()::attackPredicate));
     }
 

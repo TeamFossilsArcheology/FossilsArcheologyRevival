@@ -18,7 +18,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import software.bernie.geckolib3.core.util.Color;
+import software.bernie.geckolib.core.object.Color;
 
 import java.util.ArrayList;
 import java.util.List;

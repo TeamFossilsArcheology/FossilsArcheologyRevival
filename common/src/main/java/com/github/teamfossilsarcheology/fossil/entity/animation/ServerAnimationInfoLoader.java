@@ -10,8 +10,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
-import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.builder.ILoopType;
+import software.bernie.geckolib.core.animation.Animation;
+import software.bernie.geckolib.core.keyframe.BoneAnimation;
 
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -67,11 +67,8 @@ public class ServerAnimationInfoLoader extends AnimationInfoLoader<ServerAnimati
                 double animationLength = animationObj.has("animation_length") ? GsonHelper.getAsDouble(animationObj, "animation_length") * 20d : -1;
                 double actionDelay = animationObj.has("action_delay") ? animationObj.get("action_delay").getAsDouble() * 20d : 0;
                 boolean usesAttackBox = animationObj.has("uses_attack_box") && GsonHelper.getAsBoolean(animationObj, "uses_attack_box");
-                ILoopType loopType = ILoopType.fromJson(animationObj.get("loop"));
-                Animation animation = new Animation();
-                animation.animationName = entry.getKey();
-                animation.animationLength = animationLength;
-                animation.loop = loopType;
+                Animation.LoopType loopType = Animation.LoopType.fromJson(animationObj.get("loop"));
+                Animation animation = new Animation(entry.getKey(), animationLength, loopType, new BoneAnimation[]{}, new Animation.Keyframes(null, null, null));
                 animations.put(entry.getKey(), new ServerAnimationInfo(animation, actionDelay, usesAttackBox));
             }
             return new BakedAnimationInfo<>(animations);

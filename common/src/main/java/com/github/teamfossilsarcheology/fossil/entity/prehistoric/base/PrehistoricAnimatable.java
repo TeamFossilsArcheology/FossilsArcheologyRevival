@@ -3,11 +3,11 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 import com.github.teamfossilsarcheology.fossil.entity.animation.*;
 import net.minecraft.world.entity.Mob;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib.animatable.GeoEntity;
 
 import java.util.Map;
 
-public interface PrehistoricAnimatable<T extends Mob & PrehistoricAnimatable<T>> extends IAnimatable {
+public interface PrehistoricAnimatable<T extends Mob & PrehistoricAnimatable<T>> extends GeoEntity {
     default AnimationInfo getRandomAnimation(AnimationCategory category) {
         var animations = getAnimations().get(category);
         return animations.getRandomAnimation((T) this);

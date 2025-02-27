@@ -61,7 +61,7 @@ public class DinoLeapAtTargetGoal extends DelayedAttackGoal<PrehistoricLeaping> 
             if (inRange) {
                 if (mob.getRandom().nextInt(5) > 0) {
                     attack = ATTACK;
-                } else{
+                } else {
                     attack = LEAP;
                 }
             } else if ((lastAttackType != LEAP || currentTime > mob.getLeapSystem().getLastLeapEndTick() + 60) && !enemy.isVehicle() && mob.distanceToSqr(enemy) < LeapSystem.JUMP_DISTANCE) {
@@ -71,7 +71,7 @@ public class DinoLeapAtTargetGoal extends DelayedAttackGoal<PrehistoricLeaping> 
                 attackType = ATTACK;
                 lastAttackType = attackType;
                 ServerAnimationInfo animation = mob.startAttack();
-                attackEndTick = (long) (currentTime + animation.animation.animationLength);
+                attackEndTick = (long) (currentTime + animation.animation.length());
                 attackDamageTick = Math.min((long) (currentTime + animation.actionDelay), attackEndTick);
             } else if (attack == LEAP) {
                 attackType = LEAP;

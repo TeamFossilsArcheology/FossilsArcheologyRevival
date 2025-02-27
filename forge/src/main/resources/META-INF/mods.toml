@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[43,)"
+loaderVersion = "[${forge_loader_version_range},)"
 
 license = "${mod_license}"
 issueTrackerURL = "https://github.com/TeamFossilsArcheology/FossilsArcheologyRevival/issues"
@@ -37,16 +37,16 @@ ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.${mod_id}]]
-modId = "geckolib3"
+modId = "geckolib"
 mandatory = true
-versionRange = "[3,)"
+versionRange = "[4,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.${mod_id}]]
 modId = "roughlyenoughitems"
 mandatory = false
-versionRange = "[9.1.522,)"
+versionRange = "[10,)"
 ordering = "NONE"
 side = "BOTH"
 
@@ -59,14 +59,14 @@ side = "BOTH"
 [[dependencies.${mod_id}]]
 modId = "morehitboxes"
 mandatory = true
-versionRange = "[1.9.0,)"
+versionRange = "[1.9.1,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.${mod_id}]]
 modId = "carryon"
 mandatory = false
-versionRange = "[2.0.0.5,)"
+versionRange = "[2.0.1.9,)"
 ordering = "NONE"
 side = "BOTH"
 

@@ -6,7 +6,7 @@ import com.github.teamfossilsarcheology.fossil.block.PrehistoricPlantInfo;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.TallFlowerBlock;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.*;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -28,10 +28,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
     private final ModBlockModelProvider blockModels;
     private final ModItemProvider itemModels;
 
-    public ModBlockStateProvider(DataGenerator gen, ExistingFileHelper exFileHelper) {
-        super(gen, FossilMod.MOD_ID, exFileHelper);
-        blockModels = new ModBlockModelProvider(gen, exFileHelper);
-        itemModels = new ModItemProvider(gen, exFileHelper);
+    public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
+        super(output, FossilMod.MOD_ID, exFileHelper);
+        blockModels = new ModBlockModelProvider(output, exFileHelper);
+        itemModels = new ModItemProvider(output, exFileHelper);
     }
 
     @Override

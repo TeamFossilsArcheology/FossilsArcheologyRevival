@@ -1,14 +1,14 @@
 package com.github.teamfossilsarcheology.fossil.client.model.block;
 
 import com.mojang.math.Transformation;
-import com.mojang.math.Vector3f;
-import com.mojang.math.Vector4f;
 import net.minecraft.client.renderer.FaceInfo;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 /**
  * @see PlantBlockModel
@@ -77,13 +77,13 @@ public class PlantModelBakery {
     private static void applyElementRotation(Vector3f pos, Vector3f rotations, Vector3f origin) {
         Vector4f temp = new Vector4f(pos.x() - origin.x(), pos.y() - origin.y(), pos.z() - origin.z(), 1);
         if (rotations.x() != 0) {
-            temp.transform(Vector3f.XP.rotationDegrees(rotations.x()));
+            temp.rotateX(rotations.x() * Mth.DEG_TO_RAD);
         }
         if (rotations.y() != 0) {
-            temp.transform(Vector3f.YP.rotationDegrees(rotations.y()));
+            temp.rotateY(rotations.y() * Mth.DEG_TO_RAD);
         }
         if (rotations.z() != 0) {
-            temp.transform(Vector3f.ZP.rotationDegrees(rotations.z()));
+            temp.rotateZ(rotations.z() * Mth.DEG_TO_RAD);
         }
         pos.set(temp.x() + origin.x(), temp.y() + origin.y(), temp.z() + origin.z());
     }
@@ -94,7 +94,7 @@ public class PlantModelBakery {
         }
         Vector3f origin = new Vector3f(0.5f, 0.5f, 0.5f);
         Vector4f vector4f = new Vector4f(pos.x() - origin.x(), pos.y() - origin.y(), pos.z() - origin.z(), 1);
-        vector4f.transform(transform.getMatrix());
+        transform.getMatrix().transform(vector4f);
         pos.set(vector4f.x() + origin.x(), vector4f.y() + origin.y(), vector4f.z() + origin.z());
     }
 
@@ -102,11 +102,11 @@ public class PlantModelBakery {
         Vector3f vector3f = new Vector3f(Float.intBitsToFloat(faceData[0]), Float.intBitsToFloat(faceData[1]), Float.intBitsToFloat(faceData[2]));
         Vector3f vector3f2 = new Vector3f(Float.intBitsToFloat(faceData[8]), Float.intBitsToFloat(faceData[9]), Float.intBitsToFloat(faceData[10]));
         Vector3f vector3f3 = new Vector3f(Float.intBitsToFloat(faceData[16]), Float.intBitsToFloat(faceData[17]), Float.intBitsToFloat(faceData[18]));
-        Vector3f vector3f4 = vector3f.copy();
+        Vector3f vector3f4 = new Vector3f(vector3f);
         vector3f4.sub(vector3f2);
-        Vector3f vector3f5 = vector3f3.copy();
+        Vector3f vector3f5 = new Vector3f(vector3f3);
         vector3f5.sub(vector3f2);
-        Vector3f vector3f6 = vector3f5.copy();
+        Vector3f vector3f6 = new Vector3f(vector3f5);
         vector3f6.cross(vector3f4);
         vector3f6.normalize();
         Direction direction = null;

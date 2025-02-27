@@ -12,6 +12,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.CycleButton;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -38,13 +39,13 @@ public class DebugScreen extends Screen {
     private static final List<PathInfo> pathTargets = new ArrayList<>();
     public static CycleButton<Boolean> disableAI;
     public static boolean showPaths;
-    private static PathInfo currentVision;
     public static @Nullable Entity entity;
-    private final List<DebugTab<? extends Entity>> tabs = new ArrayList<>();
+    public static int rulerMode;
+    private static PathInfo currentVision;
     private static int tabShift = 0;
+    private final List<DebugTab<? extends Entity>> tabs = new ArrayList<>();
     private DebugTab<? extends Entity> currentTab;
     private double speedMod = 0.5;
-    public static int rulerMode;
 
     //TODO: Embryo, etc helper
     public DebugScreen(@Nullable Entity newEntity) {
@@ -119,9 +120,9 @@ public class DebugScreen extends Screen {
         if (entity instanceof Prehistoric prehistoric) {
             tabs.add(new InfoTab(this, prehistoric));
         } else if (entity instanceof TamableAnimal || entity instanceof AbstractHorse) {
-            addRenderableWidget(new Button(275, 55, 50, 20, Component.literal("Tame"), button -> {
+            addRenderableWidget(Button.builder(Component.literal("Tame"), button -> {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new C2STameMessage(entity.getId()));
-            }));
+            }).bounds(275, 55, 50, 20).build());
         }
         if (entity instanceof PrehistoricSkeleton skeleton) {
             tabs.add(new SkeletonEditTab(this, skeleton));
@@ -157,30 +158,33 @@ public class DebugScreen extends Screen {
         if (entity instanceof Prehistoric prehistoric) {
             tabs.add(new InstructionTab(this, prehistoric));
         }
-        addRenderableWidget(new Button(width / 2 - 91, height - 95, 91, 20, Component.literal("Ruler"), button -> {
-            rulerMode = 1;
-            onClose();
-            if (currentTab != null) currentTab.onClose();
-        }, (button, poseStack, i, j) -> {
-            renderTooltip(poseStack, Component.literal("Measure length. Left click for 1st pos. Right click for 2nd pos"), i, j);
-        }));
-        addRenderableWidget(new Button(width / 2 - 91, height - 70, 91, 20, Component.literal("Discard All"), button -> {
-            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDiscardMessage(-1));
-            if (currentTab != null) currentTab.onClose();
-        }, (button, poseStack, i, j) -> {
-            renderTooltip(poseStack, Component.literal("Kills all non-player entities"), i, j);
-        }));
+        addRenderableWidget(Button.builder(Component.literal("Ruler"), button -> {
+                    rulerMode = 1;
+                    onClose();
+                    if (currentTab != null) currentTab.onClose();
+                })
+                .bounds(width / 2 - 91, height - 95, 91, 20)
+                .tooltip(Tooltip.create(Component.literal("Measure length. Left click for 1st pos. Right click for 2nd pos")))
+                .build());
+        addRenderableWidget(Button.builder(Component.literal("Discard All"), button -> {
+                    MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDiscardMessage(-1));
+                    if (currentTab != null) currentTab.onClose();
+                })
+                .bounds(width / 2 - 91, height - 70, 91, 20)
+                .tooltip(Tooltip.create(Component.literal("Kills all non-player entities")))
+                .build());
         if (entity != null) {
-            addRenderableWidget(new Button(width / 2, height - 70, 91, 20, Component.literal("Discard This"), button -> {
+            addRenderableWidget(Button.builder(Component.literal("Discard This"), button -> {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDiscardMessage(entity.getId()));
                 if (currentTab != null) currentTab.onClose();
-            }));
+            }).bounds(width / 2, height - 70, 91, 20).build());
         }
-        addRenderableWidget(new Button(width / 2 + 95, height - 70, 59, 20, Component.literal("Slow Self"), button -> {
-            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SSlowMessage(speedMod));
-        }, (button, poseStack, i, j) -> {
-            renderTooltip(poseStack, Component.literal("If clicked multiply your walkspeed by the value on the right"), i, j);
-        }));
+        addRenderableWidget(Button.builder(Component.literal("Slow Self"), button -> {
+                    MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SSlowMessage(speedMod));
+                })
+                .bounds(width / 2 + 95, height - 70, 59, 20)
+                .tooltip(Tooltip.create(Component.literal("If clicked multiply your walkspeed by the value on the right")))
+                .build());
         addRenderableWidget(new DebugSlider(width / 2 + 154, height - 70, 65, 20, Component.literal("Mod: "), Component.literal(""), 0.1, 1, speedMod, 0.05, 2, true) {
             @Override
             protected void applyValue() {
@@ -191,14 +195,16 @@ public class DebugScreen extends Screen {
         addRenderableWidget(builder.create(width / 2 - 91, height - 45, 91, 20, Component.literal("Show Paths"), (cycleButton, object) -> {
             showPaths = cycleButton.getValue();
         }));
-        addRenderableWidget(new Button(width / 2, height - 45, 91, 20, Component.literal("Clear Paths"), button -> clearPaths(), (button, poseStack, i, j) -> {
-            renderTooltip(poseStack, Component.literal("Mostly unused"), i, j);
-        }));
-        addRenderableWidget(new Button(width / 2 + 95, height - 45, 125, 20, Component.literal("Spawn Test Structure"), button -> {
-            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SStructureMessage(true));
-        }, (button, poseStack, i, j) -> {
-            renderTooltip(poseStack, Component.literal("Spawns a big structure at 0,79,0 with every mob"), i, j);
-        }));
+        addRenderableWidget(Button.builder(Component.literal("Clear Paths"), button -> clearPaths())
+                .bounds(width / 2, height - 45, 91, 20)
+                .tooltip(Tooltip.create(Component.literal("Mostly unused")))
+                .build());
+        addRenderableWidget(Button.builder(Component.literal("Spawn Test Structure"), button -> {
+                    MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SStructureMessage(true));
+                })
+                .bounds(width / 2 + 95, height - 45, 125, 20)
+                .tooltip(Tooltip.create(Component.literal("Spawns a big structure at 0,79,0 with every mob")))
+                .build());
         if (!tabs.isEmpty()) {
             tabs.forEach(tab -> tab.init(width, height));
             Collections.rotate(tabs, -tabShift);
@@ -213,11 +219,12 @@ public class DebugScreen extends Screen {
                                 currentTab.onClose();
                                 currentTab = tab;
                             }));
-            addRenderableWidget(new Button(width / 2, 35, 100, 20, Component.literal("Set default"), button -> {
-                tabShift += tabs.indexOf(currentTab);
-            }, (button, poseStack, i, j) -> {
-                renderTooltip(poseStack, Component.literal("Sets the current tab as default tab when opening screen"), i, j);
-            }));
+            addRenderableWidget(Button.builder(Component.literal("Set default"), button -> {
+                        tabShift += tabs.indexOf(currentTab);
+                    })
+                    .bounds(width / 2, 35, 100, 20)
+                    .tooltip(Tooltip.create(Component.literal("Sets the current tab as default tab when opening screen")))
+                    .build());
             addWidget(currentTab);
             currentTab.onOpen();
         }

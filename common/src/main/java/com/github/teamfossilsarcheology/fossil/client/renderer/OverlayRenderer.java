@@ -6,13 +6,13 @@ import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.material.ModFluids;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector4f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
+import org.joml.Matrix4f;
+import org.joml.Vector4f;
 
 public class OverlayRenderer {
     private static final ResourceLocation ANCIENT_HELMET = FossilMod.location("textures/gui/ancient_helmet_blur.png");
@@ -67,7 +67,7 @@ public class OverlayRenderer {
 
     private static VertexConsumer vertex(BufferBuilder bufferBuilder, Matrix4f matrix4f, float x, float y, float z) {
         Vector4f vector4f = new Vector4f(x, y, z, 1);
-        vector4f.transform(matrix4f);
+        matrix4f.transform(vector4f);
         return bufferBuilder.vertex(vector4f.x(), vector4f.y(), vector4f.z());
     }
 }

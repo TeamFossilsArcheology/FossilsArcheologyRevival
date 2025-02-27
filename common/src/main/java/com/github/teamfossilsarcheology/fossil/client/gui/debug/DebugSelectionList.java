@@ -3,7 +3,7 @@ package com.github.teamfossilsarcheology.fossil.client.gui.debug;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
-import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class DebugSelectionList<E extends ContainerObjectSelectionList.Entry<E>> extends ContainerObjectSelectionList<E> {
-    protected final List<Widget> widgets = new ArrayList<>();
-    protected final List<GuiEventListener> renderables = new ArrayList<>();
+    protected final List<Renderable> renderables = new ArrayList<>();
+    protected final List<GuiEventListener> listeners = new ArrayList<>();
     protected final int rowWidth;
     private GuiEventListener focused;
 
@@ -29,7 +29,7 @@ public class DebugSelectionList<E extends ContainerObjectSelectionList.Entry<E>>
 
     @Override
     public @NotNull Optional<GuiEventListener> getChildAt(double mouseX, double mouseY) {
-        for (GuiEventListener guiEventListener : renderables) {
+        for (GuiEventListener guiEventListener : listeners) {
             if (!guiEventListener.isMouseOver(mouseX, mouseY)) continue;
             return Optional.of(guiEventListener);
         }
@@ -38,7 +38,7 @@ public class DebugSelectionList<E extends ContainerObjectSelectionList.Entry<E>>
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        for (GuiEventListener guiEventListener : renderables) {
+        for (GuiEventListener guiEventListener : listeners) {
             if (!guiEventListener.mouseClicked(mouseX, mouseY, button)) continue;
             focused = guiEventListener;
             if (button == 0) {
@@ -61,17 +61,17 @@ public class DebugSelectionList<E extends ContainerObjectSelectionList.Entry<E>>
     @Override
     protected void renderList(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         super.renderList(poseStack, mouseX, mouseY, partialTick);
-        widgets.forEach(widget -> widget.render(poseStack, mouseX, mouseY, partialTick));
+        renderables.forEach(widget -> widget.render(poseStack, mouseX, mouseY, partialTick));
     }
 
-    protected <T extends Widget & GuiEventListener> void removeWidget(T widget) {
-        widgets.remove(widget);
+    protected <T extends Renderable & GuiEventListener> void removeWidget(T widget) {
         renderables.remove(widget);
+        listeners.remove(widget);
     }
 
-    protected <T extends Widget & GuiEventListener> T addWidget(T widget) {
-        widgets.add(widget);
+    protected <T extends Renderable & GuiEventListener> T addWidget(T widget) {
         renderables.add(widget);
+        listeners.add(widget);
         return widget;
     }
 }

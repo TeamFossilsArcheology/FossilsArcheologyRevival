@@ -4,7 +4,6 @@ import com.github.teamfossilsarcheology.fossil.client.model.block.PlantBlockMode
 import com.github.teamfossilsarcheology.fossil.client.model.block.PlantBlockModel.PlantBlockElement;
 import com.github.teamfossilsarcheology.fossil.client.model.block.PlantBlockModel.PlantBlockElementFace;
 import com.github.teamfossilsarcheology.fossil.client.model.block.PlantModelBakery;
-import com.mojang.datafixers.util.Pair;
 import net.fabricmc.fabric.api.renderer.v1.Renderer;
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
 import net.fabricmc.fabric.api.renderer.v1.mesh.MeshBuilder;
@@ -20,7 +19,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
 import java.util.function.Function;
 
 public class FabricPlantUnbakedModel implements UnbakedModel {
@@ -39,13 +37,12 @@ public class FabricPlantUnbakedModel implements UnbakedModel {
     }
 
     @Override
-    public @NotNull Collection<Material> getMaterials(Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors) {
-        return model.materials().values();
+    public void resolveParents(@NotNull Function<ResourceLocation, UnbakedModel> modelGetter) {
+
     }
 
-    @Nullable
     @Override
-    public BakedModel bake(ModelBakery modelBakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ResourceLocation location) {
+    public @Nullable BakedModel bake(ModelBaker modelBaker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ResourceLocation location) {
         Renderer renderer = RENDERER == null ? IndigoRenderer.INSTANCE : RENDERER;
         MeshBuilder builder = renderer.meshBuilder();
         QuadEmitter emitter = builder.getEmitter();

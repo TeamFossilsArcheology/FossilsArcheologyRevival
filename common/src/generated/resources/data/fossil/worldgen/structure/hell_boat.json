@@ -1,0 +1,15 @@
+{
+  "type": "fossil:hell_boat",
+  "biomes": "#minecraft:is_nether",
+  "height": {
+    "type": "minecraft:uniform",
+    "max_inclusive": {
+      "absolute": 30
+    },
+    "min_inclusive": {
+      "absolute": 30
+    }
+  },
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

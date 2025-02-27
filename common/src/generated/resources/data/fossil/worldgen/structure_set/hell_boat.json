@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 92182587,
+    "separation": 5,
+    "spacing": 24
+  },
+  "structures": [
+    {
+      "structure": "fossil:hell_boat",
+      "weight": 1
+    }
+  ]
+}

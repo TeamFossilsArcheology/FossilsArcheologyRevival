@@ -7,7 +7,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.VanillaEn
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import dev.architectury.event.events.common.LifecycleEvent;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EntityType;
@@ -41,13 +41,13 @@ public class FossilFoodMappings {
         FoodMappings.addPlant(Items.PUMPKIN_SEEDS, 5);
         FoodMappings.addPlant(Items.BEETROOT_SEEDS, 5);
         LifecycleEvent.SERVER_LEVEL_LOAD.register(level -> {
-            Registry.BLOCK.getOrCreateTag(BlockTags.LEAVES).stream().map(Holder::value).forEach(block -> {
+            BuiltInRegistries.BLOCK.getOrCreateTag(BlockTags.LEAVES).stream().map(Holder::value).forEach(block -> {
                 FoodMappings.addPlant(block, 20);
             });
-            Registry.BLOCK.getOrCreateTag(BlockTags.FLOWERS).stream().map(Holder::value).forEach(block -> {
+            BuiltInRegistries.BLOCK.getOrCreateTag(BlockTags.FLOWERS).stream().map(Holder::value).forEach(block -> {
                 FoodMappings.addPlant(block, 5);
             });
-            Registry.BLOCK.getOrCreateTag(BlockTags.SAPLINGS).stream().map(Holder::value).forEach(block -> {
+            BuiltInRegistries.BLOCK.getOrCreateTag(BlockTags.SAPLINGS).stream().map(Holder::value).forEach(block -> {
                 FoodMappings.addPlant(block, 15);
             });
         });
@@ -130,12 +130,12 @@ public class FossilFoodMappings {
         FoodMappings.addInsect(EntityType.CAVE_SPIDER, 15);
 
         addMeatEntity(new ResourceLocation("rats", "rat"), 5);
-        
+
         addMeatEntity(new ResourceLocation("bewitchment", "owl"), 7);
         addMeatEntity(new ResourceLocation("bewitchment", "raven"), 5);
         addMeatEntity(new ResourceLocation("bewitchment", "snake"), 4);
         addMeatEntity(new ResourceLocation("bewitchment", "toad"), 3);
-        
+
         addMeatEntity(new ResourceLocation("betteranimalsplus", "deer"), 35);
         addMeatEntity(new ResourceLocation("betteranimalsplus", "pheasant"), 10);
         addMeatEntity(new ResourceLocation("betteranimalsplus", "turkey"), 10);

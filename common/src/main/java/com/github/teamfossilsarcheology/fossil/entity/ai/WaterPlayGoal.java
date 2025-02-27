@@ -82,7 +82,7 @@ public class WaterPlayGoal<T extends Prehistoric & SwimmingAnimal> extends PlayG
                 attackType = ATTACK;
                 ServerAnimationInfo animationInfo = dino.startAttack();
                 attackDamageTick = (long) (currentTime + animationInfo.actionDelay);
-                attackEndTick = (long) (currentTime + animationInfo.animation.animationLength);
+                attackEndTick = (long) (currentTime + animationInfo.animation.length());
                 if (attackDamageTick > attackEndTick) attackDamageTick = attackEndTick;
             } else {
                 attackType = GRAB;

@@ -8,7 +8,7 @@ import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -16,21 +16,25 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import software.bernie.geckolib3.core.util.Color;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import org.joml.Vector3f;
+import software.bernie.geckolib.cache.object.BakedGeoModel;
+import software.bernie.geckolib.core.object.Color;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 import java.util.function.Function;
 
 public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRenderer<T> {
-    private final Function<ResourceLocation, RenderType> renderType;
-
     /**
-     * @param model     the file model name (including extension)
-     * @param animation the animation model name (including extension)
+     * @param model the file model name (excluding extension)
      */
-    public PrehistoricGeoRenderer(EntityRendererProvider.Context renderManager, String model, String animation, Function<ResourceLocation, RenderType> renderType) {
-        super(renderManager, new PrehistoricGeoModel<>(model, animation));
-        this.renderType = renderType;
+    public PrehistoricGeoRenderer(EntityRendererProvider.Context renderManager, String model, Function<ResourceLocation, RenderType> renderType) {
+        super(renderManager, new PrehistoricGeoModel<>(model, renderType));
+    }
+
+    @Override
+    public void preRender(PoseStack poseStack, T animatable, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        withScale(animatable.getScale());
+        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
     @Override
@@ -43,14 +47,14 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
             float offset = entity.getBbWidth() / 2 * progress;
             poseStack.translate(dir.getStepX() * offset, 0.5 * progress, dir.getStepZ() * offset);
             Direction dirRot = dir.getClockWise();
-            poseStack.mulPose(new Vector3f(dirRot.getStepX(), 0, dirRot.getStepZ()).rotationDegrees(90 * progress));
+            poseStack.mulPose(Axis.of(new Vector3f(dirRot.getStepX(), 0, dirRot.getStepZ())).rotationDegrees(90 * progress));
         }
         super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
         poseStack.popPose();
     }
 
     @Override
-    public Color getRenderColor(T animatable, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, VertexConsumer buffer, int packedLight) {
+    public Color getRenderColor(T animatable, float partialTick, int packedLight) {
         if (Version.debugEnabled()) {
             if (InstructionTab.entityListHighlight != null && InstructionTab.entityListHighlight.getId() == animatable.getId()) {
                 return Color.RED;
@@ -61,43 +65,29 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
         if (animatable instanceof Arthropleura arthropleura && arthropleura.isBee()) {
             return Color.YELLOW;
         }
-        return super.getRenderColor(animatable, partialTick, poseStack, bufferSource, buffer, packedLight);
+        return super.getRenderColor(animatable, partialTick, packedLight);
     }
 
     @Override
-    protected float getSwingMotionAnimThreshold() {
+    public float getMotionAnimThreshold(T animatable) {
+        //TODO: get from animatable
         return Util.SWING_ANIM_THRESHOLD;
     }
 
     @Override
-    public RenderType getRenderType(T animatable, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, VertexConsumer buffer, int packedLight, ResourceLocation texture) {
-        return renderType.apply(texture);
-    }
-
-    @Override
     protected void applyRotations(T animatable, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick) {
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(180f - rotationYaw));
+        poseStack.mulPose(Axis.YP.rotationDegrees(180f - rotationYaw));
         if (animatable.deathTime > 0) {
             float deathRotation = (animatable.deathTime + partialTick - 1f) / 20f * 1.6f;
 
-            poseStack.mulPose(Vector3f.ZP.rotationDegrees(Math.min(Mth.sqrt(deathRotation), 1) * getDeathMaxRotation(animatable)));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(Math.min(Mth.sqrt(deathRotation), 1) * getDeathMaxRotation(animatable)));
         } else if (animatable.hasCustomName()) {
             String name = ChatFormatting.stripFormatting(animatable.getName().getString());
 
             if (name != null && (name.equals("Dinnerbone") || name.equalsIgnoreCase("Grumm"))) {
                 poseStack.translate(0, animatable.getBbHeight() + 0.1f, 0);
-                poseStack.mulPose(Vector3f.ZP.rotationDegrees(180f));
+                poseStack.mulPose(Axis.ZP.rotationDegrees(180f));
             }
         }
-    }
-
-    @Override
-    public float getWidthScale(T animatable) {
-        return animatable.getScale();
-    }
-
-    @Override
-    public float getHeightScale(T entity) {
-        return animatable.getScale();
     }
 }

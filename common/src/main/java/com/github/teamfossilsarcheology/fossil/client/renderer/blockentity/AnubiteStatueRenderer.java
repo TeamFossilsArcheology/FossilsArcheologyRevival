@@ -6,7 +6,7 @@ import com.github.teamfossilsarcheology.fossil.block.entity.AnubiteStatueBlockEn
 import com.github.teamfossilsarcheology.fossil.client.model.AnubiteModel;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -29,8 +29,8 @@ public class AnubiteStatueRenderer implements BlockEntityRenderer<AnubiteStatueB
                        int packedOverlay) {
         poseStack.pushPose();
         poseStack.translate(0.5f, 1.5f, 0.5f);
-        poseStack.mulPose(Vector3f.ZP.rotationDegrees(180));
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(blockEntity.getBlockState().getValue(AnubiteStatueBlock.FACING).getOpposite().toYRot()));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(180));
+        poseStack.mulPose(Axis.YP.rotationDegrees(blockEntity.getBlockState().getValue(AnubiteStatueBlock.FACING).getOpposite().toYRot()));
         var c = bufferSource.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
         if (blockEntity.getBlockState().getValue(AnubiteStatueBlock.LIT)) {
             anubiteModel.getChild("right_arm").xRot = -130 * Mth.DEG_TO_RAD;

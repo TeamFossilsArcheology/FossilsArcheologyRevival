@@ -9,7 +9,7 @@ import com.github.teamfossilsarcheology.fossil.item.ToyBallItem;
 import com.github.teamfossilsarcheology.fossil.item.ToyScratchingPostItem;
 import com.github.teamfossilsarcheology.fossil.item.ToyTetheredLogItem;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -24,8 +24,8 @@ import java.util.Objects;
 import static com.github.teamfossilsarcheology.fossil.block.PrehistoricPlantInfo.MUTANT_PLANT;
 
 public class ModItemProvider extends ItemModelProvider {
-    public ModItemProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, FossilMod.MOD_ID, existingFileHelper);
+    public ModItemProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+        super(output, FossilMod.MOD_ID, existingFileHelper);
     }
 
     @Override

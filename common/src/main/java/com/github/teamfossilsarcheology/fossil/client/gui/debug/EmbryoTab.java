@@ -5,6 +5,7 @@ import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.SyncDebugInfoMessage;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.animal.Animal;
@@ -29,10 +30,11 @@ public class EmbryoTab extends DebugTab<Animal> {
             }
         };
         addWidget(hatchingTimeSlider);
-        addWidget(new Button(20, yPos += 30, 150, 20, Component.literal("Set Info"), button -> {
-            MessageHandler.DEBUG_CHANNEL.sendToServer(new SyncDebugInfoMessage(entity.getId(), "", hatchingTime, 0, 0, 0, 0, 0));
-        }, (button, poseStack, i, j) -> {
-            debugScreen.renderTooltip(poseStack, Component.literal("Set the info above on the server"), i, j);
-        }));
+        addWidget(Button.builder(Component.literal("Set Info"), button -> {
+                    MessageHandler.DEBUG_CHANNEL.sendToServer(new SyncDebugInfoMessage(entity.getId(), "", hatchingTime, 0, 0, 0, 0, 0));
+                })
+                .bounds(20, yPos += 30, 150, 20)
+                .tooltip(Tooltip.create(Component.literal("Set the info above on the server")))
+                .build());
     }
 }

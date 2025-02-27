@@ -2,7 +2,7 @@ package com.github.teamfossilsarcheology.fossil.client.gui.debug;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.AbstractContainerEventHandler;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
@@ -17,8 +17,8 @@ public abstract class DebugTab<E extends Entity> extends AbstractContainerEventH
     protected final DebugScreen debugScreen;
     protected final Minecraft minecraft;
     protected final E entity;
-    protected final List<Widget> widgets = new ArrayList<>();
-    protected final List<GuiEventListener> renderables = new ArrayList<>();
+    protected final List<Renderable> renderables = new ArrayList<>();
+    protected final List<GuiEventListener> listeners = new ArrayList<>();
     protected int width;
     protected int height;
 
@@ -34,8 +34,8 @@ public abstract class DebugTab<E extends Entity> extends AbstractContainerEventH
     }
 
     protected void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        for (Widget widget : widgets) {
-            widget.render(poseStack, mouseX, mouseY, partialTick);
+        for (Renderable renderable : renderables) {
+            renderable.render(poseStack, mouseX, mouseY, partialTick);
         }
     }
 
@@ -68,7 +68,7 @@ public abstract class DebugTab<E extends Entity> extends AbstractContainerEventH
 
     @Override
     public @NotNull List<? extends GuiEventListener> children() {
-        return renderables;
+        return listeners;
     }
 
     @Override
@@ -81,9 +81,9 @@ public abstract class DebugTab<E extends Entity> extends AbstractContainerEventH
 
     }
 
-    protected <T extends Widget & GuiEventListener> T addWidget(T widget) {
-        widgets.add(widget);
+    protected <T extends Renderable & GuiEventListener> T addWidget(T widget) {
         renderables.add(widget);
+        listeners.add(widget);
         return widget;
     }
 }

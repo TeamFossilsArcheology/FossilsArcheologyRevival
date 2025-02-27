@@ -7,15 +7,15 @@ import dev.architectury.core.fluid.ArchitecturyFluidAttributes;
 import dev.architectury.core.fluid.SimpleArchitecturyFluidAttributes;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 
 public class ModFluids {
     public static final DeferredRegister<Fluid> FLUIDS =
-            DeferredRegister.create(FossilMod.MOD_ID, Registry.FLUID_REGISTRY);
-    public static final TagKey<Fluid> TAR_FLUID = TagKey.create(Registry.FLUID_REGISTRY, FossilMod.location("tar"));
+            DeferredRegister.create(FossilMod.MOD_ID, Registries.FLUID);
+    public static final TagKey<Fluid> TAR_FLUID = TagKey.create(Registries.FLUID, FossilMod.location("tar"));
 
     public static void register() {
         FLUIDS.register();

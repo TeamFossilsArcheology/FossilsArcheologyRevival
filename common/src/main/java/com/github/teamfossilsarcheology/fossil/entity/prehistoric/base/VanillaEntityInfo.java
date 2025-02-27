@@ -77,7 +77,7 @@ public enum VanillaEntityInfo implements EntityInfo {
     }
 
     private static void registerItem(String name, VanillaEntityInfo info, Function<Item.Properties, Item> item, Consumer<Item> listener) {
-        ModItems.ITEMS.register(name + "_" + info.resourceName, () -> item.apply(new Item.Properties().tab(ModTabs.FA_MOB_ITEM_TAB))).listen(listener);
+        ModItems.ITEMS.register(name + "_" + info.resourceName, () -> item.apply(new Item.Properties().arch$tab(ModTabs.FA_MOB_ITEM_TAB))).listen(listener);
     }
 
     @Override

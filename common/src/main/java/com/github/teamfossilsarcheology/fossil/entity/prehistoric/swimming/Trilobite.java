@@ -26,20 +26,20 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.Optional;
 
-import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.LOOP;
-import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.PLAY_ONCE;
+import static software.bernie.geckolib.core.animation.Animation.LoopType.LOOP;
+import static software.bernie.geckolib.core.animation.Animation.LoopType.PLAY_ONCE;
 
 public abstract class Trilobite extends PrehistoricSwimmingBucketable {
 
     protected Trilobite(EntityType<? extends Trilobite> entityType, Level level) {
-        super(entityType, level, FossilMod.location("animations/trilobite.animation.json"));
+        super(entityType, level, FossilMod.location("animations/entity/trilobite.animation.json"));
         this.setPathfindingMalus(BlockPathTypes.WATER, 0);
         moveControl = new TrilobiteMoveControl();
     }
@@ -98,29 +98,29 @@ public abstract class Trilobite extends PrehistoricSwimmingBucketable {
         return ModSounds.ARTHROPLEURA_DEATH.get();
     }
 
+
     @Override
-    public void registerControllers(AnimationData data) {
-        var ctrl = new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, event -> {
-            AnimationController<Trilobite> controller = event.getController();
-            if (getAnimationLogic().tryNextAnimation(controller)) {
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        var ctrl = new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, state -> {
+            AnimationController<Trilobite> controller = state.getController();
+            if (getAnimationLogic().tryNextAnimation(state, controller)) {
                 return PlayState.CONTINUE;
             }
             Optional<AnimationLogic.ActiveAnimationInfo> activeAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
-            if (activeAnimation.isPresent() && getAnimationLogic().tryForcedAnimation(event, activeAnimation.get())) {
+            if (activeAnimation.isPresent() && getAnimationLogic().tryForcedAnimation(state, activeAnimation.get())) {
                 return PlayState.CONTINUE;
             }
-            if (event.isMoving()) {
+            if (state.isMoving()) {
                 getAnimationLogic().addActiveAnimation(controller.getName(), AnimationCategory.WALK);
             } else {
                 getAnimationLogic().addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
             }
             Optional<AnimationLogic.ActiveAnimationInfo> newAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
-            newAnimation.ifPresent(activeAnimationInfo -> controller.setAnimation(new AnimationBuilder().addAnimation(
-                    activeAnimationInfo.animationName(), activeAnimationInfo.loop() ? LOOP : PLAY_ONCE)));
+            newAnimation.ifPresent(activeAnimationInfo -> controller.setAnimation(RawAnimation.begin().then(activeAnimationInfo.animationName(), activeAnimationInfo.loop() ? LOOP : PLAY_ONCE)));
             return PlayState.CONTINUE;
         });
         registerEatingListeners(ctrl);
-        data.addAnimationController(ctrl);
+        controllerRegistrar.add(ctrl);
     }
 
     class TrilobiteMoveControl extends MoveControl {

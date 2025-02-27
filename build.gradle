@@ -57,7 +57,14 @@ allprojects {
             }
         }
         maven { url "https://maven.ladysnake.org/releases" }
-        maven { url "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/" }
+        maven {
+            name = 'GeckoLib'
+            url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+            content {
+                includeGroupByRegex("software\\.bernie.*")
+                includeGroup("com.eliotlash.mclib")
+            }
+        }
         maven { url "https://dl.cloudsmith.io/public/darkpred-mods/more-hitboxes/maven/" }
         maven { url "https://maven.shedaniel.me/" }
         maven { url "https://maven.minecraftforge.net/" }
@@ -101,6 +108,7 @@ allprojects {
                 "fabric_mod_authors"           : mod_authors.split(", ").collect { "\"" + it + "\"" },
                 "forge_version"                : forge_version,
                 "forge_version_range"          : forge_version_range,
+                "forge_loader_version_range"   : forge_loader_version_range,
                 "forge_mod_authors"            : mod_authors,
                 "java_version"                 : java_version
         ]

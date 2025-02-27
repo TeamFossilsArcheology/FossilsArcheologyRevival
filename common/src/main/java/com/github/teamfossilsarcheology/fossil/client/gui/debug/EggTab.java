@@ -6,6 +6,7 @@ import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.SyncDebugInfoMessage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
@@ -43,17 +44,18 @@ public class EggTab extends DebugTab<DinosaurEgg> {
                 int j = active ? 16777215 : 10526880;
                 String currentEggScale = String.valueOf(data.eggScale());
                 int currentScaleX = (int) (((data.eggScale() - minValue) / (maxValue - minValue)) * (width - minecraft.font.width(currentEggScale)));
-                drawString(poseStack, minecraft.font, currentEggScale, x + currentScaleX, y - 8, j | Mth.ceil(alpha * 255.0F) << 24);
+                drawString(poseStack, minecraft.font, currentEggScale, getX() + currentScaleX, getY() - 8, j | Mth.ceil(alpha * 255.0F) << 24);
             }
         };
 
         addWidget(hatchingTimeSlider);
         addWidget(scaleSlider);
-        addWidget(new Button(20, yPos += 30, 150, 20, Component.literal("Set Info"), button -> {
-            entity.setScaleOverride(-1);
-            MessageHandler.DEBUG_CHANNEL.sendToServer(new SyncDebugInfoMessage(entity.getId(), "", hatchingTime, 0, 0, 0, 0, 0));
-        }, (button, poseStack, i, j) -> {
-            debugScreen.renderTooltip(poseStack, Component.literal("Set the info above on the server"), i, j);
-        }));
+        addWidget(Button.builder(Component.literal("Set Info"), button -> {
+                    entity.setScaleOverride(-1);
+                    MessageHandler.DEBUG_CHANNEL.sendToServer(new SyncDebugInfoMessage(entity.getId(), "", hatchingTime, 0, 0, 0, 0, 0));
+                })
+                .bounds(20, yPos += 30, 150, 20)
+                .tooltip(Tooltip.create(Component.literal("Set the info above on the server")))
+                .build());
     }
 }

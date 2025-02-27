@@ -33,17 +33,20 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class Failuresaurus extends Monster implements IAnimatable {
+public class Failuresaurus extends Monster implements GeoEntity {
     private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.defineId(Failuresaurus.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<String> VARIANT = SynchedEntityData.defineId(Failuresaurus.class, EntityDataSerializers.STRING);
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    public static final RawAnimation ATTACK = RawAnimation.begin().thenPlay("attack");
+    public static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk");
+    public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
 
     public Failuresaurus(EntityType<Failuresaurus> entityType, Level level) {
         super(entityType, level);
@@ -187,25 +190,25 @@ public class Failuresaurus extends Monster implements IAnimatable {
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 0, event -> {
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 0, state -> {
             if (swinging) {
                 if (swingTime == 0) {
-                    event.getController().markNeedsReload();
+                    state.getController().forceAnimationReset();
                 }
-                event.getController().setAnimation(new AnimationBuilder().playOnce("attack"));
-            } else if (event.isMoving()) {
-                event.getController().setAnimation(new AnimationBuilder().loop("walk"));
+                state.getController().setAnimation(ATTACK);
+            } else if (state.isMoving()) {
+                state.getController().setAnimation(WALK);
             } else {
-                event.getController().setAnimation(new AnimationBuilder().loop("idle"));
+                state.getController().setAnimation(IDLE);
             }
             return PlayState.CONTINUE;
         }));
     }
 
     @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 
     public enum Variant {

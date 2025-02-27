@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.tags.ModItemTags;
 import com.google.common.collect.Maps;
 import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -15,12 +16,11 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 import static com.github.teamfossilsarcheology.fossil.block.ModBlocks.SKULL_BLOCK;
 import static com.github.teamfossilsarcheology.fossil.item.ModItems.*;
 
-public class ModGenericLootTables implements Consumer<BiConsumer<ResourceLocation, LootTable.Builder>> {
+public class ModGenericLootTables implements LootTableSubProvider {
     private final Map<ResourceLocation, LootTable.Builder> map = Maps.newHashMap();
     private int scarab;
     private int broken;
@@ -83,7 +83,7 @@ public class ModGenericLootTables implements Consumer<BiConsumer<ResourceLocatio
     }
 
     @Override
-    public void accept(BiConsumer<ResourceLocation, LootTable.Builder> biConsumer) {
+    public void generate(BiConsumer<ResourceLocation, LootTable.Builder> biConsumer) {
         addTables();
         for (Map.Entry<ResourceLocation, LootTable.Builder> entry : map.entrySet()) {
             biConsumer.accept(entry.getKey(), entry.getValue());

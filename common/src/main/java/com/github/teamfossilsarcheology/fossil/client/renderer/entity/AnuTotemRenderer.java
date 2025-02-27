@@ -6,8 +6,7 @@ import com.github.teamfossilsarcheology.fossil.client.renderer.entity.layers.Anu
 import com.github.teamfossilsarcheology.fossil.entity.AnuTotem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -15,6 +14,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix4f;
 
 import java.util.Random;
 
@@ -55,7 +55,7 @@ public class AnuTotemRenderer extends MobRenderer<AnuTotem, AnuTotemModel> imple
     @Override
     protected void setupRotations(AnuTotem entityLiving, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
         super.setupRotations(entityLiving, poseStack, ageInTicks, rotationYaw, partialTicks);
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(ageInTicks * ageInTicks * 0.15f));
+        poseStack.mulPose(Axis.YP.rotationDegrees(ageInTicks * ageInTicks * 0.15f));
     }
 
     @Override
@@ -71,12 +71,12 @@ public class AnuTotemRenderer extends MobRenderer<AnuTotem, AnuTotemModel> imple
         poseStack.translate(0, 1.5, 0);
         //Rotates entity and creates beams similar to dying enderdragon
         while ((float) passes < (i + i * i) / 2f * 60f) {
-            poseStack.mulPose(Vector3f.XP.rotationDegrees(random.nextFloat() * 360));
-            poseStack.mulPose(Vector3f.YP.rotationDegrees(random.nextFloat() * 360));
-            poseStack.mulPose(Vector3f.ZP.rotationDegrees(random.nextFloat() * 360));
-            poseStack.mulPose(Vector3f.XP.rotationDegrees(random.nextFloat() * 360));
-            poseStack.mulPose(Vector3f.YP.rotationDegrees(random.nextFloat() * 360));
-            poseStack.mulPose(Vector3f.ZP.rotationDegrees(random.nextFloat() * 360 + i * 90));
+            poseStack.mulPose(Axis.XP.rotationDegrees(random.nextFloat() * 360));
+            poseStack.mulPose(Axis.YP.rotationDegrees(random.nextFloat() * 360));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(random.nextFloat() * 360));
+            poseStack.mulPose(Axis.XP.rotationDegrees(random.nextFloat() * 360));
+            poseStack.mulPose(Axis.YP.rotationDegrees(random.nextFloat() * 360));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(random.nextFloat() * 360 + i * 90));
             float y = random.nextFloat() * 20 + 5 + j * 10;
             float m = random.nextFloat() * 2 + 1 + j * 2;
             Matrix4f pose = poseStack.last().pose();

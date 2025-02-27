@@ -260,11 +260,11 @@ public class ClientInit {
     }
 
     private static <T extends Prehistoric> void registerTrilobite(RegistrySupplier<EntityType<T>> type) {
-        EntityRendererRegistry.register(type, context -> new PrehistoricGeoRenderer<>(context, "trilobite.geo.json", "trilobite.animation.json", RenderType::entityCutoutNoCull));
+        EntityRendererRegistry.register(type, context -> new PrehistoricGeoRenderer<>(context, "trilobite", RenderType::entityCutoutNoCull));
     }
 
     private static <T extends Prehistoric> void registerDino(RegistrySupplier<EntityType<T>> type, String name, Function<ResourceLocation, RenderType> renderType) {
-        EntityRendererRegistry.register(type, context -> new PrehistoricGeoRenderer<>(context, name + ".geo.json", name + ".animation.json", renderType));
+        EntityRendererRegistry.register(type, context -> new PrehistoricGeoRenderer<>(context, name, renderType));
     }
 
     private static <T extends Prehistoric> void registerDino(RegistrySupplier<EntityType<T>> type, String name) {
@@ -272,7 +272,7 @@ public class ClientInit {
     }
 
     private static <T extends PrehistoricFish> void registerFish(RegistrySupplier<EntityType<T>> type, String name) {
-        EntityRendererRegistry.register(type, context -> new PrehistoricFishGeoRenderer<>(context, name + ".geo.json", name + ".animation.json", name));
+        EntityRendererRegistry.register(type, context -> new PrehistoricFishGeoRenderer<>(context, name));
     }
 
     private static void registerEventHandlers() {

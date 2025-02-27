@@ -2,7 +2,7 @@ package com.github.teamfossilsarcheology.fossil.fabric.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
-import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationController;
 
 @Mixin(AnimationController.class)
 public interface AnimationControllerAccessor {

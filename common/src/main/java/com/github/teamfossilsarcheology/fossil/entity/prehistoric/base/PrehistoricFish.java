@@ -28,9 +28,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -38,7 +38,7 @@ import java.util.Map;
 public abstract class PrehistoricFish extends AbstractFish implements PrehistoricAnimatable<PrehistoricFish>, PrehistoricDebug {
     public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.COMPOUND_TAG);
     private static final EntityDataAccessor<Boolean> BABY = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.BOOLEAN);
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private final ResourceLocation animationLocation;
     private final AnimationLogic<PrehistoricFish> animationLogic = new AnimationLogic<>(this);
 
@@ -47,7 +47,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
 
     protected PrehistoricFish(EntityType<? extends PrehistoricFish> entityType, Level level) {
         super(entityType, level);
-        this.animationLocation = FossilMod.location("animations/" + EntityType.getKey(entityType).getPath() + ".animation.json");
+        this.animationLocation = FossilMod.location("animations/entity/" + EntityType.getKey(entityType).getPath() + ".animation.json");
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.2f, 0.1f, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
@@ -234,13 +234,13 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 4, animationLogic::fishPredicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 4, animationLogic::fishPredicate));
     }
 
     @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 
     @Override

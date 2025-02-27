@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.world.feature.village.forge;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -16,8 +16,8 @@ public class ModVillagesImpl {
 
     @SubscribeEvent
     public static void addVillageBuilding(ServerAboutToStartEvent event) {
-        var templatePoolRegistry = event.getServer().registryAccess().registry(Registry.TEMPLATE_POOL_REGISTRY).orElseThrow();
-        var processorListRegistry = event.getServer().registryAccess().registry(Registry.PROCESSOR_LIST_REGISTRY).orElseThrow();
+        var templatePoolRegistry = event.getServer().registryAccess().registry(Registries.TEMPLATE_POOL).orElseThrow();
+        var processorListRegistry = event.getServer().registryAccess().registry(Registries.PROCESSOR_LIST).orElseThrow();
         var desert = templatePoolRegistry.get(new ResourceLocation("minecraft:village/desert/houses"));
         addBuildingToPool(desert, processorListRegistry, ARCHEOLOGIST_HOUSE_DESERT);
         addBuildingToPool(desert, processorListRegistry, PALEONTOLOGIST_HOUSE_DESERT);

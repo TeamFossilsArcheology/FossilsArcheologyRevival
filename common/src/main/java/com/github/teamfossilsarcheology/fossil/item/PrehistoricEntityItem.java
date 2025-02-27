@@ -16,7 +16,7 @@ public abstract class PrehistoricEntityItem extends Item {
     }
 
     protected PrehistoricEntityItem(Properties properties, EntityInfo info, String category) {
-        super(properties.tab(ModTabs.FA_MOB_ITEM_TAB));
+        super(properties.arch$tab(ModTabs.FA_MOB_ITEM_TAB));
         this.info = info;
         this.name = Component.translatable("item." + FossilMod.MOD_ID + "." + category, info.displayName().get());
     }

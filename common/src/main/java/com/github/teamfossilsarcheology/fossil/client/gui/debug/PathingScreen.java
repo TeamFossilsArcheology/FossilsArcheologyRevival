@@ -68,12 +68,10 @@ public class PathingScreen extends Screen {
                 PathingDebug.rePath();
             }
         });
-        addRenderableWidget(new Button(200, height - 50, 100, 20, Component.literal("Reset scroll"), button -> {
-            PathingDebug.pickBlockOffset = 0;
-        }));
-        addRenderableWidget(new Button(300, height - 50, 100, 20, Component.literal("Reset pos3"), button -> {
-            PathingDebug.pos3 = null;
-        }));
+        addRenderableWidget(Button.builder(Component.literal("Reset scroll"), button -> PathingDebug.pickBlockOffset = 0)
+                .bounds(200, height - 50, 100, 20).build());
+        addRenderableWidget(Button.builder(Component.literal("Reset pos3"), button -> PathingDebug.pos3 = null)
+                .bounds(300, height - 50, 100, 20).build());
         List<PlayerPathNavigation> paths = List.of(PathingDebug.pathNavigation1, PathingDebug.pathNavigation3, PathingDebug.pathNavigation4, PathingDebug.pathNavigation5);
         addRenderableWidget(CycleButton.<PlayerPathNavigation>builder(nav -> Component.literal(nav.name)).withValues(paths)
                 .withInitialValue(currentNav).create(30, 90, 100, 20, Component.literal("Path"),

@@ -9,7 +9,7 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -27,8 +27,8 @@ public class ModRecipes {
     private static final Map<ItemLike, Integer> CULTURE_VAT_FUEL_VALUES = new Object2IntOpenHashMap<>();
 
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(FossilMod.MOD_ID,
-            Registry.RECIPE_SERIALIZER_REGISTRY);
-    public static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(FossilMod.MOD_ID, Registry.RECIPE_TYPE_REGISTRY);
+            Registries.RECIPE_SERIALIZER);
+    public static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(FossilMod.MOD_ID, Registries.RECIPE_TYPE);
 
     public static final RegistrySupplier<RecipeSerializer<AnalyzerRecipe>> ANALYZER_SERIALIZER = SERIALIZERS.register("analyzer",
             () -> AnalyzerRecipe.Serializer.INSTANCE);

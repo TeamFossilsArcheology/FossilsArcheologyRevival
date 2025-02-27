@@ -4,7 +4,7 @@ package com.github.teamfossilsarcheology.fossil.util;
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -156,7 +156,7 @@ public abstract class FoodMappings {
     public static int getMobFoodPoints(LivingEntity entity, Diet diet) {
         if (entity != null) {
             if (!FossilConfig.isEnabled(FossilConfig.DINOS_EAT_MODDED_MOBS)) {
-                String namespace = Registry.ENTITY_TYPE.getKey(entity.getType()).getNamespace();
+                String namespace = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).getNamespace();
                 if (!namespace.equals(FossilMod.MOD_ID) && !namespace.equals("minecraft")) {
                     return 0;
                 }
@@ -181,12 +181,12 @@ public abstract class FoodMappings {
     }
 
     public static void addMeatEntity(ResourceLocation location, int food) {
-        Optional<EntityType<?>> entity = Registry.ENTITY_TYPE.getOptional(location);
+        Optional<EntityType<?>> entity = BuiltInRegistries.ENTITY_TYPE.getOptional(location);
         entity.ifPresent(entityType -> addMeat(entityType, food));
     }
 
     public static void addFishEntity(ResourceLocation location, int food) {
-        Optional<EntityType<?>> entity = Registry.ENTITY_TYPE.getOptional(location);
+        Optional<EntityType<?>> entity = BuiltInRegistries.ENTITY_TYPE.getOptional(location);
         entity.ifPresent(entityType -> addFish(entityType, food));
     }
 

@@ -5,6 +5,7 @@ import com.mojang.datafixers.util.Pair;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
@@ -27,7 +28,7 @@ public class ModVillages {
     public static final Tuple ARCHEOLOGIST_HOUSE_TAIGA = createStructure("houses/archeo_house_taiga_top", 1);
     public static final Tuple PALEONTOLOGIST_HOUSE_TAIGA = createStructure("houses/paleo_house_taiga", 1);
     private static final ResourceKey<StructureProcessorList> EMPTY_PROCESSOR_LIST_KEY = ResourceKey.create(
-            Registry.PROCESSOR_LIST_REGISTRY, new ResourceLocation("minecraft", "empty"));
+            Registries.PROCESSOR_LIST, new ResourceLocation("minecraft", "empty"));
 
     private static Tuple createStructure(String name, int weight) {
         return new Tuple(FossilMod.MOD_ID + ":" + name, weight);

@@ -8,7 +8,9 @@ import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
-import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.loot.packs.VanillaBlockLoot;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -28,6 +30,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static com.github.teamfossilsarcheology.fossil.block.ModBlocks.*;
 import static com.github.teamfossilsarcheology.fossil.enchantment.ModEnchantments.ARCHEOLOGY;
@@ -35,15 +38,23 @@ import static com.github.teamfossilsarcheology.fossil.enchantment.ModEnchantment
 import static com.github.teamfossilsarcheology.fossil.item.ModItems.FERN_SEED_FOSSIL;
 import static com.github.teamfossilsarcheology.fossil.item.ModItems.FROZEN_MEAT;
 
-public class ModBlockLootTables extends BlockLoot {
+/**
+ * @see VanillaBlockLoot
+ */
+public class ModBlockLootTables extends BlockLootSubProvider {
 
     private static final List<Block> NO_TABLE = List.of(ASH_VENT.get(), HOME_PORTAL.get(), ANU_PORTAL.get(), SARCOPHAGUS.get(), TAR.get(),
             ANU_STATUE.get(), ANUBITE_STATUE.get(), ANCIENT_CHEST.get(), ANU_BARRIER_ORIGIN.get(), ANU_BARRIER_FACE.get(),
             MUTANT_TREE_TUMOR.get());
+    private static final Set<Item> EXPLOSION_RESISTANT = Set.of();
     private final List<Block> tableDone = new ArrayList<>();
 
+    public ModBlockLootTables() {
+        super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags());
+    }
+
     @Override
-    protected void addTables() {
+    public void generate() {
         FAKE_OBSIDIAN.ifPresent(block -> addCustom(block, createSingleItemTable(Blocks.OBSIDIAN)));
 
         AMBER_ORE.ifPresent(block -> addCustom(block, createSilkTouchDispatchTable(block, applyExplosionCondition(block,
@@ -116,7 +127,7 @@ public class ModBlockLootTables extends BlockLoot {
             } else if (block instanceof DoorBlock || block instanceof AmphoraVaseBlock) {
                 addCustom(block, createDoorTable(block));
             } else if (block instanceof BedBlock) {
-                addCustom(block, BlockLoot.createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD));
+                addCustom(block, createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD));
             } else if (!NO_TABLE.contains(block) && !tableDone.contains(block)) {
                 dropSelf(block);
             }

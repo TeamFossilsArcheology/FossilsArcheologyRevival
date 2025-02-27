@@ -3,7 +3,7 @@ package com.github.teamfossilsarcheology.fossil.client.renderer.entity;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming.Meganeura;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -14,7 +14,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class MeganeuraRenderer extends PrehistoricGeoRenderer<Meganeura> {
     public MeganeuraRenderer(EntityRendererProvider.Context renderManager) {
-        super(renderManager, "meganeura.geo.json", "meganeura.animation.json", RenderType::entityTranslucent);
+        super(renderManager, "meganeura", RenderType::entityTranslucent);
     }
 
     @Override
@@ -48,8 +48,8 @@ public class MeganeuraRenderer extends PrehistoricGeoRenderer<Meganeura> {
             yRot += entityYaw;
             poseStack.translate(-normal.getX() * translate, yTranslate, -normal.getZ() * translate);
             //Could apply z rotation depending on approach angle
-            poseStack.mulPose(Vector3f.YP.rotationDegrees(yRot));
-            poseStack.mulPose(Vector3f.XP.rotationDegrees(xRot));
+            poseStack.mulPose(Axis.YP.rotationDegrees(yRot));
+            poseStack.mulPose(Axis.XP.rotationDegrees(xRot));
         }
         super.render(meganeura, entityYaw, partialTick, poseStack, buffer, packedLight);
         poseStack.popPose();

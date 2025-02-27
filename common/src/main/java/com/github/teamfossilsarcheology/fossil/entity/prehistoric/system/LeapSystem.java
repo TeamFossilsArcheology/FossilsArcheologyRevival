@@ -94,7 +94,7 @@ public class LeapSystem extends AISystem {
             if (mob.isOnGround() && landingDelayTick != -1 && landingDelayTick <= currentTick) {
                 if (mob.hasLeapAnimation()) {
                     ServerAnimationInfo animation = (ServerAnimationInfo) mob.getLandAnimation();
-                    landingEndTick = (long) (currentTick + animation.animation.animationLength);
+                    landingEndTick = (long) (currentTick + animation.animation.length());
                 } else {
                     landingEndTick = currentTick + 2;
                 }
@@ -117,7 +117,7 @@ public class LeapSystem extends AISystem {
                     stopAttackRiding();
                 }
             }
-            if(!isLeapFlying() && !hasLeapStarted() && !isLanding() && !isAttackRiding()) {
+            if (!isLeapFlying() && !hasLeapStarted() && !isLanding() && !isAttackRiding()) {
                 //failsafe
                 setLeaping(false);
             }

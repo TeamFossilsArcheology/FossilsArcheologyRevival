@@ -4,7 +4,7 @@ import com.github.teamfossilsarcheology.fossil.block.custom_blocks.AnuStatueBloc
 import com.github.teamfossilsarcheology.fossil.block.entity.AnuStatueBlockEntity;
 import com.github.teamfossilsarcheology.fossil.client.model.AnuTotemModel;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -23,8 +23,8 @@ public class AnuStatueRenderer implements BlockEntityRenderer<AnuStatueBlockEnti
                        int packedOverlay) {
         poseStack.pushPose();
         poseStack.translate(0.5f, 1.5f, 0.5f);
-        poseStack.mulPose(Vector3f.ZP.rotationDegrees(180));
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(blockEntity.getBlockState().getValue(AnuStatueBlock.FACING).toYRot() + 180));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(180));
+        poseStack.mulPose(Axis.YP.rotationDegrees(blockEntity.getBlockState().getValue(AnuStatueBlock.FACING).toYRot() + 180));
         var c = bufferSource.getBuffer(RenderType.entitySolid(AnuTotemModel.TEXTURE));
         anuModel.render(poseStack, c, packedLight, packedOverlay);
         poseStack.popPose();

@@ -1,0 +1,26 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1151905941,
+    "separation": 8,
+    "spacing": 32
+  },
+  "structures": [
+    {
+      "structure": "fossil:tar_site_small",
+      "weight": 3
+    },
+    {
+      "structure": "fossil:tar_site_small_snowy",
+      "weight": 3
+    },
+    {
+      "structure": "fossil:tar_site_large",
+      "weight": 1
+    },
+    {
+      "structure": "fossil:tar_site_large_snowy",
+      "weight": 1
+    }
+  ]
+}

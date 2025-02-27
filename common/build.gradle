@@ -18,7 +18,8 @@ dependencies {
     // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury:$architectury_version"
 
-    modCompileOnly "software.bernie.geckolib:geckolib-forge-1.19:$gecko_lib_version"
+    modCompileOnly "software.bernie.geckolib:geckolib-forge-$minecraft_version:$gecko_lib_version"
+    compileOnly "com.eliotlash.mclib:mclib:20"
     modCompileOnly "com.github.darkpred.morehitboxes:morehitboxes-common-$minecraft_version:$more_hitboxes_version"
 
     //Optional

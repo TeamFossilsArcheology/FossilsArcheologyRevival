@@ -5,7 +5,7 @@ import com.github.teamfossilsarcheology.fossil.client.renderer.RendererFabricFix
 import com.github.teamfossilsarcheology.fossil.entity.AnuDead;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -27,7 +27,7 @@ public class AnuDeadRenderer extends EntityRenderer<AnuDead> implements Renderer
         poseStack.pushPose();
         poseStack.translate(0, 0.125, 0.6);
         poseStack.scale(-1, -1, 1);
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(-90));
+        poseStack.mulPose(Axis.XP.rotationDegrees(-90));
         VertexConsumer vertexConsumer = buffer.getBuffer(model.renderType(getTextureLocation(entity)));
         int m = LivingEntityRenderer.getOverlayCoords(entity, 0);
         if (entity.tickCount > 40) {

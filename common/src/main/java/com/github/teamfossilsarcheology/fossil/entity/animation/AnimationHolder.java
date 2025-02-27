@@ -1,8 +1,10 @@
 package com.github.teamfossilsarcheology.fossil.entity.animation;
 
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Mob;
+import software.bernie.geckolib.core.animation.AnimationController;
 
 import java.util.*;
 
@@ -14,11 +16,12 @@ public class AnimationHolder {
     private final Set<String> lookup = new HashSet<>();
 
     public void add(AnimationInfo animation) {
-        String name = animation.animation.animationName.toLowerCase(Locale.ROOT);
+        String name = animation.animation.name().toLowerCase(Locale.ROOT);
         String[] parts = name.split("_");
         int weight = 1;
         if (parts.length >= 3) {
             try {
+                //TODO: Use different weight system. Maybe w90 or data stored
                 Integer.parseInt(parts[parts.length - 2]);
                 weight = Integer.parseInt(parts[parts.length - 1]);
             } catch (NumberFormatException e) {
@@ -34,7 +37,7 @@ public class AnimationHolder {
         } else {
             addAnimation(animations, animation, weight);
         }
-        lookup.add(animation.animation.animationName);
+        lookup.add(animation.animation.name());
     }
 
     private static void addAnimation(NavigableMap<Double, AnimationInfo> map, AnimationInfo animation, double weight) {
@@ -58,6 +61,16 @@ public class AnimationHolder {
             return getRandomAnimation(airAnimations, entity.getRandom());
         }
         return getRandomAnimation(animations, entity.getRandom());
+    }
+
+    /**
+     * Adds each animation stored by this holder as a triggerable animation in the given controller
+     */
+    public void addTriggers(AnimationController<? extends PrehistoricAnimatable<?>> controller) {
+        babyAnimations.values().forEach(animationInfo -> controller.triggerableAnim(animationInfo.animation.name(), animationInfo.rawAnimation));
+        waterAnimations.values().forEach(animationInfo -> controller.triggerableAnim(animationInfo.animation.name(), animationInfo.rawAnimation));
+        airAnimations.values().forEach(animationInfo -> controller.triggerableAnim(animationInfo.animation.name(), animationInfo.rawAnimation));
+        animations.values().forEach(animationInfo -> controller.triggerableAnim(animationInfo.animation.name(), animationInfo.rawAnimation));
     }
 
     private static AnimationInfo getRandomAnimation(NavigableMap<Double, AnimationInfo> map, RandomSource random) {

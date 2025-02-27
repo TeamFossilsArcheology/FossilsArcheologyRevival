@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "minecraft:ocean",
+  "spawners": {
+    "type": "fossil:coelacanth",
+    "maxCount": 4,
+    "minCount": 1,
+    "weight": 3
+  }
+}

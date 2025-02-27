@@ -7,6 +7,8 @@ import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -20,9 +22,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Set;
 
 public class ModVillagers {
-    public static final DeferredRegister<PoiType> POI_TYPES = DeferredRegister.create(FossilMod.MOD_ID, Registry.POINT_OF_INTEREST_TYPE_REGISTRY);
+    public static final DeferredRegister<PoiType> POI_TYPES = DeferredRegister.create(FossilMod.MOD_ID, Registries.POINT_OF_INTEREST_TYPE);
     public static final DeferredRegister<VillagerProfession> PROFESSIONS = DeferredRegister.create(FossilMod.MOD_ID,
-            Registry.VILLAGER_PROFESSION_REGISTRY);
+            Registries.VILLAGER_PROFESSION);
 
     public static final RegistrySupplier<PoiType> ARCHEOLOGIST_POI = register("archeologist_poi", ModBlocks.WORKTABLE);
     public static final RegistrySupplier<VillagerProfession> ARCHEOLOGIST = register("archeologist", ARCHEOLOGIST_POI, SoundEvents.VILLAGER_WORK_FISHERMAN);
@@ -39,8 +41,10 @@ public class ModVillagers {
     }
 
     private static void registerBlockStates(RegistrySupplier<PoiType> supplier) {
-        Registry.POINT_OF_INTEREST_TYPE.getResourceKey(supplier.get()).ifPresentOrElse(poiTypeResourceKey -> {
-            PoiTypes.registerBlockStates(Registry.POINT_OF_INTEREST_TYPE.getHolderOrThrow(poiTypeResourceKey));
+        Registry<PoiType> registry = BuiltInRegistries.POINT_OF_INTEREST_TYPE;
+        PoiType type = supplier.get();
+        registry.getResourceKey(type).ifPresentOrElse(poiTypeResourceKey -> {
+            PoiTypes.registerBlockStates(registry.getHolderOrThrow(poiTypeResourceKey), type.matchingStates());
         }, () -> FossilMod.LOGGER.error("Failed to register point of interest: {}", supplier.getId()));
     }
 
@@ -62,6 +66,6 @@ public class ModVillagers {
     }
 
     private static ResourceKey<PoiType> key(RegistrySupplier<VillagerProfession> name) {
-        return ResourceKey.create(Registry.POINT_OF_INTEREST_TYPE_REGISTRY, name.getId());
+        return ResourceKey.create(Registries.POINT_OF_INTEREST_TYPE, name.getId());
     }
 }

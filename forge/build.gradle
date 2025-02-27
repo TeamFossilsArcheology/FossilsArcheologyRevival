@@ -41,7 +41,8 @@ dependencies {
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionForge')
 
-    modImplementation "software.bernie.geckolib:geckolib-forge-1.19:$gecko_lib_version"
+    modImplementation "software.bernie.geckolib:geckolib-forge-$minecraft_version:$gecko_lib_version"
+    implementation "com.eliotlash.mclib:mclib:20"
     modImplementation "com.github.glitchfiend:TerraBlender-forge:$minecraft_version-$terra_blender_version"
     modImplementation "com.github.darkpred.morehitboxes:morehitboxes-forge-$minecraft_version:$more_hitboxes_version"
 
@@ -52,42 +53,39 @@ dependencies {
     modImplementation "maven.modrinth:jade:$jade_version_forge"
     modImplementation "me.shedaniel:RoughlyEnoughItems-forge:$rei_version"
     modCompileOnly "maven.modrinth:carry-on:$carry_on_version"
-    modCompileOnly "maven.modrinth:farmers-delight:$minecraft_version-$farmers_delight_version_forge"
-    modCompileOnly("maven.modrinth:oceans-delight:1.0.2-1.19.2")
-    modCompileOnly("curse.maven:nethers-delight-496394:4731072") //1.19.2 3.1
-    modCompileOnly("maven.modrinth:delightful:3.4.1-1.19.2")
-    //modCompileOnly("maven.modrinth:ars-nouveau:3.22.3") //for delightful
-    modCompileOnly("maven.modrinth:biomesyougo:ImjAT2Uf") //1.19.2-2.0.1.6
-    modCompileOnly("maven.modrinth:enders-delight:1.19-1.2.2")
-    modCompileOnly("maven.modrinth:ends-delight:1.19.2-2.1")
-    modCompileOnly("maven.modrinth:crabbers-delight:q2lyova5") //1.19.2-1.1.4
-    modCompileOnly("maven.modrinth:miners-delight:1.19.2-1.1.1")
-    modCompileOnly("maven.modrinth:corn-delight:1.0.3-1.19.2")
-    modCompileOnly("maven.modrinth:mmlib:1.2.3-1.19.2") //For corn delight
-    modCompileOnly("maven.modrinth:cultural-delights:0.15.11")
-    modCompileOnly("maven.modrinth:pineapple-delight:IckMjAth") //1.19.2 1.0.6
-    //modCompileOnly("curse.maven:large-meals-an-add-on-for-farmers-delight-625110:4032025") //1.18.2 1.2.0
-    modCompileOnly("maven.modrinth:festive-delight:zOfgpD8e") //1.19.2-1.3.0
-    modCompileOnly("maven.modrinth:butchers-delight:1.19.22.1.0")
-    modCompileOnly("maven.modrinth:butchers-delight-foods:1.19.21.0.3")
-    modCompileOnly("maven.modrinth:coffee-delight:YnpoGx6p") //1.19.2 1.4
-    modCompileOnly("maven.modrinth:casualness-delight:Mmx9xgrq") //1.19.2-0.4
-    modCompileOnly("maven.modrinth:italian-delight:1.5")
-    modCompileOnly("maven.modrinth:seed-delight:4rCEZLtP") //1.19.2-1.0.1
-    modCompileOnly("curse.maven:argentinasdelight-831127:4818259") //1.19.2 3.0 beta
-    modCompileOnly("maven.modrinth:brewin-and-chewin:1.19-2.0")
-    modCompileOnly("curse.maven:alexs-delight-556448:4282385") //1.19.2-1.4.1
-    modCompileOnly("curse.maven:farmers-respite-551453:4081312") //1.19.2-2.0
-    //modCompileOnly("curse.maven:citadel-331936:3783096") //For alex's delight/alex's mobs
-    //modCompileOnly("curse.maven:curios-309927:4985315") //For ars nouveau
-    //modCompileOnly("curse.maven:patchouli-306770:3846086") //For ars nouveau
+    //modCompileOnly "maven.modrinth:farmers-delight:$minecraft_version-$farmers_delight_version_forge"
+    //modCompileOnly("maven.modrinth:oceans-delight:1.0.2-1.20")
+    //modCompileOnly "curse.maven:nethers-delight-496394:4736227" //1.20.1-4.0
+    //modCompileOnly "maven.modrinth:delightful:3.7.3-1.20.1"
+    //modCompileOnly "maven.modrinth:ars-nouveau:4.12.7" //for delightful
+    modCompileOnly "maven.modrinth:biomesyougo:1.19.3-3.0.1.1-forge"
+    //modCompileOnly "maven.modrinth:enders-delight:1.19-1.2.2"
+    //modCompileOnly "maven.modrinth:ends-delight:2.5.1+forge.1.20.1"
+    //modCompileOnly "maven.modrinth:crabbers-delight:1.1.7" //1.20-1.1.7
+    //modCompileOnly "maven.modrinth:miners-delight:1.20.1-1.2.3"
+    //modCompileOnly "maven.modrinth:corn-delight:1.0.4-1.20.1"
+    //modCompileOnly "maven.modrinth:mmlib:1.4.4-1.20.1" //For corn delight
+    //modCompileOnly "maven.modrinth:cultural-delights:0.16.5" //1.20.1
+    //modCompileOnly "maven.modrinth:pineapple-delight:1.0.13" //1.20.1
+    //modCompileOnly "maven.modrinth:festive-delight:1.3.0" //1.20.1-1.3.0
+    //modCompileOnly "maven.modrinth:butchers-delight:1.19.41.0.3"
+    //modCompileOnly "maven.modrinth:butchers-delight-foods:1.19.41.0.3"
+    //modCompileOnly "maven.modrinth:coffee-delight:YnpoGx6p" //1.19.3 1.4
+    //modCompileOnly "maven.modrinth:casualness-delight:1.20.1-0.4n"
+    //modCompileOnly "maven.modrinth:seed-delight:TDZM7AA5" //1.20.1-1.0.1
+    //modCompileOnly "curse.maven:argentinasdelight-831127:4818256" //1.19.4 3.0 beta
+    //modCompileOnly "maven.modrinth:brewin-and-chewin:1.20.1-3.2.1"
+    //modCompileOnly "curse.maven:alexs-delight-556448:4282385" //1.19.2-1.4.1
+    //modCompileOnly "curse.maven:farmers-respite-551453:5543547" //1.20.1-2.1.2
+    //modCompileOnly "curse.maven:citadel-331936:3783096" //For alex's delight/alex's mobs
+    //modCompileOnly "curse.maven:curios-309927:4985315" //For ars nouveau
+    //modCompileOnly "curse.maven:patchouli-306770:3846086" //For ars nouveau
 
-    modCompileOnly("maven.modrinth:alexs-mobs:$alex_mobs_version")
-    modCompileOnly("curse.maven:radium-570017:3949703")
+    //modCompileOnly "maven.modrinth:alexs-mobs:$alex_mobs_version"
 
-    modImplementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive false }
-    modImplementation("com.jozufozu.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}")
-    modImplementation("com.tterrag.registrate:Registrate:${registrate_version}")
+    //modImplementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive false }
+    //modImplementation("com.jozufozu.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}")
+    //modImplementation("com.tterrag.registrate:Registrate:${registrate_version}")
 
 }
 
@@ -103,7 +101,6 @@ loom {
             programArgs "--existing", project(":common").file("src/main/resources/").absolutePath
         }
     }
-
     forge {
         convertAccessWideners = true
         extraAccessWideners.add loom.accessWidenerPath.get().asFile.name

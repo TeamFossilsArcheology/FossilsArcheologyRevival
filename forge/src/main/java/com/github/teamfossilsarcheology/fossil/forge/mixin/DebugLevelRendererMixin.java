@@ -4,7 +4,6 @@ import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.Inst
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation.PathingRenderer;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Matrix4f;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
@@ -27,7 +26,7 @@ public class DebugLevelRendererMixin {
     private Frustum cullingFrustum;
 
     @Inject(method = "renderLevel", at = @At(value = "TAIL"))
-    private void renderDebugPaths(PoseStack poseStack, float partialTick, long finishNanoTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f projectionMatrix, CallbackInfo ci) {
+    private void renderDebugPaths(PoseStack poseStack, float partialTick, long finishNanoTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, org.joml.Matrix4f projectionMatrix, CallbackInfo ci) {
         if (Version.debugEnabled()) {
             MultiBufferSource.BufferSource bufferSource = renderBuffers.bufferSource();
             final Minecraft mc = Minecraft.getInstance();

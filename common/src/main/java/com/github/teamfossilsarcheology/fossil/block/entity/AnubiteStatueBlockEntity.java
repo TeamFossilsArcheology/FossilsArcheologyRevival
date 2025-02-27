@@ -11,7 +11,6 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -53,9 +52,9 @@ public class AnubiteStatueBlockEntity extends BlockEntity {
             if (blockEntity.cooldown <= 0) {
                 Player player = level.getNearestPlayer(pos.getX(), pos.getY(), pos.getZ(), 5, true);
                 if (player != null) {
-                    level.explode(null, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 5f, true, Explosion.BlockInteraction.NONE);
+                    level.explode(null, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 5f, true, Level.ExplosionInteraction.MOB);
                     BlockPos spawnPos = pos.relative(state.getValue(AnubiteStatueBlock.FACING));
-                    ModEntities.ANUBITE.get().spawn((ServerLevel) level, null, null, spawnPos, MobSpawnType.EVENT, false, false);
+                    ModEntities.ANUBITE.get().spawn((ServerLevel) level, spawnPos, MobSpawnType.EVENT);
                     blockEntity.cooldown = FossilConfig.getInt(FossilConfig.ANUBITE_COOLDOWN);
                     level.setBlockAndUpdate(pos, state.setValue(AnubiteStatueBlock.LIT, false));
                 }
@@ -63,9 +62,9 @@ public class AnubiteStatueBlockEntity extends BlockEntity {
         } else {
             Player player = level.getNearestPlayer(pos.getX(), pos.getY(), pos.getZ(), 5, true);
             if (player != null) {
-                level.explode(null, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 5f, true, Explosion.BlockInteraction.NONE);
+                level.explode(null, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 5f, true, Level.ExplosionInteraction.MOB);
                 BlockPos spawnPos = pos.relative(state.getValue(AnubiteStatueBlock.FACING));
-                ModEntities.ANUBITE.get().spawn((ServerLevel) level, null, null, spawnPos, MobSpawnType.EVENT, false, false);
+                ModEntities.ANUBITE.get().spawn((ServerLevel) level, spawnPos, MobSpawnType.EVENT);
                 level.removeBlock(pos, false);
             }
         }

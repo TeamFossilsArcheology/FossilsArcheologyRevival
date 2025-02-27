@@ -45,7 +45,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 public abstract class PrehistoricFlying extends Prehistoric implements FlyingAnimal {
     private static final EntityDataAccessor<Boolean> FLYING = SynchedEntityData.defineId(PrehistoricFlying.class, EntityDataSerializers.BOOLEAN);
@@ -189,7 +189,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     }
 
     @Override
-    public boolean canJump() {
+    public boolean canJump(Player player) {
         return false;
     }
 
@@ -447,12 +447,11 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         var controller = new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::flyingPredicate);
-        registerEatingListeners(controller);
-        data.addAnimationController(controller);
-        data.addAnimationController(new PausableAnimationController<>(
-                this, AnimationLogic.ATTACK_CTRL, 0, getAnimationLogic()::attackPredicate));
+        registerControllerWithTriggers(controllerRegistrar, controller);
+        registerControllerWithTriggers(controllerRegistrar, new PausableAnimationController<>(
+                this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate));
     }
 
     public boolean hasTakeOffAnimation() {

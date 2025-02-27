@@ -3,12 +3,12 @@ package com.github.teamfossilsarcheology.fossil.client.particle;
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.registries.Registries;
 
 public class ModParticles {
-    public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(FossilMod.MOD_ID, Registry.PARTICLE_TYPE_REGISTRY);
+    public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(FossilMod.MOD_ID, Registries.PARTICLE_TYPE);
 
     public static final RegistrySupplier<Type> BUBBLE = register("bubble");
 

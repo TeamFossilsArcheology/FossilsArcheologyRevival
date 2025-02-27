@@ -32,7 +32,7 @@ public class PrehistoricAmphibiousNodeEvaluator extends WalkNodeEvaluator {
                 BlockPos blockPos = mob.blockPosition();
 
                 while ((level.getBlockState(blockPos).isAir() || level.getBlockState(blockPos).isPathfindable(level, blockPos, PathComputationType.LAND))
-                                && blockPos.getY() > mob.level.getMinBuildHeight()) {
+                        && blockPos.getY() > mob.level.getMinBuildHeight()) {
                     blockPos = blockPos.below();
                 }
 
@@ -49,10 +49,10 @@ public class PrehistoricAmphibiousNodeEvaluator extends WalkNodeEvaluator {
         BlockPathTypes blockPathTypes = getCachedBlockType(mob, blockPos.getX(), i, blockPos.getZ());
         if (mob.getPathfindingMalus(blockPathTypes) < 0.0F) {
             AABB aABB = mob.getBoundingBox();
-            if (hasPositiveMalus(mutableBlockPos.set(aABB.minX, i, aABB.minZ))
-                    || hasPositiveMalus(mutableBlockPos.set(aABB.minX, i, aABB.maxZ))
-                    || hasPositiveMalus(mutableBlockPos.set(aABB.maxX, i, aABB.minZ))
-                    || hasPositiveMalus(mutableBlockPos.set(aABB.maxX, i, aABB.maxZ))) {
+            if (canStartAt(mutableBlockPos.set(aABB.minX, i, aABB.minZ))
+                    || canStartAt(mutableBlockPos.set(aABB.minX, i, aABB.maxZ))
+                    || canStartAt(mutableBlockPos.set(aABB.maxX, i, aABB.minZ))
+                    || canStartAt(mutableBlockPos.set(aABB.maxX, i, aABB.maxZ))) {
                 Node node = getNode(mutableBlockPos);
                 BlockPos nodePos = node.asBlockPos();
                 node.type = getCachedBlockType(mob, nodePos.getX(), nodePos.getY(), nodePos.getZ());

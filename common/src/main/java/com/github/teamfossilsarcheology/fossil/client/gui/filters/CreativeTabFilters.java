@@ -7,24 +7,21 @@ import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.item.ModTabs;
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.client.ClientGuiEvent;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.core.NonNullList;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Map;
-import java.util.Optional;
 
 import static com.github.teamfossilsarcheology.fossil.client.gui.filters.FilterTab.Filter;
 import static com.github.teamfossilsarcheology.fossil.tags.ModItemTags.*;
 
 public class CreativeTabFilters {
-    private static final Map<Integer, FilterTab> tabs = new Int2ObjectOpenHashMap<>();
-    private static int activeTab = -1;
+    private static final Map<CreativeModeTab, FilterTab> tabs = new Object2ObjectOpenHashMap<>();
+    private static CreativeModeTab activeTab;
 
     public static void register() {
         NonNullList<Filter> entityItems = NonNullList.create();
@@ -47,40 +44,35 @@ public class CreativeTabFilters {
         blocks.add(new Filter(FILTER_PARK, new ItemStack(ModItems.TOY_BALLS.get(DyeColor.RED).get())));
 
         ClientGuiEvent.RENDER_CONTAINER_BACKGROUND.register((screen, matrices, mouseX, mouseY, delta) -> {
-            if (screen instanceof CreativeModeInventoryScreen creativeScreen && tabs.containsKey(creativeScreen.getSelectedTab())) {
-                tabs.get(creativeScreen.getSelectedTab()).renderButtons(matrices, mouseX, mouseY, delta);
+            if (screen instanceof CreativeModeInventoryScreen && tabs.containsKey(CreativeModeInventoryScreen.selectedTab)) {
+                tabs.get(CreativeModeInventoryScreen.selectedTab).renderButtons(matrices, mouseX, mouseY, delta);
             }
         });
         ClientGuiEvent.RENDER_PRE.register((screen, matrices, mouseX, mouseY, delta) -> {
-            if (screen instanceof CreativeModeInventoryScreen creativeScreen && tabs.containsKey(creativeScreen.getSelectedTab())) {
-                boolean first = activeTab == -1;
-                int oldTab = activeTab;
-                activeTab = creativeScreen.getSelectedTab();
+            if (screen instanceof CreativeModeInventoryScreen creativeScreen && tabs.containsKey(CreativeModeInventoryScreen.selectedTab)) {
+                CreativeModeTab oldTab = activeTab;
+                activeTab = CreativeModeInventoryScreen.selectedTab;
                 boolean switchedTab = activeTab != oldTab;
-                creativeScreen.getMenu().items.clear();
                 FilterTab filterTab = tabs.get(activeTab);
-                if (first) {
+                if (oldTab == null) {
                     filterTab.enableButtons();
                 } else if (switchedTab) {
                     tabs.get(oldTab).disableButtons();
                     filterTab.enableButtons();
                 }
-                NonNullList<ItemStack> stacks = NonNullList.create();
-                CreativeModeTab.TABS[activeTab].fillItemList(stacks);
-                Optional<TagKey<Item>> selectedTag = filterTab.getTag();
-                selectedTag.ifPresent(tag -> stacks.removeIf(stack -> !stack.is(tag)));
-                creativeScreen.getMenu().items.addAll(stacks);
-                //List<Item> list = tabs.get(creativeScreen.getSelectedTab()).getItems();
-                //creativeScreen.getMenu().items.addAll(stacks.stream().filter(stack -> list.contains(stack.getItem())).toList());
+                tabs.get(activeTab).getTag().ifPresent(tag -> {
+                    creativeScreen.getMenu().items.clear();
+                    creativeScreen.getMenu().items.addAll(activeTab.getDisplayItems().stream().filter(itemStack -> itemStack.is(tag)).toList());
+                });
                 creativeScreen.getMenu().scrollTo(switchedTab ? 0 : creativeScreen.scrollOffs);
             }
             return EventResult.pass();
         });
         ClientGuiEvent.INIT_POST.register((screen, access) -> {
             if (screen instanceof CreativeModeInventoryScreen) {
-                tabs.put(ModTabs.FA_MOB_ITEM_TAB.getId(), FilterTab.build(screen, entityItems, access));
-                tabs.put(ModTabs.FA_BLOCK_TAB.getId(), FilterTab.build(screen, blocks, access));
-                activeTab = -1;
+                tabs.put(ModTabs.FA_MOB_ITEM_TAB.get(), FilterTab.build(screen, entityItems, access));
+                tabs.put(ModTabs.FA_BLOCK_TAB.get(), FilterTab.build(screen, blocks, access));
+                activeTab = null;
             }
         });
     }

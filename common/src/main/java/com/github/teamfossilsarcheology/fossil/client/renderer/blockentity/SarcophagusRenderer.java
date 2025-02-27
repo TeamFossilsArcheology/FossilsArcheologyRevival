@@ -6,7 +6,7 @@ import com.github.teamfossilsarcheology.fossil.client.model.AnuBossModel;
 import com.github.teamfossilsarcheology.fossil.client.model.block.SarcophagusModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -35,7 +35,7 @@ public class SarcophagusRenderer implements BlockEntityRenderer<SarcophagusBlock
             poseStack.translate(0f, 1f, 1f);
             poseStack.scale(1f, -1f, -1f);
             poseStack.translate(0.5f, -0.5f, 0.5f);
-            poseStack.mulPose(Vector3f.YP.rotationDegrees(direction.toYRot()));
+            poseStack.mulPose(Axis.YP.rotationDegrees(direction.toYRot()));
 
             sarcophagusModel.getChild("root").getChild("front").setRotation(0, blockEntity.getDoorTimer() * Mth.DEG_TO_RAD, 0);
 

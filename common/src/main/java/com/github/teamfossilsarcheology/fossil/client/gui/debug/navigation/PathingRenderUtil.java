@@ -2,8 +2,6 @@ package com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector4f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -13,7 +11,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import software.bernie.geckolib3.core.util.Color;
+import org.joml.Matrix4f;
+import org.joml.Vector4f;
+import software.bernie.geckolib.core.object.Color;
 
 public class PathingRenderUtil {
 
@@ -28,11 +28,11 @@ public class PathingRenderUtil {
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         bufferBuilder.begin(VertexFormat.Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
         Vector4f vector4f = new Vector4f((float) x0, (float) y0, (float) z0, 1.0f);
-        vector4f.transform(poseStack.last().pose());
+        poseStack.last().pose().transform(vector4f);
         bufferBuilder.vertex(vector4f.x(), vector4f.y(), vector4f.z()).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
 
         vector4f = new Vector4f((float) x1, (float) y1, (float) z1, 1.0f);
-        vector4f.transform(poseStack.last().pose());
+        poseStack.last().pose().transform(vector4f);
         bufferBuilder.vertex(vector4f.x(), vector4f.y(), vector4f.z()).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
         tesselator.end();
         poseStack.popPose();
@@ -61,7 +61,7 @@ public class PathingRenderUtil {
         for (int i = 0; i < end; i++) {
             poseStack.pushPose();
             poseStack.translate(nodes[i].x + 0.5, nodes[i].y + 0.5, nodes[i].z + 0.5);
-            poseStack.mulPoseMatrix(new Matrix4f(minecraft.gameRenderer.getMainCamera().rotation()));
+            poseStack.mulPoseMatrix(new Matrix4f().rotation(minecraft.gameRenderer.getMainCamera().rotation()));
             poseStack.scale(0.02f, -0.02f, 0.02f);
             poseStack.scale(-1, 1, 1);
             String string = String.format("%s", nodes[i].type);

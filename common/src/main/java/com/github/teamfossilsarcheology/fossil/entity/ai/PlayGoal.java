@@ -110,7 +110,7 @@ public class PlayGoal extends Goal {
             if (currentTime > attackEndTick + 20) {
                 ServerAnimationInfo animation = dino.startAttack();
                 attackDamageTick = (long) (currentTime + animation.actionDelay);
-                attackEndTick = (long) (currentTime + animation.animation.animationLength);
+                attackEndTick = (long) (currentTime + animation.animation.length());
                 if (attackDamageTick > attackEndTick) attackDamageTick = attackEndTick;
                 dino.getNavigation().stop();
             }

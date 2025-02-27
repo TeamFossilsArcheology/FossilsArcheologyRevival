@@ -45,7 +45,7 @@ public class EatBlockGoal extends MoveToFoodGoal {
             entity.level.destroyBlock(targetPos, false);
             AnimationInfo animationInfo = entity.nextEatingAnimation();
             entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, animationInfo, AnimationCategory.EAT);
-            animEndTick = (long) (entity.level.getGameTime() + animationInfo.animation.animationLength);
+            animEndTick = (long) (entity.level.getGameTime() + animationInfo.animation.length());
             done = true;
         }
     }

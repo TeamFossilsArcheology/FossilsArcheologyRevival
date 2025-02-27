@@ -6,6 +6,7 @@ import com.google.common.collect.Queues;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.*;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.Pools;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -56,7 +57,7 @@ public class AnuCastleStructure extends Structure {
         RegistryAccess registryAccess = context.registryAccess();
         StructureTemplateManager structureTemplateManager = context.structureTemplateManager();
         WorldgenRandom worldgenRandom = context.random();
-        Registry<StructureTemplatePool> templatePools = registryAccess.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
+        Registry<StructureTemplatePool> templatePools = registryAccess.registryOrThrow(Registries.TEMPLATE_POOL);
         Rotation rotation = Rotation.NONE;
         StructureTemplatePool structureTemplatePool = templatePools.get(ModTemplatePools.ANU_CASTLE_START);
         StructurePoolElement structurePoolElement = structureTemplatePool.getRandomTemplate(worldgenRandom);

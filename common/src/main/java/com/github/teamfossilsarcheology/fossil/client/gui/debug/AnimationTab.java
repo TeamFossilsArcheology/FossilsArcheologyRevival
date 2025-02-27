@@ -12,11 +12,13 @@ import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.CycleButton;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animation.AnimationController;
 
 import java.util.HashMap;
 import java.util.List;
@@ -62,15 +64,16 @@ public class AnimationTab<T extends Mob & PrehistoricAnimatable<?>> extends Debu
                         entity.setXRot(newRot);
                     }
                 });
-        addWidget(new Button(20, 30 + (yLeft++) * 30, width / 6, 20, Component.literal("Reset Rotation"), button -> {
-            rotYBase = 0;
-            rotXBase = 0;
-            sliderY.setSliderValue(0, true);
-            sliderX.setSliderValue(0, true);
-        }, (button, poseStack, i, j) -> {
-            debugScreen.renderTooltip(poseStack, Component.literal("client side only"), i, j);
-        }));
-        Map<String, AnimationController> controllers = entity.getFactory().getOrCreateAnimationData(entity.getId()).getAnimationControllers();
+        addWidget(Button.builder(Component.literal("Reset Rotation"), button -> {
+                    rotYBase = 0;
+                    rotXBase = 0;
+                    sliderY.setSliderValue(0, true);
+                    sliderX.setSliderValue(0, true);
+                })
+                .bounds(20, 30 + (yLeft++) * 30, width / 6, 20)
+                .tooltip(Tooltip.create(Component.literal("client side only")))
+                .build());
+        Map<String, AnimationController<GeoAnimatable>> controllers = entity.getAnimatableInstanceCache().getManagerForId(entity.getId()).getAnimationControllers();
         addWidget(new AnimationList(width - width / 4 + 20, entity.getAllAnimations(), controllers, minecraft, animationObject -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SForceAnimationMessage(animationObject.controller(), entity.getId(), animationObject.name(), animationObject.speed(), animationObject.transitionLength(), animationObject.loop()));
         }));
@@ -88,7 +91,7 @@ public class AnimationTab<T extends Mob & PrehistoricAnimatable<?>> extends Debu
         private final Map<String, AbstractWidget> pauseButtons = new HashMap<>();
         private final Map<String, DebugSlider> pauseSliders = new HashMap<>();
 
-        public AnimationList(int x0, Map<String, ? extends AnimationInfo> animations, Map<String, AnimationController> controllers, Minecraft minecraft, Consumer<AnimationObject> function) {
+        public AnimationList(int x0, Map<String, ? extends AnimationInfo> animations, Map<String, AnimationController<GeoAnimatable>> controllers, Minecraft minecraft, Consumer<AnimationObject> function) {
             super(x0, 250, 21, 120, animations, minecraft, function);
             int buttonX = x0;
             int buttonY = y0 - 110;
@@ -110,7 +113,7 @@ public class AnimationTab<T extends Mob & PrehistoricAnimatable<?>> extends Debu
             addWidget(new DebugSlider(buttonX, buttonY + 21, 99, 20, Component.literal("Transition: "), Component.literal(""), 0, 20, transitionLength, 1, 3, true) {
                 @Override
                 protected void applyValue() {
-                    transitionLength = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
+                    transitionLength = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
                 }
             });
             addWidget(new DebugSlider(buttonX + 102, buttonY + 21, 99, 20, Component.literal("Speed: "), Component.literal(""), 0, 3, speed, 0.05, 3, true) {
@@ -132,7 +135,7 @@ public class AnimationTab<T extends Mob & PrehistoricAnimatable<?>> extends Debu
                                 slider.visible = paused;
                                 if (pausableAnimationController.getCurrentAnimation() != null) {
                                     //Update max value of pause slider
-                                    slider.maxValue = pausableAnimationController.getCurrentAnimation().animationLength;
+                                    slider.maxValue = pausableAnimationController.getCurrentAnimation().animation().length();
                                 }
                                 if (Boolean.TRUE.equals(paused)) {
                                     slider.setSliderValue(pausableAnimationController.getCurrentTick() / slider.maxValue, true);
@@ -152,7 +155,7 @@ public class AnimationTab<T extends Mob & PrehistoricAnimatable<?>> extends Debu
             double tick = pausableAnimationController.getCurrentTick();
             double maxTick = tick;
             if (pausableAnimationController.getCurrentAnimation() != null) {
-                maxTick = pausableAnimationController.getCurrentAnimation().animationLength - 1;
+                maxTick = pausableAnimationController.getCurrentAnimation().animation().length() - 1;
             }
             var slider = new DebugSlider(buttonX, buttonY + 63, 200, 20, Component.literal("Time: "), Component.literal(""), 0, maxTick,
                     tick, 1, 3, true) {

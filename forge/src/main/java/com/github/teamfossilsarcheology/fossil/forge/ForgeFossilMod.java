@@ -11,19 +11,17 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.fish.Coelacanth;
 import com.github.teamfossilsarcheology.fossil.forge.capabilities.mammal.IMammalCap;
 import com.github.teamfossilsarcheology.fossil.forge.client.model.PlantModelLoader;
-import com.github.teamfossilsarcheology.fossil.forge.client.renderer.armor.ForgeAncientHelmetRenderer;
 import com.github.teamfossilsarcheology.fossil.forge.compat.alexsmobs.AlexsMobsCompat;
 import com.github.teamfossilsarcheology.fossil.forge.compat.farmers.FarmersDelightCompat;
 import com.github.teamfossilsarcheology.fossil.forge.world.biome.ForgeFossilRegion;
-import com.github.teamfossilsarcheology.fossil.item.forge.AncientHelmetItemImpl;
 import com.github.teamfossilsarcheology.fossil.util.ModConstants;
 import com.github.teamfossilsarcheology.fossil.world.chunk.AnuLairChunkGenerator;
 import com.github.teamfossilsarcheology.fossil.world.chunk.TreasureChunkGenerator;
-import com.github.teamfossilsarcheology.fossil.world.feature.placement.ModPlacementTypes;
 import com.github.teamfossilsarcheology.fossil.world.feature.structures.ModStructureType;
 import com.github.teamfossilsarcheology.fossil.world.surfacerules.ModSurfaceRules;
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.api.distmarker.Dist;
@@ -39,7 +37,6 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 import terrablender.api.RegionType;
 import terrablender.api.Regions;
 import terrablender.api.SurfaceRuleManager;
@@ -66,7 +63,6 @@ public class ForgeFossilMod {
 
     public void onClient(FMLClientSetupEvent event) {
         ClientInit.later();
-        GeoArmorRenderer.registerArmorRenderer(AncientHelmetItemImpl.class, ForgeAncientHelmetRenderer::new);
     }
 
     public void onCommon(FMLCommonSetupEvent event) {
@@ -78,12 +74,11 @@ public class ForgeFossilMod {
                 AlexsMobsCompat.register();
             }
             ModStructureType.register();
-            ModPlacementTypes.register();
             ModTriggers.register();
             Regions.register(new ForgeFossilRegion("overworld", RegionType.OVERWORLD, 4));
             SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, FossilMod.MOD_ID, ModSurfaceRules.VOLCANIC_SURFACE_RULE);
-            Registry.register(Registry.CHUNK_GENERATOR, FossilMod.location("treasure_room"), TreasureChunkGenerator.CODEC);
-            Registry.register(Registry.CHUNK_GENERATOR, FossilMod.location("anu_lair"), AnuLairChunkGenerator.CODEC);
+            Registry.register(BuiltInRegistries.CHUNK_GENERATOR, FossilMod.location("treasure_room"), TreasureChunkGenerator.CODEC);
+            Registry.register(BuiltInRegistries.CHUNK_GENERATOR, FossilMod.location("anu_lair"), AnuLairChunkGenerator.CODEC);
             SpawnPlacements.register(ModEntities.ALLIGATOR_GAR.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PrehistoricFish::canSpawn);
             SpawnPlacements.register(ModEntities.COELACANTH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Coelacanth::canCoelacanthSpawn);
             SpawnPlacements.register(ModEntities.NAUTILUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PrehistoricFish::canSpawn);

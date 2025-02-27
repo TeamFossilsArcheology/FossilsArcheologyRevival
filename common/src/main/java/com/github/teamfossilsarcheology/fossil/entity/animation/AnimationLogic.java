@@ -12,20 +12,21 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib.core.animation.Animation;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
 
-import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.LOOP;
-import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.PLAY_ONCE;
+import static software.bernie.geckolib.core.animation.Animation.LoopType.LOOP;
+import static software.bernie.geckolib.core.animation.Animation.LoopType.PLAY_ONCE;
 
 public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
+    //TODO: Save RawAnimations
     public static final String IDLE_CTRL = "Movement/Idle";
     public static final String EAT_CTRL = "Eat";
     public static final String ATTACK_CTRL = "Attack";
@@ -85,7 +86,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
      * @param transitionLength the length of the transition from the previous animation in ticks
      * @param loop             whether the animation should loop (until manually stopped because forced)
      */
-    public ActiveAnimationInfo forceAnimation(String controller, AnimationInfo animationInfo, AnimationCategory category, double speed, double transitionLength, boolean loop) {
+    public ActiveAnimationInfo forceAnimation(String controller, AnimationInfo animationInfo, AnimationCategory category, double speed, int transitionLength, boolean loop) {
         if (animationInfo != null) {
             ActiveAnimationInfo activeAnimationInfo = new Builder(animationInfo.animation, entity.level.getGameTime(), category).forced().transitionLength(transitionLength).speed(speed).loop(loop).build();
             addNextAnimation(controller, activeAnimationInfo);
@@ -205,22 +206,22 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         return 0;
     }
 
-    public PlayState waterPredicate(AnimationEvent<PrehistoricSwimming> event) {
+    public PlayState waterPredicate(AnimationState<PrehistoricSwimming> state) {
         if (isBlocked()) return PlayState.STOP;
-        AnimationController<PrehistoricSwimming> controller = event.getController();
-        if (tryNextAnimation(controller)) {
+        AnimationController<PrehistoricSwimming> controller = state.getController();
+        if (tryNextAnimation(state, controller)) {
             return PlayState.CONTINUE;
         }
         Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
-        if (activeAnimation.isPresent() && tryForcedAnimation(event, activeAnimation.get())) {
+        if (activeAnimation.isPresent() && tryForcedAnimation(state, activeAnimation.get())) {
             return PlayState.CONTINUE;
         }
         double animationSpeed = 1;
-        if (event.getAnimatable().isBeached()) {
+        if (state.getAnimatable().isBeached()) {
             addActiveAnimation(controller.getName(), AnimationCategory.BEACHED);
         } else if (entity.isSleeping()) {
             addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
-        } else if (event.isMoving()) {
+        } else if (state.isMoving()) {
             //TODO: AnimSpeed for amphibians on land
             if (entity.isInWater()) {
                 if (entity.isSprinting()) {
@@ -229,18 +230,18 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                     addActiveAnimation(controller.getName(), AnimationCategory.SWIM);
                 }
             } else {
-                animationSpeed = addMovementAnimation(event, true);
+                animationSpeed = addMovementAnimation(state, true);
             }
-        } else if (event.getAnimatable().isWeak()) {
+        } else if (state.getAnimatable().isWeak()) {
             addActiveAnimation(controller.getName(), AnimationCategory.KNOCKOUT);
         } else {
             addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
         }
         prevAnimationSpeeds.put(controller.getName(), (float) animationSpeed);
-        setAnimationSpeed(controller, animationSpeed, event.getAnimationTick());
+        setAnimationSpeed(controller, animationSpeed, state.getAnimationTick());
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
         if (newAnimation.isPresent()) {
-            controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName, newAnimation.get().loop ? LOOP : PLAY_ONCE));
+            state.setAnimation(RawAnimation.begin().then(newAnimation.get().animationName, PLAY_ONCE));
         }
         return PlayState.CONTINUE;
     }
@@ -255,41 +256,41 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         }
     }
 
-    public boolean tryNextAnimation(AnimationController<?> controller) {
+    public boolean tryNextAnimation(AnimationState<?> state, AnimationController<?> controller) {
         if (!nextAnimations.containsKey(controller.getName())) {
             return false;
         }
         ActiveAnimationInfo next = nextAnimations.remove(controller.getName());
         putActiveAnimation(controller.getName(), next);
 
-        controller.transitionLengthTicks = next.transitionLength;
-        controller.markNeedsReload();
-        controller.setAnimation(new AnimationBuilder().addAnimation(next.animationName, next.loop ? LOOP : null));
+        controller.setTransitionLength(next.transitionLength);
+        controller.forceAnimationReset();
+        state.setAnimation(RawAnimation.begin().then(next.animationName, next.loop ? LOOP : null));
         return true;
     }
 
-    public boolean tryForcedAnimation(AnimationEvent<?> event, ActiveAnimationInfo activeAnimation) {
+    public boolean tryForcedAnimation(AnimationState<?> state, ActiveAnimationInfo activeAnimation) {
         if (activeAnimation.forced && (activeAnimation.loop || !isAnimationDone(activeAnimation))) {
-            AnimationController<?> controller = event.getController();
-            setAnimationSpeed(controller, activeAnimation.speed, event.getAnimationTick());
-            controller.transitionLengthTicks = activeAnimation.transitionLength;
-            controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.animationName, activeAnimation.loop ? LOOP : PLAY_ONCE));
+            AnimationController<?> controller = state.getController();
+            setAnimationSpeed(controller, activeAnimation.speed, state.getAnimationTick());
+            controller.setTransitionLength(activeAnimation.transitionLength);
+            state.setAnimation(RawAnimation.begin().then(activeAnimation.animationName, activeAnimation.loop ? LOOP : PLAY_ONCE));
             return true;
         }
         return false;
     }
 
-    public double addMovementAnimation(AnimationEvent<? extends Prehistoric> event, boolean canSprint) {
-        AnimationController<? extends Prehistoric> controller = event.getController();
+    public double addMovementAnimation(AnimationState<? extends Prehistoric> state, boolean canSprint) {
+        AnimationController<? extends Prehistoric> controller = state.getController();
         ClientAnimationInfo walkAnim = (ClientAnimationInfo) entity.nextWalkingAnimation();
         //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
-        double scaleMult = 1 / event.getAnimatable().getScale();
+        double scaleMult = 1 / state.getAnimatable().getScale();
         double animationSpeed = scaleMult;
         //the deltaMovement of the animation should match the mobs deltaMovement
         double f = entity.isOnGround() ? entity.level.getBlockState(entity.blockPosition().below()).getBlock().getFriction() * 0.91F : 0.91F;
         double mobSpeed = entity.getDeltaMovement().horizontalDistance() / f * 20;
         //Limit mobSpeed to the mobs maximum natural movement speed
-        mobSpeed = Math.min(Util.attributeToSpeed(entity.getAttributeValue(Attributes.MOVEMENT_SPEED), event.getAnimatable().attributes().sprintMod(), entity.isSprinting()), mobSpeed);
+        mobSpeed = Math.min(Util.attributeToSpeed(entity.getAttributeValue(Attributes.MOVEMENT_SPEED), state.getAnimatable().attributes().sprintMod(), entity.isSprinting()), mobSpeed);
         //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
         if (walkAnim.blocksPerSecond > 0) {
             animationSpeed *= mobSpeed / walkAnim.blocksPerSecond;
@@ -317,36 +318,36 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         return animationSpeed;
     }
 
-    public PlayState leapingPredicate(AnimationEvent<PrehistoricLeaping> event) {
-        AnimationController<PrehistoricLeaping> controller = event.getController();
-        if (tryNextAnimation(controller)) {
+    public PlayState leapingPredicate(AnimationState<PrehistoricLeaping> state) {
+        AnimationController<PrehistoricLeaping> controller = state.getController();
+        if (tryNextAnimation(state, controller)) {
             return PlayState.CONTINUE;
         }
         Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
-        if (activeAnimation.isPresent() && tryForcedAnimation(event, activeAnimation.get())) {
+        if (activeAnimation.isPresent() && tryForcedAnimation(state, activeAnimation.get())) {
             return PlayState.CONTINUE;
         }
         double animationSpeed = 1;
-        PrehistoricLeaping entity = event.getAnimatable();
+        PrehistoricLeaping entity = state.getAnimatable();
 
         if (entity.getLeapSystem().isAttackRiding()) {
-            setAnimationSpeed(controller, 1, event.getAnimationTick());
-            controller.transitionLengthTicks = 10;
-            controller.setAnimation(new AnimationBuilder().loop(entity.getLeapAttackAnimationName()));
+            setAnimationSpeed(controller, 1, state.getAnimationTick());
+            controller.setTransitionLength(10);
+            state.setAnimation(RawAnimation.begin().thenLoop(entity.getLeapAttackAnimationName()));
             return PlayState.CONTINUE;
         } else if (entity.getLeapSystem().hasLeapStarted() || entity.getLeapSystem().isLeapFlying()) {
-            setAnimationSpeed(controller, 1, event.getAnimationTick());
-            if (controller.getCurrentAnimation() != null && entity.getAnimations().get(AnimationCategory.FALL).hasAnimation(controller.getCurrentAnimation().animationName) && entity.isOnGround()) {
-                controller.transitionLengthTicks = 0;
-                controller.setAnimation(new AnimationBuilder().playOnce(entity.getLandAnimationName()));
+            setAnimationSpeed(controller, 1, state.getAnimationTick());
+            if (controller.getCurrentAnimation() != null && entity.getAnimations().get(AnimationCategory.FALL).hasAnimation(controller.getCurrentAnimation().animation().name()) && entity.isOnGround()) {
+                controller.setTransitionLength(0);
+                state.setAnimation(RawAnimation.begin().thenPlay(entity.getLandAnimationName()));
             } else {
-                controller.setAnimation(new AnimationBuilder().playOnce(entity.getLeapStartAnimationName()).loop(entity.getAnimation(AnimationCategory.FALL).animation.animationName));
+                state.setAnimation(RawAnimation.begin().thenPlay(entity.getLeapStartAnimationName()).thenLoop(entity.getAnimation(AnimationCategory.FALL).animation.name()));
             }
             return PlayState.CONTINUE;
         } else if (entity.getLeapSystem().isLanding()) {
-            setAnimationSpeed(controller, 1, event.getAnimationTick());
-            controller.transitionLengthTicks = 0;
-            controller.setAnimation(new AnimationBuilder().playOnce(entity.getLandAnimationName()));
+            setAnimationSpeed(controller, 1, state.getAnimationTick());
+            controller.setTransitionLength(0);
+            state.setAnimation(RawAnimation.begin().thenPlay(entity.getLandAnimationName()));
             return PlayState.CONTINUE;
         } else if (entity.isSleeping()) {
             addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
@@ -356,14 +357,14 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             addActiveAnimation(controller.getName(), AnimationCategory.CLIMB);
             //TODO: Quick fix. Think of something better leater
             animationSpeed = 2;
-        } else if (event.isMoving()) {
+        } else if (state.isMoving()) {
             if (entity.isInWater()) {
                 ActiveAnimationInfo info = addActiveAnimation(controller.getName(), AnimationCategory.SWIM, true);
                 if (info != null) {
                     additionalLogic.put(info, entity::isOnGround);
                 }
             } else {
-                animationSpeed = addMovementAnimation(event, true);
+                animationSpeed = addMovementAnimation(state, true);
             }
         } else {
             if (entity.isInWater()) {
@@ -372,55 +373,55 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
             }
         }
-        setAnimationSpeed(controller, animationSpeed, event.getAnimationTick());
+        setAnimationSpeed(controller, animationSpeed, state.getAnimationTick());
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
         if (newAnimation.isPresent()) {
-            controller.transitionLengthTicks = newAnimation.get().transitionLength;
-            controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName, newAnimation.get().loop ? LOOP : PLAY_ONCE));
+            controller.setTransitionLength(newAnimation.get().transitionLength);
+            state.setAnimation(RawAnimation.begin().then(newAnimation.get().animationName, newAnimation.get().loop ? LOOP : null));
         }
         return PlayState.CONTINUE;
     }
 
-    public PlayState landPredicate(AnimationEvent<Prehistoric> event) {
+    public PlayState landPredicate(AnimationState<Prehistoric> state) {
         if (isBlocked()) return PlayState.STOP;
-        AnimationController<Prehistoric> controller = event.getController();
-        if (tryNextAnimation(controller)) {
+        AnimationController<Prehistoric> controller = state.getController();
+        if (tryNextAnimation(state, controller)) {
             return PlayState.CONTINUE;
         }
         Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
-        if (activeAnimation.isPresent() && tryForcedAnimation(event, activeAnimation.get())) {
+        if (activeAnimation.isPresent() && tryForcedAnimation(state, activeAnimation.get())) {
             return PlayState.CONTINUE;
         }
         double animationSpeed = 1;
-        if (event.getAnimatable().isWeak()) {
+        if (state.getAnimatable().isWeak()) {
             addActiveAnimation(controller.getName(), AnimationCategory.KNOCKOUT);
         } else if (entity.isSleeping()) {
             addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
-        } else if (event.getAnimatable().sitSystem.isSitting()) {
+        } else if (state.getAnimatable().sitSystem.isSitting()) {
             addActiveAnimation(controller.getName(), AnimationCategory.SIT);
         } else if (entity.isInWater()) {
             ActiveAnimationInfo info = addActiveAnimation(controller.getName(), AnimationCategory.SWIM, true);
             if (info != null) {
                 additionalLogic.put(info, entity::isOnGround);
             }
-        } else if (event.isMoving()) {
-            animationSpeed = addMovementAnimation(event, true);
+        } else if (state.isMoving()) {
+            animationSpeed = addMovementAnimation(state, true);
         } else {
             addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
         }
         prevAnimationSpeeds.put(controller.getName(), (float) animationSpeed);
-        setAnimationSpeed(controller, animationSpeed, event.getAnimationTick());
+        setAnimationSpeed(controller, animationSpeed, state.getAnimationTick());
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
         if (newAnimation.isPresent()) {
-            controller.transitionLengthTicks = newAnimation.get().transitionLength;
-            controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName, newAnimation.get().loop ? LOOP : PLAY_ONCE));
+            controller.setTransitionLength(newAnimation.get().transitionLength);
+            state.setAnimation(RawAnimation.begin().then(newAnimation.get().animationName, newAnimation.get().loop ? LOOP : PLAY_ONCE));
         }
         return PlayState.CONTINUE;
     }
 
-    public PlayState attackPredicate(AnimationEvent<Prehistoric> event) {
-        AnimationController<Prehistoric> controller = event.getController();
-        if (tryNextAnimation(controller)) {
+    public PlayState attackPredicate(AnimationState<Prehistoric> state) {
+        AnimationController<Prehistoric> controller = state.getController();
+        if (tryNextAnimation(state, controller)) {
             return PlayState.CONTINUE;
         }
         if (!isAnimationDone(controller.getName())) {
@@ -429,54 +430,54 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         return PlayState.STOP;
     }
 
-    public PlayState grabAttackPredicate(AnimationEvent<PrehistoricSwimming> event) {
-        AnimationController<PrehistoricSwimming> controller = event.getController();
-        if (tryNextAnimation(controller)) {
+    public PlayState grabAttackPredicate(AnimationState<PrehistoricSwimming> state) {
+        AnimationController<PrehistoricSwimming> controller = state.getController();
+        if (tryNextAnimation(state, controller)) {
             return PlayState.CONTINUE;
         }
-        if (event.getAnimatable().isDoingGrabAttack()) {
-            addActiveAnimation(controller.getName(), event.getAnimatable().nextGrabbingAnimation().animation, AnimationCategory.ATTACK, false);
+        if (state.getAnimatable().isDoingGrabAttack()) {
+            addActiveAnimation(controller.getName(), state.getAnimatable().nextGrabbingAnimation().animation, AnimationCategory.ATTACK, false);
         } else if (isAnimationDone(controller.getName())) {
             activeAnimations.remove(controller.getName());
         }
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
         if (newAnimation.isPresent()) {
-            controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName()));
+            state.setAnimation(RawAnimation.begin().thenPlay(newAnimation.get().animationName()));
             return PlayState.CONTINUE;
         } else {
-            event.getController().markNeedsReload();
+            state.getController().forceAnimationReset();
             return PlayState.STOP;
         }
     }
 
-    public PlayState fishPredicate(AnimationEvent<PrehistoricFish> event) {
-        AnimationController<PrehistoricFish> controller = event.getController();
+    public PlayState fishPredicate(AnimationState<PrehistoricFish> state) {
+        AnimationController<PrehistoricFish> controller = state.getController();
         if (!entity.isInWater()) {
             addActiveAnimation(controller.getName(), AnimationCategory.BEACHED);
-        } else if (event.isMoving()) {
+        } else if (state.isMoving()) {
             addActiveAnimation(controller.getName(), AnimationCategory.SWIM);
         } else {
             addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
         }
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
-        newAnimation.ifPresent(newInfo -> controller.setAnimation(new AnimationBuilder().addAnimation(newInfo.animationName(), newInfo.loop ? LOOP : PLAY_ONCE)));
+        newAnimation.ifPresent(newInfo -> state.setAnimation(RawAnimation.begin().then(newInfo.animationName(), newInfo.loop ? LOOP : PLAY_ONCE)));
         return PlayState.CONTINUE;
     }
 
-    public PlayState flyingPredicate(AnimationEvent<PrehistoricFlying> event) {
-        AnimationController<PrehistoricFlying> controller = event.getController();
-        if (tryNextAnimation(controller)) {
+    public PlayState flyingPredicate(AnimationState<PrehistoricFlying> state) {
+        AnimationController<PrehistoricFlying> controller = state.getController();
+        if (tryNextAnimation(state, controller)) {
             return PlayState.CONTINUE;
         }
 
         Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
-        if (activeAnimation.isPresent() && tryForcedAnimation(event, activeAnimation.get())) {
+        if (activeAnimation.isPresent() && tryForcedAnimation(state, activeAnimation.get())) {
             return PlayState.CONTINUE;
         }
-        controller.transitionLengthTicks = 5;
+        controller.setTransitionLength(5);
         double animationSpeed = 1;
-        if (!event.getAnimatable().isTakingOff()) {
-            if (event.getAnimatable().isFlying()) {
+        if (!state.getAnimatable().isTakingOff()) {
+            if (state.getAnimatable().isFlying()) {
                 if (entity.isSprinting()) {
                     addActiveAnimation(controller.getName(), AnimationCategory.FLY_FAST);
                 } else {
@@ -484,34 +485,34 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 }
             } else if (entity.isSleeping()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
-            } else if (event.getAnimatable().sitSystem.isSitting()) {
+            } else if (state.getAnimatable().sitSystem.isSitting()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.SIT);
-            } else if (event.getAnimatable().isClimbing()) {
+            } else if (state.getAnimatable().isClimbing()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.CLIMB);
             } else if (entity.isInWater()) {
                 ActiveAnimationInfo info = addActiveAnimation(controller.getName(), AnimationCategory.SWIM, true);
                 if (info != null) {
                     additionalLogic.put(info, entity::isOnGround);
                 }
-            } else if (!entity.isOnGround() && !event.getAnimatable().isFlying() && (entity.getY() - entity.yo) < -0.05) {
+            } else if (!entity.isOnGround() && !state.getAnimatable().isFlying() && (entity.getY() - entity.yo) < -0.05) {
                 addActiveAnimation(controller.getName(), AnimationCategory.FLY);
-                controller.transitionLengthTicks = 10;
+                controller.setTransitionLength(10);
                 animationSpeed = 0.5;
-            } else if (event.isMoving()) {
+            } else if (state.isMoving()) {
                 //TODO: Flying mob might need different limit
-                animationSpeed = addMovementAnimation(event, false);
+                animationSpeed = addMovementAnimation(state, false);
             } else {
                 addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
             }
         }
-        setAnimationSpeed(controller, animationSpeed, event.getAnimationTick());
+        setAnimationSpeed(controller, animationSpeed, state.getAnimationTick());
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
-        newAnimation.ifPresent(newInfo -> controller.setAnimation(new AnimationBuilder().addAnimation(newInfo.animationName(), newInfo.loop ? LOOP : PLAY_ONCE)));
+        newAnimation.ifPresent(newInfo -> state.setAnimation(RawAnimation.begin().then(newInfo.animationName(), newInfo.loop ? LOOP : PLAY_ONCE)));
         return PlayState.CONTINUE;
     }
 
     public record ActiveAnimationInfo(String animationName, double endTick, AnimationCategory category,
-                                      boolean forced, double transitionLength, double speed, boolean loop,
+                                      boolean forced, int transitionLength, double speed, boolean loop,
                                       boolean keepActive) {
     }
 
@@ -520,17 +521,17 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         private final double endTick;
         private final AnimationCategory category;
         private boolean forced;
-        private double transitionLength;
+        private int transitionLength;
         private double speed = 1;
         private boolean loop;
         private boolean keepActive;
 
         public Builder(Animation animation, long currentTime, AnimationCategory category) {
-            this.animationName = animation.animationName;
-            this.endTick = currentTime + animation.animationLength;
+            this.animationName = animation.name();
+            this.endTick = currentTime + animation.length();
             this.category = category;
             this.transitionLength = category.transitionLength();
-            this.loop = animation.loop.isRepeatingAfterEnd();
+            this.loop = animation.loopType() == LOOP;
         }
 
         public Builder(String animationName, double endTick, AnimationCategory category) {
@@ -545,7 +546,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             return this;
         }
 
-        public Builder transitionLength(double length) {
+        public Builder transitionLength(int length) {
             transitionLength = length;
             return this;
         }

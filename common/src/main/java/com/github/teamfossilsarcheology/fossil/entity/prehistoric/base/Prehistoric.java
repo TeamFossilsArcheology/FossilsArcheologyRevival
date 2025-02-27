@@ -42,12 +42,14 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -95,11 +97,10 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -124,7 +125,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     private static final EntityDataAccessor<String> DATA_VARIANT = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Byte> GENDER = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BYTE);
     private static final int GROW_UP_INTERVAL = 120;
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private final List<AISystem> aiSystems = new ArrayList<>();
     public final MoodSystem moodSystem = registerSystem(new MoodSystem(this));
     public final SleepSystem sleepSystem = registerSystem(createSleepSystem());
@@ -164,7 +165,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level) {
-        this(entityType, level, FossilMod.location("animations/" + EntityType.getKey(entityType).getPath() + ".animation.json"));
+        this(entityType, level, FossilMod.location("animations/entity/" + EntityType.getKey(entityType).getPath() + ".animation.json"));
     }
 
     @Override
@@ -575,7 +576,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
-    public boolean canJump() {
+    public boolean canJump(Player player) {
         return isVehicle();
     }
 
@@ -593,7 +594,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         playerJumpPendingScale = jumpPower >= 90 ? 1.0f : 0.4f + 0.4f * jumpPower / 90.0f;
     }
 
-   // @Override
+    // @Override
     public boolean canBeControlledByRider() {
         return data().canBeRidden() && getControllingPassenger() instanceof LivingEntity rider && isOwnedBy(rider);
     }
@@ -1394,7 +1395,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             if (soundEvent != null) {
                 float volume = getSoundVolume();
                 double radius = volume > 1 ? (double) (16 * volume) : 16;
-                var packet = new ClientboundSoundPacket(soundEvent, getSoundSource(), getX(), getY(), getZ(), volume, getVoicePitch(), level.threadSafeRandom.nextLong());
+                var packet = new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(soundEvent), getSoundSource(), getX(), getY(), getZ(), volume, getVoicePitch(), level.threadSafeRandom.nextLong());
                 for (ServerPlayer player : ((ServerLevel) level).getServer().getPlayerList().getPlayers()) {
                     if (player.isUnderWater() && player.level.dimension() == level.dimension()) {
                         double d = getX() - player.getX();
@@ -1490,7 +1491,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
-    public @NotNull Packet<?> getAddEntityPacket() {
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkManager.createAddEntityPacket(this);
     }
 
@@ -1576,20 +1577,27 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         var controller = new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, animationLogic::landPredicate);
         registerEatingListeners(controller);
-        data.addAnimationController(controller);
-        data.addAnimationController(new PausableAnimationController<>(
-                this, AnimationLogic.ATTACK_CTRL, 0, animationLogic::attackPredicate));
+        registerControllerWithTriggers(controllerRegistrar, controller);
+
+        var attackController = new PausableAnimationController<>(this, AnimationLogic.ATTACK_CTRL, 5, animationLogic::attackPredicate);
+        registerControllerWithTriggers(controllerRegistrar, attackController);
+    }
+
+    protected void registerControllerWithTriggers(AnimatableManager.ControllerRegistrar controllerRegistrar, AnimationController<? extends Prehistoric> controller) {
+        //Lets just add triggers for all animations
+        AnimationCategory.CATEGORIES.forEach(category -> getAnimations().get(category).addTriggers(controller));
+        controllerRegistrar.add(controller);
     }
 
     /**
      * Calls an additional particle listener
      */
-    protected void registerEatingListeners(AnimationController<? extends IAnimatable> controller, Consumer<String> additional) {
-        controller.registerParticleListener(event -> {
-            if ("eat".equals(event.effect)) {
+    protected void registerEatingListeners(AnimationController<? extends Prehistoric> controller, Consumer<String> additional) {
+        controller.setParticleKeyframeHandler(event -> {
+            if ("eat".equals(event.getKeyframeData().getEffect())) {
                 //TODO: Could use event.script + getScale to increase the aabb size
                 AABB aabb = eatPos == null ? getBoundingBoxForCulling() : new AABB(eatPos, eatPos);
                 switch (data().diet()) {
@@ -1600,13 +1608,13 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                     default -> Util.spawnItemParticles(level, Items.BEEF, 4, aabb);
                 }
             }
-            additional.accept(event.effect);
+            additional.accept(event.getKeyframeData().getEffect());
         });
-        controller.registerSoundListener(event -> {
-            if ("eat".equals(event.sound)) {
+        controller.setSoundKeyframeHandler(event -> {
+            if ("eat".equals(event.getKeyframeData().getSound())) {
                 makeEatingSounds();
             }
-            if ("call".equals(event.sound)) {
+            if ("call".equals(event.getKeyframeData().getSound())) {
                 playAmbientSound();
             }
         });
@@ -1618,8 +1626,8 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 
     public AnimationLogic<Prehistoric> getAnimationLogic() {

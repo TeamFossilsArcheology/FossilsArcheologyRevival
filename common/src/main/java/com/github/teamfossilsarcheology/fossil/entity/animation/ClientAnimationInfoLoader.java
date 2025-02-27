@@ -12,9 +12,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
-import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.file.AnimationFile;
-import software.bernie.geckolib3.resource.GeckoLibCache;
+import software.bernie.geckolib.cache.GeckoLibCache;
+import software.bernie.geckolib.core.animation.Animation;
+import software.bernie.geckolib.loading.object.BakedAnimations;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +50,7 @@ public class ClientAnimationInfoLoader extends AnimationInfoLoader<ClientAnimati
 
         //Client side. Copy from geckolib
         ImmutableMap.Builder<ResourceLocation, BakedAnimationInfo<ClientAnimationInfo>> builder = ImmutableMap.builder();
-        for (Map.Entry<ResourceLocation, AnimationFile> fileEntry : GeckoLibCache.getInstance().getAnimations().entrySet()) {
+        for (Map.Entry<ResourceLocation, BakedAnimations> fileEntry : GeckoLibCache.getBakedAnimations().entrySet()) {
             if (!fileEntry.getKey().getNamespace().equals(FossilMod.MOD_ID)) {
                 continue;
             }

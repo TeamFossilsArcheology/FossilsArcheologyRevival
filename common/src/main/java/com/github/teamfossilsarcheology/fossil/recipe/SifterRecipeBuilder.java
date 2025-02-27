@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.recipe;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -31,11 +31,11 @@ public class SifterRecipeBuilder extends MultiOutputAndSlotsRecipeBuilder<Sifter
     @Override
     protected ResourceLocation getDefaultRecipeId() {
         if (itemInput != null) {
-            return new ResourceLocation(modId, "sifter/" + Registry.ITEM.getKey(itemInput.asItem()).getPath());
+            return new ResourceLocation(modId, "sifter/" + BuiltInRegistries.ITEM.getKey(itemInput.asItem()).getPath());
         } else if (tagInput != null) {
             return new ResourceLocation(modId, "sifter/" + tagInput.location().getPath());
         }
-        return Registry.ITEM.getKey(Items.ENDER_PEARL);
+        return BuiltInRegistries.ITEM.getKey(Items.ENDER_PEARL);
     }
 
     public static class Result extends MultiOutputAndSlotsRecipeBuilder.Result {

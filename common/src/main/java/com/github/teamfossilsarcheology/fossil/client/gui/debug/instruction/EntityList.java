@@ -50,9 +50,7 @@ public class EntityList extends ContainerObjectSelectionList<EntityList.EntityEn
         EntityEntry(Entity entity) {
             this.entity = entity;
             String display = String.format(Locale.ROOT, "%s[%d]", entity.getClass().getSimpleName(), entity.getId());
-            changeButton = new Button(0, 0, 200, 20, Component.literal(display), button -> {
-                consumer.accept(entity);
-            });
+            changeButton = Button.builder(Component.literal(display), button -> consumer.accept(entity)).bounds(0, 0, 200, 20).build();
         }
 
         @Override
@@ -63,8 +61,8 @@ public class EntityList extends ContainerObjectSelectionList<EntityList.EntityEn
         @Override
         public void render(PoseStack poseStack, int index, int top, int left, int width, int height, int mouseX, int mouseY, boolean isMouseOver,
                            float partialTick) {
-            changeButton.x = left;
-            changeButton.y = top;
+            changeButton.setX(left);
+            changeButton.setY(top);
             changeButton.render(poseStack, mouseX, mouseY, partialTick);
             if (isMouseOver) {
                 InstructionTab.entityListHighlight = entity;

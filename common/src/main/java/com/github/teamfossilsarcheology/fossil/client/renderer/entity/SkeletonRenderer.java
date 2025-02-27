@@ -2,39 +2,30 @@ package com.github.teamfossilsarcheology.fossil.client.renderer.entity;
 
 import com.github.teamfossilsarcheology.fossil.client.model.SkeletonModel;
 import com.github.teamfossilsarcheology.fossil.entity.PrehistoricSkeleton;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.VertexMultiConsumer;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib3.core.util.Color;
-import software.bernie.geckolib3.geo.render.built.GeoBone;
-import software.bernie.geckolib3.geo.render.built.GeoCube;
-import software.bernie.geckolib3.geo.render.built.GeoModel;
-import software.bernie.geckolib3.model.provider.GeoModelProvider;
-import software.bernie.geckolib3.renderers.geo.IGeoRenderer;
-import software.bernie.geckolib3.util.EModelRenderCycle;
-import software.bernie.geckolib3.util.IRenderCycle;
-import software.bernie.geckolib3.util.RenderUtils;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import software.bernie.geckolib.cache.object.BakedGeoModel;
+import software.bernie.geckolib.cache.object.GeoBone;
+import software.bernie.geckolib.model.GeoModel;
+import software.bernie.geckolib.renderer.GeoRenderer;
+import software.bernie.geckolib.util.RenderUtils;
 
-public class SkeletonRenderer extends EntityRenderer<PrehistoricSkeleton> implements IGeoRenderer<PrehistoricSkeleton> {
+public class SkeletonRenderer extends EntityRenderer<PrehistoricSkeleton> implements GeoRenderer<PrehistoricSkeleton> {
+    private final GeoModel<PrehistoricSkeleton> geoModel;
 
-    private final GeoModelProvider<PrehistoricSkeleton> geoModel;
-    private IRenderCycle currentModelRenderCycle = EModelRenderCycle.INITIAL;
-    private PrehistoricSkeleton animatable;
-    protected Matrix4f dispatchedMat = new Matrix4f();
-    protected Matrix4f renderEarlyMat = new Matrix4f();
-    private MultiBufferSource rtb;
+    protected PrehistoricSkeleton animatable;
+
+    protected Matrix4f entityRenderTranslations = new Matrix4f();
+    protected Matrix4f modelRenderTranslations = new Matrix4f();
 
     public SkeletonRenderer(EntityRendererProvider.Context context) {
         super(context);
@@ -42,114 +33,79 @@ public class SkeletonRenderer extends EntityRenderer<PrehistoricSkeleton> implem
     }
 
     @Override
-    public void renderEarly(PrehistoricSkeleton animatable, PoseStack poseStack, float partialTick, MultiBufferSource bufferSource, VertexConsumer buffer, int packedLight, int packedOverlayIn, float red, float green, float blue, float alpha) {
-        this.animatable = animatable;
-        this.renderEarlyMat = poseStack.last().pose().copy();
-        this.rtb = bufferSource;
-
-        IGeoRenderer.super.renderEarly(animatable, poseStack, partialTick, bufferSource, buffer, packedLight, packedOverlayIn, red, green, blue, alpha);
+    public GeoModel<PrehistoricSkeleton> getGeoModel() {
+        return geoModel;
     }
 
     @Override
-    public void render(GeoModel model, PrehistoricSkeleton animatable, float partialTick, RenderType type, PoseStack poseStack, MultiBufferSource bufferSource, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        IGeoRenderer.super.render(model, animatable, partialTick, type, poseStack, bufferSource, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+    public PrehistoricSkeleton getAnimatable() {
+        return animatable;
+    }
+
+    @Override
+    public long getInstanceId(PrehistoricSkeleton animatable) {
+        return animatable.getId();
+    }
+
+    @Override
+    public @NotNull ResourceLocation getTextureLocation(PrehistoricSkeleton entity) {
+        return GeoRenderer.super.getTextureLocation(animatable);
+    }
+
+    @Override
+    public void preRender(PoseStack poseStack, PrehistoricSkeleton animatable, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        this.entityRenderTranslations = new Matrix4f(poseStack.last().pose());
+        scaleModelForRender(animatable.getScale(), animatable.getScale(), poseStack, animatable, model, isReRender, partialTick, packedLight, packedOverlay);
     }
 
     @Override
     public void render(PrehistoricSkeleton animatable, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-        setCurrentModelRenderCycle(EModelRenderCycle.INITIAL);
-        poseStack.pushPose();
-        dispatchedMat = poseStack.last().pose().copy();
-        GeoModel model = geoModel.getModel(geoModel.getModelResource(animatable));
-        poseStack.translate(0, 0.01f, 0);
-        RenderSystem.setShaderTexture(0, getTextureLocation(animatable));
-
-        if (!animatable.isInvisibleTo(Minecraft.getInstance().player)) {
-            poseStack.mulPose(Vector3f.YP.rotationDegrees(180f - animatable.getYRot()));
-
-            Color renderColor = getRenderColor(animatable, partialTick, poseStack, bufferSource, null, packedLight);
-            RenderType renderType = getRenderType(animatable, partialTick, poseStack, bufferSource, null, packedLight, getTextureLocation(animatable));
-
-            VertexConsumer glintBuffer = bufferSource.getBuffer(RenderType.entityGlintDirect());
-            VertexConsumer translucentBuffer = bufferSource.getBuffer(RenderType.entityTranslucentCull(getTextureLocation(animatable)));
-
-            render(model, animatable, partialTick, renderType, poseStack, bufferSource,
-                    glintBuffer != translucentBuffer ? VertexMultiConsumer.create(glintBuffer, translucentBuffer) : null,
-                    packedLight, OverlayTexture.pack(OverlayTexture.u(0), OverlayTexture.v(false)), renderColor.getRed() / 255f, renderColor.getGreen() / 255f, renderColor.getBlue() / 255f, renderColor.getAlpha() / 255f);
-        }
-
-        poseStack.popPose();
-        super.render(animatable, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+        this.animatable = animatable;
+        defaultRender(poseStack, animatable, bufferSource, null, null, entityYaw, partialTick, packedLight);
     }
 
     @Override
-    public void renderRecursively(GeoBone bone, PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void actuallyRender(PoseStack poseStack, PrehistoricSkeleton animatable, BakedGeoModel model, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        poseStack.pushPose();
+        modelRenderTranslations = new Matrix4f(poseStack.last().pose());
+        if (!animatable.isInvisibleTo(Minecraft.getInstance().player)) {
+            GeoRenderer.super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+        }
+        poseStack.popPose();
+    }
+
+    @Override
+    public void renderRecursively(PoseStack poseStack, PrehistoricSkeleton animatable, GeoBone bone, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         poseStack.pushPose();
         RenderUtils.translateMatrixToBone(poseStack, bone);
         RenderUtils.translateToPivotPoint(poseStack, bone);
-
-        boolean rotOverride = bone.rotMat != null;
-
-        if (rotOverride) {
-            poseStack.last().pose().multiply(bone.rotMat);
-            poseStack.last().normal().mul(new Matrix3f(bone.rotMat));
-        } else {
-            RenderUtils.rotateMatrixAroundBone(poseStack, bone);
-        }
-
+        RenderUtils.rotateMatrixAroundBone(poseStack, bone);
         RenderUtils.scaleMatrixForBone(poseStack, bone);
 
-        if (bone.isTrackingXform()) {
-            Matrix4f poseState = poseStack.last().pose().copy();
-            Matrix4f localMatrix = RenderUtils.invertAndMultiplyMatrices(poseState, this.dispatchedMat);
+        if (bone.isTrackingMatrices()) {
+            Matrix4f poseState = new Matrix4f(poseStack.last().pose());
+            Matrix4f localMatrix = RenderUtils.invertAndMultiplyMatrices(poseState, entityRenderTranslations);
 
-            bone.setModelSpaceXform(RenderUtils.invertAndMultiplyMatrices(poseState, this.renderEarlyMat));
-            localMatrix.translate(new Vector3f(getRenderOffset(this.animatable, 1)));
-            bone.setLocalSpaceXform(localMatrix);
-
-            Matrix4f worldState = localMatrix.copy();
-
-            worldState.translate(new Vector3f(this.animatable.position()));
-            bone.setWorldSpaceXform(worldState);
+            bone.setModelSpaceMatrix(RenderUtils.invertAndMultiplyMatrices(poseState, modelRenderTranslations));
+            bone.setLocalSpaceMatrix(localMatrix.translation(new Vector3f(getRenderOffset(this.animatable, 1).toVector3f())));
+            bone.setWorldSpaceMatrix(new Matrix4f(localMatrix).translation(new Vector3f(this.animatable.position().toVector3f())));
         }
 
         RenderUtils.translateAwayFromPivotPoint(poseStack, bone);
 
-        if (!bone.isHidden) {
-            if (!bone.cubesAreHidden()) {
-                for (GeoCube geoCube : bone.childCubes) {
-                    poseStack.pushPose();
-                    renderCube(geoCube, poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-                    poseStack.popPose();
-                }
-            }
+        renderCubesOfBone(poseStack, bone, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 
-            for (GeoBone childBone : bone.childBones) {
-                renderRecursively(childBone, poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-            }
-        }
+        if (!isReRender)
+            applyRenderLayersForBone(poseStack, animatable, bone, renderType, bufferSource, buffer, partialTick, packedLight, packedOverlay);
+
+        renderChildBones(poseStack, animatable, bone, renderType, bufferSource, buffer, false, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
 
         poseStack.popPose();
     }
 
     @Override
-    public RenderType getRenderType(PrehistoricSkeleton animatable, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, VertexConsumer buffer, int packedLight, ResourceLocation texture) {
+    public RenderType getRenderType(PrehistoricSkeleton animatable, ResourceLocation texture, MultiBufferSource bufferSource, float partialTick) {
         return RenderType.entityCutoutNoCull(texture);
-    }
-
-    @Override
-    public int getInstanceId(PrehistoricSkeleton entity) {
-        return entity.getId();
-    }
-
-    @Override
-    public float getWidthScale(PrehistoricSkeleton entity) {
-        return entity.getScale();
-    }
-
-    @Override
-    public float getHeightScale(PrehistoricSkeleton entity) {
-        return entity.getScale();
     }
 
     @Override
@@ -158,32 +114,24 @@ public class SkeletonRenderer extends EntityRenderer<PrehistoricSkeleton> implem
     }
 
     @Override
-    public GeoModelProvider<PrehistoricSkeleton> getGeoModelProvider() {
-        return geoModel;
+    public void scaleModelForRender(float widthScale, float heightScale, PoseStack poseStack, PrehistoricSkeleton animatable, BakedGeoModel model, boolean isReRender, float partialTick, int packedLight, int packedOverlay) {
+        if (!isReRender && (widthScale != 1 || heightScale != 1)) {
+            poseStack.scale(widthScale, heightScale, widthScale);
+        }
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(PrehistoricSkeleton entity) {
-        return geoModel.getTextureResource(entity);
+    public void fireCompileRenderLayersEvent() {
+
     }
 
     @Override
-    public void setCurrentRTB(MultiBufferSource bufferSource) {
-        this.rtb = bufferSource;
+    public boolean firePreRenderEvent(PoseStack poseStack, BakedGeoModel model, MultiBufferSource bufferSource, float partialTick, int packedLight) {
+        return true;
     }
 
     @Override
-    public MultiBufferSource getCurrentRTB() {
-        return this.rtb;
-    }
+    public void firePostRenderEvent(PoseStack poseStack, BakedGeoModel model, MultiBufferSource bufferSource, float partialTick, int packedLight) {
 
-    @Override
-    public @NotNull IRenderCycle getCurrentModelRenderCycle() {
-        return currentModelRenderCycle;
-    }
-
-    @Override
-    public void setCurrentModelRenderCycle(IRenderCycle currentModelRenderCycle) {
-        this.currentModelRenderCycle = currentModelRenderCycle;
     }
 }

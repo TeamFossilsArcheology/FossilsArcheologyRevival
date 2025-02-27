@@ -22,9 +22,9 @@ import com.mojang.datafixers.util.Pair;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.Util;
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.BlockFamily;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -35,7 +35,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraftforge.fml.ModList;
@@ -44,7 +43,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 import static com.github.teamfossilsarcheology.fossil.block.ModBlocks.*;
@@ -78,96 +76,96 @@ public class ModRecipeProvider extends RecipeProvider {
         enumMap.put(DyeColor.BLACK, Blocks.BLACK_WOOL);
     });
 
-    public ModRecipeProvider(DataGenerator arg) {
+    public ModRecipeProvider(PackOutput arg) {
         super(arg);
     }
 
     @Override
-    protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
+    public void buildRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
         boolean cookingRecipes = true;
         boolean craftingRecipes = true;
         boolean machineRecipes = true;
         if (cookingRecipes) {
             for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
                 if (info.foodItem != null && info.cookedFoodItem != null) {
-                    fullCooking(info.foodItem, info.cookedFoodItem, consumer, 1.5f);
+                    fullCooking(RecipeCategory.FOOD, info.foodItem, info.cookedFoodItem, consumer, 1.5f);
                 }
             }
-            fullOre(DENSE_SAND.get(), REINFORCED_GLASS.get(), consumer, 3);
+            fullOre(RecipeCategory.BUILDING_BLOCKS, DENSE_SAND.get(), REINFORCED_GLASS.get(), consumer, 3);
         }
         if (craftingRecipes) {
             ToyBallItem white = TOY_BALLS.get(DyeColor.WHITE).get();
-            ShapedRecipeBuilder.shaped(white).define('W', Blocks.WHITE_WOOL).define('S', Items.STRING)
+            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, white).define('W', Blocks.WHITE_WOOL).define('S', Items.STRING)
                     .define('B', Items.SLIME_BALL).pattern("SWS").pattern("WBW").pattern("SWS").unlockedBy("has_wool",
                             RecipeProvider.has(ItemTags.WOOL)).save(consumer, RecipeBuilder.getDefaultRecipeId(white));
             for (Map.Entry<DyeColor, RegistrySupplier<ToyBallItem>> entry : TOY_BALLS.entrySet()) {
                 DyeColor color = entry.getKey();
                 ToyBallItem ball = entry.getValue().get();
                 if (color == DyeColor.WHITE) continue;
-                ShapelessRecipeBuilder.shapeless(ball).requires(colorToDye(color)).requires(white).unlockedBy("has_ball",
+                ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ball).requires(colorToDye(color)).requires(white).unlockedBy("has_ball",
                         RecipeProvider.has(white)).save(consumer, FossilMod.MOD_ID + ":toy_ball_white_to_" + color.getName());
-                ShapelessRecipeBuilder.shapeless(white).requires(Items.WHITE_DYE).requires(ball).unlockedBy("has_ball",
+                ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, white).requires(Items.WHITE_DYE).requires(ball).unlockedBy("has_ball",
                         RecipeProvider.has(white)).save(consumer, FossilMod.MOD_ID + ":toy_ball_" + color.getName() + "_to_white");
-                ShapedRecipeBuilder.shaped(ball).define('W', ITEM_BY_DYE.get(entry.getKey())).define('S', Items.STRING)
+                ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ball).define('W', ITEM_BY_DYE.get(entry.getKey())).define('S', Items.STRING)
                         .define('B', Items.SLIME_BALL).pattern("SWS").pattern("WBW").pattern("SWS").unlockedBy("has_wool",
                                 RecipeProvider.has(ItemTags.WOOL)).save(consumer, RecipeBuilder.getDefaultRecipeId(ball));
             }
             for (Map.Entry<String, RegistrySupplier<ToyTetheredLogItem>> entry : TOY_TETHERED_LOGS.entrySet()) {
-                var block = Registry.BLOCK.getOptional(new ResourceLocation("minecraft:" + entry.getKey() + "_log"));
-                block.ifPresent(log -> ShapedRecipeBuilder.shaped(entry.getValue().get()).define('S', Items.STRING).define('L', log)
+                var block = BuiltInRegistries.BLOCK.getOptional(new ResourceLocation("minecraft:" + entry.getKey() + "_log"));
+                block.ifPresent(log -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, entry.getValue().get()).define('S', Items.STRING).define('L', log)
                         .pattern("S").pattern("S").pattern("L").unlockedBy("has_log", RecipeProvider.has(log)).save(consumer));
             }
-            ShapedRecipeBuilder.shaped(TOY_TETHERED_LOGS.get(WoodType.CRIMSON.name()).get()).define('S', Items.STRING)
+            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TOY_TETHERED_LOGS.get(WoodType.CRIMSON.name()).get()).define('S', Items.STRING)
                     .define('L', Blocks.CRIMSON_STEM).pattern("S").pattern("S").pattern("L").unlockedBy("has_log",
                             RecipeProvider.has(Blocks.CRIMSON_STEM)).save(consumer);
-            ShapedRecipeBuilder.shaped(TOY_TETHERED_LOGS.get(WoodType.WARPED.name()).get()).define('S', Items.STRING)
+            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TOY_TETHERED_LOGS.get(WoodType.WARPED.name()).get()).define('S', Items.STRING)
                     .define('L', Blocks.WARPED_STEM).pattern("S").pattern("S").pattern("L").unlockedBy("has_log",
                             RecipeProvider.has(Blocks.WARPED_STEM)).save(consumer);
             for (Map.Entry<String, RegistrySupplier<ToyScratchingPostItem>> entry : TOY_SCRATCHING_POSTS.entrySet()) {
-                var block = Registry.BLOCK.getOptional(new ResourceLocation("minecraft:" + entry.getKey() + "_slab"));
-                block.ifPresent(slab -> ShapedRecipeBuilder.shaped(entry.getValue().get()).define('S', Items.STICK).define('X', slab)
+                var block = BuiltInRegistries.BLOCK.getOptional(new ResourceLocation("minecraft:" + entry.getKey() + "_slab"));
+                block.ifPresent(slab -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, entry.getValue().get()).define('S', Items.STICK).define('X', slab)
                         .define('W', ItemTags.WOOL).pattern("WWW").pattern("WSW").pattern(" X ").unlockedBy("has_slab",
                                 RecipeProvider.has(slab)).save(consumer));
             }
             var hasScarabGem = RecipeProvider.has(SCARAB_GEM.get());
-            ShapelessRecipeBuilder.shapeless(AQUATIC_SCARAB_GEM.get()).requires(SCARAB_GEM.get()).requires(AMBER_CHUNK_DOMINICAN.get())
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AQUATIC_SCARAB_GEM.get()).requires(SCARAB_GEM.get()).requires(AMBER_CHUNK_DOMINICAN.get())
                     .unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
-            ShapelessRecipeBuilder.shapeless(SCARAB_AXE.get()).requires(Items.DIAMOND_AXE).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
-            ShapelessRecipeBuilder.shapeless(SCARAB_HOE.get()).requires(Items.DIAMOND_HOE).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
-            ShapelessRecipeBuilder.shapeless(SCARAB_PICKAXE.get()).requires(Items.DIAMOND_PICKAXE).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
-            ShapelessRecipeBuilder.shapeless(SCARAB_SHOVEL.get()).requires(Items.DIAMOND_SHOVEL).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
-            ShapelessRecipeBuilder.shapeless(SCARAB_SWORD.get()).requires(Items.DIAMOND_SWORD).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, SCARAB_AXE.get()).requires(Items.DIAMOND_AXE).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, SCARAB_HOE.get()).requires(Items.DIAMOND_HOE).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, SCARAB_PICKAXE.get()).requires(Items.DIAMOND_PICKAXE).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, SCARAB_SHOVEL.get()).requires(Items.DIAMOND_SHOVEL).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, SCARAB_SWORD.get()).requires(Items.DIAMOND_SWORD).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
 
             var bonesLeg = ModItemTags.LEG_BONES;
             var bonesFoot = ModItemTags.FOOT_BONES;
             var bonesVertebrae = ModItemTags.VERTEBRAE_BONES;
             var bonesRibcage = ModItemTags.RIBCAGE_BONES;
             var bonesSkull = ModItemTags.SKULL_BONES;
-            ShapedRecipeBuilder.shaped(BONE_BOOTS.get()).define('L', bonesLeg).define('F', bonesFoot).pattern("L L").pattern("F F").unlockedBy("has_bones", RecipeProvider.has(bonesFoot)).save(consumer);
-            ShapedRecipeBuilder.shaped(BONE_CHESTPLATE.get()).define('B', Items.BONE).define('V', bonesVertebrae).define('R', bonesRibcage).pattern("B B").pattern(" V ").pattern("BRB").unlockedBy("has_bones", RecipeProvider.has(bonesRibcage)).save(consumer);
-            ShapedRecipeBuilder.shaped(BONE_HELMET.get()).define('B', Items.BONE).define('S', bonesSkull).pattern("BSB").pattern("B B").unlockedBy("has_bones", RecipeProvider.has(bonesSkull)).save(consumer);
-            ShapedRecipeBuilder.shaped(BONE_LEGGINGS.get()).define('B', Items.BONE).define('L', bonesLeg).pattern("BBB").pattern("L L").pattern("B B").unlockedBy("has_bones", RecipeProvider.has(bonesLeg)).save(consumer);
-            ShapelessRecipeBuilder.shapeless(Items.BONE_MEAL).requires(VOLCANIC_ASH.get(), 4).unlockedBy("has_volcanic_ash", RecipeProvider.has(VOLCANIC_ASH.get())).save(consumer, FossilMod.MOD_ID + ":bone_meal_from_ash");
-            ShapelessRecipeBuilder.shapeless(Items.BONE_MEAL).requires(ModItemTags.ALL_BONES).unlockedBy("has_bone", RecipeProvider.has(ModItemTags.ALL_BONES)).save(consumer, FossilMod.MOD_ID + ":bone_meal_from_bone");
-            ShapedRecipeBuilder.shaped(CHICKEN_ESSENCE.get(), 8).define('G', Items.GLASS_BOTTLE).define('C', COOKED_CHICKEN_SOUP.get()).pattern("GGG").pattern("GCG").pattern("GGG").unlockedBy("has_cooked_chicken_soup", RecipeProvider.has(COOKED_CHICKEN_SOUP.get())).save(consumer);
-            ShapedRecipeBuilder.shaped(STUNTED_ESSENCE.get()).define('P', Items.POISONOUS_POTATO).define('C', CHICKEN_ESSENCE.get()).pattern(" P ").pattern("PCP").pattern(" P ").unlockedBy("has_chicken_essence", RecipeProvider.has(CHICKEN_ESSENCE.get())).save(consumer);
+            ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BONE_BOOTS.get()).define('L', bonesLeg).define('F', bonesFoot).pattern("L L").pattern("F F").unlockedBy("has_bones", RecipeProvider.has(bonesFoot)).save(consumer);
+            ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BONE_CHESTPLATE.get()).define('B', Items.BONE).define('V', bonesVertebrae).define('R', bonesRibcage).pattern("B B").pattern(" V ").pattern("BRB").unlockedBy("has_bones", RecipeProvider.has(bonesRibcage)).save(consumer);
+            ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BONE_HELMET.get()).define('B', Items.BONE).define('S', bonesSkull).pattern("BSB").pattern("B B").unlockedBy("has_bones", RecipeProvider.has(bonesSkull)).save(consumer);
+            ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BONE_LEGGINGS.get()).define('B', Items.BONE).define('L', bonesLeg).pattern("BBB").pattern("L L").pattern("B B").unlockedBy("has_bones", RecipeProvider.has(bonesLeg)).save(consumer);
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.BONE_MEAL).requires(VOLCANIC_ASH.get(), 4).unlockedBy("has_volcanic_ash", RecipeProvider.has(VOLCANIC_ASH.get())).save(consumer, FossilMod.MOD_ID + ":bone_meal_from_ash");
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.BONE_MEAL).requires(ModItemTags.ALL_BONES).unlockedBy("has_bone", RecipeProvider.has(ModItemTags.ALL_BONES)).save(consumer, FossilMod.MOD_ID + ":bone_meal_from_bone");
+            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CHICKEN_ESSENCE.get(), 8).define('G', Items.GLASS_BOTTLE).define('C', COOKED_CHICKEN_SOUP.get()).pattern("GGG").pattern("GCG").pattern("GGG").unlockedBy("has_cooked_chicken_soup", RecipeProvider.has(COOKED_CHICKEN_SOUP.get())).save(consumer);
+            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, STUNTED_ESSENCE.get()).define('P', Items.POISONOUS_POTATO).define('C', CHICKEN_ESSENCE.get()).pattern(" P ").pattern("PCP").pattern(" P ").unlockedBy("has_chicken_essence", RecipeProvider.has(CHICKEN_ESSENCE.get())).save(consumer);
 
-            ShapedRecipeBuilder.shaped(ANALYZER.get()).define('I', Items.IRON_INGOT).define('R', RELIC_SCRAP.get()).define('B', ModItemTags.FOSSILS).pattern("IRI").pattern("IBI").unlockedBy("has_fossil", RecipeProvider.has(ModItemTags.FOSSILS)).save(consumer);
-            ShapedRecipeBuilder.shaped(BUBBLE_BLOWER.get()).define('I', Items.GOLD_INGOT).define('N', Items.GOLD_NUGGET).define('W', Items.WATER_BUCKET).pattern("NIN").pattern("IWI").pattern("NIN").unlockedBy("has_dino_egg", RecipeProvider.has(ModItemTags.DINO_EGGS)).save(consumer);
-            ShapedRecipeBuilder.shaped(SIFTER.get()).define('I', Blocks.IRON_BARS).define('S', Items.STRING).define('P', ItemTags.PLANKS).pattern("SPS").pattern("PIP").pattern("PSP").unlockedBy("has_planks", RecipeProvider.has(ItemTags.PLANKS)).save(consumer);
-            ShapedRecipeBuilder.shaped(WORKTABLE.get()).define('L', Items.LEATHER).define('C', Blocks.CRAFTING_TABLE).pattern("L").pattern("C").unlockedBy("has_crafting_table", RecipeProvider.has(Blocks.CRAFTING_TABLE)).save(consumer);
-            ShapedRecipeBuilder.shaped(DRUM.get()).define('L', Items.LEATHER).define('R', Items.REDSTONE).define('P', ItemTags.PLANKS).pattern("LLL").pattern("PRP").pattern("PPP").unlockedBy("has_crafting_table", RecipeProvider.has(Blocks.CRAFTING_TABLE)).save(consumer);
+            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ANALYZER.get()).define('I', Items.IRON_INGOT).define('R', RELIC_SCRAP.get()).define('B', ModItemTags.FOSSILS).pattern("IRI").pattern("IBI").unlockedBy("has_fossil", RecipeProvider.has(ModItemTags.FOSSILS)).save(consumer);
+            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BUBBLE_BLOWER.get()).define('I', Items.GOLD_INGOT).define('N', Items.GOLD_NUGGET).define('W', Items.WATER_BUCKET).pattern("NIN").pattern("IWI").pattern("NIN").unlockedBy("has_dino_egg", RecipeProvider.has(ModItemTags.DINO_EGGS)).save(consumer);
+            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, SIFTER.get()).define('I', Blocks.IRON_BARS).define('S', Items.STRING).define('P', ItemTags.PLANKS).pattern("SPS").pattern("PIP").pattern("PSP").unlockedBy("has_planks", RecipeProvider.has(ItemTags.PLANKS)).save(consumer);
+            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, WORKTABLE.get()).define('L', Items.LEATHER).define('C', Blocks.CRAFTING_TABLE).pattern("L").pattern("C").unlockedBy("has_crafting_table", RecipeProvider.has(Blocks.CRAFTING_TABLE)).save(consumer);
+            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DRUM.get()).define('L', Items.LEATHER).define('R', Items.REDSTONE).define('P', ItemTags.PLANKS).pattern("LLL").pattern("PRP").pattern("PPP").unlockedBy("has_crafting_table", RecipeProvider.has(Blocks.CRAFTING_TABLE)).save(consumer);
 
-            ShapelessRecipeBuilder.shapeless(DINOPEDIA.get()).requires(Items.BOOK).requires(ModItemTags.FOSSILS).unlockedBy("has_bio_fossil", RecipeProvider.has(BIO_FOSSIL.get())).save(consumer);
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, DINOPEDIA.get()).requires(Items.BOOK).requires(ModItemTags.FOSSILS).unlockedBy("has_bio_fossil", RecipeProvider.has(BIO_FOSSIL.get())).save(consumer);
 
-            ShapelessRecipeBuilder.shapeless(RAW_CHICKEN_SOUP.get()).requires(Items.BUCKET).requires(Items.CHICKEN).unlockedBy("has_chicken", RecipeProvider.has(Items.CHICKEN)).save(consumer);
-            ShapelessRecipeBuilder.shapeless(SKULL_STICK.get()).requires(Items.STICK).requires(SKULL_BLOCK.get()).unlockedBy("has_skull_block", RecipeProvider.has(SKULL_BLOCK.get())).save(consumer);
-            ShapelessRecipeBuilder.shapeless(TOOTH_DAGGER.get()).requires(Items.STICK).requires(PrehistoricEntityInfo.TYRANNOSAURUS.uniqueBoneItem);
-            ShapedRecipeBuilder.shaped(WHIP.get()).define('S', Items.STRING).define('T', Items.STICK).pattern("  S").pattern(" TS").pattern("T S").unlockedBy("has_dinopedia", RecipeProvider.has(DINOPEDIA.get())).save(consumer);
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, RAW_CHICKEN_SOUP.get()).requires(Items.BUCKET).requires(Items.CHICKEN).unlockedBy("has_chicken", RecipeProvider.has(Items.CHICKEN)).save(consumer);
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, SKULL_STICK.get()).requires(Items.STICK).requires(SKULL_BLOCK.get()).unlockedBy("has_skull_block", RecipeProvider.has(SKULL_BLOCK.get())).save(consumer);
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, TOOTH_DAGGER.get()).requires(Items.STICK).requires(PrehistoricEntityInfo.TYRANNOSAURUS.uniqueBoneItem);
+            ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, WHIP.get()).define('S', Items.STRING).define('T', Items.STICK).pattern("  S").pattern(" TS").pattern("T S").unlockedBy("has_dinopedia", RecipeProvider.has(DINOPEDIA.get())).save(consumer);
 
-            ShapedRecipeBuilder.shaped(AMPHORA_VASE_DAMAGED.get()).define('P', POTTERY_SHARD.get()).pattern("PP").pattern("PP").pattern("PP").unlockedBy("has_pottery_shard", RecipeProvider.has(POTTERY_SHARD.get())).save(consumer);
-            ShapedRecipeBuilder.shaped(KYLIX_VASE_DAMAGED.get()).define('P', POTTERY_SHARD.get()).pattern("PPP").pattern(" P ").unlockedBy("has_pottery_shard", RecipeProvider.has(POTTERY_SHARD.get())).save(consumer);
-            ShapedRecipeBuilder.shaped(VOLUTE_VASE_DAMAGED.get()).define('P', POTTERY_SHARD.get()).pattern("P P").pattern("P P").pattern("PPP").unlockedBy("has_pottery_shard", RecipeProvider.has(POTTERY_SHARD.get())).save(consumer);
+            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, AMPHORA_VASE_DAMAGED.get()).define('P', POTTERY_SHARD.get()).pattern("PP").pattern("PP").pattern("PP").unlockedBy("has_pottery_shard", RecipeProvider.has(POTTERY_SHARD.get())).save(consumer);
+            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, KYLIX_VASE_DAMAGED.get()).define('P', POTTERY_SHARD.get()).pattern("PPP").pattern(" P ").unlockedBy("has_pottery_shard", RecipeProvider.has(POTTERY_SHARD.get())).save(consumer);
+            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, VOLUTE_VASE_DAMAGED.get()).define('P', POTTERY_SHARD.get()).pattern("P P").pattern("P P").pattern("PPP").unlockedBy("has_pottery_shard", RecipeProvider.has(POTTERY_SHARD.get())).save(consumer);
             for (Pair<DyeColor, RegistrySupplier<VaseBlock>> pair : VASES_WITH_COLOR) {
                 VaseBlock vase = pair.getSecond().get();
                 VaseBlock restored;
@@ -178,24 +176,24 @@ public class ModRecipeProvider extends RecipeProvider {
                 } else {
                     restored = VOLUTE_VASE_RESTORED.get();
                 }
-                ShapelessRecipeBuilder.shapeless(vase).requires(restored).requires(DyeItem.byColor(pair.getFirst())).unlockedBy("has_restored_vase", RecipeProvider.has(restored)).save(consumer);
+                ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, vase).requires(restored).requires(DyeItem.byColor(pair.getFirst())).unlockedBy("has_restored_vase", RecipeProvider.has(restored)).save(consumer);
             }
 
-            ShapelessRecipeBuilder.shapeless(DENSE_SAND.get()).requires(Blocks.SAND).requires(Items.QUARTZ).unlockedBy("has_sand", RecipeProvider.has(Blocks.SAND)).save(consumer);
-            generateFamilyRecipes(ANCIENT_WOOD_PLANKS, consumer);
-            generateFamilyRecipes(CALAMITES_PLANKS, consumer);
-            generateFamilyRecipes(CORDAITES_PLANKS, consumer);
-            generateFamilyRecipes(MUTANT_TREE_PLANKS, consumer);
-            generateFamilyRecipes(PALM_PLANKS, consumer);
-            generateFamilyRecipes(SIGILLARIA_PLANKS, consumer);
-            generateFamilyRecipes(TEMPSKYA_PLANKS, consumer);
-            RecipeProvider.planksFromLogs(consumer, ModBlocks.ANCIENT_WOOD_PLANKS.get(), ModItemTags.ANCIENT_WOOD_LOGS);
-            RecipeProvider.planksFromLogs(consumer, ModBlocks.CALAMITES_PLANKS.get(), ModItemTags.CALAMITES_LOGS);
-            RecipeProvider.planksFromLogs(consumer, ModBlocks.CORDAITES_PLANKS.get(), ModItemTags.CORDAITES_LOGS);
-            RecipeProvider.planksFromLogs(consumer, ModBlocks.MUTANT_TREE_PLANKS.get(), ModItemTags.MUTANT_TREE_LOGS);
-            RecipeProvider.planksFromLogs(consumer, ModBlocks.PALM_PLANKS.get(), ModItemTags.PALM_LOGS);
-            RecipeProvider.planksFromLogs(consumer, ModBlocks.SIGILLARIA_PLANKS.get(), ModItemTags.SIGILLARIA_LOGS);
-            RecipeProvider.planksFromLogs(consumer, ModBlocks.TEMPSKYA_PLANKS.get(), ModItemTags.TEMPSKYA_LOGS);
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, DENSE_SAND.get()).requires(Blocks.SAND).requires(Items.QUARTZ).unlockedBy("has_sand", RecipeProvider.has(Blocks.SAND)).save(consumer);
+            generateRecipes(consumer, ANCIENT_WOOD_PLANKS);
+            generateRecipes(consumer, CALAMITES_PLANKS);
+            generateRecipes(consumer, CORDAITES_PLANKS);
+            generateRecipes(consumer, MUTANT_TREE_PLANKS);
+            generateRecipes(consumer, PALM_PLANKS);
+            generateRecipes(consumer, SIGILLARIA_PLANKS);
+            generateRecipes(consumer, TEMPSKYA_PLANKS);
+            RecipeProvider.planksFromLogs(consumer, ModBlocks.ANCIENT_WOOD_PLANKS.get(), ModItemTags.ANCIENT_WOOD_LOGS, 4);
+            RecipeProvider.planksFromLogs(consumer, ModBlocks.CALAMITES_PLANKS.get(), ModItemTags.CALAMITES_LOGS, 4);
+            RecipeProvider.planksFromLogs(consumer, ModBlocks.CORDAITES_PLANKS.get(), ModItemTags.CORDAITES_LOGS, 4);
+            RecipeProvider.planksFromLogs(consumer, ModBlocks.MUTANT_TREE_PLANKS.get(), ModItemTags.MUTANT_TREE_LOGS, 4);
+            RecipeProvider.planksFromLogs(consumer, ModBlocks.PALM_PLANKS.get(), ModItemTags.PALM_LOGS, 4);
+            RecipeProvider.planksFromLogs(consumer, ModBlocks.SIGILLARIA_PLANKS.get(), ModItemTags.SIGILLARIA_LOGS, 4);
+            RecipeProvider.planksFromLogs(consumer, ModBlocks.TEMPSKYA_PLANKS.get(), ModItemTags.TEMPSKYA_LOGS, 4);
             RecipeProvider.woodFromLogs(consumer, CALAMITES_WOOD.get(), CALAMITES_LOG.get());
             RecipeProvider.woodFromLogs(consumer, CORDAITES_WOOD.get(), CORDAITES_LOG.get());
             RecipeProvider.woodFromLogs(consumer, MUTANT_TREE_WOOD.get(), MUTANT_TREE_LOG.get());
@@ -210,27 +208,27 @@ public class ModRecipeProvider extends RecipeProvider {
             RecipeProvider.woodFromLogs(consumer, STRIPPED_TEMPSKYA_WOOD.get(), STRIPPED_TEMPSKYA_LOG.get());
 
             stonecutter(consumer, ANCIENT_STONE_SLAB.get(), ANCIENT_STONE.get(), 2);
-            stonecutter(consumer, ANCIENT_STONE_STAIRS.get(), ANCIENT_STONE.get());
-            stonecutter(consumer, ANCIENT_STONE_WALL.get(), ANCIENT_STONE.get());
-            stonecutter(consumer, ANCIENT_STONE_BRICKS.get(), ANCIENT_STONE.get());
+            stonecutter(consumer, ANCIENT_STONE_STAIRS.get(), ANCIENT_STONE.get(), 1);
+            stonecutter(RecipeCategory.DECORATIONS, consumer, ANCIENT_STONE_WALL.get(), ANCIENT_STONE.get(), 1);
+            stonecutter(consumer, ANCIENT_STONE_BRICKS.get(), ANCIENT_STONE.get(), 1);
             stonecutter(consumer, ANCIENT_STONE_SLAB.get(), ANCIENT_STONE_BRICKS.get(), 2);
-            stonecutter(consumer, ANCIENT_STONE_STAIRS.get(), ANCIENT_STONE_BRICKS.get());
-            stonecutter(consumer, ANCIENT_STONE_WALL.get(), ANCIENT_STONE_BRICKS.get());
+            stonecutter(consumer, ANCIENT_STONE_STAIRS.get(), ANCIENT_STONE_BRICKS.get(), 1);
+            stonecutter(RecipeCategory.DECORATIONS, consumer, ANCIENT_STONE_WALL.get(), ANCIENT_STONE_BRICKS.get(), 1);
             stonecutter(consumer, VOLCANIC_BRICK_SLAB.get(), VOLCANIC_ROCK.get(), 2);
-            stonecutter(consumer, VOLCANIC_BRICK_STAIRS.get(), VOLCANIC_ROCK.get());
-            stonecutter(consumer, VOLCANIC_BRICK_WALL.get(), VOLCANIC_ROCK.get());
-            stonecutter(consumer, VOLCANIC_BRICKS.get(), VOLCANIC_ROCK.get());
+            stonecutter(consumer, VOLCANIC_BRICK_STAIRS.get(), VOLCANIC_ROCK.get(), 1);
+            stonecutter(RecipeCategory.DECORATIONS, consumer, VOLCANIC_BRICK_WALL.get(), VOLCANIC_ROCK.get(), 1);
+            stonecutter(consumer, VOLCANIC_BRICKS.get(), VOLCANIC_ROCK.get(), 1);
             stonecutter(consumer, VOLCANIC_BRICK_SLAB.get(), VOLCANIC_BRICKS.get(), 2);
-            stonecutter(consumer, VOLCANIC_BRICK_STAIRS.get(), VOLCANIC_BRICKS.get());
-            stonecutter(consumer, VOLCANIC_BRICK_WALL.get(), VOLCANIC_BRICKS.get());
+            stonecutter(consumer, VOLCANIC_BRICK_STAIRS.get(), VOLCANIC_BRICKS.get(), 1);
+            stonecutter(RecipeCategory.DECORATIONS, consumer, VOLCANIC_BRICK_WALL.get(), VOLCANIC_BRICKS.get(), 1);
 
             stonecutter(consumer, VOLCANIC_TILE_SLAB.get(), VOLCANIC_BRICKS.get(), 2);
-            stonecutter(consumer, VOLCANIC_TILE_STAIRS.get(), VOLCANIC_BRICKS.get());
-            stonecutter(consumer, VOLCANIC_TILE_WALL.get(), VOLCANIC_BRICKS.get());
-            stonecutter(consumer, VOLCANIC_TILES.get(), VOLCANIC_BRICKS.get());
+            stonecutter(consumer, VOLCANIC_TILE_STAIRS.get(), VOLCANIC_BRICKS.get(), 1);
+            stonecutter(RecipeCategory.DECORATIONS, consumer, VOLCANIC_TILE_WALL.get(), VOLCANIC_BRICKS.get(), 1);
+            stonecutter(consumer, VOLCANIC_TILES.get(), VOLCANIC_BRICKS.get(), 1);
             stonecutter(consumer, VOLCANIC_TILE_SLAB.get(), VOLCANIC_TILES.get(), 2);
-            stonecutter(consumer, VOLCANIC_TILE_STAIRS.get(), VOLCANIC_TILES.get());
-            stonecutter(consumer, VOLCANIC_TILE_WALL.get(), VOLCANIC_TILES.get());
+            stonecutter(consumer, VOLCANIC_TILE_STAIRS.get(), VOLCANIC_TILES.get(), 1);
+            stonecutter(RecipeCategory.DECORATIONS, consumer, VOLCANIC_TILE_WALL.get(), VOLCANIC_TILES.get(), 1);
         }
 
         if (machineRecipes) {
@@ -473,7 +471,7 @@ public class ModRecipeProvider extends RecipeProvider {
             }
         }
         if (ModList.get().isLoaded(ModConstants.CREATE)) {
-            FossilCreateRecipeProvider.buildCraftingRecipes(consumer);
+            //FossilCreateRecipeProvider.buildCraftingRecipes(consumer);
         }
     }
 
@@ -531,63 +529,47 @@ public class ModRecipeProvider extends RecipeProvider {
 
     }
 
-    private static void fullCooking(Ingredient ingredient, ItemPredicate predicate, ItemLike result, String ingredientName, String resultName, Consumer<FinishedRecipe> consumer, float exp) {
+    private static void fullCooking(RecipeCategory category, Ingredient ingredient, ItemPredicate predicate, ItemLike result, String ingredientName, String resultName, Consumer<FinishedRecipe> consumer, float exp) {
         ResourceLocation resultLocation = FossilMod.location(resultName);
-        var furnace = SimpleCookingRecipeBuilder.smelting(ingredient, result, exp, 200)
+        var furnace = SimpleCookingRecipeBuilder.smelting(ingredient, category, result, exp, 200)
                 .unlockedBy("has_" + ingredientName, inventoryTrigger(predicate));
-        var campfire = SimpleCookingRecipeBuilder.campfireCooking(ingredient, result, exp, 600)
+        var campfire = SimpleCookingRecipeBuilder.campfireCooking(ingredient, category, result, exp, 600)
                 .unlockedBy("has_" + ingredientName, inventoryTrigger(predicate));
-        var smoker = SimpleCookingRecipeBuilder.smoking(ingredient, result, exp, 100)
+        var smoker = SimpleCookingRecipeBuilder.smoking(ingredient, category, result, exp, 100)
                 .unlockedBy("has_" + ingredientName, inventoryTrigger(predicate));
         furnace.save(consumer, resultLocation);
         campfire.save(consumer, resultLocation + "_from_campfire_cooking");
         smoker.save(consumer, resultLocation + "_from_smoking");
     }
 
-    private static void fullCooking(TagKey<Item> ingredient, ItemLike result, String resultName, Consumer<FinishedRecipe> consumer, float exp) {
-        fullCooking(Ingredient.of(ingredient), ItemPredicate.Builder.item().of(ingredient).build(), result, ingredient.location().getPath(), resultName, consumer, exp);
+    private static void fullCooking(RecipeCategory category, TagKey<Item> ingredient, ItemLike result, String resultName, Consumer<FinishedRecipe> consumer, float exp) {
+        fullCooking(category, Ingredient.of(ingredient), ItemPredicate.Builder.item().of(ingredient).build(), result, ingredient.location().getPath(), resultName, consumer, exp);
     }
 
-    private static void fullCooking(ItemLike ingredient, ItemLike result, String resultName, Consumer<FinishedRecipe> consumer, float exp) {
-        fullCooking(Ingredient.of(ingredient), ItemPredicate.Builder.item().of(ingredient).build(), result, RecipeBuilder.getDefaultRecipeId(ingredient).getPath(), resultName, consumer, exp);
+    private static void fullCooking(RecipeCategory category, ItemLike ingredient, ItemLike result, String resultName, Consumer<FinishedRecipe> consumer, float exp) {
+        fullCooking(category, Ingredient.of(ingredient), ItemPredicate.Builder.item().of(ingredient).build(), result, RecipeBuilder.getDefaultRecipeId(ingredient).getPath(), resultName, consumer, exp);
     }
 
-    private static void fullCooking(ItemLike ingredient, ItemLike result, Consumer<FinishedRecipe> consumer, float exp) {
-        fullCooking(ingredient, result, RecipeBuilder.getDefaultRecipeId(result).getPath(), consumer, exp);
+    private static void fullCooking(RecipeCategory category, ItemLike ingredient, ItemLike result, Consumer<FinishedRecipe> consumer, float exp) {
+        fullCooking(category, ingredient, result, RecipeBuilder.getDefaultRecipeId(result).getPath(), consumer, exp);
     }
 
-    private void fullOre(ItemLike ingredient, ItemLike result, Consumer<FinishedRecipe> consumer, float exp) {
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ingredient), result, exp, 200)
+    private void fullOre(RecipeCategory category, ItemLike ingredient, ItemLike result, Consumer<FinishedRecipe> consumer, float exp) {
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ingredient), category, result, exp, 200)
                 .unlockedBy(getHasName(ingredient), has(ingredient))
                 .save(consumer, RecipeBuilder.getDefaultRecipeId(result) + "_from_smelting_" + getItemName(ingredient));
-        SimpleCookingRecipeBuilder.blasting(Ingredient.of(ingredient), result, exp, 100)
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(ingredient), category, result, exp, 100)
                 .unlockedBy(getHasName(ingredient), has(ingredient))
                 .save(consumer, RecipeBuilder.getDefaultRecipeId(result) + "_from_blasting_" + getItemName(ingredient));
     }
 
-    protected void stonecutter(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike material) {
-        stonecutter(consumer, result, material, 1);
+    protected void stonecutter(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike material, int resultCount) {
+        stonecutter(RecipeCategory.BUILDING_BLOCKS, consumer, result, material, resultCount);
     }
 
-    protected void stonecutter(Consumer<FinishedRecipe> finishedRecipeConsumer, ItemLike result, ItemLike material, int resultCount) {
-        SingleItemRecipeBuilder builder = SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), result, resultCount).unlockedBy(getHasName(material), has(material));
+    protected void stonecutter(RecipeCategory category, Consumer<FinishedRecipe> finishedRecipeConsumer, ItemLike result, ItemLike material, int resultCount) {
+        SingleItemRecipeBuilder builder = SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), category, result, resultCount).unlockedBy(getHasName(material), has(material));
         String id = getConversionRecipeName(result, material);
         builder.save(finishedRecipeConsumer, FossilMod.MOD_ID + ":" + id + "_stonecutting");
-    }
-
-    private static void generateFamilyRecipes(BlockFamily family, Consumer<FinishedRecipe> finishedRecipeConsumer) {
-        family.getVariants().forEach((variant, block) -> {
-            BiFunction<ItemLike, ItemLike, RecipeBuilder> biFunction = shapeBuilders.get(variant);
-            Block itemLike = RecipeProvider.getBaseBlock(family, variant);
-            if (biFunction != null) {
-                RecipeBuilder recipeBuilder = biFunction.apply(block, itemLike);
-                family.getRecipeGroupPrefix().ifPresent(string -> recipeBuilder.group(string + (variant == BlockFamily.Variant.CUT ? "" : "_" + variant.getName())));
-                recipeBuilder.unlockedBy(family.getRecipeUnlockedBy().orElseGet(() -> RecipeProvider.getHasName(itemLike)), RecipeProvider.has(itemLike));
-                recipeBuilder.save(finishedRecipeConsumer);
-            }
-            if (variant == BlockFamily.Variant.CRACKED) {
-                RecipeProvider.smeltingResultFromBase(finishedRecipeConsumer, block, itemLike);
-            }
-        });
     }
 }

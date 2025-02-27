@@ -4,7 +4,7 @@ import com.github.teamfossilsarcheology.fossil.block.custom_blocks.CultureVatBlo
 import com.github.teamfossilsarcheology.fossil.client.model.EmbryoGenericModel;
 import com.github.teamfossilsarcheology.fossil.client.model.EmbryoPlantModel;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -30,10 +30,10 @@ public class CultureVatRenderer implements BlockEntityRenderer<BlockEntity> {
             float bob = (float) (Math.sin((Minecraft.getInstance().player.tickCount + partialTick) * 0.03F) * 1 * 0.05F - 1 * 0.05F);
             poseStack.pushPose();
             poseStack.translate(0.5, 1.5, 0.5);
-            poseStack.mulPose(Vector3f.ZP.rotationDegrees(180));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(180));
             poseStack.translate(0, 0.5F + bob, 0);
             poseStack.scale(0.5F, 0.5F, 0.5F);
-            poseStack.mulPose(Vector3f.YP.rotationDegrees(rot));
+            poseStack.mulPose(Axis.YP.rotationDegrees(rot));
             CultureVatBlock.EmbryoType embryoType = blockEntity.getBlockState().getValue(CultureVatBlock.EMBRYO);
             if (embryoType == CultureVatBlock.EmbryoType.GENERIC) {
                 var c = bufferSource.getBuffer(RenderType.entityCutout(EmbryoGenericModel.TEXTURE_GENERIC));

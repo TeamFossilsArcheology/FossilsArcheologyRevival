@@ -5,7 +5,7 @@ import com.github.teamfossilsarcheology.fossil.block.custom_blocks.AncientChestB
 import com.github.teamfossilsarcheology.fossil.block.entity.AncientChestBlockEntity;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -51,7 +51,7 @@ public class AncientChestRenderer implements BlockEntityRenderer<AncientChestBlo
         Direction direction = blockEntity.getBlockState().getValue(AncientChestBlock.FACING);
         poseStack.pushPose();
         poseStack.translate(0.5f, 0.5f, 0.5f);
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(-direction.toYRot()));
+        poseStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
         poseStack.translate(-0.5f, -0.5f, -0.5f);
         chestModel.getChild("lid").setRotation(-blockEntity.getLidTimer() * Mth.DEG_TO_RAD, 0, 0);
         var c = bufferSource.getBuffer(RenderType.entityCutout(TEXTURE));
@@ -62,19 +62,19 @@ public class AncientChestRenderer implements BlockEntityRenderer<AncientChestBlo
             poseStack.pushPose();
             if (direction == Direction.NORTH) {
                 poseStack.translate(0.5f, 0.6f, -0.1);
-                poseStack.mulPose(Vector3f.YP.rotationDegrees(90));
-                poseStack.mulPose(Vector3f.ZP.rotationDegrees(45));
+                poseStack.mulPose(Axis.YP.rotationDegrees(90));
+                poseStack.mulPose(Axis.ZP.rotationDegrees(45));
             } else if (direction == Direction.WEST) {
                 poseStack.translate(-0.1f, 0.6f, 0.5f);
-                poseStack.mulPose(Vector3f.YP.rotationDegrees(180));
-                poseStack.mulPose(Vector3f.ZP.rotationDegrees(45));
+                poseStack.mulPose(Axis.YP.rotationDegrees(180));
+                poseStack.mulPose(Axis.ZP.rotationDegrees(45));
             } else if (direction == Direction.SOUTH) {
                 poseStack.translate(0.5f, 0.6f, 1.1f);
-                poseStack.mulPose(Vector3f.YP.rotationDegrees(270));
-                poseStack.mulPose(Vector3f.ZP.rotationDegrees(45));
+                poseStack.mulPose(Axis.YP.rotationDegrees(270));
+                poseStack.mulPose(Axis.ZP.rotationDegrees(45));
             } else if (direction == Direction.EAST) {
                 poseStack.translate(1.1f, 0.6f, 0.5f);
-                poseStack.mulPose(Vector3f.ZP.rotationDegrees(45));
+                poseStack.mulPose(Axis.ZP.rotationDegrees(45));
             }
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();

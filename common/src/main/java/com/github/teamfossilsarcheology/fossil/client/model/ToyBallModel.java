@@ -4,7 +4,7 @@ import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.ToyBall;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -41,7 +41,7 @@ public class ToyBallModel extends EntityModel<ToyBall> {
     public void renderToBuffer(PoseStack stack, VertexConsumer buffer, int packedLight, int packedOverlay, float r, float g, float b, float alpha) {
         stack.pushPose();
         stack.translate(0, 1.25, 0);
-        stack.mulPose(Vector3f.XP.rotationDegrees(rotationX));
+        stack.mulPose(Axis.XP.rotationDegrees(rotationX));
         stack.translate(0, -1.25, 0);
         model.render(stack, buffer, packedLight, packedOverlay, rgb[0], rgb[1], rgb[2], alpha);
         stack.popPose();

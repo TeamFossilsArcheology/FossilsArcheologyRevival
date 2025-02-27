@@ -3,43 +3,30 @@ package com.github.teamfossilsarcheology.fossil.forge.data.providers;
 import com.github.teamfossilsarcheology.fossil.forge.data.loot.ModBlockLootTables;
 import com.github.teamfossilsarcheology.fossil.forge.data.loot.ModEntityLootTables;
 import com.github.teamfossilsarcheology.fossil.forge.data.loot.ModGenericLootTables;
-import com.google.common.collect.ImmutableList;
-import com.mojang.datafixers.util.Pair;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTables;
 import net.minecraft.world.level.storage.loot.ValidationContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+import java.util.Set;
 
 public class ModLootProvider extends LootTableProvider {
 
-    private final List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>>
-            lootTables = ImmutableList.of(
-            Pair.of(ModBlockLootTables::new, LootContextParamSets.BLOCK),
-            Pair.of(ModEntityLootTables::new, LootContextParamSets.ENTITY),
-            Pair.of(ModGenericLootTables::new, LootContextParamSets.ALL_PARAMS));
-
-    public ModLootProvider(DataGenerator dataGeneratorIn) {
-        super(dataGeneratorIn);
+    public ModLootProvider(PackOutput output) {
+        super(output, Set.of(), List.of(
+                new SubProviderEntry(ModBlockLootTables::new, LootContextParamSets.BLOCK),
+                new SubProviderEntry(ModEntityLootTables::new, LootContextParamSets.ENTITY),
+                new SubProviderEntry(ModGenericLootTables::new, LootContextParamSets.ALL_PARAMS)));
     }
 
     @Override
-    protected @NotNull List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> getTables() {
-        return lootTables;
-    }
-
-    @Override
-    protected void validate(Map<ResourceLocation, LootTable> map, @NotNull ValidationContext validationtracker) {
-        map.forEach((location, lootTable) -> LootTables.validate(validationtracker, location, lootTable));
+    protected void validate(Map<ResourceLocation, LootTable> map, @NotNull ValidationContext validationcontext) {
+        map.forEach((location, lootTable) -> LootTables.validate(validationcontext, location, lootTable));
     }
 }

@@ -2,66 +2,50 @@ package com.github.teamfossilsarcheology.fossil.world.feature.configuration;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.world.feature.ModFeatures;
-import dev.architectury.registry.registries.DeferredRegister;
-import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
+import com.github.teamfossilsarcheology.fossil.world.feature.ModOreFeatures;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
  * Calling this class before the mod blocks have been initialized will cause a crash at the moment
  */
 public class ModConfiguredFeatures {
-    /*public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> CORDAITES_TREE = FeatureUtils.register("cordaites",
-            Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
-                    BlockStateProvider.simple(ModBlocks.CORDAITES_LOG.get()),
-                    new CordaitesTrunkPlacer(10, 7, 0),
-                    BlockStateProvider.simple(ModBlocks.CORDAITES_LEAVES.get()),
-                    new CordaitesFoliagePlacer(),
-                    new TwoLayersFeatureSize(1, 0, 2)).build());
-    public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> SIGILLARIA_TREE = FeatureUtils.register("sigillaria",
-            Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
-                    BlockStateProvider.simple(ModBlocks.SIGILLARIA_LOG.get()),
-                    new StraightTrunkPlacer(5, 6, 3),
-                    BlockStateProvider.simple(ModBlocks.SIGILLARIA_LEAVES.get()),
-                    new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 4),
-                    new TwoLayersFeatureSize(1, 0, 2)).build());*/
-    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> CALAMITES_TREE = register("calamites_tree", ModFeatures.CALAMITES_TREE.feature(),
-            NoneFeatureConfiguration.INSTANCE);
-    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> CORDAITES_TREE = register("cordaites_tree", ModFeatures.CORDAITES_TREE.feature(),
-            NoneFeatureConfiguration.INSTANCE);
-    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> MUTANT_TREE = register("mutant_tree", ModFeatures.MUTANT_TREE.feature(),
-            NoneFeatureConfiguration.INSTANCE);
-    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> PALM_TREE = register("palm_tree", ModFeatures.PALM_TREE.feature(),
-            NoneFeatureConfiguration.INSTANCE);
-    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> SIGILLARIA_TREE = register("sigillaria_tree", ModFeatures.SIGILLARIA_TREE.feature(),
-            NoneFeatureConfiguration.INSTANCE);
-    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> TEMPSKYA_TREE = register("tempskya_tree", ModFeatures.TEMPSKYA_TREE.feature(),
-            NoneFeatureConfiguration.INSTANCE);
-    private static final DeferredRegister<ConfiguredFeature<?, ?>> FEATURES = DeferredRegister.create(FossilMod.MOD_ID, Registry.CONFIGURED_FEATURE_REGISTRY);
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CALAMITES_TREE_KEY = createKey("calamites_tree");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CORDAITES_TREE_KEY = createKey("cordaites_tree");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MUTANT_TREE_KEY = createKey("mutant_tree");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> PALM_TREE_KEY = createKey("palm_tree");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SIGILLARIA_TREE_KEY = createKey("sigillaria_tree");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> TEMPSKYA_TREE_KEY = createKey("tempskya_tree");
 
-    static {
-        FEATURES.register("moai_statue", () -> new ConfiguredFeature<>(ModFeatures.MOAI_STATUE.feature(), NoneFeatureConfiguration.INSTANCE));
-        FEATURES.register("ash_disk", () -> new ConfiguredFeature<>(ModFeatures.ASH_DISK.feature(), new AshDiskConfiguration(UniformInt.of(6, 11), false)));
-        FEATURES.register("magma_disk", () -> new ConfiguredFeature<>(ModFeatures.ASH_DISK.feature(), new AshDiskConfiguration(UniformInt.of(4, 6), true)));
-        FEATURES.register("volcano_cone", () -> new ConfiguredFeature<>(ModFeatures.VOLCANO_CONE.feature(), NoneFeatureConfiguration.INSTANCE));
-        FEATURES.register("volcano_vent", () -> new ConfiguredFeature<>(ModFeatures.VOLCANO_VENT.feature(), NoneFeatureConfiguration.INSTANCE));
-    }
-
-    public static void register() {
-        FEATURES.register();
-    }
-
-    private static <C extends FeatureConfiguration, F extends Feature<C>> Holder<ConfiguredFeature<C, ?>> register(String name, F feature, C config) {
-        return FeatureUtils.register(FossilMod.MOD_ID + ":" + name, feature, config);
-    }
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MOAI_STATUE_KEY = createKey("moai_statue");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ASH_DISK_KEY = createKey("ash_disk");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MAGMA_DISK_KEY = createKey("magma_disk");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> VOLCANO_CONE_KEY = createKey("volcano_cone");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> VOLCANO_VENT_KEY = createKey("volcano_vent");
 
     private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
-        return ResourceKey.create(Registry.CONFIGURED_FEATURE_REGISTRY, FossilMod.location(name));
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, FossilMod.location(name));
+    }
+
+    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+        ModOreFeatures.bootstrap(context);
+        FeatureUtils.register(context, CALAMITES_TREE_KEY, ModFeatures.CALAMITES_TREE.feature());
+        FeatureUtils.register(context, CORDAITES_TREE_KEY, ModFeatures.CORDAITES_TREE.feature());
+        FeatureUtils.register(context, MUTANT_TREE_KEY, ModFeatures.MUTANT_TREE.feature());
+        FeatureUtils.register(context, PALM_TREE_KEY, ModFeatures.PALM_TREE.feature());
+        FeatureUtils.register(context, SIGILLARIA_TREE_KEY, ModFeatures.SIGILLARIA_TREE.feature());
+        FeatureUtils.register(context, TEMPSKYA_TREE_KEY, ModFeatures.TEMPSKYA_TREE.feature());
+
+        FeatureUtils.register(context, MOAI_STATUE_KEY, ModFeatures.MOAI_STATUE.feature());
+        FeatureUtils.register(context, ASH_DISK_KEY, ModFeatures.ASH_DISK.feature(),
+                new AshDiskConfiguration(UniformInt.of(6, 11), false));
+        FeatureUtils.register(context, MAGMA_DISK_KEY, ModFeatures.ASH_DISK.feature(),
+                new AshDiskConfiguration(UniformInt.of(4, 6), true));
+        FeatureUtils.register(context, VOLCANO_CONE_KEY, ModFeatures.VOLCANO_CONE.feature());
+        FeatureUtils.register(context, VOLCANO_VENT_KEY, ModFeatures.VOLCANO_VENT.feature());
     }
 }

@@ -7,7 +7,7 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.AbstractContainerEventHandler;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.renderer.GameRenderer;
@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class InstructionsList extends AbstractContainerEventHandler implements Widget {
+public class InstructionsList extends AbstractContainerEventHandler implements Renderable {
     static final ResourceLocation ICON_OVERLAY_LOCATION = new ResourceLocation("textures/gui/resource_packs.png");
     private static final int WIDTH = 200;
     private static final int ITEM_HEIGHT = 20;
@@ -55,7 +55,7 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
         this.minecraft = minecraft;
         this.instructions = pair.instructions();
         instructions.forEach(instruction -> children.add(new InstructionEntry(instruction, minecraft)));
-        removeButton = new Button(X_0, Y_1 + 5, 70, 20, Component.literal("Remove item"), button -> {
+        removeButton = Button.builder(Component.literal("Remove item"), button -> {
             if (selected != null) {
                 instructions.remove(children.indexOf(selected));
                 children.remove(selected);
@@ -64,8 +64,8 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
                     selected = children.get(0);
                 }
             }
-        });
-        upButton = new Button(X_0 + 110, Y_1 + 5, 20, 20, Component.literal(""), button -> {
+        }).bounds(X_0, X_1 + 5, 70, 20).build();
+        upButton = new MoveButton(X_0 + 110, X_1 + 5, 20, 20, Component.literal(""), button -> {
             int i = children.indexOf(selected);
             if (i != 0) {
                 Collections.swap(children, i, i - 1);
@@ -76,13 +76,13 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
             public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
                 super.renderButton(poseStack, mouseX, mouseY, partialTick);
                 RenderSystem.setShaderTexture(0, ICON_OVERLAY_LOCATION);
-                int left = x + width / 2;
-                int top = y + (height - 8) / 2;
+                int left = getX() + width / 2;
+                int top = getY() + (height - 8) / 2;
                 GuiComponent.blit(poseStack, left - 8, top - 5, 111, 0, 32, 32, 256, 256);
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
             }
         };
-        downButton = new Button(X_0 + 80, Y_1 + 5, 20, 20, Component.literal(""), button -> {
+        downButton = new MoveButton(X_0 + 80, X_1 + 5, 20, 20, Component.literal(""), button -> {
             int i = children.indexOf(selected);
             if (i != children.size() - 1) {
                 Collections.swap(children, i, i + 1);
@@ -93,8 +93,8 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
             public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
                 super.renderButton(poseStack, mouseX, mouseY, partialTick);
                 RenderSystem.setShaderTexture(0, ICON_OVERLAY_LOCATION);
-                int left = x + width / 2;
-                int top = y + (height - 8) / 2;
+                int left = getX() + width / 2;
+                int top = getY() + (height - 8) / 2;
                 GuiComponent.blit(poseStack, left - 23, top - 4, 64, 16, 32, 32, 256, 256);
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
             }
@@ -311,6 +311,12 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
         bufferBuilder.vertex(rowLeft + 1, rowTop - 1, 0.0).endVertex();
         tesselator.end();
         RenderSystem.enableTexture();
+    }
+
+    static class MoveButton extends Button {
+        protected MoveButton(int x, int y, int width, int height, Component message, OnPress onPress) {
+            super(x, y, width, height, message, onPress, Button.DEFAULT_NARRATION);
+        }
     }
 
     class InstructionEntry implements GuiEventListener {

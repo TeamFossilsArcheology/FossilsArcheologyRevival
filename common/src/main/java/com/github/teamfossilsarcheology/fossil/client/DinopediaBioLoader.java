@@ -13,11 +13,7 @@ import org.slf4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * Loads dinopedia bio entries for the currently selected language and fallback language
@@ -39,20 +35,22 @@ public class DinopediaBioLoader extends ClientResourceLoader<Map<String, Map<Str
         ImmutableMap.Builder<String, String> fallbackLangBuilder = ImmutableMap.builder();
         int i = directory.length() + 1;
         String selectedLang = Minecraft.getInstance().options.languageCode;
-        for (ResourceLocation resourceLocation : listResources(resourceManager)) {
-            String path = resourceLocation.getPath();
-            ResourceLocation locationWithLang = new ResourceLocation(resourceLocation.getNamespace(), path.substring(i, path.length() - suffix.length()));
+        for (Map.Entry<ResourceLocation, Resource> entry : listResources(resourceManager).entrySet()) {
+            String path = entry.getKey().getPath();
+            ResourceLocation locationWithLang = new ResourceLocation(entry.getKey().getNamespace(), path.substring(i, path.length() - suffix.length()));
             try {
                 String[] dinoInfo = locationWithLang.getPath().split("/");
-                if (Language.DEFAULT.equals(dinoInfo[0])) {
-                    fallbackLangBuilder.put(dinoInfo[1], readFile(resourceManager, resourceLocation));
+                if (selectedLang.equals(dinoInfo[0])) {
+                    String text = readFile(entry.getValue());
+                    selectedLangBuilder.put(dinoInfo[1], text);
+                    if (Language.DEFAULT.equals(selectedLang)) {
+                        fallbackLangBuilder.put(dinoInfo[1], text);
+                    }
+                } else if (Language.DEFAULT.equals(dinoInfo[0])) {
+                    fallbackLangBuilder.put(dinoInfo[1], readFile(entry.getValue()));
                 }
-                if (!selectedLang.equals(dinoInfo[0])) {
-                    continue;
-                }
-                selectedLangBuilder.put(dinoInfo[1], readFile(resourceManager, resourceLocation));
             } catch (IOException | IllegalArgumentException exception) {
-                LOGGER.error("Couldn't parse data file {} from {}", locationWithLang, resourceLocation, exception);
+                LOGGER.error("Couldn't parse data file {} from {}", locationWithLang, entry.getKey(), exception);
             }
         }
         mapBuilder.put(selectedLang, selectedLangBuilder.build());
@@ -62,19 +60,14 @@ public class DinopediaBioLoader extends ClientResourceLoader<Map<String, Map<Str
         return mapBuilder.build();
     }
 
-    private String readFile(ResourceManager resourceManager, ResourceLocation resourceLocation) throws IOException {
-        Optional<Resource> opt = resourceManager.getResource(resourceLocation);
-        if (opt.isPresent()) {
-            try (InputStream inputStream = opt.get().open(); BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-                StringBuilder builder = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    builder.append(line);
-                }
-                return builder.toString();
+    private String readFile(Resource resource) throws IOException {
+        try (BufferedReader reader = resource.openAsReader()) {
+            StringBuilder builder = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                builder.append(line);
             }
-        } else {
-            throw new IllegalArgumentException("Couldn't find resource " + resourceLocation + " in resource manager");
+            return builder.toString();
         }
     }
 

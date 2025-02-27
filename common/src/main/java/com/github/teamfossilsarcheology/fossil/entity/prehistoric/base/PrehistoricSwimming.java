@@ -37,7 +37,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 public abstract class PrehistoricSwimming extends Prehistoric implements SwimmingAnimal {
     public static final int MAX_TIME_IN_WATER = 1000;
@@ -366,7 +366,7 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
             if (level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                 int i;
                 for (i = 0; i < 3; i++) {
-                    spawnAtLocation(boat.getBoatType().getPlanks());
+                    spawnAtLocation(boat.getVariant().getPlanks());
                 }
                 for (i = 0; i < 2; i++) {
                     spawnAtLocation(Items.STICK);
@@ -409,12 +409,12 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         var controller = new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::waterPredicate);
         registerEatingListeners(controller);
-        data.addAnimationController(controller);
-        data.addAnimationController(new PausableAnimationController<>(
-                this, AnimationLogic.ATTACK_CTRL, 0, getAnimationLogic()::grabAttackPredicate));
+        registerControllerWithTriggers(controllerRegistrar, controller);
+        registerControllerWithTriggers(controllerRegistrar, new PausableAnimationController<>(
+                this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::grabAttackPredicate));
     }
 
     @Override

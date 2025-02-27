@@ -43,36 +43,36 @@ dependencies {
     modApi "net.fabricmc.fabric-api:fabric-api:$fabric_api_version+$minecraft_version"
     modApi "dev.architectury:architectury-fabric:$architectury_version"
     modApi include("teamreborn:energy:$energy_version")
-    modImplementation include("maven.modrinth:sructurized-reborn:1.19-01")//Structurized Reborneborn
-    modImplementation "software.bernie.geckolib:geckolib-fabric-1.19:$gecko_lib_version"
+    modImplementation include("maven.modrinth:sructurized-reborn:1.19.3-01")//Structurized Reborneborn
+    modImplementation "software.bernie.geckolib:geckolib-fabric-$minecraft_version:$gecko_lib_version"
+    implementation "com.eliotlash.mclib:mclib:20"
     modImplementation "com.github.glitchfiend:TerraBlender-fabric:$minecraft_version-$terra_blender_version"
     modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:$cardinal_components_version")
     modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:$cardinal_components_version")
-    modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:$cardinal_components_version")
-    modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:$cardinal_components_version")
     modImplementation include("maven.modrinth:midnightlib:$midnight_lib_version")
-    modImplementation "com.github.darkpred.morehitboxes:morehitboxes-fabric-$minecraft_version:1.9.1"
+    modImplementation "com.github.darkpred.morehitboxes:morehitboxes-fabric-$minecraft_version:$more_hitboxes_version"
 
     //Optional
     modCompileOnly "maven.modrinth:jade:$jade_version_fabric"
     modRuntimeOnly "maven.modrinth:jade:$jade_version_fabric"
     modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
     modCompileOnly "maven.modrinth:carry-on:$carry_on_version_fabric"
-    modCompileOnly "maven.modrinth:farmers-delight-fabric:$farmers_delight_version_fabric"
+    //modCompileOnly "maven.modrinth:farmers-delight-fabric:$farmers_delight_version_fabric" 1.19.4
 
     //FD addons
-    modCompileOnly "maven.modrinth:oceans-delight:fabric-1.0.2-1.19.2"
-    modCompileOnly "curse.maven:nethers-delight-fabric-701831:4353098" //1.19.2 1.0.1
-    modCompileOnly "maven.modrinth:biomesyougo:b3yqYAnG" //1.19.2-2.0.1.6
-    modCompileOnly "maven.modrinth:ends-delight:VQxr0ozB" //1.19.2-2.0
-    modCompileOnly "maven.modrinth:cultural-delights-fabric:0.14.12+1.19.2"
-    modCompileOnly "maven.modrinth:pineapple-delight:1.0.9"
-    modCompileOnly "maven.modrinth:festive-delight:pJ5h6NXI" //1.19.2-1.1.0
-    modCompileOnly "maven.modrinth:coffee-delight:IOftAwJN" //1.19.2 1.4
-    modCompileOnly "maven.modrinth:casualness-delight:1.19.2-0.4"
-    modCompileOnly "maven.modrinth:brewin-and-chewin-fabric:fabric-2.3.1+1.19.2"
-    modCompileOnly "curse.maven:farmers-respite-fabric-811003:4658852" //1.19.2-2.2.5
-    modCompileOnly "curse.maven:expanded-delight-620770:4409058" //1.19.2 0.2.5.2
+    //modCompileOnly "maven.modrinth:oceans-delight:fdrf-fabric-1.0.2-1.20"
+    //modCompileOnly "curse.maven:nethers-delight-fabric-701831:4353098" //1.19.2 1.0.1
+    modCompileOnly "maven.modrinth:biomesyougo:1.19.3-3.0.1.1-fabric"
+    //modCompileOnly "maven.modrinth:ends-delight:VQxr0ozB" //1.19.2-2.0
+    //modCompileOnly "maven.modrinth:cultural-delights-fabric:1.0.5+1.20.1"
+    //modCompileOnly "maven.modrinth:pineapple-delight:x85UwMri" //1.20.1-1.0.13
+    //modCompileOnly "maven.modrinth:festive-delight:Gs9jmquQ" //1.20.1-1.1.0
+    //modCompileOnly "maven.modrinth:coffee-delight:IOftAwJN" //1.19.3 1.4
+    //modCompileOnly "maven.modrinth:casualness-delight:1.20.1-0.4-FDR"
+    //modCompileOnly "maven.modrinth:seed-delight:2MhNzl7f" //1.20.1-1.0.1
+    //modCompileOnly "maven.modrinth:brewin-and-chewin-fabric:3.0.6+1.20.1"
+    //modCompileOnly "curse.maven:farmers-respite-fabric-811003:4658852" //1.19.2-2.2.5
+    //modCompileOnly "curse.maven:expanded-delight-620770:4409058" //1.19.3 0.2.5.2
 
     //Dev only
     /*

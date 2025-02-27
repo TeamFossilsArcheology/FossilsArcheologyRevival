@@ -1,41 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.forge.data.providers;
 
-import com.github.teamfossilsarcheology.fossil.FossilMod;
-import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
-import com.github.teamfossilsarcheology.fossil.item.ModItems;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.simibubi.create.AllRecipeTypes;
-import com.simibubi.create.Create;
-import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
-import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
-import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
-import com.simibubi.create.foundation.data.recipe.CreateRecipeProvider;
-import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
-import com.simibubi.create.foundation.utility.RegisteredObjects;
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.common.crafting.conditions.ICondition;
-import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
-
-import static com.github.teamfossilsarcheology.fossil.block.ModBlocks.DEEPSLATE_FOSSIL;
-import static com.github.teamfossilsarcheology.fossil.block.ModBlocks.TUFF_FOSSIL;
-
 public class FossilCreateRecipeProvider {
-    public static void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
+   /* public static void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
         baseFossil(ModBlocks.CALCITE_FOSSIL::get, Blocks.CALCITE, consumer);
         baseFossil(ModBlocks.DRIPSTONE_FOSSIL::get, Blocks.DRIPSTONE_BLOCK, consumer);
         baseFossil(ModBlocks.RED_SANDSTONE_FOSSIL::get, Blocks.RED_SANDSTONE, consumer);
@@ -80,10 +46,11 @@ public class FossilCreateRecipeProvider {
                     .build(c);
         };
     }
-
+*/
     /**
      * With serializer for fabric conditions
      */
+    /*
     private static class CustomProcessingRecipeBuilder<T extends ProcessingRecipe<?>> extends ProcessingRecipeBuilder<T> {
 
         private CustomProcessingRecipeBuilder(ProcessingRecipeFactory<T> factory, ResourceLocation recipeId) {
@@ -167,5 +134,5 @@ public class FossilCreateRecipeProvider {
             return toReturn;
         }
 
-    }
+    }*/
 }

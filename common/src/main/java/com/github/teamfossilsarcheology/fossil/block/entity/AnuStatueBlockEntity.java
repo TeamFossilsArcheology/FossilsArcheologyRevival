@@ -7,7 +7,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -21,8 +20,8 @@ public class AnuStatueBlockEntity extends BlockEntity {
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, AnuStatueBlockEntity blockEntity) {
         if (hasFigurines(level, pos) && hasRedstone(level, pos)) {
-            level.explode(null, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 5f, true, Explosion.BlockInteraction.BREAK);
-            ModEntities.ANU_TOTEM.get().spawn((ServerLevel) level, null, null, null, pos.offset(0.5f, 0, 0.5f), MobSpawnType.EVENT, false, false);
+            level.explode(null, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 5f, true, Level.ExplosionInteraction.BLOCK);
+            ModEntities.ANU_TOTEM.get().spawn((ServerLevel) level, pos.offset(0.5f, 0, 0.5f), MobSpawnType.EVENT);
             level.playSound(null, pos, ModSounds.ANU_TOTEM.get(), SoundSource.BLOCKS, 1, 1);
             level.removeBlock(pos.north().east(), false);
             level.removeBlock(pos.north().west(), false);

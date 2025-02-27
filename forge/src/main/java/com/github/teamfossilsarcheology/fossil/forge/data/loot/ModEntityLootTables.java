@@ -1,13 +1,13 @@
 package com.github.teamfossilsarcheology.fossil.forge.data.loot;
 
-import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricMobType;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.loot.CustomizeToDinoFunction;
-import net.minecraft.data.loot.EntityLoot;
+import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -21,37 +21,54 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
-public class ModEntityLootTables extends EntityLoot {
+public class ModEntityLootTables extends EntityLootSubProvider {
+    public ModEntityLootTables() {
+        super(FeatureFlags.REGISTRY.allFlags());
+    }
 
     @Override
-    protected void addTables() {
+    public void generate() {
         for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
             if (info.hasBones()) {
-                add(FossilMod.location("entities/" + info.resourceName), defaultLoot(info));
+                add(info.entityType(), defaultLoot(info));
             } else if(info.uniqueBoneItem != null) {
                 var meat = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).
                         add(LootItem.lootTableItem(info.foodItem).apply(CustomizeToDinoFunction.apply(LootContext.EntityTarget.THIS))
                                 .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 2))));
                 var unique = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(info.uniqueBoneItem).setWeight(50)).add(EmptyLootItem.emptyItem().setWeight(50));
-                add(FossilMod.location("entities/" + info.resourceName), LootTable.lootTable().withPool(meat).withPool(unique));
+                add(info.entityType(), LootTable.lootTable().withPool(meat).withPool(unique));
             } else if (info.foodItem != null) {
                 var meat = LootItem.lootTableItem(info.foodItem).apply(CustomizeToDinoFunction.apply(LootContext.EntityTarget.THIS));
                 if (info.mobType != PrehistoricMobType.FISH) {
                     meat = meat.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 2)));
                 }
-                add(FossilMod.location("entities/" + info.resourceName), LootTable.lootTable().withPool(
+                add(info.entityType(), LootTable.lootTable().withPool(
                         LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(meat)));
             }
         }
         var wool = uniformLoot(Items.BROWN_WOOL, 6, 8);
-        add(FossilMod.location("entities/" + PrehistoricEntityInfo.MAMMOTH.resourceName), defaultLoot(PrehistoricEntityInfo.MAMMOTH).withPool(wool));
+        add(ModEntities.MAMMOTH.get(), defaultLoot(PrehistoricEntityInfo.MAMMOTH).withPool(wool));
         var shell = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(PrehistoricEntityInfo.NAUTILUS.foodItem).setWeight(95))
                 .add(LootItem.lootTableItem(ModItems.MAGIC_CONCH.get()).setWeight(5));
-        add(FossilMod.location("entities/" + PrehistoricEntityInfo.NAUTILUS.resourceName), LootTable.lootTable().withPool(shell));
+        add(ModEntities.NAUTILUS.get(), LootTable.lootTable().withPool(shell));
         add(ModEntities.FAILURESAURUS.get(), LootTable.lootTable().withPool(
                 LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(ModItems.FAILURESAURUS_FLESH.get()))));
+
+        add(ModEntities.TAR_SLIME.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                .add(LootItem.lootTableItem(ModItems.TAR_DROP.get()))
+                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 2)))
+                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 1)))));
+
+        add(ModEntities.ANUBITE.get(), LootTable.lootTable());
+        add(ModEntities.ANU_BOSS.get(), LootTable.lootTable());
+        add(ModEntities.ANU_DEAD.get(), LootTable.lootTable());
+        add(ModEntities.SENTRY_PIGLIN.get(), LootTable.lootTable());
+        add(ModEntities.FRIENDLY_PIGLIN.get(), LootTable.lootTable());
+        add(ModEntities.DINOSAUR_EGG.get(), LootTable.lootTable());
     }
 
     private LootTable.Builder defaultLoot(PrehistoricEntityInfo info) {
@@ -75,7 +92,7 @@ public class ModEntityLootTables extends EntityLoot {
     }
 
     @Override
-    protected @NotNull Iterable<EntityType<?>> getKnownEntities() {
-        return List.of();
+    protected @NotNull Stream<EntityType<?>> getKnownEntityTypes() {
+        return StreamSupport.stream(ModEntities.ENTITIES.spliterator(), false).map(Supplier::get);
     }
 }

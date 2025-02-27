@@ -22,7 +22,7 @@ public class AbstractAnimationList extends DebugSelectionList<AbstractAnimationL
     private final Consumer<AnimationObject> consumer;
     protected String currentControllerName;
     protected double speed = 1;
-    protected double transitionLength = 5;
+    protected int transitionLength = 5;
     protected boolean loop;
 
     public AbstractAnimationList(int x0, int height, int itemHeight, int yOffset, Map<String, ? extends AnimationInfo> animations, Minecraft minecraft, Consumer<AnimationObject> function) {
@@ -62,9 +62,8 @@ public class AbstractAnimationList extends DebugSelectionList<AbstractAnimationL
         AnimationEntry(String animation) {
             String[] split = animation.split("\\.");
             Component display = Component.literal(split.length > 0 ? StringUtils.capitalize(split[split.length - 1]) : "");
-            changeButton = new Button(0, 0, 100, 20, display, button -> {
-                consumer.accept(new AnimationObject(animation, currentControllerName, speed, transitionLength, loop));
-            });
+            changeButton = Button.builder(display, button -> consumer.accept(new AnimationObject(animation, currentControllerName, speed, transitionLength, loop)))
+                    .bounds(0, 0, 100, 20).build();
         }
 
         @Override
@@ -75,8 +74,8 @@ public class AbstractAnimationList extends DebugSelectionList<AbstractAnimationL
         @Override
         public void render(PoseStack poseStack, int index, int top, int left, int width, int height, int mouseX, int mouseY, boolean isMouseOver,
                            float partialTick) {
-            changeButton.x = getEntryLeftPos();
-            changeButton.y = top;
+            changeButton.setX(getEntryLeftPos());
+            changeButton.setY(top);
             changeButton.render(poseStack, mouseX, mouseY, partialTick);
         }
 
@@ -96,7 +95,7 @@ public class AbstractAnimationList extends DebugSelectionList<AbstractAnimationL
         }
     }
 
-    public record AnimationObject(String name, String controller, double speed, double transitionLength, boolean loop) {
+    public record AnimationObject(String name, String controller, double speed, int transitionLength, boolean loop) {
 
     }
 }

@@ -2,7 +2,7 @@ package com.github.teamfossilsarcheology.fossil.recipe;
 
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.CriterionTriggerInstance;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -82,7 +82,7 @@ public abstract class WithFuelRecipeBuilder implements RecipeBuilder {
         public void serializeRecipeData(JsonObject json) {
             json.add("input", input.toJson());
             json.add("fuel", fuel.toJson());
-            json.addProperty("result", Registry.ITEM.getKey(output.asItem()).toString());
+            json.addProperty("result", BuiltInRegistries.ITEM.getKey(output.asItem()).toString());
             json.addProperty("duration", duration);
         }
 

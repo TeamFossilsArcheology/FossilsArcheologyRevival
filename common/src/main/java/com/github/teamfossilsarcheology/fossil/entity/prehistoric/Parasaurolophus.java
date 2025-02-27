@@ -21,17 +21,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.EnumSet;
 import java.util.Optional;
 
-import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.LOOP;
-import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.PLAY_ONCE;
+import static software.bernie.geckolib.core.animation.Animation.LoopType.LOOP;
+import static software.bernie.geckolib.core.animation.Animation.LoopType.PLAY_ONCE;
 
 public class Parasaurolophus extends Prehistoric {
     private static final EntityDataAccessor<Boolean> STANDING = SynchedEntityData.defineId(Parasaurolophus.class, EntityDataSerializers.BOOLEAN);
@@ -126,11 +123,11 @@ public class Parasaurolophus extends Prehistoric {
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         var controller = new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, animationLogic::paraPredicate);
         registerEatingListeners(controller);
-        data.addAnimationController(controller);
-        data.addAnimationController(new PausableAnimationController<>(
+        controllerRegistrar.add(controller);
+        controllerRegistrar.add(new PausableAnimationController<>(
                 this, AnimationLogic.ATTACK_CTRL, 0, getAnimationLogic()::attackPredicate));
     }
 
@@ -178,37 +175,37 @@ public class Parasaurolophus extends Prehistoric {
             super(entity);
         }
 
-        public PlayState paraPredicate(AnimationEvent<Parasaurolophus> event) {
+        public PlayState paraPredicate(AnimationState<Parasaurolophus> state) {
             if (isBlocked()) return PlayState.STOP;
-            AnimationController<Parasaurolophus> controller = event.getController();
-            if (tryNextAnimation(controller)) {
+            AnimationController<Parasaurolophus> controller = state.getController();
+            if (tryNextAnimation(state, controller)) {
                 return PlayState.CONTINUE;
             }
             Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
-            if (activeAnimation.isPresent() && tryForcedAnimation(event, activeAnimation.get())) {
+            if (activeAnimation.isPresent() && tryForcedAnimation(state, activeAnimation.get())) {
                 return PlayState.CONTINUE;
             }
-            if (event.getAnimatable().isStanding()) {
-                controller.setAnimation(new AnimationBuilder().playOnce(STAND_UP).loop(STAND));
+            if (state.getAnimatable().isStanding()) {
+                controller.setAnimation(RawAnimation.begin().thenPlay(STAND_UP).thenLoop(STAND));
                 return PlayState.CONTINUE;
             }
             double animationSpeed = 1;
             if (entity.isSleeping()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
-            } else if (event.getAnimatable().sitSystem.isSitting()) {
+            } else if (state.getAnimatable().sitSystem.isSitting()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.SIT);
             } else if (entity.isInWater()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.SWIM, true);
-            } else if (event.isMoving()) {
-                animationSpeed = addMovementAnimation(event, true);
+            } else if (state.isMoving()) {
+                animationSpeed = addMovementAnimation(state, true);
             } else {
                 addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
             }
-            setAnimationSpeed(controller, animationSpeed, event.getAnimationTick());
+            setAnimationSpeed(controller, animationSpeed, state.getAnimationTick());
             Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
             if (newAnimation.isPresent()) {
-                controller.transitionLengthTicks = newAnimation.get().transitionLength();
-                controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName(), newAnimation.get().loop() ? LOOP : PLAY_ONCE));
+                controller.setTransitionLength(newAnimation.get().transitionLength());
+                controller.setAnimation(RawAnimation.begin().then(newAnimation.get().animationName(), newAnimation.get().loop() ? LOOP : PLAY_ONCE));
             }
             return PlayState.CONTINUE;
         }

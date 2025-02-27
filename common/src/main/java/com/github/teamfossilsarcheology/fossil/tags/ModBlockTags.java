@@ -1,14 +1,14 @@
 package com.github.teamfossilsarcheology.fossil.tags;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
-import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
 public class ModBlockTags {
-    private static final ResourceKey<? extends Registry<Block>> key = ModBlocks.BLOCKS.getRegistrar().key();
+    private static final ResourceKey<? extends Registry<Block>> key = Registries.BLOCK;
     public static final TagKey<Block> ANCIENT_WOOD_LOGS = TagKey.create(key, FossilMod.location("ancient_wood_logs"));
     public static final TagKey<Block> CALAMITES_LOGS = TagKey.create(key, FossilMod.location("calamites_logs"));
     public static final TagKey<Block> CORDAITES_LOGS = TagKey.create(key, FossilMod.location("cordaites_logs"));

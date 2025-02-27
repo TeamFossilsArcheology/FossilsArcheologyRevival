@@ -1,20 +1,24 @@
 package com.github.teamfossilsarcheology.fossil.item.forge;
 
+import com.github.teamfossilsarcheology.fossil.client.renderer.armor.AncientHelmetRenderer;
+import com.github.teamfossilsarcheology.fossil.item.AncientHelmetItem;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.item.GeoArmorItem;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
-public class AncientHelmetItemImpl extends GeoArmorItem implements IAnimatable {
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+import java.util.function.Consumer;
 
-    public AncientHelmetItemImpl(ArmorMaterial materialIn, EquipmentSlot slot, Properties builder) {
-        super(materialIn, slot, builder);
+public class AncientHelmetItemImpl extends AncientHelmetItem {
+
+    public AncientHelmetItemImpl(ArmorMaterial armorMaterial, EquipmentSlot slot, Properties properties) {
+        super(armorMaterial, slot, properties);
     }
 
     public static ArmorItem get(ArmorMaterial material, EquipmentSlot slot, Item.Properties properties) {
@@ -22,11 +26,21 @@ public class AncientHelmetItemImpl extends GeoArmorItem implements IAnimatable {
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
-    }
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        consumer.accept(new IClientItemExtensions() {
+            private GeoArmorRenderer<?> renderer;
 
-    @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
+            @Override
+            public @NotNull HumanoidModel<?> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
+                if (renderer == null)
+                    renderer = new AncientHelmetRenderer();
+
+                // This prepares our GeoArmorRenderer for the current render frame.
+                // These parameters may be null however, so we don't do anything further with them
+                renderer.prepForRender(livingEntity, itemStack, equipmentSlot, original);
+
+                return renderer;
+            }
+        });
     }
 }

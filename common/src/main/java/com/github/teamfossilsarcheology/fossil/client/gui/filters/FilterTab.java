@@ -10,7 +10,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -52,7 +52,7 @@ public class FilterTab {
         List<Item> list = new ArrayList<>();
         var enabledButton = buttons.stream().filter(button -> button.filter.enabled).findFirst();
         if (enabledButton.isPresent()) {
-            var optional = Registry.ITEM.getTag(enabledButton.get().filter.tag);
+            var optional = BuiltInRegistries.ITEM.getTag(enabledButton.get().filter.tag);
             if (optional.isPresent()) {
                 list = optional.get().stream().map(Holder::value).toList();
             }
@@ -94,7 +94,7 @@ public class FilterTab {
         private final boolean left;
 
         public FilterButton(Screen screen, int i, int j, boolean left, Filter filter, OnPress onPress) {
-            super(i, j, 32, 28, Component.empty(), onPress);
+            super(i, j, 32, 28, Component.empty(), onPress, DEFAULT_NARRATION);
             this.screen = screen;
             this.left = left;
             this.filter = filter;
@@ -115,11 +115,9 @@ public class FilterTab {
             ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
             float j = left ? 0 : 64;
             j = filter.enabled ? j + 32 : j;
-            GuiComponent.blit(poseStack, x, y, 0, j, 0, 32, 28, 128, 128);
-            itemRenderer.blitOffset = 100;
-            itemRenderer.renderAndDecorateItem(filter.icon, x + 8, y + 6);
-            itemRenderer.blitOffset = 0;
-            if (mouseX > x && mouseY > y && mouseX < x + 32 && mouseY < y + 28) {
+            GuiComponent.blit(poseStack, getX(), getY(), 0, j, 0, 32, 28, 128, 128);
+            itemRenderer.renderAndDecorateItem(filter.icon, getX() + 8, getY() + 6);
+            if (mouseX > getX() && mouseY > getY() && mouseX < getX() + 32 && mouseY < getY() + 28) {
                 screen.renderTooltip(poseStack, filter.tooltip, mouseX, mouseY);
             }
         }

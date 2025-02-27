@@ -18,7 +18,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.StringSplitter;
@@ -114,12 +114,12 @@ public class DinopediaScreen extends Screen {
             scale = 35;
         }
         poseStack2.scale(scale, scale, scale);
-        poseStack2.mulPose(Vector3f.ZP.rotationDegrees(180));
+        poseStack2.mulPose(Axis.ZP.rotationDegrees(180));
         Lighting.setupForEntityInInventory();
         EntityRenderDispatcher entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
         entityRenderDispatcher.setRenderShadow(false);
         //Look at mob from above
-        poseStack2.mulPose(Vector3f.XP.rotationDegrees(-30));
+        poseStack2.mulPose(Axis.XP.rotationDegrees(-30));
         MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
         RenderSystem.runAsFancy(() -> {
             float yRotO = entity.yBodyRot;
@@ -478,7 +478,7 @@ public class DinopediaScreen extends Screen {
         private final boolean isForward;
 
         public DinopediaPageButton(int x, int y, int width, int height, boolean isForward, OnPress onPress) {
-            super(x, y, width, height, Component.literal(""), onPress);
+            super(x, y, width, height, Component.literal(""), onPress, DEFAULT_NARRATION);
             this.isForward = isForward;
         }
 
@@ -487,7 +487,7 @@ public class DinopediaScreen extends Screen {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderColor(1, 1, 1, 1);
             RenderSystem.setShaderTexture(0, DINOPEDIA_BACKGROUND);
-            blit(poseStack, x, y, isForward ? 0 : 34, 223, 34, 30);
+            blit(poseStack, getX(), getY(), isForward ? 0 : 34, 223, 34, 30);
         }
     }
 }

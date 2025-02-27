@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "minecraft:ocean",
+  "spawners": {
+    "type": "fossil:nautilus",
+    "maxCount": 4,
+    "minCount": 1,
+    "weight": 2
+  }
+}

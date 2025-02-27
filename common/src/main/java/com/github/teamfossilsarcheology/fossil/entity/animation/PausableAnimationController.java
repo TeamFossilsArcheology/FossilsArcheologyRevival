@@ -1,14 +1,15 @@
 package com.github.teamfossilsarcheology.fossil.entity.animation;
 
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.controller.AnimationController;
 
-public class PausableAnimationController<T extends IAnimatable> extends AnimationController<T> {
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animation.AnimationController;
+
+public class PausableAnimationController<T extends GeoEntity> extends AnimationController<T> {
     private boolean paused;
     private double lastTick;
 
-    public PausableAnimationController(T animatable, String name, float transitionLengthTicks, IAnimationPredicate<T> animationPredicate) {
-        super(animatable, name, transitionLengthTicks, animationPredicate);
+    public PausableAnimationController(T animatable, String name, int transitionTickTime, AnimationStateHandler<T> animationHandler) {
+        super(animatable, name, transitionTickTime, animationHandler);
     }
 
     public boolean isPaused() {
@@ -29,7 +30,7 @@ public class PausableAnimationController<T extends IAnimatable> extends Animatio
      */
     public double getCurrentTick() {
         if (getCurrentAnimation() != null) {
-            return lastTick % getCurrentAnimation().animationLength;
+            return lastTick % getCurrentAnimation().animation().length();
         }
         return lastTick;
     }
@@ -60,10 +61,10 @@ public class PausableAnimationController<T extends IAnimatable> extends Animatio
         if (animationSpeed == 0) {
             return;
         }
-        if (animationSpeed != this.animationSpeed && getCurrentAnimation() != null) {
+        if (animationSpeed != getAnimationSpeed() && getCurrentAnimation() != null) {
             double timeInAnim = animationTick - tickOffset;
             //Inverse of how much the tick will change after changing the animation speed
-            double mult = this.animationSpeed / animationSpeed;
+            double mult = getAnimationSpeed() / animationSpeed;
             tickOffset = animationTick - timeInAnim * mult;
             setAnimationSpeed(animationSpeed);
         }

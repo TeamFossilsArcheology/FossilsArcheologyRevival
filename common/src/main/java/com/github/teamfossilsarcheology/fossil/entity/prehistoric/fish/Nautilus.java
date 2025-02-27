@@ -23,11 +23,11 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib3.core.AnimationState;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.List;
 
@@ -40,6 +40,10 @@ public class Nautilus extends PrehistoricFish {
     public static final String SHELL_HOLD = "animation.nautilus.shell_hold";
     public static final String SHELL_EMERGE = "animation.nautilus.shell_emerge";
     public static final String BEACHED = "animation.nautilus.land";
+
+    public static final RawAnimation SHELL_CLOSE = RawAnimation.begin().thenPlay(SHELL_RETRACT).thenPlay(SHELL_HOLD);
+    public static final RawAnimation SHELL_OPEN = RawAnimation.begin().thenPlay(SHELL_EMERGE);
+
     private static final EntityDataAccessor<Boolean> IS_IN_SHELL = SynchedEntityData.defineId(Nautilus.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDimensions SHELL_DIMENSIONS = EntityDimensions.fixed(1, 0.5f);
     private float ticksUntilShellUpdate = 0;
@@ -206,33 +210,33 @@ public class Nautilus extends PrehistoricFish {
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 20, event -> {
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 20, event -> {
             var ctrl = event.getController();
             if (shouldBeBeached()) {
-                ctrl.setAnimation(new AnimationBuilder().addAnimation(nextBeachedAnimation().animation.animationName));
+                ctrl.setAnimation(RawAnimation.begin().thenPlay(nextBeachedAnimation().animation.name()));
             } else if (isInShell() && isInWater()) {
                 return PlayState.STOP;
             } else if (event.isMoving()) {
-                ctrl.setAnimation(new AnimationBuilder().addAnimation(nextWalkingAnimation().animation.animationName));
+                ctrl.setAnimation(RawAnimation.begin().thenPlay(nextWalkingAnimation().animation.name()));
             } else {
-                ctrl.setAnimation(new AnimationBuilder().addAnimation(nextIdleAnimation().animation.animationName));
+                ctrl.setAnimation(RawAnimation.begin().thenPlay(nextIdleAnimation().animation.name()));
             }
             return PlayState.CONTINUE;
         }));
-        data.addAnimationController(new PausableAnimationController<>(this, "Shell", 4, this::shellPredicate));
+        controllerRegistrar.add(new PausableAnimationController<>(this, "Shell", 4, this::shellPredicate));
     }
 
-    private PlayState shellPredicate(AnimationEvent<Nautilus> event) {
-        var ctrl = event.getController();
+    private PlayState shellPredicate(AnimationState<Nautilus> state) {
+        var ctrl = state.getController();
         var anim = ctrl.getCurrentAnimation();
-        if (event.getAnimatable().isInShell()) {
-            if (anim == null || anim.animationName.equals(SHELL_EMERGE) && ctrl.getAnimationState() == AnimationState.Stopped) {
-                ctrl.setAnimation(new AnimationBuilder().addAnimation(SHELL_RETRACT).addAnimation(SHELL_HOLD));
+        if (state.getAnimatable().isInShell()) {
+            if (anim == null || state.isCurrentAnimation(SHELL_OPEN) && ctrl.getAnimationState() == AnimationController.State.STOPPED) {
+                state.setAnimation(SHELL_CLOSE);
             }
         } else {
-            if (anim != null && anim.animationName.equals(SHELL_HOLD)) {
-                ctrl.setAnimation(new AnimationBuilder().addAnimation(SHELL_EMERGE));
+            if (anim != null && anim.animation().name().equals(SHELL_HOLD)) {
+                state.setAnimation(SHELL_OPEN);
             }
         }
         return PlayState.CONTINUE;

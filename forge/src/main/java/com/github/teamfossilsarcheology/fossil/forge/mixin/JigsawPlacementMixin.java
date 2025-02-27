@@ -4,9 +4,10 @@ import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.Pools;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.block.JigsawBlock;
@@ -31,15 +32,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.*;
+import java.util.Deque;
+import java.util.List;
+import java.util.Optional;
 
 
 @Mixin(targets = "net/minecraft/world/level/levelgen/structure/pools/JigsawPlacement$Placer")
 public abstract class JigsawPlacementMixin {
 
-    @Shadow
-    @Final
-    private StructureTemplateManager structureTemplateManager;
     @Final
     @Shadow
     private RandomSource random;
@@ -58,6 +58,13 @@ public abstract class JigsawPlacementMixin {
     @Final
     @Shadow
     private List<? super PoolElementStructurePiece> pieces;
+
+    @Shadow @Final private StructureTemplateManager structureTemplateManager;
+
+    @Shadow
+    private static ResourceKey<StructureTemplatePool> readPoolName(StructureTemplate.StructureBlockInfo structureBlockInfo) {
+        return null;
+    }
 
     @Inject(method = "tryPlacingChildren", at = @At(value = "HEAD"), cancellable = true)
     private void tryPlacingCustomStructures(PoolElementStructurePiece structurePiece, MutableObject<VoxelShape> mutableObject, int depth, boolean bl, LevelHeightAccessor levelHeightAccessor, RandomState randomState, CallbackInfo ci) {
@@ -83,14 +90,17 @@ public abstract class JigsawPlacementMixin {
                 BlockPos expectedJigsawPosition = baseJigsawPosition.relative(baseJigsawDirection);
                 int k = baseJigsawPosition.getY() - baseMinY;
                 int l = -1;
-                ResourceLocation baseTargetLocation = new ResourceLocation(baseStructureJigSaw.nbt.getString("pool"));
-                Optional<StructureTemplatePool> baseTargetPool = pools.getOptional(baseTargetLocation);
-                if (baseTargetPool.isEmpty() || baseTargetPool.get().size() == 0 && !Objects.equals(baseTargetLocation, Pools.EMPTY.location())) {
+                ResourceKey<StructureTemplatePool> baseTargetKey = readPoolName(baseStructureJigSaw);
+                Optional<? extends Holder<StructureTemplatePool>> baseTargetPool = pools.getHolder(baseTargetKey);
+                if (baseTargetPool.isEmpty()) {
                     continue;
                 }
-                ResourceLocation baseFallbackLocation = baseTargetPool.get().getFallback();
-                Optional<StructureTemplatePool> baseFallbackPool = pools.getOptional(baseFallbackLocation);
-                if (baseFallbackPool.isEmpty() || baseFallbackPool.get().size() == 0 && !Objects.equals(baseFallbackLocation, Pools.EMPTY.location())) {
+                Holder<StructureTemplatePool> baseTarget = baseTargetPool.get();
+                if (baseTarget.value().size() == 0 && !baseTarget.is(Pools.EMPTY)) {
+                    continue;
+                }
+                Holder<StructureTemplatePool> baseFallback = baseTarget.value().getFallback();
+                if (baseFallback.value().size() == 0 && !baseFallback.is(Pools.EMPTY)) {
                     continue;
                 }
                 if (baseStructureBoundingBox.isInside(expectedJigsawPosition)) {
@@ -104,24 +114,25 @@ public abstract class JigsawPlacementMixin {
                 List<StructurePoolElement> list = Lists.newArrayList();
                 //Always place basement even if limit is reached
                 if (depth != maxDepth || isBottom) {
-                    list.addAll(baseTargetPool.get().getShuffledTemplates(this.random));
+                    list.addAll(baseTarget.value().getShuffledTemplates(random));
                 }
-                list.addAll(baseFallbackPool.get().getShuffledTemplates(this.random));
-                Iterator<StructurePoolElement> targetPoolIterator = list.iterator();
-                StructurePoolElement targetElement;
-                while (targetPoolIterator.hasNext() && (targetElement = targetPoolIterator.next()) != EmptyPoolElement.INSTANCE) {
-                    for (Rotation targetElementRotation : Rotation.getShuffled(this.random)) {
-                        List<StructureTemplate.StructureBlockInfo> allTargetJigsaws = targetElement.getShuffledJigsawBlocks(this.structureTemplateManager, BlockPos.ZERO, targetElementRotation, this.random);
-                        BoundingBox boundingBox2 = targetElement.getBoundingBox(this.structureTemplateManager, BlockPos.ZERO, targetElementRotation);
+                list.addAll(baseFallback.value().getShuffledTemplates(random));
+                for (StructurePoolElement targetElement : list) {
+                    if (targetElement == EmptyPoolElement.INSTANCE) {
+                        break;
+                    }
+                    for (Rotation targetElementRotation : Rotation.getShuffled(random)) {
+                        List<StructureTemplate.StructureBlockInfo> allTargetJigsaws = targetElement.getShuffledJigsawBlocks(structureTemplateManager, BlockPos.ZERO, targetElementRotation, this.random);
+                        BoundingBox boundingBox2 = targetElement.getBoundingBox(structureTemplateManager, BlockPos.ZERO, targetElementRotation);
                         int m = !bl || boundingBox2.getYSpan() > 16 ? 0 : allTargetJigsaws.stream().mapToInt(structureBlockInfo -> {
                             if (!boundingBox2.isInside(structureBlockInfo.pos.relative(JigsawBlock.getFrontFacing(structureBlockInfo.state)))) {
                                 return 0;
                             }
-                            ResourceLocation resourceLocation = new ResourceLocation(structureBlockInfo.nbt.getString("pool"));
-                            Optional<StructureTemplatePool> optional = this.pools.getOptional(resourceLocation);
-                            Optional<StructureTemplatePool> optional2 = optional.flatMap(structureTemplatePool -> this.pools.getOptional(structureTemplatePool.getFallback()));
-                            int a = optional.map(structureTemplatePool -> structureTemplatePool.getMaxSize(this.structureTemplateManager)).orElse(0);
-                            int b = optional2.map(structureTemplatePool -> structureTemplatePool.getMaxSize(this.structureTemplateManager)).orElse(0);
+                            ResourceKey<StructureTemplatePool> resourceKey = readPoolName(structureBlockInfo);
+                            Optional<Holder.Reference<StructureTemplatePool>> optional = pools.getHolder(resourceKey);
+                            Optional<Holder<StructureTemplatePool>> optional2 = optional.map(argx -> argx.value().getFallback());
+                            int a = optional.map(structureTemplatePool -> structureTemplatePool.value().getMaxSize(structureTemplateManager)).orElse(0);
+                            int b = optional2.map(structureTemplatePool -> structureTemplatePool.value().getMaxSize(structureTemplateManager)).orElse(0);
                             return Math.max(a, b);
                         }).max().orElse(0);
                         for (StructureTemplate.StructureBlockInfo targetJigsaw : allTargetJigsaws) {
@@ -131,7 +142,7 @@ public abstract class JigsawPlacementMixin {
                             if (!JigsawBlock.canAttach(baseStructureJigSaw, targetJigsaw)) continue;
                             BlockPos targetJigsawPosition = targetJigsaw.pos;
                             BlockPos vecToTargetJigsaw = expectedJigsawPosition.subtract(targetJigsawPosition);
-                            BoundingBox boundingBox3 = targetElement.getBoundingBox(this.structureTemplateManager, vecToTargetJigsaw, targetElementRotation);
+                            BoundingBox boundingBox3 = targetElement.getBoundingBox(structureTemplateManager, vecToTargetJigsaw, targetElementRotation);
                             int n = boundingBox3.minY();
                             StructureTemplatePool.Projection targetProjection = targetElement.getProjection();
                             boolean targetIsRigid = targetProjection == StructureTemplatePool.Projection.RIGID;
@@ -160,6 +171,7 @@ public abstract class JigsawPlacementMixin {
                             mutableObject3.setValue(Shapes.joinUnoptimized(mutableObject3.getValue(), Shapes.create(AABB.of(boundingBox4)), BooleanOp.ONLY_FIRST));
                             s = structurePiece.getGroundLevelDelta();
                             int t = targetIsRigid ? s - p : targetElement.getGroundLevelDelta();
+
                             PoolElementStructurePiece targetStructurePiece = new PoolElementStructurePiece(
                                     structureTemplateManager, targetElement, blockPos6, t, targetElementRotation, boundingBox4);
                             if (baseIsRigid) {

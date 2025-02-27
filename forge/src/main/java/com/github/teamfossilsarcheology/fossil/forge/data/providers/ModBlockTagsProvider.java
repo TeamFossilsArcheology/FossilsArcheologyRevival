@@ -6,29 +6,32 @@ import com.github.teamfossilsarcheology.fossil.block.custom_blocks.FigurineBlock
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.VaseBlock;
 import com.github.teamfossilsarcheology.fossil.tags.ModBlockTags;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 import static com.github.teamfossilsarcheology.fossil.block.ModBlocks.*;
 
 public class ModBlockTagsProvider extends BlockTagsProvider {
 
-    public ModBlockTagsProvider(DataGenerator arg, @Nullable ExistingFileHelper existingFileHelper) {
-        super(arg, FossilMod.MOD_ID, existingFileHelper);
+    public ModBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, @Nullable ExistingFileHelper existingFileHelper) {
+        super(output, registries, FossilMod.MOD_ID, existingFileHelper);
     }
 
     @Override
-    protected void addTags() {
+    protected void addTags(HolderLookup.@NotNull Provider provider) {
         addTag(ModBlockTags.ANCIENT_WOOD_LOGS, ANCIENT_WOOD_LOG);
         addTag(ModBlockTags.CALAMITES_LOGS, CALAMITES_LOG, CALAMITES_WOOD, STRIPPED_CALAMITES_LOG, STRIPPED_CALAMITES_WOOD);
         addTag(ModBlockTags.CORDAITES_LOGS, CORDAITES_LOG, CORDAITES_WOOD, STRIPPED_CORDAITES_LOG, STRIPPED_CORDAITES_WOOD);
@@ -95,16 +98,16 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     }
 
     @SafeVarargs
-    private TagAppender<Block> addTag(TagKey<Block> key, TagKey<Block>... toAdd) {
+    private IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> addTag(TagKey<Block> key, TagKey<Block>... toAdd) {
         return tag(key).addTags(toAdd);
     }
 
     @SafeVarargs
-    private TagAppender<Block> addTag(TagKey<Block> key, RegistrySupplier<? extends Block>... toAdd) {
+    private IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> addTag(TagKey<Block> key, RegistrySupplier<? extends Block>... toAdd) {
         return tag(key).add(Arrays.stream(toAdd).filter(RegistrySupplier::isPresent).map(Supplier::get).toArray(Block[]::new));
     }
 
-    private TagAppender<Block> addTag(TagKey<Block> key, Block... toAdd) {
+    private IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> addTag(TagKey<Block> key, Block... toAdd) {
         return tag(key).add(Arrays.stream(toAdd).toArray(Block[]::new));
     }
 

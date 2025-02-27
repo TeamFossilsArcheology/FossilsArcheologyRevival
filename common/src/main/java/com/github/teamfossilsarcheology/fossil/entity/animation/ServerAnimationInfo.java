@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.animation;
 
-import software.bernie.geckolib3.core.builder.Animation;
+import software.bernie.geckolib.core.animation.Animation;
 
 /**
  * A specific animation instance available to the server

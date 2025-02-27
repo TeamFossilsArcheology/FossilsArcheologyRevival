@@ -3,7 +3,7 @@ package com.github.teamfossilsarcheology.fossil.recipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.CriterionTriggerInstance;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -45,7 +45,7 @@ public abstract class MultiOutputAndSlotsRecipeBuilder<T extends MultiOutputAndS
 
     public MultiOutputAndSlotsRecipeBuilder<T> addOutput(ItemLike itemLike, int count, double weight) {
         total += weight;
-        weightedOutputs.put(new ItemHolder(Registry.ITEM.getKey(itemLike.asItem()), count), weight);
+        weightedOutputs.put(new ItemHolder(BuiltInRegistries.ITEM.getKey(itemLike.asItem()), count), weight);
         return this;
     }
 

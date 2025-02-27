@@ -4,15 +4,15 @@ import com.github.teamfossilsarcheology.fossil.client.gui.debug.InstructionTab;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import it.unimi.dsi.fastutil.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
-import software.bernie.geckolib3.core.util.Color;
+import org.joml.Matrix4f;
+import software.bernie.geckolib.core.object.Color;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class InstructionRenderUtil {
             Instruction instruction = positions.get(i).right();
             poseStack.pushPose();
             poseStack.translate(pos.x, pos.y, pos.z);
-            poseStack.mulPoseMatrix(new Matrix4f(minecraft.gameRenderer.getMainCamera().rotation()));
+            poseStack.mulPoseMatrix(new Matrix4f().rotation(minecraft.gameRenderer.getMainCamera().rotation()));
             poseStack.scale(0.02f, -0.02f, 0.02f);
             poseStack.scale(-1, 1, 1);
             String string;
@@ -60,7 +60,7 @@ public class InstructionRenderUtil {
 
         poseStack.pushPose();
         poseStack.translate(pos.x, pos.y, pos.z);
-        poseStack.mulPoseMatrix(new Matrix4f(minecraft.gameRenderer.getMainCamera().rotation()));
+        poseStack.mulPoseMatrix(new Matrix4f().rotation(minecraft.gameRenderer.getMainCamera().rotation()));
         poseStack.scale(0.02f, -0.02f, 0.02f);
         poseStack.scale(-1, 1, 1);
         float g = -minecraft.font.width(text) / 2f;
@@ -120,19 +120,19 @@ public class InstructionRenderUtil {
     }
 
     public static void renderArrow(PoseStack poseStack, Vec3 pos, Color color, float yRot) {
-        renderArrow(poseStack, pos, color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, 1, false,1, yRot, 0);
+        renderArrow(poseStack, pos, color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, 1, false, 1, yRot, 0);
     }
 
     public static void renderArrow(PoseStack poseStack, Vec3 pos, float r, float g, float b, float a, boolean down, float scale, float yRot, float bounce) {
         poseStack.pushPose();
         poseStack.translate(pos.x(), pos.y() + bounce, pos.z());
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(yRot));
+        poseStack.mulPose(Axis.YP.rotationDegrees(yRot));
         poseStack.scale(scale, scale, scale);
         if (!down) {
             float i = 0.3f;
             float o = -0.2f;
             poseStack.translate(0, i, o);
-            poseStack.mulPose(Vector3f.XP.rotationDegrees(90));
+            poseStack.mulPose(Axis.XP.rotationDegrees(90));
             poseStack.scale(0.5f, 0.5f, 0.5f);
             poseStack.translate(0, -i, -o);
         }

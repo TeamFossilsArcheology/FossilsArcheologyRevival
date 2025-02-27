@@ -9,22 +9,27 @@ import com.github.teamfossilsarcheology.fossil.item.*;
 import com.github.teamfossilsarcheology.fossil.tags.ModBlockTags;
 import com.github.teamfossilsarcheology.fossil.tags.ModItemTags;
 import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.BlockFamily;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 import static com.github.teamfossilsarcheology.fossil.block.ModBlocks.*;
@@ -33,12 +38,13 @@ import static com.github.teamfossilsarcheology.fossil.item.ModItems.*;
 
 public class ModItemTagsProvider extends ItemTagsProvider {
 
-    public ModItemTagsProvider(DataGenerator arg, BlockTagsProvider blockTagsProvider, ExistingFileHelper exFileHelper) {
-        super(arg, blockTagsProvider, FossilMod.MOD_ID, exFileHelper);
+
+    public ModItemTagsProvider(PackOutput arg, CompletableFuture<HolderLookup.Provider> lookup, TagsProvider<Block> tagLookup, @Nullable ExistingFileHelper existingFileHelper) {
+        super(arg, lookup, tagLookup, FossilMod.MOD_ID, existingFileHelper);
     }
 
     @Override
-    protected void addTags() {
+    protected void addTags(HolderLookup.@NotNull Provider provider) {
         copy(ModBlockTags.ANCIENT_WOOD_LOGS, ModItemTags.ANCIENT_WOOD_LOGS);
         copy(ModBlockTags.CALAMITES_LOGS, ModItemTags.CALAMITES_LOGS);
         copy(ModBlockTags.CORDAITES_LOGS, ModItemTags.CORDAITES_LOGS);
@@ -245,21 +251,16 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     }
 
     @SafeVarargs
-    private TagAppender<Item> addTag(TagKey<Item> key, TagKey<Item>... toAdd) {
+    private IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item> addTag(TagKey<Item> key, TagKey<Item>... toAdd) {
         return tag(key).addTags(toAdd);
     }
 
     @SafeVarargs
-    private TagAppender<Item> addTag(TagKey<Item> key, RegistrySupplier<? extends ItemLike>... toAdd) {
+    private IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item> addTag(TagKey<Item> key, RegistrySupplier<? extends ItemLike>... toAdd) {
         return tag(key).add(Arrays.stream(toAdd).filter(RegistrySupplier::isPresent).map(Supplier::get).map(ItemLike::asItem).toArray(Item[]::new));
     }
 
-    private TagAppender<Item> addTag(TagKey<Item> key, ItemLike... toAdd) {
+    private IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item> addTag(TagKey<Item> key, ItemLike... toAdd) {
         return tag(key).add(Arrays.stream(toAdd).filter(Objects::nonNull).map(ItemLike::asItem).toArray(Item[]::new));
-    }
-
-    @Override
-    public @NotNull String getName() {
-        return "Fossil Item Tags";
     }
 }

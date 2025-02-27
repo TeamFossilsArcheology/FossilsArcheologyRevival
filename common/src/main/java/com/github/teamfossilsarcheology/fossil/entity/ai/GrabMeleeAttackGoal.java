@@ -83,7 +83,7 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal<PrehistoricSwimming> 
             if (tooBig || mob.getRandom().nextInt(5) > 0) {
                 attackType = ATTACK;
                 ServerAnimationInfo animationInfo = mob.startAttack();
-                attackEndTick = (long) (currentTime + animationInfo.animation.animationLength);
+                attackEndTick = (long) (currentTime + animationInfo.animation.length());
                 attackDamageTick = Math.min((long) (currentTime + animationInfo.actionDelay), attackEndTick);
             } else {
                 attackType = GRAB;

@@ -3,13 +3,13 @@ package com.github.teamfossilsarcheology.fossil.client.model.block;
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.Maps;
 import com.google.gson.*;
-import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public record PlantBlockModel(List<PlantBlockElement> elements, HashMap<String, 
                 Vector3f to = getVector3f(jsonObject, "to");
                 Vector3f origin = jsonObject.has("origin") ? getVector3f(jsonObject, "origin") : new Vector3f(0, 0, 0);
                 origin.mul(1 / 16f);
-                Vector3f rotations = jsonObject.has("rotation") ? getVector3f(jsonObject, "rotation") : Vector3f.ZERO;
+                Vector3f rotations = jsonObject.has("rotation") ? getVector3f(jsonObject, "rotation") : new Vector3f(0, 0, 0);
                 Map<Direction, PlantBlockElementFace> map = getFaces(context, jsonObject);
                 return new PlantBlockElement(from, to, origin, rotations, map, jsonObject.has("name") ? jsonObject.get("name").getAsString() : "");
             }

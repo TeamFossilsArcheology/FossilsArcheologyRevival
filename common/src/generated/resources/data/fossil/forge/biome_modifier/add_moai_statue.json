@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "minecraft:beach",
+  "features": "fossil:moai_statue",
+  "step": "surface_structures"
+}

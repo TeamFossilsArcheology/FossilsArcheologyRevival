@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.recipe;
 
 import com.github.teamfossilsarcheology.fossil.inventory.WorktableMenu;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -27,7 +27,7 @@ public class WorktableRecipeBuilder extends WithFuelRecipeBuilder {
 
     @Override
     protected ResourceLocation getDefaultRecipeId() {
-        return new ResourceLocation(modId, "worktable/" + Registry.ITEM.getKey(itemInput.asItem()).getPath() + "_with_" + Registry.ITEM.getKey(itemFuel.asItem()).getPath());
+        return new ResourceLocation(modId, "worktable/" + BuiltInRegistries.ITEM.getKey(itemInput.asItem()).getPath() + "_with_" + BuiltInRegistries.ITEM.getKey(itemFuel.asItem()).getPath());
     }
 
     public static class Result extends WithFuelRecipeBuilder.Result {

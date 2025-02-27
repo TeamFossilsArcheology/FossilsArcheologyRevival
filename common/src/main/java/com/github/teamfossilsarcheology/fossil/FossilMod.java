@@ -23,9 +23,6 @@ import com.github.teamfossilsarcheology.fossil.villager.ModVillagers;
 import com.github.teamfossilsarcheology.fossil.world.dimension.ModDimensions;
 import com.github.teamfossilsarcheology.fossil.world.effect.ModEffects;
 import com.github.teamfossilsarcheology.fossil.world.feature.ModFeatures;
-import com.github.teamfossilsarcheology.fossil.world.feature.configuration.ModConfiguredFeatures;
-import com.github.teamfossilsarcheology.fossil.world.feature.structures.ModStructureSets;
-import com.github.teamfossilsarcheology.fossil.world.feature.structures.ModStructures;
 import com.github.teamfossilsarcheology.fossil.world.feature.village.ModVillages;
 import dev.architectury.registry.ReloadListenerRegistry;
 import net.minecraft.resources.ResourceLocation;
@@ -48,25 +45,22 @@ public class FossilMod {
         ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityDataLoader.INSTANCE);
         ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityVariantLoader.INSTANCE);
         VariantRegistry.register();
+        ModSounds.register();
         ModFluids.register(); //Before ModBlocks
         ModBlocks.register();
-        ModEntities.register(); //Before ModItems
-        ModSounds.register();
-        ModItems.register();
-        ModMenus.register();
-        ModBlockEntities.register();
         ModParticles.register();
+        ModEntities.register(); //Before ModItems
+        ModItems.register();
+        ModEnchantments.register();
+        ModBlockEntities.register();
+        ModMenus.register();
+        ModRecipes.register();
+        ModVillagers.register();
         ModFeatures.register();
-        ModConfiguredFeatures.register();
-        ModStructureSets.register();
-        ModStructures.register();
         ModVillages.register();
         ModDimensions.register();
         ModEffects.register();
         ModLootItemFunctionTypes.register();
-        ModRecipes.register();
-        ModEnchantments.register();
-        ModVillagers.register();
         ModEvents.init();
 
         if (Version.debugEnabled()) {

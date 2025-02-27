@@ -1,12 +1,8 @@
 package com.github.teamfossilsarcheology.fossil.forge.compat.alexsmobs;
 
-import com.github.alexthe666.alexsmobs.entity.AMEntityRegistry;
-import com.github.alexthe666.alexsmobs.item.AMItemRegistry;
-import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
-
 public class AlexsMobsCompat {
 	public static void register() {
-		FoodMappings.addMeat(AMItemRegistry.MAGGOT.get());
+		/*FoodMappings.addMeat(AMItemRegistry.MAGGOT.get());
 		FoodMappings.addMeat(AMItemRegistry.MOOSE_RIBS.get());
 		FoodMappings.addMeat(AMItemRegistry.COOKED_MOOSE_RIBS.get());
 		FoodMappings.addMeat(AMItemRegistry.KANGAROO_MEAT.get());
@@ -87,6 +83,6 @@ public class AlexsMobsCompat {
 		FoodMappings.addInsect(AMEntityRegistry.LEAFCUTTER_ANT.get(), 3);
 		FoodMappings.addInsect(AMEntityRegistry.CENTIPEDE_HEAD.get(), 18);
 		FoodMappings.addInsect(AMEntityRegistry.TARANTULA_HAWK.get(), 9);
-		FoodMappings.addInsect(AMEntityRegistry.WARPED_MOSCO.get(), 50);
+		FoodMappings.addInsect(AMEntityRegistry.WARPED_MOSCO.get(), 50);*/
 	}
 }

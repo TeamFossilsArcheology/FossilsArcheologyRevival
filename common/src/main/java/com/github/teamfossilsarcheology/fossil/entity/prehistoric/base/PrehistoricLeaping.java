@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import java.util.Objects;
 
@@ -136,10 +136,8 @@ public abstract class PrehistoricLeaping extends Prehistoric {
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
-        var controller = new PausableAnimationController<>(
-                this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::leapingPredicate);
-        data.addAnimationController(controller);
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        var controller = new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::leapingPredicate);
         registerEatingListeners(controller, effect -> {
             if ("land".equals(effect) && isOnGround()) {
                 BlockState below = level.getBlockState(new BlockPos(getX(), getY() - 0.2, getZ()));
@@ -154,8 +152,10 @@ public abstract class PrehistoricLeaping extends Prehistoric {
                 }
             }
         });
-        data.addAnimationController(new PausableAnimationController<>(
-                this, AnimationLogic.ATTACK_CTRL, 0, getAnimationLogic()::attackPredicate));
+        registerControllerWithTriggers(controllerRegistrar, controller);
+
+        var attackController = new PausableAnimationController<>(this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate);
+        registerControllerWithTriggers(controllerRegistrar, attackController);
     }
 
     class LeapMoveControl extends SmoothTurningMoveControl {

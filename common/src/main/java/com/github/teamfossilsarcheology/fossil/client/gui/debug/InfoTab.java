@@ -9,6 +9,7 @@ import com.github.teamfossilsarcheology.fossil.util.Gender;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.CycleButton;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
@@ -64,18 +65,18 @@ public class InfoTab extends DebugTab<Prehistoric> {
                 float step = (data.maxScale() - data.minScale()) / ((data.adultAgeInTicks()) + 1);
                 String min = format.format(data.minScale() + step * minValue);
                 String max = format.format(data.minScale() + step * maxValue);
-                drawString(poseStack, minecraft.font, min, x, y - 8, j | Mth.ceil(alpha * 255.0F) << 24);
-                drawString(poseStack, minecraft.font, max, x + width - minecraft.font.width(max), y - 8, j | Mth.ceil(alpha * 255.0F) << 24);
+                drawString(poseStack, minecraft.font, min, getX(), getY() - 8, j | Mth.ceil(alpha * 255.0F) << 24);
+                drawString(poseStack, minecraft.font, max, getX() + width - minecraft.font.width(max), getY() - 8, j | Mth.ceil(alpha * 255.0F) << 24);
             }
         };
-        addWidget(new Button(275, 30, 150, 20, Component.literal("Scale 1"), button -> {
+        addWidget(Button.builder(Component.literal("Scale 1"), button -> {
             EntityDataLoader.Data data = entity.data();
             ageInTicks = (int) (((1 - data.minScale()) * (data.adultAgeInTicks() + 1)) / (data.maxScale() - data.minScale()));
             ageSlider.setValue(ageInTicks);
-        }));
-        addWidget(new Button(275, 55, 50, 20, Component.literal("Tame"), button -> {
+        }).bounds(275, 30, 150, 20).build());
+        addWidget(Button.builder(Component.literal("Tame"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new C2STameMessage(entity.getId()));
-        }));
+        }).bounds(275, 55, 50, 20).build());
         scaleSlider = new DebugSlider(20, yPos += 30, 150, 20, Component.literal("Scale: "), Component.literal(""), 0.1, Math.max(2.5, entity.data().maxScale()), entity.getScale(), 0.05, 2, true) {
             @Override
             protected void applyValue() {
@@ -92,8 +93,8 @@ public class InfoTab extends DebugTab<Prehistoric> {
                 int minX = (int) (((data.minScale() - minValue) / (maxValue - minValue)) * width);
                 String max = String.valueOf(entity.data().adultAgeDays());
                 int maxX = (int) (((data.maxScale() - minValue) / (maxValue - minValue)) * (width - minecraft.font.width(max)));
-                drawString(poseStack, minecraft.font, min, x + minX, y - 8, j | Mth.ceil(alpha * 255.0F) << 24);
-                drawString(poseStack, minecraft.font, max, x + maxX, y - 8, j | Mth.ceil(alpha * 255.0F) << 24);
+                drawString(poseStack, minecraft.font, min, getX() + minX, getY() - 8, j | Mth.ceil(alpha * 255.0F) << 24);
+                drawString(poseStack, minecraft.font, max, getX() + maxX, getY() - 8, j | Mth.ceil(alpha * 255.0F) << 24);
             }
         };
         matingSlider = new DebugSlider(20, yPos += 30, 150, 20, Component.literal("Seconds till mating: "), Component.literal(""), 0, 900, matingCooldown / 20f, 1, 0, true) {
@@ -137,13 +138,14 @@ public class InfoTab extends DebugTab<Prehistoric> {
         addWidget(CycleButton.builder(Gender::getName).withValues(Arrays.stream(Gender.values()).toList())
                 .withInitialValue(gender).create(20, yPos += 30, 150, 20, Component.literal("Gender"),
                         (cycleButton, gender) -> this.gender = gender));
-        addWidget(new Button(20, yPos += 30, 150, 20, Component.literal("Set Info"), button -> {
-            entity.setGender(gender);
-            entity.setScaleOverride(-1);
-            MessageHandler.DEBUG_CHANNEL.sendToServer(new SyncDebugInfoMessage(entity.getId(), gender.name(), ageInTicks, matingCooldown, playingCooldown, climbingCooldown, hunger, mood));
-        }, (button, poseStack, i, j) -> {
-            debugScreen.renderTooltip(poseStack, Component.literal("Set the info above on the server"), i, j);
-        }));
+        addWidget(Button.builder(Component.literal("Set Info"), button -> {
+                    entity.setGender(gender);
+                    entity.setScaleOverride(-1);
+                    MessageHandler.DEBUG_CHANNEL.sendToServer(new SyncDebugInfoMessage(entity.getId(), gender.name(), ageInTicks, matingCooldown, playingCooldown, climbingCooldown, hunger, mood));
+                })
+                .bounds(20, yPos += 30, 150, 20)
+                .tooltip(Tooltip.create(Component.literal("Set the info above on the server")))
+                .build());
     }
 
     @Override

@@ -5,9 +5,7 @@ import com.github.teamfossilsarcheology.fossil.client.renderer.RendererFabricFix
 import com.github.teamfossilsarcheology.fossil.entity.StoneTablet;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -20,6 +18,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 
 public class StoneTabletRenderer extends EntityRenderer<StoneTablet> implements RendererFabricFix {
     private static final ResourceLocation TEXTURE = FossilMod.location("textures/entity/stone_tablet.png");
@@ -51,7 +51,7 @@ public class StoneTabletRenderer extends EntityRenderer<StoneTablet> implements 
     @Override
     public void render(StoneTablet entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0f - entityYaw));
+        poseStack.mulPose(Axis.YP.rotationDegrees(180.0f - entityYaw));
         StoneTablet.Variant variant = entity.variant;
         poseStack.scale(0.0625f, 0.0625f, 0.0625f);
         VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityCutout(getTextureLocation(entity)));

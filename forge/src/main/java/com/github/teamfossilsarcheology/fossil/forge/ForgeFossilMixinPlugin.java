@@ -26,9 +26,6 @@ public class ForgeFossilMixinPlugin implements IMixinConfigPlugin {
         if (FMLLoader.getLoadingModList().getModFileById(FossilMod.MOD_ID) == null || mixinClassName.contains("Debug") && !Version.debugEnabled()) {
             return false;
         }
-        if (mixinClassName.contains("WalkNodeEvaluatorMixinOpt") && FMLLoader.getLoadingModList().getModFileById("radium") != null) {
-            return false;
-        }
         return true;
     }
 

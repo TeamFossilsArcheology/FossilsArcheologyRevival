@@ -22,16 +22,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.Optional;
 
-import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.LOOP;
-import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.PLAY_ONCE;
+import static software.bernie.geckolib.core.animation.Animation.LoopType.LOOP;
+import static software.bernie.geckolib.core.animation.Animation.LoopType.PLAY_ONCE;
 
 public class Spinosaurus extends PrehistoricSwimming {
     public static final String GRAB = "animation.spinosaurus.grab";
@@ -100,11 +97,11 @@ public class Spinosaurus extends PrehistoricSwimming {
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         var controller = new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, animationLogic::spinoPredicate);
         registerEatingListeners(controller);
-        data.addAnimationController(controller);
-        data.addAnimationController(new PausableAnimationController<>(
+        controllerRegistrar.add(controller);
+        controllerRegistrar.add(new PausableAnimationController<>(
                 this, AnimationLogic.ATTACK_CTRL, 0, getAnimationLogic()::grabAttackPredicate));
     }
 
@@ -114,22 +111,22 @@ public class Spinosaurus extends PrehistoricSwimming {
             super(entity);
         }
 
-        public PlayState spinoPredicate(AnimationEvent<PrehistoricSwimming> event) {
+        public PlayState spinoPredicate(AnimationState<PrehistoricSwimming> state) {
             if (isBlocked()) return PlayState.STOP;
-            AnimationController<PrehistoricSwimming> controller = event.getController();
-            if (tryNextAnimation(controller)) {
+            AnimationController<PrehistoricSwimming> controller = state.getController();
+            if (tryNextAnimation(state, controller)) {
                 return PlayState.CONTINUE;
             }
             Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
-            if (activeAnimation.isPresent() && tryForcedAnimation(event, activeAnimation.get())) {
+            if (activeAnimation.isPresent() && tryForcedAnimation(state, activeAnimation.get())) {
                 return PlayState.CONTINUE;
             }
             double animationSpeed = 1;
-            if (event.getAnimatable().isBeached()) {
+            if (state.getAnimatable().isBeached()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.BEACHED);
             } else if (entity.isSleeping()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
-            } else if (event.isMoving()) {
+            } else if (state.isMoving()) {
                 if (entity.isInWater()) {
                     if (entity.isEyeInFluid(FluidTags.WATER)) {
                         if (entity.isOnGround()) {
@@ -141,9 +138,9 @@ public class Spinosaurus extends PrehistoricSwimming {
                         addActiveAnimation(controller.getName(), entity.getAnimation(SWIM_FLOATING).animation, AnimationCategory.SWIM, false);
                     }
                 } else {
-                    animationSpeed = addMovementAnimation(event, false);
+                    animationSpeed = addMovementAnimation(state, false);
                 }
-            } else if (event.getAnimatable().isWeak()) {
+            } else if (state.getAnimatable().isWeak()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.KNOCKOUT);
             } else {
                 if (entity.isInWater()) {
@@ -156,10 +153,10 @@ public class Spinosaurus extends PrehistoricSwimming {
                     addActiveAnimation(controller.getName(), entity.getAnimation(IDLE).animation, AnimationCategory.IDLE, false);
                 }
             }
-            setAnimationSpeed(controller, animationSpeed, event.getAnimationTick());
+            setAnimationSpeed(controller, animationSpeed, state.getAnimationTick());
             Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
             if (newAnimation.isPresent()) {
-                controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName(), newAnimation.get().loop() ? LOOP : PLAY_ONCE));
+                controller.setAnimation(RawAnimation.begin().then(newAnimation.get().animationName(), newAnimation.get().loop() ? LOOP : PLAY_ONCE));
             }
             return PlayState.CONTINUE;
         }

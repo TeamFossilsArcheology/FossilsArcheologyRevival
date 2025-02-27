@@ -14,14 +14,14 @@ public class C2SForceAnimationMessage {
     private final int entityId;
     private final String animation;
     private final double speed;
-    private final double transitionLength;
+    private final int transitionLength;
     private final boolean loop;
 
     public C2SForceAnimationMessage(FriendlyByteBuf buf) {
-        this(buf.readUtf(), buf.readInt(), buf.readUtf(), buf.readDouble(), buf.readDouble(), buf.readBoolean());
+        this(buf.readUtf(), buf.readInt(), buf.readUtf(), buf.readDouble(), buf.readInt(), buf.readBoolean());
     }
 
-    public C2SForceAnimationMessage(String controller, int entityId, String animation, double speed, double transitionLength, boolean loop) {
+    public C2SForceAnimationMessage(String controller, int entityId, String animation, double speed, int transitionLength, boolean loop) {
         this.controller = controller;
         this.entityId = entityId;
         this.animation = animation;
@@ -35,7 +35,7 @@ public class C2SForceAnimationMessage {
         buf.writeInt(entityId);
         buf.writeUtf(animation);
         buf.writeDouble(speed);
-        buf.writeDouble(transitionLength);
+        buf.writeInt(transitionLength);
         buf.writeBoolean(loop);
     }
 

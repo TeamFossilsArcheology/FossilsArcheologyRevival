@@ -59,9 +59,9 @@ public class CenteredNodeEvaluator extends WalkNodeEvaluator {
         if (this.mob.getPathfindingMalus(blockPathTypes) < 0.0f) {
             AABB aABB = this.mob.getBoundingBox();
             Vec3 center = aABB.setMinY(i).setMaxY(i).getCenter();
-            if (hasPositiveMalus(mutableBlockPos.set(center.x, center.y, center.z)) || hasPositiveMalus(
-                    mutableBlockPos.set(aABB.minX, i, aABB.maxZ)) || hasPositiveMalus(
-                    mutableBlockPos.set(aABB.maxX, i, aABB.minZ)) || this.hasPositiveMalus(
+            if (canStartAt(mutableBlockPos.set(center.x, center.y, center.z)) || canStartAt(
+                    mutableBlockPos.set(aABB.minX, i, aABB.maxZ)) || canStartAt(
+                    mutableBlockPos.set(aABB.maxX, i, aABB.minZ)) || canStartAt(
                     mutableBlockPos.set(aABB.maxX, i, aABB.maxZ))) {
                 Node node = this.getNode(mutableBlockPos);
                 BlockPos nodePos = node.asBlockPos();

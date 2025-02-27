@@ -43,12 +43,12 @@ public class SkeletonEditTab extends DebugTab<PrehistoricSkeleton> {
         };
         addWidget(ageSlider);
         addWidget(new ModelsList());
-        addWidget(new Button(20, 210, 150, 20, Component.literal("Set Info"), button -> {
+        addWidget(Button.builder(Component.literal("Set Info"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new SyncDebugInfoMessage(entity.getId(), info.name(), age, 0, 0, 0, 0, 0));
             ageSlider.maxValue = EntityDataLoader.INSTANCE.getData(info.resourceName).adultAgeDays();
             age = (int) Math.min(age, ageSlider.maxValue);
             ageSlider.setValue(age);
-        }));
+        }).bounds(20, 210, 150, 20).build());
     }
 
     @Override
@@ -81,9 +81,9 @@ public class SkeletonEditTab extends DebugTab<PrehistoricSkeleton> {
             private final Button changeButton;
 
             ModelEntry(String text) {
-                changeButton = new Button(0, 0, 200, 20, Component.literal(text), button -> {
-                    SkeletonEditTab.this.info = PrehistoricEntityInfo.valueOf(button.getMessage().getContents().toString());
-                });
+                changeButton = Button.builder(Component.literal(text), button -> {
+                    SkeletonEditTab.this.info = PrehistoricEntityInfo.valueOf(button.getMessage().getString());
+                }).bounds(0, 0, 200, 20).build();
             }
 
             @Override
@@ -94,8 +94,8 @@ public class SkeletonEditTab extends DebugTab<PrehistoricSkeleton> {
             @Override
             public void render(PoseStack poseStack, int index, int top, int left, int width, int height, int mouseX, int mouseY, boolean isMouseOver,
                                float partialTick) {
-                changeButton.x = left;
-                changeButton.y = top;
+                changeButton.setX(left);
+                changeButton.setY(top);
                 changeButton.render(poseStack, mouseX, mouseY, partialTick);
             }
 

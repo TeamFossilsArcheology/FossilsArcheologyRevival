@@ -1,31 +1,13 @@
 package com.github.teamfossilsarcheology.fossil.client.model;
 
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFish;
-import net.minecraft.resources.ResourceLocation;
+import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 
-public class PrehistoricFishGeoModel<T extends PrehistoricFish> extends PrehistoricAnimatableModel<T> {
-    private final ResourceLocation modelLocation;
-    private final ResourceLocation animationLocation;
-    private final ResourceLocation textureLocation;
+public class PrehistoricFishGeoModel<T extends PrehistoricFish> extends DefaultedEntityGeoModel<T> {
 
-    public PrehistoricFishGeoModel(ResourceLocation modelLocation, ResourceLocation animationLocation, ResourceLocation textureLocation) {
-        this.modelLocation = modelLocation;
-        this.animationLocation = animationLocation;
-        this.textureLocation = textureLocation;
-    }
-
-    @Override
-    public ResourceLocation getModelResource(T object) {
-        return modelLocation;
-    }
-
-    @Override
-    public ResourceLocation getTextureResource(T object) {
-        return textureLocation;
-    }
-
-    @Override
-    public ResourceLocation getAnimationResource(T animatable) {
-        return animationLocation;
+    public PrehistoricFishGeoModel(String assetName) {
+        super(FossilMod.location(assetName), false);
+        withAltTexture(FossilMod.location(assetName + "/texturemap"));
     }
 }

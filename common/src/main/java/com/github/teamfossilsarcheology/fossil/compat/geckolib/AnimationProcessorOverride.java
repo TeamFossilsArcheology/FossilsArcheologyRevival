@@ -1,20 +1,8 @@
 package com.github.teamfossilsarcheology.fossil.compat.geckolib;
 
-import org.apache.commons.lang3.tuple.Pair;
+import software.bernie.geckolib.core.molang.MolangParser;
 import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.keyframe.AnimationPoint;
-import software.bernie.geckolib3.core.keyframe.BoneAnimationQueue;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.molang.MolangParser;
-import software.bernie.geckolib3.core.processor.IBone;
-import software.bernie.geckolib3.core.snapshot.BoneSnapshot;
-import software.bernie.geckolib3.core.snapshot.DirtyTracker;
-import software.bernie.geckolib3.core.util.MathUtil;
-
-import java.util.List;
-import java.util.Map;
 
 public class AnimationProcessorOverride {
 
@@ -22,7 +10,7 @@ public class AnimationProcessorOverride {
      * Replaces parts of  {@link software.bernie.geckolib3.core.processor.AnimationProcessor#tickAnimation(IAnimatable, int, double, AnimationEvent, MolangParser, boolean) AnimationProcessor#tickAnimation}
      * with the goal of making animations additive across controllers
      */
-    public static <T extends IAnimatable> void tickAdditiveAnimations(double seekTime, AnimationEvent<T> event, boolean reloadAnimations,
+   /* public static <T extends IAnimatable> void tickAdditiveAnimations(double seekTime, AnimationEvent<T> event, boolean reloadAnimations,
                                                                       List<IBone> modelRendererList, MolangParser parser, boolean crashWhenCantFindBone,
                                                                       AnimationData manager, Map<String, DirtyTracker> modelTracker,
                                                                       Map<String, Pair<IBone, BoneSnapshot>> boneSnapshots) {
@@ -116,5 +104,5 @@ public class AnimationProcessorOverride {
                 }
             }
         }
-    }
+    }*/
 }

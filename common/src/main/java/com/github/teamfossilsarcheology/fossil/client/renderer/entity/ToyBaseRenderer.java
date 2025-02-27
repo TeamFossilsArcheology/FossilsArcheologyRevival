@@ -4,7 +4,7 @@ import com.github.teamfossilsarcheology.fossil.client.renderer.RendererFabricFix
 import com.github.teamfossilsarcheology.fossil.entity.ToyBase;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -40,7 +40,7 @@ public abstract class ToyBaseRenderer<T extends ToyBase> extends EntityRenderer<
     }
 
     protected void setupRotations(PoseStack poseStack, float rotationYaw) {
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(180 - rotationYaw));
+        poseStack.mulPose(Axis.YP.rotationDegrees(180 - rotationYaw));
     }
 
     @Override
