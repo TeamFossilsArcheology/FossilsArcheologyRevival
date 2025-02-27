@@ -114,16 +114,6 @@ public class DinopediaScreen extends Screen {
     protected void init() {
         leftPos = (width - xSize) / 2;
         topPos = (height - ySize) / 2;
-        if (Version.debugEnabled()) {
-            addRenderableWidget(CycleOption.create("options.guiScale", () -> IntStream.rangeClosed(0,
-                            Minecraft.getInstance().getWindow().calculateScale(0, Minecraft.getInstance().isEnforceUnicode())).boxed().collect(
-                            Collectors.toList()),
-                    integer -> integer == 0 ? new TranslatableComponent("options.guiScale.auto") : new TextComponent(Integer.toString(integer)),
-                    options -> options.guiScale, (options, option, integer) -> {
-                        options.guiScale = integer;
-                        minecraft.resizeDisplay();
-                    }).createButton(Minecraft.getInstance().options, (width - 200) / 2, 10, 200));
-        }
         backButton = addRenderableWidget(new DinopediaPageButton(leftPos + 10, topPos + ySize - 45, 200, 100, false, button -> pageBack()));
         if (entity instanceof Prehistoric || entity instanceof Quagga || entity instanceof PrehistoricFish) {
             forwardButton = addRenderableWidget(

@@ -157,9 +157,7 @@ public class ClientInit {
                 }
                 return EventResult.pass();
             });
-            ClientGuiEvent.RENDER_HUD.register((poseStack, v) -> {
-                PathingRenderer.renderOverlay(poseStack);
-            });
+            ClientGuiEvent.RENDER_HUD.register((poseStack, v) -> PathingRenderer.renderOverlay(poseStack));
         }
         KeyMappingRegistry.register(flyUpKey);
         KeyMappingRegistry.register(flyDownKey);

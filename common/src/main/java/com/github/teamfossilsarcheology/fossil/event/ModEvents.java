@@ -26,6 +26,7 @@ import dev.architectury.event.events.common.EntityEvent;
 import dev.architectury.event.events.common.InteractionEvent;
 import dev.architectury.event.events.common.LifecycleEvent;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -47,7 +48,7 @@ import java.util.Locale;
 import java.util.Random;
 
 public class ModEvents {
-    private static final TranslatableComponent ANU_BREAK_BLOCK = new TranslatableComponent("entity.fossil.anu.break_block");
+    private static final Component ANU_BREAK_BLOCK = new TranslatableComponent("entity.fossil.anu.break_block");
 
     public static void init() {
         EntityEvent.ADD.register((entity, level) -> {

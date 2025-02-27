@@ -10,6 +10,7 @@ import com.github.teamfossilsarcheology.fossil.world.feature.structures.AnuDefen
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -33,9 +34,9 @@ import java.util.List;
 import java.util.Random;
 
 public class AnuDefensePhase extends AbstractAnuPhaseInstance {
-    private static final TranslatableComponent ANU_COMBAT_BRUTES = new TranslatableComponent("entity.fossil.anu.brutes");
-    private static final TranslatableComponent ANU_COMBAT_ARCHERS = new TranslatableComponent("entity.fossil.anu.archers");
-    private static final TranslatableComponent ANU_COMBAT_BLAZES = new TranslatableComponent("entity.fossil.anu.blazes");
+    private static final Component ANU_COMBAT_BRUTES = new TranslatableComponent("entity.fossil.anu.brutes");
+    private static final Component ANU_COMBAT_ARCHERS = new TranslatableComponent("entity.fossil.anu.archers");
+    private static final Component ANU_COMBAT_BLAZES = new TranslatableComponent("entity.fossil.anu.blazes");
 
     public AnuDefensePhase(AnuBoss anuBoss) {
         super(anuBoss);

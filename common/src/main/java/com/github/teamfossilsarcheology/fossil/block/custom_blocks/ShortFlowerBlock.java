@@ -8,8 +8,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -20,8 +22,8 @@ import java.util.Random;
 public class ShortFlowerBlock extends BushBlock implements BonemealableBlock {
     private final VoxelShape shape;
 
-    public ShortFlowerBlock(Properties properties, VoxelShape shape) {
-        super(properties);
+    public ShortFlowerBlock(VoxelShape shape) {
+        super(Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS));
         this.shape = shape;
     }
 

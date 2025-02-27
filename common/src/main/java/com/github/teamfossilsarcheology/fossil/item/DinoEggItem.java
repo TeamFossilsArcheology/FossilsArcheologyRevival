@@ -51,10 +51,10 @@ public class DinoEggItem extends PrehistoricEntityItem {
             egg.moveTo(x, y, z, 0, 0);
             egg.setPrehistoricEntityInfo(info);
             level.addFreshEntity(egg);
-            level.gameEvent(player, GameEvent.ENTITY_PLACE, egg);
+            egg.gameEvent(GameEvent.ENTITY_PLACE, player);
         } else {
             Entity entity = DinosaurEgg.hatchEgg(level, x, y, z, (ServerPlayer) player, info, false);
-            level.gameEvent(player, GameEvent.ENTITY_PLACE, entity);
+            entity.gameEvent(GameEvent.ENTITY_PLACE, player);
         }
         return true;
     }

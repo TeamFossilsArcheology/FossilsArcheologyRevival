@@ -58,13 +58,13 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     public static final int ARENA_RADIUS = 25;
     public static final EntityDataAccessor<Integer> DATA_PHASE = SynchedEntityData.defineId(AnuBoss.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Boolean> WEAK = SynchedEntityData.defineId(AnuBoss.class, EntityDataSerializers.BOOLEAN);
-    private static final TranslatableComponent SPAWN_1 = new TranslatableComponent("entity.fossil.anu.hello");
-    private static final TranslatableComponent SPAWN_2 = new TranslatableComponent("entity.fossil.anu.fewBeaten");
-    private static final TranslatableComponent ANU_COMBAT_SWORD = new TranslatableComponent("entity.fossil.anu.draw");
-    private static final TranslatableComponent ANU_COMBAT_BOW = new TranslatableComponent("entity.fossil.anu.coward");
-    private static final TranslatableComponent ANU_COMBAT_FIST = new TranslatableComponent("entity.fossil.anu.fist");
-    private static final TranslatableComponent ANU_COMBAT_ANCIENT = new TranslatableComponent("entity.fossil.anu.ancient");
-    private static final TranslatableComponent ANU_DEATH = new TranslatableComponent("entity.fossil.anu.death");
+    private static final Component SPAWN_1 = new TranslatableComponent("entity.fossil.anu.hello");
+    private static final Component SPAWN_2 = new TranslatableComponent("entity.fossil.anu.fewBeaten");
+    private static final Component ANU_COMBAT_SWORD = new TranslatableComponent("entity.fossil.anu.draw");
+    private static final Component ANU_COMBAT_BOW = new TranslatableComponent("entity.fossil.anu.coward");
+    private static final Component ANU_COMBAT_FIST = new TranslatableComponent("entity.fossil.anu.fist");
+    private static final Component ANU_COMBAT_ANCIENT = new TranslatableComponent("entity.fossil.anu.ancient");
+    private static final Component ANU_DEATH = new TranslatableComponent("entity.fossil.anu.death");
     private static final int SONG_LENGTH = 4041;
     private final ServerBossEvent bossEvent = (ServerBossEvent) new ServerBossEvent(getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS).setDarkenScreen(true);
     private Vec3 spawnPosition = Vec3.ZERO;
@@ -84,7 +84,7 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
         return createMobAttributes().add(Attributes.FOLLOW_RANGE, 40).add(Attributes.MAX_HEALTH, 600).add(Attributes.MOVEMENT_SPEED, 0.35).add(Attributes.ATTACK_DAMAGE);
     }
 
-    public static TranslatableComponent getRandomGreeting(Random random) {
+    public static Component getRandomGreeting(Random random) {
         return random.nextInt(2) == 0 ? SPAWN_1 : SPAWN_2;
     }
 

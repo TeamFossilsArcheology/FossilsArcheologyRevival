@@ -38,7 +38,7 @@ public class StoneTabletItem extends Item {
         if (stoneTablet.survives()) {
             if (!level.isClientSide) {
                 stoneTablet.playPlacementSound();
-                level.gameEvent(player, GameEvent.ENTITY_PLACE, blockPos);
+                stoneTablet.gameEvent(GameEvent.ENTITY_PLACE, player);
                 level.addFreshEntity(stoneTablet);
             }
             itemStack.shrink(1);

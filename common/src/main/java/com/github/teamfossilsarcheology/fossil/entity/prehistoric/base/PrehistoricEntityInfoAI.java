@@ -17,8 +17,8 @@ public class PrehistoricEntityInfoAI {
 
     public enum Response implements DinopediaInfo {
         CALM, SCARED, TERRITORIAL, AGGRESSIVE, WATER_AGGRESSIVE, WATER_CALM;
-        private final TranslatableComponent name = new TranslatableComponent("pedia.fossil.temperament." + name().toLowerCase(Locale.ROOT));
-        private final TranslatableComponent description = new TranslatableComponent("pedia.fossil.temperament." + name().toLowerCase(Locale.ROOT) + ".desc");
+        private final Component name = new TranslatableComponent("pedia.fossil.temperament." + name().toLowerCase(Locale.ROOT));
+        private final Component description = new TranslatableComponent("pedia.fossil.temperament." + name().toLowerCase(Locale.ROOT) + ".desc");
 
         @Override
         public Component getName() {
@@ -57,8 +57,8 @@ public class PrehistoricEntityInfoAI {
 
     public enum Activity implements DinopediaInfo {
         DIURNAL, NOCTURNAL, BOTH, NO_SLEEP;
-        private final TranslatableComponent name = new TranslatableComponent("pedia.fossil.activity." + name().toLowerCase(Locale.ROOT));
-        private final TranslatableComponent description = new TranslatableComponent("pedia.fossil.activity." + name().toLowerCase(Locale.ROOT) + ".desc");
+        private final Component name = new TranslatableComponent("pedia.fossil.activity." + name().toLowerCase(Locale.ROOT));
+        private final Component description = new TranslatableComponent("pedia.fossil.activity." + name().toLowerCase(Locale.ROOT) + ".desc");
 
         @Override
         public Component getName() {

@@ -78,7 +78,7 @@ public class Anubite extends PathfinderMob {
             return false;
         }
         double x = getX() + (random.nextDouble() - 0.5) * 64.0;
-        double y = getY() + (double) (random.nextInt(64) - 32);
+        double y = getY() + (random.nextInt(64) - 32);
         double z = getZ() + (random.nextDouble() - 0.5) * 64.0;
         return teleport(x, y, z);
     }
@@ -87,7 +87,7 @@ public class Anubite extends PathfinderMob {
         Vec3 vecToTarget = new Vec3(getX() - target.getX(), getY(0.5) - target.getEyeY(), getZ() - target.getZ());
         vecToTarget = vecToTarget.normalize();
         double x = getX() + (random.nextDouble() - 0.5) * 8 - vecToTarget.x * 16;
-        double y = getY() + (double) (random.nextInt(16) - 8) - vecToTarget.y * 16;
+        double y = getY() + (random.nextInt(16) - 8) - vecToTarget.y * 16;
         double z = getZ() + (random.nextDouble() - 0.5) * 8 - vecToTarget.z * 16;
         return teleport(x, y, z);
     }

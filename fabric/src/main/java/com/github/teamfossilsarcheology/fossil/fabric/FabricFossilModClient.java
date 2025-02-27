@@ -56,10 +56,5 @@ public class FabricFossilModClient implements ClientModInitializer {
                 entity.addEffect(new MobEffectInstance(ModEffects.COMFY_BED.get(), 24000, 0));
             }
         });
-        if (Version.debugEnabled()) {
-            HudRenderCallback.EVENT.register((matrixStack, tickDelta) -> {
-                PathingRenderer.renderOverlay(matrixStack);
-            });
-        }
     }
 }

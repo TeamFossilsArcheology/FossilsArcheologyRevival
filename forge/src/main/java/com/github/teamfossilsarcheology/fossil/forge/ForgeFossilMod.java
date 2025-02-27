@@ -79,9 +79,9 @@ public class ForgeFossilMod {
             if (ModList.get().isLoaded(ModConstants.FARMERS)) {
                 FarmersDelightCompat.registerFoodMappings();
             }
-			if (ModList.get().isLoaded(ModConstants.ALEXS_MOBS)) {
-				AlexsMobsCompat.register();
-			}
+            if (ModList.get().isLoaded(ModConstants.ALEXS_MOBS)) {
+                AlexsMobsCompat.register();
+            }
             ModPlacementTypes.register();
             ModTriggers.register();
             Regions.register(new ForgeFossilRegion("overworld", RegionType.OVERWORLD, 4));
