@@ -25,6 +25,9 @@ import dev.architectury.event.events.common.BlockEvent;
 import dev.architectury.event.events.common.EntityEvent;
 import dev.architectury.event.events.common.InteractionEvent;
 import dev.architectury.event.events.common.LifecycleEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockSource;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -40,9 +43,12 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DispensibleContainerItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 import java.util.Random;
@@ -86,6 +92,20 @@ public class ModEvents {
                     DispenserBlock.registerBehavior(info.cultivatedBirdEggItem, ThrownBirdEgg.getProjectile(info, true));
                 }
             }
+            DispenserBlock.registerBehavior(ModItems.TAR_BUCKET.get(), new DefaultDispenseItemBehavior() {
+                private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();
+                @Override
+                public @NotNull ItemStack execute(BlockSource source, ItemStack stack) {
+                    DispensibleContainerItem dispensibleContainerItem = (DispensibleContainerItem) ModItems.TAR_BUCKET.get();
+                    BlockPos blockPos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
+                    if (dispensibleContainerItem.emptyContents(null, source.getLevel(), blockPos, null)) {
+                        dispensibleContainerItem.checkExtraContent(null, source.getLevel(), stack, blockPos);
+                        return new ItemStack(Items.BUCKET);
+                    } else {
+                        return defaultDispenseItemBehavior.dispense(source, stack);
+                    }
+                }
+            });
         });
         InteractionEvent.INTERACT_ENTITY.register((player, entity, hand) -> {
             ItemStack stack = player.getItemInHand(hand);
