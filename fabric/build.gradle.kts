@@ -114,6 +114,18 @@ dependencies {
     modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:${reiVersion}")
     modCompileOnly("maven.modrinth:farmers-delight-fabric:$farmersDelightVersion")
 
+    //FD addons
+    modCompileOnly("curse.maven:oceans-delight-841262:4523147") //1.18.2 1.0.0
+    modCompileOnly("curse.maven:ends-delight-662675:5281934") //1.18.2 1.2.1
+    modCompileOnly("curse.maven:farmers-respite-fabric-811003:4344002") //1.18.2 1.0.0
+    modCompileOnly("curse.maven:pineapple-delight-687974:4624371") //1.18.2 1.0.6
+    modCompileOnly("curse.maven:cultural-delights-fabric-807107:4329072") //1.18.2 0.14.7
+    modCompileOnly("curse.maven:coffee-delight-835597:4626094") //1.18.2 1.3
+    modCompileOnly("curse.maven:nethers-delight-fabric-701831:4291741") //1.18.2 2.0.0
+    modCompileOnly("curse.maven:casualness-delight-909519:5212580") //1.18.2 0.4
+    modCompileOnly("curse.maven:expanded-delight-620770:4362782") //1.18.2 0.1.9.2
+
+
     //Dev only
     /*
     modRuntimeOnly("curse.maven:hugestructureblocks-474114:3647042")

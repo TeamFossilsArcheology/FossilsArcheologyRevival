@@ -69,3 +69,171 @@ mandatory = false
 versionRange = "[1.17.2.15,)"
 ordering = "NONE"
 side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "farmers-delight"
+mandatory = false
+versionRange = "[1.2.3,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "oceansdelight"
+mandatory = false
+versionRange = "[1.0.0,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "nethersdelight"
+mandatory = false
+versionRange = "[2.2.0,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "delightful"
+mandatory = false
+versionRange = "[3.2.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "endersdelight"
+mandatory = false
+versionRange = "[1.2.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "ends_delight"
+mandatory = false
+versionRange = "[1.2.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "crabbersdelight"
+mandatory = false
+versionRange = "[1.1.2,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "miners_delight"
+mandatory = false
+versionRange = "[1.1.2,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "corn_delight"
+mandatory = false
+versionRange = "[1.0.6,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "culturaldelights"
+mandatory = false
+versionRange = "[0.14,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "pineapple_delight"
+mandatory = false
+versionRange = "[1.0,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "largemeals"
+mandatory = false
+versionRange = "[1.2.0,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "festive_delight"
+mandatory = false
+versionRange = "[1.0.0,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "butchersdelight"
+mandatory = false
+versionRange = "[1.18.22.1.0,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "butchersdelightfoods"
+mandatory = false
+versionRange = "[1.18.21.0.3,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "coffee_delight"
+mandatory = false
+versionRange = "[1.4,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "casualness_delight"
+mandatory = false
+versionRange = "[0.4,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "italian_delight"
+mandatory = false
+versionRange = "[1.2,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "seeddelight"
+mandatory = false
+versionRange = "[0.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "argentinas_delight"
+mandatory = false
+versionRange = "[1.3,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "honeyexpansion"
+mandatory = false
+versionRange = "[1.1.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "brewinandchewin"
+mandatory = false
+versionRange = "[1.0.0,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "alexsdelight"
+mandatory = false
+versionRange = "[1.3.3,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "farmersrespite"
+mandatory = false
+versionRange = "[1.3.0,)"
+ordering = "NONE"
+side = "BOTH"

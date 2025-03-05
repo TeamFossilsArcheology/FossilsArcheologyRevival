@@ -49,7 +49,16 @@
   },
   "suggests": {
     "cloth_config": ">=6.3.81",
-    "roughlyenoughitems": ">=8.3.495"
+    "roughlyenoughitems": ">=8.3.495",
+    "oceansdelight": ">=1.0.0",
+    "ends_delight": ">=1.2.1",
+    "farmersrespite": ">=1.0.0",
+    "pineapple_delight": ">=1.0.6",
+    "culturaldelights": ">=0.14.7",
+    "coffee_delight": ">=1.3",
+    "nethersdelight": ">=2.0.0",
+    "casualness_delight": ">=0.4",
+    "expandeddelight": ">=0.1.9.2"
   },
   "custom": {
     "cardinal-components": [
