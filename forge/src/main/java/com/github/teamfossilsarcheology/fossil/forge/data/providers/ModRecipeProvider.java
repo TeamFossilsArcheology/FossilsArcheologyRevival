@@ -392,6 +392,7 @@ public class ModRecipeProvider extends RecipeProvider {
             analyzed(Items.STRING).addOutput(STRIDER.dnaItem, 100).save(consumer);
             analyzed(Items.TROPICAL_FISH).addOutput(TROPICAL_FISH.dnaItem, 90).addOutput(POLAR_BEAR.dnaItem, 10).save(consumer);
             analyzed(Items.SCUTE).addOutput(TURTLE.dnaItem, 100).save(consumer);
+            analyzed(Blocks.TURTLE_EGG).addOutput(TURTLE.dnaItem, 100).save(consumer);
 
             analyzed(RELIC_SCRAP.get()).addOutput(Blocks.GRAVEL, 30).addOutput(Items.FLINT, 18).addOutput(POTTERY_SHARD.get(), 4).addOutput(BROKEN_HELMET.get(), 4).addOutput(BROKEN_SWORD.get(), 4).addOutput(STONE_TABLET.get(), 30)
                     .addOutput(ANU_FIGURINE_DESTROYED.get(), 4).addOutput(ENDERMAN_FIGURINE_DESTROYED.get(), 4).addOutput(PIGLIN_FIGURINE_DESTROYED.get(), 4).addOutput(SKELETON_FIGURINE_DESTROYED.get(), 4).addOutput(STEVE_FIGURINE_DESTROYED.get(), 4).addOutput(ZOMBIE_FIGURINE_DESTROYED.get(), 4).save(consumer);
