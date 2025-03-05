@@ -139,7 +139,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     private int ticksClimbing = 0;
     private int climbingCooldown = 0;
     private Vec3 eatPos;
-    private final EntityHitboxData<Prehistoric> hitboxData = EntityHitboxDataFactory.create(this, false, true);
+    private final EntityHitboxData<Prehistoric> hitboxData = EntityHitboxDataFactory.create(this);
     protected double swimSpeed;
     private boolean useLowerFluidJumpThreshold;
 

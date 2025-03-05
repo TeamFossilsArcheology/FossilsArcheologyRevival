@@ -31,7 +31,7 @@ public class SleepSystem extends AISystem {
             if (ticksSlept > 100 && mob.getRandom().nextInt(100) == 0 && !wantsToSleep()) {
                 setSleeping(false);
             }
-            if (!canSleep()) {
+            if (mob.tickCount % 10 == 0 && !canSleep()) {
                 setSleeping(false);
             }
         }
