@@ -5,6 +5,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.SwimmingA
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 
 public class CustomSwimMoveControl<T extends Prehistoric & SwimmingAnimal> extends SmoothSwimmingMoveControl {
@@ -54,8 +55,14 @@ public class CustomSwimMoveControl<T extends Prehistoric & SwimmingAnimal> exten
                     mob.yya = -l * i;
                     if (mob.isAmphibious() && mob.level.getFluidState(new BlockPos(wantedX, wantedY, wantedZ)).isEmpty()) {
                         mob.getJumpControl().jump();
+                        operation = MoveControl.Operation.JUMPING;
                     }
                 }
+            }
+        } else if (operation == MoveControl.Operation.JUMPING) {
+            mob.setSpeed((float) mob.swimSpeed());
+            if (!mob.isInWater() || mob.getDeltaMovement().y <= 0) {
+                operation = MoveControl.Operation.WAIT;
             }
         } else {
             mob.setSpeed(0);

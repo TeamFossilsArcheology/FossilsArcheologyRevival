@@ -18,6 +18,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -33,6 +34,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -188,14 +190,19 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
     public void aiStep() {
         super.aiStep();
         boolean wasBeached = beached;
-        beached = !isAmphibious() && !isInWater() && isOnGround();
+        boolean inWater = isInWater();
+        beached = !isAmphibious() && !inWater && isOnGround();
         if (!level.isClientSide) {
-            if (isInWater() && isLandNavigator) {
+            if (isAmphibious()) {
+                if (isLandNavigator && inWater) {
+                    switchNavigator(false);
+                } else if (!isLandNavigator && !inWater && isOnGround()) {
+                    switchNavigator(true);
+                }
+            } else if (isLandNavigator) {
                 switchNavigator(false);
-            } else if (!isInWater() && isOnGround() && isAmphibious() && !isLandNavigator) {
-                switchNavigator(true);
             }
-            if (isInWater()) {
+            if (inWater) {
                 timeInWater++;
                 timeOnLand = 0;
                 setNoGravity(true);
@@ -220,6 +227,11 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
                 setXRot(0);
             }
         }
+    }
+
+    @Override
+    protected void jumpInLiquid(TagKey<Fluid> fluidTag) {
+        setDeltaMovement(getDeltaMovement().add(0.0, 0.3, 0.0));
     }
 
     @Override
