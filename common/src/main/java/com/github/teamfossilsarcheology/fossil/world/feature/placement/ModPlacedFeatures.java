@@ -55,13 +55,13 @@ public class ModPlacedFeatures {
         var moaiStatuePlaced = PlacementUtils.register("moai_statue", ModConfiguredFeatures.MOAI_STATUE, BiomeFilter.biome(),
                 new LazyRarityFilter(FossilConfig.MOAI_RARITY), InSquarePlacement.spread(),
                 PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
-
-        var upperFossilBlockPlaced = PlacementUtils.register("fossil_block_placed_upper", ModOreFeatures.FOSSIL_BLOCK,
+;
+        var upperFossilBlockPlaced = PlacementUtils.register("fossil_block_no_sandstone_placed_upper", ModOreFeatures.FOSSIL_BLOCK_NO_SANDSTONE,
                 commonOrePlacement(FossilConfig.FOSSIL_ORE_RARITY, // VeinsPerChunk
-                        HeightRangePlacement.triangle(VerticalAnchor.absolute(81), VerticalAnchor.top())));
+                        HeightRangePlacement.triangle(VerticalAnchor.absolute(76), VerticalAnchor.top())));
         var middleFossilBlockPlaced = PlacementUtils.register("fossil_block_placed_middle", ModOreFeatures.FOSSIL_BLOCK,
                 commonOrePlacement(FossilConfig.FOSSIL_ORE_RARITY, // VeinsPerChunk
-                        HeightRangePlacement.triangle(VerticalAnchor.absolute(0), VerticalAnchor.absolute(80))));
+                        HeightRangePlacement.triangle(VerticalAnchor.absolute(0), VerticalAnchor.absolute(75))));
         var deepFossilBlockPlaced = PlacementUtils.register("fossil_block_placed_deep", ModOreFeatures.FOSSIL_BLOCK,
                 commonOrePlacement(FossilConfig.FOSSIL_ORE_RARITY, // VeinsPerChunk
                         HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(0), VerticalAnchor.absolute(0))));

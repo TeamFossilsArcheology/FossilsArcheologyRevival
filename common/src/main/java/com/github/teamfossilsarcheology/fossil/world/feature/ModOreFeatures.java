@@ -19,6 +19,12 @@ import static net.minecraft.data.worldgen.features.OreFeatures.DEEPSLATE_ORE_REP
 import static net.minecraft.data.worldgen.features.OreFeatures.STONE_ORE_REPLACEABLES;
 
 public class ModOreFeatures {
+    public static final List<OreConfiguration.TargetBlockState> OVERWORLD_FOSSIL_BLOCK_NO_SANDSTONE = List.of(
+            target(Blocks.CALCITE, ModBlocks.CALCITE_FOSSIL),
+            target(Blocks.DRIPSTONE_BLOCK, ModBlocks.DRIPSTONE_FOSSIL),
+            target(Blocks.DEEPSLATE, ModBlocks.DEEPSLATE_FOSSIL),
+            OreConfiguration.target(STONE_ORE_REPLACEABLES, ModBlocks.STONE_FOSSIL.get().defaultBlockState()),
+            target(Blocks.TUFF, ModBlocks.TUFF_FOSSIL));
     public static final List<OreConfiguration.TargetBlockState> OVERWORLD_FOSSIL_BLOCK = List.of(
             target(Blocks.CALCITE, ModBlocks.CALCITE_FOSSIL),
             target(Blocks.DRIPSTONE_BLOCK, ModBlocks.DRIPSTONE_FOSSIL),
@@ -27,6 +33,9 @@ public class ModOreFeatures {
             target(Blocks.SANDSTONE, ModBlocks.SANDSTONE_FOSSIL),
             OreConfiguration.target(STONE_ORE_REPLACEABLES, ModBlocks.STONE_FOSSIL.get().defaultBlockState()),
             target(Blocks.TUFF, ModBlocks.TUFF_FOSSIL));
+
+    public static final Holder<ConfiguredFeature<OreConfiguration, ?>> FOSSIL_BLOCK_NO_SANDSTONE =
+            FeatureUtils.register("ore_fossil_block_without_sandstone", Feature.ORE, new OreConfiguration(OVERWORLD_FOSSIL_BLOCK_NO_SANDSTONE, 6));
 
     public static final Holder<ConfiguredFeature<OreConfiguration, ?>> FOSSIL_BLOCK = FeatureUtils.register("ore_fossil_block",
             Feature.ORE, new OreConfiguration(OVERWORLD_FOSSIL_BLOCK, 6));
