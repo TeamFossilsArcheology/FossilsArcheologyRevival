@@ -372,7 +372,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         }
         ListTag saved = compound.getList("Variants", Tag.TAG_COMPOUND);
         allVariants.clear();
-        for (Tag savedTag : saved) {//TODO: Replace Pair with cusotm obect
+        for (Tag savedTag : saved) {
             VariantRegistry.RegistryObject<? extends VariantCondition> type = VariantRegistry.RegistryObject.parse((CompoundTag) savedTag);
             allVariants.put(type, VariantCondition.WithVariant.of(type.load((CompoundTag) savedTag), variants().get(compound.getString("VariantId"))));
         }
@@ -441,8 +441,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         heal(getMaxHealth());
         setCurrentOrder(OrderType.WANDER);
         setNoAi(false);
-        //TODO: Only initial spawn
-        //TODO:
+        //TODO: world load or config change
         for (VariantCondition.WithVariant<ConfigCondition> pair : variantsByCondition(ConfigCondition.class)) {
             if (pair.condition().test()) {
                 setVariant(VariantRegistry.CONFIG, pair);
@@ -451,10 +450,19 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 clearVariant(VariantRegistry.CONFIG);
             }
         }
+        //TODO: Only initial spawn not world load
         for (VariantCondition.WithVariant<DateCondition> pair : variantsByCondition(DateCondition.class)) {
             if (pair.condition().test(random, ZonedDateTime.now())) {
                 setVariant(VariantRegistry.DATE, pair);
                 break;
+            }
+        }
+        if (dataTag != null) {
+            for (VariantCondition.WithVariant<NbtCondition> pair : variantsByCondition(NbtCondition.class)) {
+                if (pair.condition().test(dataTag)) {
+                    setVariant(VariantRegistry.NBT, pair);
+                    break;
+                }
             }
         }
         return spawnDataIn;

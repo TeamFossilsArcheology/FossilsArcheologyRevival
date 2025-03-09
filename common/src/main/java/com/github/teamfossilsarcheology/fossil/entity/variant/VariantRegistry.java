@@ -21,6 +21,7 @@ public class VariantRegistry {
     private static final List<RegistryObject<? extends VariantCondition>> PRIORITY = new ObjectArrayList<>();
 
     public static final RegistryObject<NameTagCondition> NAME_TAG = register("nametag", NameTagCondition::save, NameTagCondition::load, NameTagCondition.class, new NameTagCondition.Deserializer());
+    public static final RegistryObject<NbtCondition> NBT = register("nbt", NbtCondition::save, NbtCondition::load, NbtCondition.class, new NbtCondition.Deserializer());
     public static final RegistryObject<DateCondition> DATE = register("date", DateCondition::save, DateCondition::load, DateCondition.class, new DateCondition.Deserializer());
     public static final RegistryObject<ConfigCondition> CONFIG = register("config", ConfigCondition::save, ConfigCondition::load, ConfigCondition.class, new ConfigCondition.Deserializer());
 
