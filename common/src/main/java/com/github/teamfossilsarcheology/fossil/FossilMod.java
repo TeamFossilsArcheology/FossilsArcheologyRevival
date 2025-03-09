@@ -8,6 +8,8 @@ import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategoryLoader;
 import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationInfoLoader;
 import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
+import com.github.teamfossilsarcheology.fossil.entity.variant.EntityVariantLoader;
+import com.github.teamfossilsarcheology.fossil.entity.variant.VariantRegistry;
 import com.github.teamfossilsarcheology.fossil.event.ModEvents;
 import com.github.teamfossilsarcheology.fossil.inventory.ModMenus;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
@@ -42,7 +44,9 @@ public class FossilMod {
     public static void init() {
         ReloadListenerRegistry.register(PackType.SERVER_DATA, ServerAnimationInfoLoader.INSTANCE);
         ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityDataLoader.INSTANCE);
+        ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityVariantLoader.INSTANCE);
         ReloadListenerRegistry.register(PackType.SERVER_DATA, AnimationCategoryLoader.INSTANCE);
+        VariantRegistry.register();
         ModFluids.register(); //Before ModBlocks
         ModBlocks.register();
         ModEntities.register(); //Before ModItems

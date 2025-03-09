@@ -24,6 +24,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.SitSyst
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.SleepSystem;
 import com.github.teamfossilsarcheology.fossil.entity.util.InstructionSystem;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
+import com.github.teamfossilsarcheology.fossil.entity.variant.*;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.network.C2SHitPlayerMessage;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
@@ -42,6 +43,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -98,6 +100,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -117,6 +120,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     private static final EntityDataAccessor<Direction> CLIMBING_DIR = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.DIRECTION);
     private static final EntityDataAccessor<Boolean> AGING_DISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Integer> DIMENSION_VER = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<String> DATA_VARIANT = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.STRING);
     private static final int GROW_UP_INTERVAL = 120;
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private final List<AISystem> aiSystems = new ArrayList<>();
@@ -144,6 +148,8 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     protected double swimSpeed;
     private boolean useLowerFluidJumpThreshold;
     private EntityDimensions prevDimensions;
+    private final Map<VariantRegistry.RegistryObject<?>, VariantCondition.WithVariant<?>> allVariants = new HashMap<>();
+    // private VariantCondition variantCondition;
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, ResourceLocation animationLocation) {
         super(entityType, level);
@@ -248,6 +254,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         entityData.define(CLIMBING_DIR, Direction.UP);
         entityData.define(AGING_DISABLED, false);
         entityData.define(DIMENSION_VER, 0);
+        entityData.define(DATA_VARIANT, "");
 
         CompoundTag tag = new CompoundTag();
         tag.putBoolean("disableGoalAI", false);
@@ -258,21 +265,30 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-        if (DIMENSION_VER.equals(key) && level.isClientSide) {
-            dimensions = prevDimensions;
-            eyeHeight = getEyeHeight(getPose(), prevDimensions);
-        } else if (SLEEPING.equals(key)) {
-            refreshTexturePath();
-        } else if (AGE_TICK.equals(key)) {
-            refreshDimensions();
-            if (level.isClientSide) {
+        if (level.isClientSide) {
+            if (DATA_VARIANT.equals(key) || SLEEPING.equals(key) || AGE_TICK.equals(key)) {
                 refreshTexturePath();
+            } else if (CLIMBING_DIR.equals(key)) {
+                if (entityData.get(CLIMBING_DIR) != Direction.UP) {
+                    //Store climb direction after climbing stopped to undo rotation
+                    prevClimbDirection = entityData.get(CLIMBING_DIR);
+                }
+            } else if (DIMENSION_VER.equals(key)) {
+                dimensions = prevDimensions;
+                eyeHeight = getEyeHeight(getPose(), prevDimensions);
             }
+        }
+        if (AGE_TICK.equals(key)) {
+            refreshDimensions();
             updateAbilities();
-        } else if (CLIMBING_DIR.equals(key)) {
-            if (level.isClientSide && entityData.get(CLIMBING_DIR) != Direction.UP) {
-                //Store climb direction after climbing stopped to undo rotation
-                prevClimbDirection = entityData.get(CLIMBING_DIR);
+        } else if (DATA_CUSTOM_NAME.equals(key) && !level.isClientSide) {
+            for (VariantCondition.WithVariant<NameTagCondition> pair : variantsByCondition(NameTagCondition.class)) {
+                if (pair.condition().test(this)) {
+                    setVariant(VariantRegistry.NAME_TAG, pair);
+                    break;
+                } else if (allVariants.containsKey(VariantRegistry.NAME_TAG) && Objects.equals(allVariants.get(VariantRegistry.NAME_TAG).condition(), pair.condition())) {
+                    clearVariant(VariantRegistry.NAME_TAG);
+                }
             }
         }
         super.onSyncedDataUpdated(key);
@@ -283,6 +299,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         buf.writeBoolean(getGender() == Gender.MALE);
         buf.writeInt(getAge());
         buf.writeFloat(getXRot());
+        buf.writeUtf(getVariantId());
         instructionSystem.saveAdditionalSpawnData(buf);
     }
 
@@ -295,6 +312,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         }
         setAgeInTicks(buf.readInt());
         setXRot(buf.readFloat());
+        setVariantId(buf.readUtf());
         refreshTexturePath();
         instructionSystem.loadAdditionalSpawnData(buf);
     }
@@ -314,6 +332,13 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         compound.putFloat("YHeadRot", yHeadRot);
         compound.putBoolean("AgingDisabled", isAgingDisabled());
         compound.putString("Gender", getGender().toString());
+        compound.putString("VariantId", getVariantId());
+        ListTag saved = new ListTag();
+        for (Map.Entry<VariantRegistry.RegistryObject<?>, VariantCondition.WithVariant<?>> entry : allVariants.entrySet()) {
+            //Save condition
+            saved.add(entry.getKey().save(new CompoundTag(), entry.getValue()));
+        }
+        compound.put("Variants", saved);
     }
 
     @Override
@@ -342,7 +367,17 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         } else {
             setGender(Gender.MALE);
         }
+        if (compound.contains("VariantId", Tag.TAG_STRING)) {
+            setVariantId(compound.getString("VariantId"));
+        }
+        ListTag saved = compound.getList("Variants", Tag.TAG_COMPOUND);
+        allVariants.clear();
+        for (Tag savedTag : saved) {//TODO: Replace Pair with cusotm obect
+            VariantRegistry.RegistryObject<? extends VariantCondition> type = VariantRegistry.RegistryObject.parse((CompoundTag) savedTag);
+            allVariants.put(type, VariantCondition.WithVariant.of(type.load((CompoundTag) savedTag), variants().get(compound.getString("VariantId"))));
+        }
     }
+
     @Override
     public void refreshDimensions() {
         EntityDimensions oldDimensions = dimensions;
@@ -406,6 +441,22 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         heal(getMaxHealth());
         setCurrentOrder(OrderType.WANDER);
         setNoAi(false);
+        //TODO: Only initial spawn
+        //TODO:
+        for (VariantCondition.WithVariant<ConfigCondition> pair : variantsByCondition(ConfigCondition.class)) {
+            if (pair.condition().test()) {
+                setVariant(VariantRegistry.CONFIG, pair);
+                break;
+            } else if (allVariants.containsKey(VariantRegistry.CONFIG) && Objects.equals(allVariants.get(VariantRegistry.CONFIG).condition(), pair.condition())) {
+                clearVariant(VariantRegistry.CONFIG);
+            }
+        }
+        for (VariantCondition.WithVariant<DateCondition> pair : variantsByCondition(DateCondition.class)) {
+            if (pair.condition().test(random, ZonedDateTime.now())) {
+                setVariant(VariantRegistry.DATE, pair);
+                break;
+            }
+        }
         return spawnDataIn;
     }
 
@@ -997,6 +1048,30 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         refreshTexturePath();
     }
 
+    private String getVariantId() {
+        return entityData.get(DATA_VARIANT);
+    }
+
+    private void setVariantId(@NotNull String variant) {
+        entityData.set(DATA_VARIANT, variant);
+    }
+
+    private void clearVariant(VariantRegistry.RegistryObject<?> type) {
+        if (allVariants.containsKey(type)) {
+            String removedVariant = allVariants.get(type).variant().getVariantId();
+            if (entityData.get(DATA_VARIANT).equals(removedVariant)) {
+                entityData.set(DATA_VARIANT, "");
+            }
+        }
+        allVariants.remove(type);
+        VariantRegistry.getHighestPriority(allVariants).ifPresent(variant -> entityData.set(DATA_VARIANT, variant.getVariantId()));
+    }
+
+    private <T extends VariantCondition> void setVariant(VariantRegistry.RegistryObject<?> type, @NotNull VariantCondition.WithVariant<T> pair) {
+        allVariants.put(type, pair);
+        VariantRegistry.getHighestPriority(allVariants).ifPresent(variant -> entityData.set(DATA_VARIANT, variant.getVariantId()));
+    }
+
     public int getClimbingCooldown() {
         return climbingCooldown;
     }
@@ -1214,13 +1289,18 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         builder.append(name);
         builder.append("/");
         builder.append(name);
-        if (isBaby()) builder.append("_baby");
-        if (hasTeenTexture() && isTeen()) builder.append("_teen");
-        if (!hasTeenTexture() && isTeen() || isAdult()) {
-            if (gender == Gender.MALE) {
-                builder.append("_male");
-            } else {
-                builder.append("_female");
+        String variantId = getVariantId();
+        if (!variantId.isBlank() && variants().containsKey(variantId)) {
+            variants().get(variantId).appendTextureString(builder, this);
+        } else {
+            if (isBaby()) builder.append("_baby");
+            if (hasTeenTexture() && isTeen()) builder.append("_teen");
+            if (!hasTeenTexture() && isTeen() || isAdult()) {
+                if (gender == Gender.MALE) {
+                    builder.append("_male");
+                } else {
+                    builder.append("_female");
+                }
             }
         }
         if (isSleeping() || isWeak()) builder.append("_sleeping");
@@ -1390,6 +1470,14 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     public abstract PrehistoricEntityInfo info();
 
     public abstract Item getOrderItem();
+
+    public Map<String, Variant> variants() {
+        return EntityVariantLoader.INSTANCE.getVariants(info().resourceName);
+    }
+
+    public <T extends VariantCondition> List<VariantCondition.WithVariant<T>> variantsByCondition(Class<T> clazz) {
+        return EntityVariantLoader.INSTANCE.getVariantsByCondition(clazz, info().resourceName);
+    }
 
     public EntityDataLoader.Data data() {
         return EntityDataLoader.INSTANCE.getData(info().resourceName);

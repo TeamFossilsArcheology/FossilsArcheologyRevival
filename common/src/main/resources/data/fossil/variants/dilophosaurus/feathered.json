@@ -1,0 +1,11 @@
+{
+  "textureName": "feathered",
+  "conditions": [
+    {
+      "type": "config",
+      "configKey": "featheredDilo"
+    }
+  ],
+  "hasBabyTexture": true,
+  "hasGenderTextures": true
+}
