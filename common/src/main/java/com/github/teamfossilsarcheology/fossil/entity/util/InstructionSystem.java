@@ -204,7 +204,7 @@ public class InstructionSystem extends AISystem {
     }
 
     public double acceptedDistance() {
-        if (mob.getEntityHitboxData().hasCustomParts()) {
+        if (mob.getEntityHitboxData().hasCustomParts() && mob.getEntityHitboxData().getHeadRadius() != 0) {
             return mob.getEntityHitboxData().getHeadRadius() * mob.getScale() + 1;
         }
         return mob.getBbWidth() / 2 + 1;

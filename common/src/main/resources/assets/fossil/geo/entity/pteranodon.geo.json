@@ -152,6 +152,12 @@
 					]
 				},
 				{
+					"name": "head_hitbox",
+					"parent": "Head",
+					"pivot": [-0.02, 11.05, -14.8],
+					"cubes": []
+				},
+				{
 					"name": "WingL1",
 					"parent": "body",
 					"pivot": [2.18, 13.1, 3.5],

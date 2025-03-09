@@ -6,6 +6,13 @@
 			"width": 12,
 			"height": 23,
 			"ref": "body_hitbox"
+		},
+		{
+			"name": "head",
+			"pos": [0, 13, 12],
+			"width": 10,
+			"height": 6,
+			"ref": "head_hitbox"
 		}
 	]
 }
