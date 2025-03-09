@@ -116,6 +116,7 @@ dependencies {
 
     //Dev only
     /*
+    modRuntimeOnly("maven.modrinth:auth-me:3.1.0")
     modRuntimeOnly("curse.maven:hugestructureblocks-474114:3647042")
     modRuntimeOnly("curse.maven:worldedit-225608:3697298")
     modRuntimeOnly("maven.modrinth:smoothboot-fabric:1.18.2-1.7.0")
@@ -127,7 +128,7 @@ dependencies {
     //runtimeOnly("org.joml:joml:1.10.4")
     modRuntimeOnly("maven.modrinth:modmenu:3.2.5")
     modRuntimeOnly("curse.maven:camerautils-510234:3667404")
-    modRuntimeOnly("curse.maven:replay-775651:4262559")
+    //modRuntimeOnly("curse.maven:replay-775651:4262559")
     //modRuntimeOnly("maven.modrinth:6pku8gW1:zbBHXeFQ")//Energized Power
     modRuntimeOnly("curse.maven:debugutils-783010:5337485")
     //modRuntimeOnly("com.github.darkpred.extended_structure_blocks:extended-structure-blocks-fabric:${minecraftVersion}-0.4.0")
