@@ -119,7 +119,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     private static final EntityDataAccessor<Boolean> CLIMBING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Direction> CLIMBING_DIR = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.DIRECTION);
     private static final EntityDataAccessor<Boolean> AGING_DISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
-    public static final EntityDataAccessor<Integer> DIMENSION_VER = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<CompoundTag> DIMENSION_VER = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
     private static final EntityDataAccessor<String> DATA_VARIANT = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.STRING);
     private static final int GROW_UP_INTERVAL = 120;
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -147,9 +147,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     private final EntityHitboxData<Prehistoric> hitboxData = EntityHitboxDataFactory.create(this);
     protected double swimSpeed;
     private boolean useLowerFluidJumpThreshold;
-    private EntityDimensions prevDimensions;
     private final Map<VariantRegistry.RegistryObject<?>, VariantCondition.WithVariant<?>> allVariants = new HashMap<>();
-    // private VariantCondition variantCondition;
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, ResourceLocation animationLocation) {
         super(entityType, level);
@@ -253,7 +251,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         entityData.define(CLIMBING, false);
         entityData.define(CLIMBING_DIR, Direction.UP);
         entityData.define(AGING_DISABLED, false);
-        entityData.define(DIMENSION_VER, 0);
+        entityData.define(DIMENSION_VER, new CompoundTag());
         entityData.define(DATA_VARIANT, "");
 
         CompoundTag tag = new CompoundTag();
@@ -274,8 +272,12 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                     prevClimbDirection = entityData.get(CLIMBING_DIR);
                 }
             } else if (DIMENSION_VER.equals(key)) {
-                dimensions = prevDimensions;
-                eyeHeight = getEyeHeight(getPose(), prevDimensions);
+                CompoundTag tag = entityData.get(DIMENSION_VER);
+                if (tag.contains("Width", Tag.TAG_FLOAT) && tag.contains("Height", Tag.TAG_FLOAT)) {
+                    dimensions = EntityDimensions.fixed(tag.getFloat("Width"), tag.getFloat("Height"));
+                    eyeHeight = getEyeHeight(getPose(), dimensions);
+
+                }
             }
         }
         if (AGE_TICK.equals(key)) {
@@ -386,9 +388,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         dimensions = newDimensions;
         eyeHeight = getEyeHeight(pose, newDimensions);
         reapplyPosition();
-        if (level.isClientSide) {
-            prevDimensions = oldDimensions;
-        } else if (!firstTick && !noPhysics && (newDimensions.width > oldDimensions.width || newDimensions.height > oldDimensions.height)) {
+        if (!level.isClientSide && !firstTick && !noPhysics && (newDimensions.width > oldDimensions.width || newDimensions.height > oldDimensions.height)) {
             Vec3 vec3 = position().add(0.0, oldDimensions.height / 2.0, 0.0);
             double wDiff = Math.max(0.0, newDimensions.width - oldDimensions.width) + 1.0E-6;
             double hDiff = Math.max(0.0, newDimensions.height - oldDimensions.height) + 1.0E-6;
@@ -401,7 +401,10 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 //This should prevent mobs from phasing through blocks while growing up
                 dimensions = oldDimensions;
                 eyeHeight = getEyeHeight(pose, oldDimensions);
-                entityData.set(DIMENSION_VER, entityData.get(DIMENSION_VER) + 1);
+                CompoundTag tag = new CompoundTag();
+                tag.putFloat("Width", dimensions.width);
+                tag.putFloat("Height", dimensions.height);
+                entityData.set(DIMENSION_VER, tag);
                 reapplyPosition();
             }
         }

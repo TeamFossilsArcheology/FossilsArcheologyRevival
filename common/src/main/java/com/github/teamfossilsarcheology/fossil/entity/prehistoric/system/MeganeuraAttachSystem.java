@@ -7,6 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Random;
@@ -78,8 +79,6 @@ public class MeganeuraAttachSystem extends AISystem {
                     stopAttaching(1000 + mob.getRandom().nextInt(1500));
                 }
 
-                attachTicks++;
-                mob.setDeltaMovement(Vec3.ZERO);
                 if (mob.getCurrentOrder() == OrderType.FOLLOW) {
                     stopAttaching();
                 }
@@ -118,15 +117,12 @@ public class MeganeuraAttachSystem extends AISystem {
      */
     public void setAttachTarget(BlockPos attachBlockPos, Direction attachFace) {
         //Pick a random point on the hit face, offset by half the mobs width
-        float rad = mob.getBbWidth() / 2;
-        if (!mob.usesAttachHitBox()) {
-            rad *= mob.getAttachHitBoxScale();
-        }
+        double rad = mob.getBbWidth() / 2;
         //Offset perpendicular to face
         Vec3 pos = Vec3.atCenterOf(attachBlockPos).add((0.5 + rad) * attachFace.getStepX(), 0, (0.5 + rad) * attachFace.getStepZ());
         Random random = mob.getRandom();
-        float randomOffset = (random.nextFloat(2) - 1) * 0.4f;
-        //Offset parallel to face
+        //Offset parallel to face while staying inside block bounds
+        double randomOffset = (random.nextDouble(2) - 1) * (0.5 - rad - Mth.EPSILON);
         pos = pos.add(attachFace.getClockWise().getStepX() * randomOffset, (random.nextFloat(2) - 1) * 0.3f, attachFace.getClockWise().getStepZ() * randomOffset);
         setAttachTarget(attachBlockPos, attachFace, pos);
     }

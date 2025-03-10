@@ -246,7 +246,6 @@ public class InstructionSystem extends AISystem {
             if (mob instanceof Meganeura meganeura) {
                 Direction face = attachTo.direction;
                 float rad = mob.getBbWidth() / 2;
-                if (!meganeura.usesAttachHitBox()) rad *= meganeura.getAttachHitBoxScale();
                 Vec3 pos = new Vec3(attachTo.location.x + rad * face.getStepX(), attachTo.location.y, attachTo.location.z + rad * face.getStepZ());
                 meganeura.getAttachSystem().setAttachTarget(attachTo.target, face, pos);
             }
