@@ -236,7 +236,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                 birdEgg.add(info.cultivatedBirdEggItem);
             }
         }
-        addTag(ModItemTags.COOKABLE_EGGS, ModItemTags.DINO_EGGS).add(Items.EGG);
+        addTag(ModItemTags.COOKABLE_EGGS, ModItemTags.DINO_EGGS, ModItemTags.BIRD_EGGS).add(Items.EGG);
         addTag(ModItemTags.ALL_EGGS, ModItemTags.DINO_EGGS, ModItemTags.FISH_EGGS, ModItemTags.BIRD_EGGS);
         addTag(ModItemTags.ALL_BONES, ModItemTags.ARM_BONES, ModItemTags.FOOT_BONES, ModItemTags.LEG_BONES, ModItemTags.RIBCAGE_BONES, ModItemTags.SKULL_BONES, ModItemTags.TAIL_BONES, ModItemTags.UNIQUE_BONES, ModItemTags.VERTEBRAE_BONES);
         addTag(ItemTags.CREEPER_DROP_MUSIC_DISCS, MUSIC_DISC_ANU, MUSIC_DISC_BONES, MUSIC_DISC_DISCOVERY, MUSIC_DISC_SCARAB);
