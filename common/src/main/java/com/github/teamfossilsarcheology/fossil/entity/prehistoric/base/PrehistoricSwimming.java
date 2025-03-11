@@ -252,7 +252,6 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
             setAirSupply(airSupply - 1);
             if (getAirSupply() == -40) {
                 setAirSupply(0);
-                FossilMod.LOGGER.info("{} is suffocating. isInWater: {} blockstate: {} fluidstate: {} pos: {} age: {}", info(), isInWater(), level.getBlockState(blockPosition()), level.getFluidState(blockPosition()), position(), getAge());
                 hurt(ModDamageSources.SUFFOCATE, 2);
             }
         } else {

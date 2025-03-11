@@ -92,8 +92,6 @@ public class ModRecipeProvider extends RecipeProvider {
                 }
             }
             fullOre(DENSE_SAND.get(), REINFORCED_GLASS.get(), consumer, 3);
-            fullCooking(Items.EGG, COOKED_EGG.get(), "egg_to_cooked_egg", consumer, 0.35f);
-            fullCooking(ModItemTags.COOKABLE_EGGS, COOKED_EGG.get(), "dino_eggs_to_cooked_egg", consumer, 0.7f);
         }
         if (craftingRecipes) {
             ToyBallItem white = TOY_BALLS.get(DyeColor.WHITE).get();

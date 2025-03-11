@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "fossil:dino_eggs_to_cooked_egg_from_campfire_cooking"
+      "fossil:fa_cookable_eggs_to_fried_egg_from_smoking"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "fossil:dino_eggs_to_cooked_egg_from_campfire_cooking"
+        "recipe": "fossil:fa_cookable_eggs_to_fried_egg_from_smoking"
       }
     }
   },
