@@ -11,9 +11,7 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-import java.util.Comparator;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 
 /**
@@ -56,20 +54,17 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
 
     @Override
     protected boolean isValidTarget(LevelReader level, BlockPos pos) {
-        if (!super.isValidTarget(level, pos)) {
-            return false;
-        }
-        return level.getBlockEntity(pos) instanceof FeederBlockEntity feeder && !feeder.isEmpty(entity.data().diet()) && Util.canSeeFood(entity, pos);
+        return isValidTarget(pos, level.getBlockEntity(pos));
     }
 
-    private boolean isValidTarget(Map.Entry<BlockPos, BlockEntity> entry) {
-        if (avoidCache.contains(entry.getKey().asLong())) {
+    protected boolean isValidTarget(BlockPos pos, BlockEntity blockEntity) {
+        if (avoidCache.contains(pos.asLong())) {
             return false;
         }
-        if (!(entry.getValue() instanceof FeederBlockEntity feeder) || feeder.isEmpty(entity.data().diet())) {
+        if (!(blockEntity instanceof FeederBlockEntity feeder) || feeder.isEmpty(entity.data().diet())) {
             return false;
         }
-        return (Util.canSeeFood(entity, entry.getKey()) || entity.getHunger() < entity.getMaxHunger() * 0.5);
+        return (Util.canSeeFood(entity, pos) || entity.getHunger() < entity.getMaxHunger() * 0.5);
     }
 
     @Override
@@ -78,7 +73,7 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
         //chunkRadius of 2 is 25 chunks. Should not be too slow
         Optional<BlockPos> target = ChunkPos.rangeClosed(new ChunkPos(mobPos), chunkRadius)
                 .flatMap(chunkPos -> entity.level.getChunk(chunkPos.x, chunkPos.z).getBlockEntities().entrySet().stream())
-                .filter(this::isValidTarget)
+                .filter(entry -> isValidTarget(entry.getKey(), entry.getValue()))
                 .map(Map.Entry::getKey)
                 .min(Comparator.comparingInt(pos -> pos.distManhattan(mobPos)));
         if (target.isPresent()) {

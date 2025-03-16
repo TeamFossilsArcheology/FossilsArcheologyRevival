@@ -4,7 +4,6 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.level.LevelReader;
@@ -129,7 +128,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
             return false;
         }
         //Check if the mob can reach it
-        if (path.getNodeCount() < 16 && path.getEndNode().distanceTo(getMoveToTarget()) == 0) {
+        if (path.getNodeCount() < 16 && path.getEndNode().distanceTo(getMoveToTarget()) > 1) {
             avoidCache.add(getMoveToTarget().asLong());
             return false;
         }
@@ -148,7 +147,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
         if (entity.getEntityHitboxData().hasCustomParts() && entity.getEntityHitboxData().getHeadRadius() != 0) {
             return entity.getEntityHitboxData().getHeadRadius() * entity.getScale() + 0.7;
         }
-        return entity.getBbWidth() / 2 + 1;
+        return entity.getBbWidth() / 2 + 1.5;
     }
 
     protected BlockPos getMoveToTarget() {
