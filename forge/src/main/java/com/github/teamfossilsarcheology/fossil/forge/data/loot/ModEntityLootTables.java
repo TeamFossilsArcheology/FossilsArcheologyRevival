@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.forge.data.loot;
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricMobType;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.loot.CustomizeToDinoFunction;
 import net.minecraft.data.loot.EntityLoot;
@@ -36,10 +37,12 @@ public class ModEntityLootTables extends EntityLoot {
                 var unique = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(info.uniqueBoneItem).setWeight(50)).add(EmptyLootItem.emptyItem().setWeight(50));
                 add(FossilMod.location("entities/" + info.resourceName), LootTable.lootTable().withPool(meat).withPool(unique));
             } else if (info.foodItem != null) {
-                var meat = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).
-                        add(LootItem.lootTableItem(info.foodItem).apply(CustomizeToDinoFunction.apply(LootContext.EntityTarget.THIS))
-                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 2))));
-                add(FossilMod.location("entities/" + info.resourceName), LootTable.lootTable().withPool(meat));
+                var meat = LootItem.lootTableItem(info.foodItem).apply(CustomizeToDinoFunction.apply(LootContext.EntityTarget.THIS));
+                if (info.mobType != PrehistoricMobType.FISH) {
+                    meat = meat.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 2)));
+                }
+                add(FossilMod.location("entities/" + info.resourceName), LootTable.lootTable().withPool(
+                        LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(meat)));
             }
         }
         var wool = uniformLoot(Items.BROWN_WOOL, 6, 8);
