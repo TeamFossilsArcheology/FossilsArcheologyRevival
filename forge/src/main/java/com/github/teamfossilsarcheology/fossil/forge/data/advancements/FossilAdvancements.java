@@ -13,6 +13,7 @@ import com.github.teamfossilsarcheology.fossil.world.dimension.ModDimensions;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.*;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -139,11 +140,11 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
         return tag(item, tag, parent, consumer, key);
     }
 
-    private TranslatableComponent title(String key) {
+    private Component title(String key) {
         return new TranslatableComponent(String.format("advancements.%s.%s.title", FossilMod.MOD_ID, key));
     }
 
-    private TranslatableComponent description(String key) {
+    private Component description(String key) {
         return new TranslatableComponent(String.format("advancements.%s.%s.description", FossilMod.MOD_ID, key));
     }
 }

@@ -11,6 +11,12 @@
     <a href="https://www.youtube.com/@FossilsAndArcheology">
         <img src="https://img.shields.io/youtube/channel/subscribers/UCeO0YnK5lTmPTGSLOhK-hgA?style=for-the-badge&logo=youtube&label=Youtube" alt="Youtube"/>
     </a>
+    <a href="https://www.curseforge.com/minecraft/mc-mods/fossils">
+        <img src="http://cf.way2muchnoise.eu/full_223908_downloads.svg" alt="Curseforge Downloads">
+    </a>
+    <a href="https://modrinth.com/mod/fossils-and-archeology-revival">
+        <img src="https://img.shields.io/modrinth/dt/IJY7IqPP?style=for-the-badge&label=MODRINTH&color=1BD96A" alt="Modrinth Downloads">
+    </a>
 </p>
 
 [Imgur album of current and past banners](http://imgur.com/a/hBe0h)

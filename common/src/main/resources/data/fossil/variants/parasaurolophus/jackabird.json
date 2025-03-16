@@ -1,0 +1,9 @@
+{
+  "textureName": "jackabird",
+  "conditions": [
+    {
+      "type": "nametag",
+      "name": "Jackabird"
+    }
+  ]
+}

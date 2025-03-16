@@ -8,6 +8,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
 import org.apache.commons.lang3.StringUtils;
@@ -61,7 +62,7 @@ public class AbstractAnimationList extends DebugSelectionList<AbstractAnimationL
 
         AnimationEntry(String animation) {
             String[] split = animation.split("\\.");
-            TextComponent display = new TextComponent(split.length > 0 ? StringUtils.capitalize(split[split.length - 1]) : "");
+            Component display = new TextComponent(split.length > 0 ? StringUtils.capitalize(split[split.length - 1]) : "");
             changeButton = new Button(0, 0, 100, 20, display, button -> {
                 consumer.accept(new AnimationObject(animation, currentControllerName, speed, transitionLength, loop));
             });

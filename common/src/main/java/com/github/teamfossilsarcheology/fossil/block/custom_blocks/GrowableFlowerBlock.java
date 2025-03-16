@@ -13,8 +13,8 @@ public class GrowableFlowerBlock extends ShortFlowerBlock {
 
     private final RegistrySupplier<TallFlowerBlock> tallFlower;
 
-    public GrowableFlowerBlock(Properties properties, RegistrySupplier<TallFlowerBlock> tallFlower, VoxelShape shape) {
-        super(properties, shape);
+    public GrowableFlowerBlock(RegistrySupplier<TallFlowerBlock> tallFlower, VoxelShape shape) {
+        super(shape);
         this.tallFlower = tallFlower;
     }
 

@@ -2,18 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "fossil:egg_to_cooked_egg"
+      "fossil:fa_cookable_eggs_to_fried_egg_from_campfire_cooking"
     ]
   },
   "criteria": {
-    "has_egg": {
+    "has_cookable_eggs": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:egg"
-            ]
+            "tag": "fossil:cookable_eggs"
           }
         ]
       }
@@ -21,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "fossil:egg_to_cooked_egg"
+        "recipe": "fossil:fa_cookable_eggs_to_fried_egg_from_campfire_cooking"
       }
     }
   },
   "requirements": [
     [
-      "has_egg",
+      "has_cookable_eggs",
       "has_the_recipe"
     ]
   ]

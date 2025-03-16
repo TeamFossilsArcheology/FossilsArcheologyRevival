@@ -159,7 +159,7 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
     @Override
     public @NotNull EntityDimensions getDimensions(Pose poseIn) {
         if (usesAttachHitBox()) {
-            return super.getDimensions(poseIn).scale(getAttachHitBoxScale(), 2f);
+            return super.getDimensions(poseIn).scale(1, 2);
         }
         return super.getDimensions(poseIn);
     }
@@ -264,10 +264,6 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
 
     public boolean usesAttachHitBox() {
         return attachSystem == null || attachSystem.getAttachmentFace().getAxis().isHorizontal();
-    }
-
-    public float getAttachHitBoxScale() {
-        return 0.5f;
     }
 
     @Override

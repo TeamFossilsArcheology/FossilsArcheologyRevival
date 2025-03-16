@@ -1,0 +1,9 @@
+{
+  "textureName": "fire",
+  "conditions": [
+    {
+      "type": "nametag",
+      "name": "Bringer of Peace"
+    }
+  ]
+}

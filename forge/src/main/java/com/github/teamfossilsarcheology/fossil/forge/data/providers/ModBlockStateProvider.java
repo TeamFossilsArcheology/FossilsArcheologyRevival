@@ -16,6 +16,7 @@ import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.stream.IntStream;
 
@@ -243,57 +244,57 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
 
     public void woodBlock(RotatedPillarBlock block, RotatedPillarBlock log) {
-        itemModels().blockItem(block.getRegistryName());
-        ModelFile wood = models().cubeColumn(block.getRegistryName().getPath(), blockTexture(log), blockTexture(log));
+        itemModels().blockItem(key(block));
+        ModelFile wood = models().cubeColumn(key(block).getPath(), blockTexture(log), blockTexture(log));
         axisBlock(block, wood, wood);
     }
 
     @Override
     public void logBlock(RotatedPillarBlock block) {
-        itemModels().blockItem(block.getRegistryName());
+        itemModels().blockItem(key(block));
         models().registerExistingTexture(FossilMod.location(blockTexture(block).getPath() + "_top"));
         super.logBlock(block);
     }
 
     @Override
     public void simpleBlock(Block block) {
-        itemModels().blockItem(block.getRegistryName());
+        itemModels().blockItem(key(block));
         super.simpleBlock(block);
     }
 
     @Override
     public void stairsBlock(StairBlock block, ResourceLocation texture) {
-        itemModels().blockItem(block.getRegistryName());
+        itemModels().blockItem(key(block));
         super.stairsBlock(block, texture);
     }
 
 
     public void slabBlock(SlabBlock block, ResourceLocation texture) {
-        itemModels().blockItem(block.getRegistryName());
+        itemModels().blockItem(key(block));
         getVariantBuilder(block)
-                .partialState().with(SlabBlock.TYPE, SlabType.BOTTOM).addModels(new ConfiguredModel(models().slab(block.getRegistryName().getPath(), texture, texture, texture)))
-                .partialState().with(SlabBlock.TYPE, SlabType.TOP).addModels(new ConfiguredModel(models().slabTop(block.getRegistryName().getPath() + "_top", texture, texture, texture)))
+                .partialState().with(SlabBlock.TYPE, SlabType.BOTTOM).addModels(new ConfiguredModel(models().slab(key(block).getPath(), texture, texture, texture)))
+                .partialState().with(SlabBlock.TYPE, SlabType.TOP).addModels(new ConfiguredModel(models().slabTop(key(block).getPath() + "_top", texture, texture, texture)))
                 .partialState().with(SlabBlock.TYPE, SlabType.DOUBLE).addModels(new ConfiguredModel(models().getExistingFile(texture)));
     }
 
     @Override
     public void wallBlock(WallBlock block, ResourceLocation texture) {
-        itemModels().blockItem(block.getRegistryName(), "_inventory");
-        models().singleTexture(BLOCK_FOLDER2 + block.getRegistryName().getPath() + "_inventory", mcLoc("wall_inventory"), "wall", texture);
+        itemModels().blockItem(key(block), "_inventory");
+        models().singleTexture(BLOCK_FOLDER2 + key(block).getPath() + "_inventory", mcLoc("wall_inventory"), "wall", texture);
         super.wallBlock(block, texture);
     }
 
     @Override
     public void fenceBlock(FenceBlock block, ResourceLocation texture) {
-        itemModels().blockItem(block.getRegistryName(), "_inventory");
-        models().singleTexture(BLOCK_FOLDER2 + block.getRegistryName().getPath() + "_inventory", mcLoc("fence_inventory"), texture);
+        itemModels().blockItem(key(block), "_inventory");
+        models().singleTexture(BLOCK_FOLDER2 + key(block).getPath() + "_inventory", mcLoc("fence_inventory"), texture);
         //getVariantBuilder(block).partialState().setModels(ConfiguredModel.builder().modelFile(file).buildLast());
         super.fenceBlock(block, texture);
     }
 
     @Override
     public void fenceGateBlock(FenceGateBlock block, ResourceLocation texture) {
-        itemModels().blockItem(block.getRegistryName());
+        itemModels().blockItem(key(block));
         super.fenceGateBlock(block, texture);
     }
 
@@ -302,7 +303,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
 
     public void doorBlock(DoorBlock block) {
-        itemModels().simpleItem(block.getRegistryName(), false);
+        itemModels().simpleItem(key(block), false);
         ResourceLocation bottom = expand(blockTexture(block), "_bottom");
         ResourceLocation top = expand(blockTexture(block), "_top");
         models().registerExistingTexture(bottom, top);
@@ -310,53 +311,53 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
 
     public void trapdoorBlock(TrapDoorBlock block, boolean orientable) {
-        itemModels().blockItem(block.getRegistryName(), "_bottom");
+        itemModels().blockItem(key(block), "_bottom");
         models().registerExistingTexture(blockTexture(block));
         super.trapdoorBlock(block, blockTexture(block), orientable);
     }
 
     @Override
     public void buttonBlock(ButtonBlock block, ResourceLocation texture) {
-        itemModels().blockItem(block.getRegistryName(), "_inventory");
-        models().singleTexture(BLOCK_FOLDER2 + block.getRegistryName().getPath() + "_inventory", mcLoc("button_inventory"), texture);
+        itemModels().blockItem(key(block), "_inventory");
+        models().singleTexture(BLOCK_FOLDER2 + key(block).getPath() + "_inventory", mcLoc("button_inventory"), texture);
         //getVariantBuilder(block).partialState().setModels(ConfiguredModel.builder().modelFile(file).buildLast());
         super.buttonBlock(block, texture);
     }
 
     @Override
     public void pressurePlateBlock(PressurePlateBlock block, ResourceLocation texture) {
-        itemModels().blockItem(block.getRegistryName());
+        itemModels().blockItem(key(block));
         super.pressurePlateBlock(block, texture);
     }
 
     public void crossBlock(Block block) {
-        itemModels().simpleItem(block.getRegistryName(), true);
+        itemModels().simpleItem(key(block), true);
         ResourceLocation texture = blockTexture(block);
         models().registerExistingTexture(texture);
-        ModelFile file = models().singleTexture(BLOCK_FOLDER2 + block.getRegistryName().getPath(), mcLoc("cross"), "cross", texture);
+        ModelFile file = models().singleTexture(BLOCK_FOLDER2 + key(block).getPath(), mcLoc("cross"), "cross", texture);
         getVariantBuilder(block).partialState().setModels(ConfiguredModel.builder().modelFile(file).buildLast());
     }
 
     public void leavesBlock(LeavesBlock block) {
-        itemModels().blockItem(block.getRegistryName());
+        itemModels().blockItem(key(block));
         ResourceLocation texture = blockTexture(block);
         models().registerExistingTexture(texture);
-        ModelFile file = models().singleTexture(BLOCK_FOLDER2 + block.getRegistryName().getPath(), mcLoc("leaves"), "all", texture);
+        ModelFile file = models().singleTexture(BLOCK_FOLDER2 + key(block).getPath(), mcLoc("leaves"), "all", texture);
         getVariantBuilder(block).partialState().setModels(ConfiguredModel.builder().modelFile(file).buildLast());
     }
 
     public void amphora(VaseBlock block, ResourceLocation templateBase, ResourceLocation templateTop) {
-        itemModels().vaseItem(block.getRegistryName());
+        itemModels().vaseItem(key(block));
         ResourceLocation base = FossilMod.location("block/vases/vase_amphora_base");
         if (block == AMPHORA_VASE_DAMAGED.get()) {
             base = FossilMod.location("block/vases/vase_amphora_base_damaged");
         }
-        ResourceLocation color = FossilMod.location("block/vases/" + block.getRegistryName().getPath());
+        ResourceLocation color = FossilMod.location("block/vases/" + key(block).getPath());
         models().registerExistingTexture(base, color);
-        ModelFile fileBase = models().withExistingParent("block/vases/" + block.getRegistryName().getPath() + "_base", templateBase)
+        ModelFile fileBase = models().withExistingParent("block/vases/" + key(block).getPath() + "_base", templateBase)
                 .texture("color", color)
                 .texture("base", base);
-        ModelFile fileTop = models().withExistingParent("block/vases/" + block.getRegistryName().getPath() + "_top", templateTop)
+        ModelFile fileTop = models().withExistingParent("block/vases/" + key(block).getPath() + "_top", templateTop)
                 .texture("color", color)
                 .texture("base", base);
         getVariantBuilder(block).forAllStates(state ->
@@ -366,26 +367,26 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
 
     public void vaseBlock(VaseBlock block, ResourceLocation template) {
-        itemModels().vaseItem(block.getRegistryName());
-        ResourceLocation texture = FossilMod.location("block/vases/" + block.getRegistryName().getPath());
+        itemModels().vaseItem(key(block));
+        ResourceLocation texture = FossilMod.location("block/vases/" + key(block).getPath());
         models().registerExistingTexture(texture);
-        ModelFile file = models().singleTexture("block/vases/" + block.getRegistryName().getPath(), template, texture);
+        ModelFile file = models().singleTexture("block/vases/" + key(block).getPath(), template, texture);
         horizontalBlock(block, file);
     }
 
     public void amberChunkBlock(Block block) {
         ResourceLocation template = FossilMod.location("block/amber_chunk_template");
         models().registerExistingModel(template);
-        itemModels().basicItem(block.getRegistryName());
-        ResourceLocation texture = FossilMod.location(BLOCK_FOLDER2 + block.getRegistryName().getPath());
+        itemModels().basicItem(key(block));
+        ResourceLocation texture = FossilMod.location(BLOCK_FOLDER2 + key(block).getPath());
         models().registerExistingTexture(texture);
-        ModelFile file = models().singleTexture(BLOCK_FOLDER2 + block.getRegistryName().getPath(), template, "all", texture);
+        ModelFile file = models().singleTexture(BLOCK_FOLDER2 + key(block).getPath(), template, "all", texture);
         horizontalBlock(block, file, 90);
     }
 
     private void shortBerryBlock(PrehistoricPlantInfo info, ShortBerryBushBlock block) {
         itemModels().plantBlockItem(block, "_stage" + info.maxAge);
-        String name = block.getRegistryName().getPath();
+        String name = key(block).getPath();
         var blockState = getVariantBuilder(block);
         ResourceLocation[] textures = IntStream.rangeClosed(0, info.maxAge).mapToObj(age -> FossilMod.location("block/plants/plant_" + name + "_stage" + age)).toArray(ResourceLocation[]::new);
         models().registerExistingTexture(textures);
@@ -396,7 +397,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     private void tallBerryBlock(PrehistoricPlantInfo info, TallBerryBushBlock block) {
         itemModels().plantBlockItem(block, "_2_stage" + info.maxAge);
-        String name = block.getRegistryName().getPath();
+        String name = key(block).getPath();
         var blockState = getVariantBuilder(block);
         ResourceLocation[] lower = IntStream.rangeClosed(0, info.maxAge).mapToObj(age -> FossilMod.location("block/plants/plant_" + name + "_1_stage" + age)).toArray(ResourceLocation[]::new);
         ResourceLocation[] upper = IntStream.rangeClosed(0, info.maxAge).mapToObj(age -> FossilMod.location("block/plants/plant_" + name + "_2_stage" + age)).toArray(ResourceLocation[]::new);
@@ -411,39 +412,43 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     public void shortFlowerBlock(ShortFlowerBlock block) {
         itemModels().plantBlockItem(block, "");
-        ResourceLocation flower = FossilMod.location("block/plants/plant_" + block.getRegistryName().getPath());
+        ResourceLocation flower = FossilMod.location("block/plants/plant_" + key(block).getPath());
         models().registerExistingTexture(flower);
         getVariantBuilder(block).partialState().setModels(
-                new ConfiguredModel(models().cross("block/plants/" + block.getRegistryName().getPath(), flower)));
+                new ConfiguredModel(models().cross("block/plants/" + key(block).getPath(), flower)));
     }
 
     public void tallFlowerBlock(TallFlowerBlock block) {
         itemModels().plantBlockItem(block, "_2");
-        ResourceLocation lower = FossilMod.location("block/plants/plant_" + block.getRegistryName().getPath() + "_1");
-        ResourceLocation upper = FossilMod.location("block/plants/plant_" + block.getRegistryName().getPath() + "_2");
+        ResourceLocation lower = FossilMod.location("block/plants/plant_" + key(block).getPath() + "_1");
+        ResourceLocation upper = FossilMod.location("block/plants/plant_" + key(block).getPath() + "_2");
         models().registerExistingTexture(lower, upper);
         getVariantBuilder(block)
                 .partialState().with(TallFlowerBlock.HALF, DoubleBlockHalf.LOWER).setModels(
-                        new ConfiguredModel(models().cross("block/plants/" + block.getRegistryName().getPath() + "_1", lower)))
+                        new ConfiguredModel(models().cross("block/plants/" + key(block).getPath() + "_1", lower)))
                 .partialState().with(TallFlowerBlock.HALF, DoubleBlockHalf.UPPER).setModels(
-                        new ConfiguredModel(models().cross("block/plants/" + block.getRegistryName().getPath() + "_2", upper)));
+                        new ConfiguredModel(models().cross("block/plants/" + key(block).getPath() + "_2", upper)));
     }
 
     public void fourTallFlowerBlock(FourTallFlowerBlock block) {
         itemModels().plantBlockItem(block, "_1");
-        ResourceLocation first = FossilMod.location("block/plants/plant_" + block.getRegistryName().getPath() + "_1");
-        ResourceLocation second = FossilMod.location("block/plants/plant_" + block.getRegistryName().getPath() + "_2");
-        ResourceLocation third = FossilMod.location("block/plants/plant_" + block.getRegistryName().getPath() + "_3");
-        ResourceLocation fourth = FossilMod.location("block/plants/plant_" + block.getRegistryName().getPath() + "_4");
+        ResourceLocation first = FossilMod.location("block/plants/plant_" + key(block).getPath() + "_1");
+        ResourceLocation second = FossilMod.location("block/plants/plant_" + key(block).getPath() + "_2");
+        ResourceLocation third = FossilMod.location("block/plants/plant_" + key(block).getPath() + "_3");
+        ResourceLocation fourth = FossilMod.location("block/plants/plant_" + key(block).getPath() + "_4");
         models().registerExistingTexture(first, second, third, fourth);
         getVariantBuilder(block)
                 .partialState().with(FourTallFlowerBlock.LAYER, 0).setModels(
-                        new ConfiguredModel(models().cross("block/plants/" + block.getRegistryName().getPath() + "_1", first)))
+                        new ConfiguredModel(models().cross("block/plants/" + key(block).getPath() + "_1", first)))
                 .partialState().with(FourTallFlowerBlock.LAYER, 1).setModels(
-                        new ConfiguredModel(models().cross("block/plants/" + block.getRegistryName().getPath() + "_2", second)))
+                        new ConfiguredModel(models().cross("block/plants/" + key(block).getPath() + "_2", second)))
                 .partialState().with(FourTallFlowerBlock.LAYER, 2).setModels(
-                        new ConfiguredModel(models().cross("block/plants/" + block.getRegistryName().getPath() + "_3", third)))
+                        new ConfiguredModel(models().cross("block/plants/" + key(block).getPath() + "_3", third)))
                 .partialState().with(FourTallFlowerBlock.LAYER, 3).setModels(
-                        new ConfiguredModel(models().cross("block/plants/" + block.getRegistryName().getPath() + "_4", fourth)));
+                        new ConfiguredModel(models().cross("block/plants/" + key(block).getPath() + "_4", fourth)));
+    }
+
+    private ResourceLocation key(Block block) {
+        return ForgeRegistries.BLOCKS.getKey(block);
     }
 }

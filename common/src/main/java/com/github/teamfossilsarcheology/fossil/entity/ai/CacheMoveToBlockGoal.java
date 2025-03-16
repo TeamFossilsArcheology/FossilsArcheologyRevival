@@ -52,7 +52,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     protected BlockPos targetPos = BlockPos.ZERO;
     protected int verticalSearchStart;
     protected boolean reachedTarget;
-    private Path path;
+    protected Path path;
     private BlockPos lastStuckPos;
 
     protected CacheMoveToBlockGoal(Prehistoric entity, double speedModifier, int searchRange) {
@@ -125,7 +125,15 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     protected boolean createPath() {
         //Needs to be this one because it will otherwise move to the target one block up
         path = entity.getNavigation().createPath(getMoveToTarget(), 1, 32);
-        return path != null;
+        if (path == null || path.getEndNode() == null) {
+            return false;
+        }
+        //Check if the mob can reach it
+        if (path.getNodeCount() < 16 && path.getEndNode().distanceTo(getMoveToTarget()) == 0) {
+            avoidCache.add(getMoveToTarget().asLong());
+            return false;
+        }
+        return true;
     }
 
     protected double calculateSpeedModifier() {
@@ -137,7 +145,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     }
 
     public double acceptedDistance() {
-        if (entity.getEntityHitboxData().hasCustomParts()) {
+        if (entity.getEntityHitboxData().hasCustomParts() && entity.getEntityHitboxData().getHeadRadius() != 0) {
             return entity.getEntityHitboxData().getHeadRadius() * entity.getScale() + 0.7;
         }
         return entity.getBbWidth() / 2 + 1;

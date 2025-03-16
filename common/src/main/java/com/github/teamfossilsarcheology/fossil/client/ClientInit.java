@@ -157,9 +157,7 @@ public class ClientInit {
                 }
                 return EventResult.pass();
             });
-            ClientGuiEvent.RENDER_HUD.register((poseStack, v) -> {
-                PathingRenderer.renderOverlay(poseStack);
-            });
+            ClientGuiEvent.RENDER_HUD.register((poseStack, v) -> PathingRenderer.renderOverlay(poseStack));
         }
         KeyMappingRegistry.register(flyUpKey);
         KeyMappingRegistry.register(flyDownKey);
@@ -210,12 +208,12 @@ public class ClientInit {
         EntityRendererRegistry.register(ModEntities.MEGANEURA, MeganeuraRenderer::new);
         registerDino(ModEntities.MOSASAURUS, "mosasaurus", RenderType::entityCutout);
         registerFish(ModEntities.NAUTILUS, "nautilus");
-        registerDino(ModEntities.ORNITHOLESTES, "ornitholestes", RenderType::entityCutout);
+        registerDino(ModEntities.ORNITHOLESTES, "ornitholestes");
         registerDino(ModEntities.PACHYCEPHALOSAURUS, "pachycephalosaurus", RenderType::entityCutout);
-        registerDino(ModEntities.PACHYRHINOSAURUS, "pachyrhinosaurus", RenderType::entityCutout);
+        registerDino(ModEntities.PACHYRHINOSAURUS, "pachyrhinosaurus");
         registerDino(ModEntities.PARASAUROLOPHUS, "parasaurolophus", RenderType::entityCutout);
         registerDino(ModEntities.PHORUSRHACOS, "phorusrhacos");
-        registerDino(ModEntities.PLATYBELODON, "platybelodon", RenderType::entityCutout);
+        registerDino(ModEntities.PLATYBELODON, "platybelodon");
         registerDino(ModEntities.PLESIOSAURUS, "plesiosaurus", RenderType::entityCutout);
         registerDino(ModEntities.PROTOCERATOPS, "protoceratops", RenderType::entityCutout);
         registerDino(ModEntities.PSITTACOSAURUS, "psittacosaurus");
@@ -223,7 +221,7 @@ public class ClientInit {
         EntityRendererRegistry.register(ModEntities.QUAGGA, QuaggaRenderer::new);
         registerDino(ModEntities.QUETZALCOATLUS, "quetzalcoatlus");
         registerDino(ModEntities.SARCOSUCHUS, "sarcosuchus");
-        registerDino(ModEntities.SMILODON, "smilodon", RenderType::entityCutout);
+        registerDino(ModEntities.SMILODON, "smilodon");
         registerDino(ModEntities.SPINOSAURUS, "spinosaurus");
         registerDino(ModEntities.STEGOSAURUS, "stegosaurus", RenderType::entityCutout);
         registerFish(ModEntities.STURGEON, "sturgeon");

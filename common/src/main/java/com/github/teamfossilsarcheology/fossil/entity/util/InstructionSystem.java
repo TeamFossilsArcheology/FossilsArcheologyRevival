@@ -204,7 +204,7 @@ public class InstructionSystem extends AISystem {
     }
 
     public double acceptedDistance() {
-        if (mob.getEntityHitboxData().hasCustomParts()) {
+        if (mob.getEntityHitboxData().hasCustomParts() && mob.getEntityHitboxData().getHeadRadius() != 0) {
             return mob.getEntityHitboxData().getHeadRadius() * mob.getScale() + 1;
         }
         return mob.getBbWidth() / 2 + 1;
@@ -246,7 +246,6 @@ public class InstructionSystem extends AISystem {
             if (mob instanceof Meganeura meganeura) {
                 Direction face = attachTo.direction;
                 float rad = mob.getBbWidth() / 2;
-                if (!meganeura.usesAttachHitBox()) rad *= meganeura.getAttachHitBoxScale();
                 Vec3 pos = new Vec3(attachTo.location.x + rad * face.getStepX(), attachTo.location.y, attachTo.location.z + rad * face.getStepZ());
                 meganeura.getAttachSystem().setAttachTarget(attachTo.target, face, pos);
             }

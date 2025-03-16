@@ -38,12 +38,12 @@ public record Attribute(double baseDamage, double maxDamage, double baseHealth, 
             double baseHealth = GsonHelper.getAsDouble(jsonobject, "healthBase");
             double maxHealth = GsonHelper.getAsDouble(jsonobject, "healthMax");
             double baseSpeed = GsonHelper.getAsDouble(jsonobject, "speedBase");
-            double minSpeed = jsonobject.has("speedMin") ? GsonHelper.getAsDouble(jsonobject, "speedMin") : baseSpeed;
+            double minSpeed = GsonHelper.getAsDouble(jsonobject, "speedMin", baseSpeed);
             double maxSpeed = GsonHelper.getAsDouble(jsonobject, "speedMax");
-            double sprintMod = jsonobject.has("sprintMod") ? GsonHelper.getAsDouble(jsonobject, "sprintMod") : 1.25;
-            double baseSwimSpeed = jsonobject.has("swimSpeedBase") ? GsonHelper.getAsDouble(jsonobject, "swimSpeedBase") : baseSpeed;
-            double minSwimSpeed = jsonobject.has("swimSpeedMin") ? GsonHelper.getAsDouble(jsonobject, "swimSpeedMin") : jsonobject.has("swimSpeedBase") ? baseSwimSpeed : minSpeed;
-            double maxSwimSpeed = jsonobject.has("swimSpeedMax") ? GsonHelper.getAsDouble(jsonobject, "swimSpeedMax") : maxSpeed;
+            double sprintMod = GsonHelper.getAsDouble(jsonobject, "sprintMod", 1.25);
+            double baseSwimSpeed = GsonHelper.getAsDouble(jsonobject, "swimSpeedBase", baseSpeed);
+            double minSwimSpeed = GsonHelper.getAsDouble(jsonobject, "swimSpeedMin", jsonobject.has("swimSpeedBase") ? baseSwimSpeed : minSpeed);
+            double maxSwimSpeed = GsonHelper.getAsDouble(jsonobject, "swimSpeedMax", maxSpeed);
             double baseArmor = GsonHelper.getAsDouble(jsonobject, "armorBase");
             double maxArmor = GsonHelper.getAsDouble(jsonobject, "armorMax");
             double baseKnockBackResistance = GsonHelper.getAsDouble(jsonobject, "knockBackResistanceBase");

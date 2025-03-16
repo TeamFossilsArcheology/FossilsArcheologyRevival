@@ -34,8 +34,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class FriendlyPiglin extends TamableAnimal {
-    public static final TranslatableComponent KILLED = new TranslatableComponent("entity.fossil.friendly_piglin.kill");
-    public static final TranslatableComponent SUMMONED = new TranslatableComponent("entity.fossil.friendly_piglin.summon");
+    public static final Component KILLED = new TranslatableComponent("entity.fossil.friendly_piglin.kill");
+    public static final Component SUMMONED = new TranslatableComponent("entity.fossil.friendly_piglin.summon");
 
     public FriendlyPiglin(EntityType<? extends TamableAnimal> entityType, Level level) {
         super(entityType, level);

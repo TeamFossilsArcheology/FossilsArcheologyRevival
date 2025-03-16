@@ -1,0 +1,11 @@
+{
+  "textureName": "feathered",
+  "conditions": [
+    {
+      "type": "config",
+      "configKey": "featheredDryo"
+    }
+  ],
+  "hasBabyTexture": true,
+  "hasGenderTextures": true
+}

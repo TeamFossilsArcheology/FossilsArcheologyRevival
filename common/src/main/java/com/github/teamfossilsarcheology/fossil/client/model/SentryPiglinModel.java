@@ -11,6 +11,11 @@ public class SentryPiglinModel extends PiglinModel<SentryPiglin> {
 
     public SentryPiglinModel() {
         super(createBodyLayer().bakeRoot());
+        leftSleeve.visible = false;
+        rightSleeve.visible = false;
+        leftPants.visible = false;
+        rightPants.visible = false;
+        jacket.visible = false;
     }
 
     public static LayerDefinition createBodyLayer() {

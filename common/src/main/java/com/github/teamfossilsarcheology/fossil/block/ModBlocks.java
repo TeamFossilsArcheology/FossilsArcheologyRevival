@@ -476,26 +476,20 @@ public class ModBlocks {
     }
 
     public static RegistrySupplier<ShortFlowerBlock> registerShortFlower(String name, VoxelShape shape) {
-        return registerBlock(name,
-                () -> new ShortFlowerBlock(Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS), shape));
+        return registerBlock(name, () -> new ShortFlowerBlock(shape));
     }
 
     public static RegistrySupplier<TallFlowerBlock> registerTallFlower(String name, VoxelShape shape) {
-        return registerBlock(name,
-                () -> new TallFlowerBlock(Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS), shape));
+        return registerBlock(name, () -> new TallFlowerBlock(Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS), shape));
     }
 
     public static RegistrySupplier<FourTallFlowerBlock> registerFourTallFlower(String name, VoxelShape shape) {
-        return registerBlock(name,
-                () -> new FourTallFlowerBlock(Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS),
-                        shape));
+        return registerBlock(name, () -> new FourTallFlowerBlock(shape));
     }
 
     public static RegistrySupplier<GrowableFlowerBlock> registerGrowableFlower(String name, RegistrySupplier<TallFlowerBlock> tallFlower,
                                                                                VoxelShape shape) {
-        return registerBlock(name,
-                () -> new GrowableFlowerBlock(Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS),
-                        tallFlower, shape));
+        return registerBlock(name, () -> new GrowableFlowerBlock(tallFlower, shape));
     }
 
     public static <T extends Block> RegistrySupplier<T> registerBlockWithoutBlockItem(String name, Supplier<T> block) {

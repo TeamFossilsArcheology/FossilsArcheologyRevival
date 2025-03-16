@@ -28,10 +28,7 @@ public class ModCapabilitiesImpl {
             cachedMammals.put(animal, cap);
             cap.addListener(optional -> cachedMammals.remove(animal));
         }
-        if (cap.isPresent()) {
-            return cap.resolve();
-        }
-        return Optional.empty();
+        return cap.resolve();
     }
 
     public static Optional<IFirstHatchCap> getFirstHatchCap(Player player) {
@@ -41,10 +38,7 @@ public class ModCapabilitiesImpl {
             cachedPlayers.put(player, cap);
             cap.addListener(optional -> cachedPlayers.remove(player));
         }
-        if (cap.isPresent()) {
-            return cap.resolve();
-        }
-        return Optional.empty();
+        return cap.resolve();
     }
 
     public static boolean hasEmbryo(Animal animal) {

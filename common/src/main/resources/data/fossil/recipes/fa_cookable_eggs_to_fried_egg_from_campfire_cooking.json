@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "tag": "fossil:cookable_eggs"
+  },
+  "result": "farmersdelight:fried_egg",
+  "experience": 1.5,
+  "cookingtime": 600,
+  "conditions": [
+    {
+      "modid": "farmersdelight",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:any_mod_loaded",
+      "values": [
+        "farmersdelight"
+      ]
+    }
+  ]
+}

@@ -92,8 +92,6 @@ public class ModRecipeProvider extends RecipeProvider {
                 }
             }
             fullOre(DENSE_SAND.get(), REINFORCED_GLASS.get(), consumer, 3);
-            fullCooking(Items.EGG, COOKED_EGG.get(), "egg_to_cooked_egg", consumer, 0.35f);
-            fullCooking(ModItemTags.COOKABLE_EGGS, COOKED_EGG.get(), "dino_eggs_to_cooked_egg", consumer, 0.7f);
         }
         if (craftingRecipes) {
             ToyBallItem white = TOY_BALLS.get(DyeColor.WHITE).get();
@@ -392,6 +390,7 @@ public class ModRecipeProvider extends RecipeProvider {
             analyzed(Items.STRING).addOutput(STRIDER.dnaItem, 100).save(consumer);
             analyzed(Items.TROPICAL_FISH).addOutput(TROPICAL_FISH.dnaItem, 90).addOutput(POLAR_BEAR.dnaItem, 10).save(consumer);
             analyzed(Items.SCUTE).addOutput(TURTLE.dnaItem, 100).save(consumer);
+            analyzed(Blocks.TURTLE_EGG).addOutput(TURTLE.dnaItem, 100).save(consumer);
 
             analyzed(RELIC_SCRAP.get()).addOutput(Blocks.GRAVEL, 30).addOutput(Items.FLINT, 18).addOutput(POTTERY_SHARD.get(), 4).addOutput(BROKEN_HELMET.get(), 4).addOutput(BROKEN_SWORD.get(), 4).addOutput(STONE_TABLET.get(), 30)
                     .addOutput(ANU_FIGURINE_DESTROYED.get(), 4).addOutput(ENDERMAN_FIGURINE_DESTROYED.get(), 4).addOutput(PIGLIN_FIGURINE_DESTROYED.get(), 4).addOutput(SKELETON_FIGURINE_DESTROYED.get(), 4).addOutput(STEVE_FIGURINE_DESTROYED.get(), 4).addOutput(ZOMBIE_FIGURINE_DESTROYED.get(), 4).save(consumer);

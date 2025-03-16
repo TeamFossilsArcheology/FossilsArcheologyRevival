@@ -69,6 +69,11 @@ public class AnuLairChunkGenerator extends ChunkGenerator {
     }
 
     @Override
+    public void addDebugScreenInfo(List<String> info, BlockPos pos) {
+
+    }
+
+    @Override
     protected @NotNull Codec<? extends ChunkGenerator> codec() {
         return CODEC;
     }
@@ -225,10 +230,5 @@ public class AnuLairChunkGenerator extends ChunkGenerator {
     @Override
     public @NotNull NoiseColumn getBaseColumn(int x, int z, LevelHeightAccessor level) {
         return new NoiseColumn(level.getMinBuildHeight(), new BlockState[0]);
-    }
-
-    @Override
-    public void addDebugScreenInfo(List<String> info, BlockPos pos) {
-
     }
 }

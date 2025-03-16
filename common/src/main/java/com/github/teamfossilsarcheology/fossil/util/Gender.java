@@ -9,8 +9,8 @@ import java.util.Random;
 public enum Gender implements DinopediaInfo {
     MALE,
     FEMALE;
-    private final TranslatableComponent name = new TranslatableComponent("pedia.fossil.gender." + name().toLowerCase(Locale.ROOT));
-    private final TranslatableComponent description = new TranslatableComponent("pedia.fossil.gender." + name().toLowerCase(Locale.ROOT) + ".desc");
+    private final Component name = new TranslatableComponent("pedia.fossil.gender." + name().toLowerCase(Locale.ROOT));
+    private final Component description = new TranslatableComponent("pedia.fossil.gender." + name().toLowerCase(Locale.ROOT) + ".desc");
 
     public static Gender random(Random random) {
         return values()[random.nextInt(2)];

@@ -25,8 +25,5 @@ public class DataGenerators {
         generator.addProvider(new ModLootProvider(generator));
         generator.addProvider(new ModRecipeProvider(generator));
         generator.addProvider(new ModAdvancements(generator, event.getExistingFileHelper()));
-        if (ModList.get().isLoaded(ModConstants.FARMERS)) {
-            generator.addProvider(new FossilFarmersRecipeProvider(generator));
-        }
     }
 }

@@ -59,7 +59,7 @@ public class FossilItem extends Item {
             fossil.setType(info);
             serverLevel.addFreshEntity(fossil);
             level.playSound(null, fossil.getX(), fossil.getY(), fossil.getZ(), SoundEvents.SKELETON_AMBIENT, SoundSource.BLOCKS, 0.75f, 0.8f);
-            level.gameEvent(context.getPlayer(), GameEvent.ENTITY_PLACE, fossil);
+            fossil.gameEvent(GameEvent.ENTITY_PLACE, context.getPlayer());
         }
         context.getItemInHand().shrink(1);
         return InteractionResult.sidedSuccess(level.isClientSide);

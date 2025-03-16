@@ -1,0 +1,16 @@
+{
+  "textureName": "festive",
+  "conditions": [
+    {
+      "type": "date",
+      "month": 12,
+      "day": 24,
+      "chance": 0.5
+    },
+    {
+      "type": "date",
+      "month": 12,
+      "chance": 0.05
+    }
+  ]
+}

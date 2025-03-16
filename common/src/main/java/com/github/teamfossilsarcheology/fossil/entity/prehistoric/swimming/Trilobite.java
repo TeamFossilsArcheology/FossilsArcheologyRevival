@@ -59,7 +59,7 @@ public abstract class Trilobite extends PrehistoricSwimmingBucketable {
 
     @Override
     public boolean onClimbable() {
-        return horizontalCollision && level.getFluidState(blockPosition()).is(FluidTags.WATER);
+        return horizontalCollision && level.getFluidState(blockPosition().above()).is(FluidTags.WATER);
     }
 
     @Override

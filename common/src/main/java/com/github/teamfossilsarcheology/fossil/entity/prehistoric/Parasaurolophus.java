@@ -1,6 +1,5 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
-import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.ai.FleeBattleGoal;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
@@ -10,7 +9,6 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import com.github.teamfossilsarcheology.fossil.util.Gender;
-import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -54,22 +52,6 @@ public class Parasaurolophus extends Prehistoric {
     }
 
     @Override
-    public void refreshTexturePath() {
-        if (!level.isClientSide) {
-            return;
-        }
-        if ("Jackabird".equals(ChatFormatting.stripFormatting(getName().getString()))) {
-            if (isSleeping()) {
-                textureLocation = FossilMod.location("textures/entity/parasaurolophus/parasaurolophus_jackabird_sleeping.png");
-            } else {
-                textureLocation = FossilMod.location("textures/entity/parasaurolophus/parasaurolophus_jackabird.png");
-            }
-            return;
-        }
-        super.refreshTexturePath();
-    }
-
-    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         entityData.define(STANDING, false);
@@ -82,8 +64,6 @@ public class Parasaurolophus extends Prehistoric {
                 //Fallback
                 setStanding(false);
             }
-        } else if (DATA_CUSTOM_NAME.equals(key)) {
-            refreshTexturePath();
         }
         super.onSyncedDataUpdated(key);
     }

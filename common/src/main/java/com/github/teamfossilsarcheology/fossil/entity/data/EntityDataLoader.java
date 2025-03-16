@@ -8,6 +8,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 
 import java.lang.reflect.Type;
@@ -75,15 +76,15 @@ public class EntityDataLoader extends SimpleJsonResourceReloadListener {
                 Attribute attribute = GSON.getAdapter(Attribute.class).fromJsonTree(root.getAsJsonObject("attributes"));
                 AI ai = GSON.getAdapter(AI.class).fromJsonTree(root.getAsJsonObject("ai"));
                 Diet diet = GSON.fromJson(root, Diet.class);
-                float eggScale = root.has("eggScale") ? root.get("eggScale").getAsFloat() : 1;
+                float eggScale = GsonHelper.getAsFloat(root, "eggScale", 1);
                 float minScale = root.get("scaleBase").getAsFloat();
                 float maxScale = root.get("scaleMax").getAsFloat();
                 int teenAgeDays = root.get("teenAgeDays").getAsInt();
                 int adultAgeDays = root.get("adultAgeDays").getAsInt();
                 int maxHunger = root.get("maxHunger").getAsInt();
-                int maxPopulation = root.has("maxPopulation") ? root.get("maxPopulation").getAsInt() : 15;
-                boolean canBeRidden = root.has("canBeRidden") && root.get("canBeRidden").getAsBoolean();
-                boolean breaksBlocks = root.has("breaksBlocks") && root.get("breaksBlocks").getAsBoolean();
+                int maxPopulation = GsonHelper.getAsInt(root, "maxPopulation", 15);
+                boolean canBeRidden = GsonHelper.getAsBoolean(root, "canBeRidden", false);
+                boolean breaksBlocks = GsonHelper.getAsBoolean(root, "breaksBlocks", false);
                 return new Data(attribute, ai, diet, eggScale, minScale, maxScale, teenAgeDays, adultAgeDays,
                         maxHunger, maxPopulation, canBeRidden, breaksBlocks);
             }

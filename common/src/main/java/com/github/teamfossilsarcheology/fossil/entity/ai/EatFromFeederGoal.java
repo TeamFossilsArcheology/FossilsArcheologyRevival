@@ -66,7 +66,10 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
         if (avoidCache.contains(entry.getKey().asLong())) {
             return false;
         }
-        return entry.getValue() instanceof FeederBlockEntity feeder && !feeder.isEmpty(entity.data().diet()) && Util.canSeeFood(entity, entry.getKey());
+        if (!(entry.getValue() instanceof FeederBlockEntity feeder) || feeder.isEmpty(entity.data().diet())) {
+            return false;
+        }
+        return (Util.canSeeFood(entity, entry.getKey()) || entity.getHunger() < entity.getMaxHunger() * 0.5);
     }
 
     @Override

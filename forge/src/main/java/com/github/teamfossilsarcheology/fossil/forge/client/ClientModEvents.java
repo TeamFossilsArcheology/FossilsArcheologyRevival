@@ -26,9 +26,5 @@ public class ClientModEvents {
     public static void registerOverlays() {
         OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HELMET_ELEMENT, "fossil_helmets",
                 (gui, poseStack, partialTick, screenWidth, screenHeight) -> OverlayRenderer.renderHelmet(screenWidth, screenHeight));
-        if (Version.debugEnabled()) {
-            OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HOTBAR_ELEMENT, "debug_overlay",
-                    (gui, poseStack, partialTick, screenWidth, screenHeight) -> PathingRenderer.renderOverlay(poseStack));
-        }
     }
 }

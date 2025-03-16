@@ -21,8 +21,8 @@ public enum Diet implements DinopediaInfo {
     INSECTIVORE(true, false, false),
     PISCI_CARNIVORE(true, true, false),
     PASSIVE(false, false, false);
-    private final TranslatableComponent name = new TranslatableComponent("pedia.fossil.diet." + name().toLowerCase(Locale.ROOT));
-    private final TranslatableComponent description = new TranslatableComponent("pedia.fossil.diet." + name().toLowerCase(Locale.ROOT) + ".desc");
+    private final Component name = new TranslatableComponent("pedia.fossil.diet." + name().toLowerCase(Locale.ROOT));
+    private final Component description = new TranslatableComponent("pedia.fossil.diet." + name().toLowerCase(Locale.ROOT) + ".desc");
 
     private final boolean canEatMeat;
     private final boolean canEatFish;
