@@ -1,7 +1,7 @@
 {
   "type": "fossil:sifter",
   "input": {
-    "tag": "fossil:sifter_inputs"
+    "item": "minecraft:gravel"
   },
   "outputs": [
     {
@@ -29,6 +29,10 @@
       "weight": 5.0
     },
     {
+      "item": "minecraft:flint",
+      "weight": 5.0
+    },
+    {
       "item": "fossil:fossil_bio",
       "weight": 2.0
     },
@@ -37,20 +41,16 @@
       "weight": 2.0
     },
     {
-      "item": "fossil:fossil_seed_fern",
-      "weight": 1.0
-    },
-    {
       "item": "minecraft:gold_nugget",
-      "weight": 4.0
+      "weight": 3.0
     },
     {
       "item": "minecraft:iron_nugget",
-      "weight": 4.0
+      "weight": 3.0
     },
     {
       "item": "minecraft:melon_seeds",
-      "weight": 3.0
+      "weight": 2.0
     },
     {
       "item": "minecraft:potato",
@@ -62,7 +62,7 @@
     },
     {
       "item": "minecraft:pumpkin_seeds",
-      "weight": 3.0
+      "weight": 2.0
     },
     {
       "item": "minecraft:sand",

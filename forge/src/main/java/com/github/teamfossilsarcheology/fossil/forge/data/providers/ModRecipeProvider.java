@@ -427,12 +427,22 @@ public class ModRecipeProvider extends RecipeProvider {
             worktable(ModItems.ANCIENT_JAVELIN, ModItems.ANCIENT_JAVELIN, ModItems.RELIC_SCRAP, consumer);
 
             sifter(ModItemTags.SIFTER_INPUTS).addOutput(Blocks.SAND, 5d).addOutput(Items.POTATO, 15d).
-                    addOutput(Items.CARROT, 15d).addOutput(Items.BEETROOT, 5d).addOutput(Items.PUMPKIN_SEEDS, 2d).
-                    addOutput(Items.BONE_MEAL, 22d).addOutput(Items.IRON_NUGGET, 3d).addOutput(Items.GOLD_NUGGET, 3d).
-                    addOutput(ModBlocks.AMBER_CHUNK_DOMINICAN.get(), 1d).addOutput(ModItems.FERN_SEED_FOSSIL.get(), 5d).
+                    addOutput(Items.CARROT, 15d).addOutput(Items.BEETROOT_SEEDS, 5d).addOutput(Items.PUMPKIN_SEEDS, 4d).
+                    addOutput(Items.MELON_SEEDS, 4d).addOutput(Items.BONE_MEAL, 20d).
+                    addOutput(Items.IRON_NUGGET, 3d).addOutput(Items.GOLD_NUGGET, 3d).
+                    addOutput(ModBlocks.AMBER_CHUNK_DOMINICAN.get(), 1d).addOutput(ModItems.FERN_SEED_FOSSIL.get(), 1d).
                     addOutput(Blocks.COBBLESTONE, 5d).
                     addOutput(ModItems.PlANT_FOSSIL.get(), 2d).addOutput(ModItems.BIO_FOSSIL.get(), 2d).
                     addOutput(ModItems.POTTERY_SHARD.get(), 5d).addOutput(Items.CLAY_BALL, 10d).save(consumer);
+
+            sifter(Blocks.GRAVEL).addOutput(Blocks.SAND, 5d).addOutput(Items.POTATO, 15d).
+                    addOutput(Items.CARROT, 10d).addOutput(Items.BEETROOT_SEEDS, 3d).addOutput(Items.PUMPKIN_SEEDS, 2d).
+                    addOutput(Items.MELON_SEEDS, 2d).addOutput(Items.FLINT, 5d).addOutput(Items.BONE_MEAL, 20d).
+                    addOutput(Items.IRON_NUGGET, 4d).addOutput(Items.GOLD_NUGGET, 4d).
+                    addOutput(ModBlocks.AMBER_CHUNK_DOMINICAN.get(), 1d).
+                    addOutput(Blocks.COBBLESTONE, 5d).
+                    addOutput(ModItems.PlANT_FOSSIL.get(), 2d).addOutput(ModItems.BIO_FOSSIL.get(), 2d).
+                    addOutput(ModItems.POTTERY_SHARD.get(), 5d).addOutput(Items.CLAY_BALL, 15d).save(consumer);
 
             for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
                 if (info.dnaItem != null && info.getDNAResult() != null) {
@@ -471,6 +481,10 @@ public class ModRecipeProvider extends RecipeProvider {
 
     public AnalyzerRecipeBuilder analyzed(TagKey<Item> tagKey) {
         return new AnalyzerRecipeBuilder(FossilMod.MOD_ID, tagKey);
+    }
+
+    public SifterRecipeBuilder sifter(ItemLike itemLike) {
+        return new SifterRecipeBuilder(FossilMod.MOD_ID, itemLike);
     }
 
     public SifterRecipeBuilder sifter(TagKey<Item> tagKey) {
