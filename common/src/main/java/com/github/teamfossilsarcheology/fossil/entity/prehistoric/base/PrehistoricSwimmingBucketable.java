@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
 import com.github.teamfossilsarcheology.fossil.util.Gender;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -77,7 +78,7 @@ public abstract class PrehistoricSwimmingBucketable extends PrehistoricSwimming 
         tag.putInt("MatingCooldown", getMatingCooldown());
         tag.putInt("Hunger", getHunger());
         tag.putBoolean("AgingDisabled", isAgingDisabled());
-        tag.putString("Gender", getGender().toString());
+        tag.putByte("Gender", (byte) getGender().ordinal());
         tag.putInt("Age", getAge());
     }
 
@@ -102,8 +103,8 @@ public abstract class PrehistoricSwimmingBucketable extends PrehistoricSwimming 
         if (tag.contains("AgingDisabled")) {
             setAgingDisabled(tag.getBoolean("AgingDisabled"));
         }
-        if (tag.contains("Gender")) {
-            setGender(Gender.valueOf(tag.getString("Gender")));
+        if (tag.contains("Gender", Tag.TAG_BYTE)) {
+            setGender(Gender.values()[tag.getByte("Gender")]);
         }
         if (tag.contains("Age")) {
             setAgeInTicks(tag.getInt("Age"));
