@@ -381,6 +381,19 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
+    public void load(CompoundTag compound) {
+        super.load(compound);
+        for (VariantCondition.WithVariant<ConfigCondition> pair : variantsByCondition(ConfigCondition.class)) {
+            if (pair.condition().test()) {
+                setVariant(VariantRegistry.CONFIG, pair);
+                break;
+            } else if (allVariants.containsKey(VariantRegistry.CONFIG) && Objects.equals(allVariants.get(VariantRegistry.CONFIG).condition(), pair.condition())) {
+                clearVariant(VariantRegistry.CONFIG);
+            }
+        }
+    }
+
+    @Override
     public void refreshDimensions() {
         EntityDimensions oldDimensions = dimensions;
         Pose pose = getPose();
@@ -444,16 +457,6 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         heal(getMaxHealth());
         setCurrentOrder(OrderType.WANDER);
         setNoAi(false);
-        //TODO: world load or config change
-        for (VariantCondition.WithVariant<ConfigCondition> pair : variantsByCondition(ConfigCondition.class)) {
-            if (pair.condition().test()) {
-                setVariant(VariantRegistry.CONFIG, pair);
-                break;
-            } else if (allVariants.containsKey(VariantRegistry.CONFIG) && Objects.equals(allVariants.get(VariantRegistry.CONFIG).condition(), pair.condition())) {
-                clearVariant(VariantRegistry.CONFIG);
-            }
-        }
-        //TODO: Only initial spawn not world load
         for (VariantCondition.WithVariant<DateCondition> pair : variantsByCondition(DateCondition.class)) {
             if (pair.condition().test(random, ZonedDateTime.now())) {
                 setVariant(VariantRegistry.DATE, pair);
