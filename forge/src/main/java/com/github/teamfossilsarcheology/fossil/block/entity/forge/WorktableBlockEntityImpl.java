@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implements WorktableBlockEntity {
     private static final int[] SLOTS_FOR_UP = new int[]{WorktableMenu.INPUT_SLOT_ID}; //Input
-    private static final int[] SLOTS_FOR_SIDES = new int[]{WorktableMenu.FUEL_SLOT_ID}; //Fuel
+    private static final int[] SLOTS_FOR_SIDES = new int[]{WorktableMenu.INPUT_SLOT_ID, WorktableMenu.FUEL_SLOT_ID}; //Input, Fuel
     private static final int[] SLOTS_FOR_DOWN = new int[]{WorktableMenu.OUTPUT_SLOT_ID}; //Output
     private final ContainerData dataAccess = new ContainerData() {
 
