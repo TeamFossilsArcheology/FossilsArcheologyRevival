@@ -18,6 +18,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -154,21 +155,23 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
 
     protected void createItem() {
         if (canProcess(fuel)) {
-            ItemStack var1 = checkSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), fuel);
+            ItemStack result = checkSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), fuel);
 
+            ItemStack input = items.get(WorktableMenu.INPUT_SLOT_ID);
             if (items.get(WorktableMenu.OUTPUT_SLOT_ID).isEmpty()) {
-                items.set(WorktableMenu.OUTPUT_SLOT_ID, var1.copy());
-            } else if (items.get(WorktableMenu.OUTPUT_SLOT_ID).getItem() == var1.getItem()) {
-                items.get(WorktableMenu.OUTPUT_SLOT_ID).grow(var1.getCount());
+                items.set(WorktableMenu.OUTPUT_SLOT_ID, result.copy());
+                EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(input), items.get(WorktableMenu.OUTPUT_SLOT_ID));
+            } else if (items.get(WorktableMenu.OUTPUT_SLOT_ID).getItem() == result.getItem()) {
+                items.get(WorktableMenu.OUTPUT_SLOT_ID).grow(result.getCount());
             }
 
-            if (items.get(WorktableMenu.INPUT_SLOT_ID).getItem().hasCraftingRemainingItem()) {
-                items.set(WorktableMenu.INPUT_SLOT_ID, new ItemStack(items.get(WorktableMenu.INPUT_SLOT_ID).getItem().getCraftingRemainingItem()));
+            if (input.getItem().hasCraftingRemainingItem()) {
+                items.set(WorktableMenu.INPUT_SLOT_ID, new ItemStack(input.getItem().getCraftingRemainingItem()));
             } else {
-                items.get(WorktableMenu.INPUT_SLOT_ID).shrink(1);
+                input.shrink(1);
             }
 
-            if (items.get(WorktableMenu.INPUT_SLOT_ID).getCount() <= 0) {
+            if (input.getCount() <= 0) {
                 items.set(WorktableMenu.INPUT_SLOT_ID, ItemStack.EMPTY);
             }
         }
