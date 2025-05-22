@@ -1,8 +1,13 @@
 ### Added
+- Updated sifter outputs. Gravel and sands now have slightly different outputs
+- A new meganeura nametag variant
 
 ### Fixed
-- Feeders not working correctly
-- Aquatic mobs not counting towards the aquatic creature spawn cap
-- Looting enchantment working on fish
+- Mobs sometimes losing age and gender information when stored in a bucket
+- Variants enabled by config not being applied to existing mobs
+- Meganeura moving too fast when hungry
+- Culture Vats and workbenchs not taking in inputs from the side
+- Incorrect dinopedia info when the mob owner was offline
+- Tools no longer lose their enchanmtnets when repaired in a workbench
 
 ### Mod compatibility
