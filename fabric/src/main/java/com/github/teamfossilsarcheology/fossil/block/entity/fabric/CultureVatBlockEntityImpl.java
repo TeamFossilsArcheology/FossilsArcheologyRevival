@@ -34,7 +34,7 @@ import org.jetbrains.annotations.Nullable;
 public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity implements CultureVatBlockEntity {
 
     private static final int[] SLOTS_FOR_UP = new int[]{CultureVatMenu.INPUT_SLOT_ID}; //Input
-    private static final int[] SLOTS_FOR_SIDES = new int[]{CultureVatMenu.FUEL_SLOT_ID}; //Fuel
+    private static final int[] SLOTS_FOR_SIDES = new int[]{CultureVatMenu.INPUT_SLOT_ID, CultureVatMenu.FUEL_SLOT_ID}; //Input, Fuel
     private static final int[] SLOTS_FOR_DOWN = new int[]{CultureVatMenu.OUTPUT_SLOT_ID}; //Output
     private final ContainerData dataAccess = new ContainerData() {
 

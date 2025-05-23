@@ -10,13 +10,15 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.MoodSystem;
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
-import com.github.teamfossilsarcheology.fossil.util.Version;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.CycleOption;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.StringSplitter;
 import net.minecraft.client.gui.components.Button;
@@ -32,20 +34,39 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.UUID;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 public class DinopediaScreen extends Screen {
     private static final ResourceLocation DINOPEDIA_BACKGROUND = FossilMod.location("textures/gui/dinopedia.png");
     private static final ResourceLocation MOODS = FossilMod.location("textures/gui/dinopedia_mood.png");
+    private static final LoadingCache<UUID, Component> USERNAMES = CacheBuilder.newBuilder()
+            .expireAfterWrite(24, TimeUnit.HOURS).build(new CacheLoader<>() {
+                @Override
+                public @NotNull Component load(@NotNull UUID key) {
+                    Player player = Minecraft.getInstance().level.getPlayerByUUID(key);
+                    if (player != null) {
+                        return player.getName();
+                    }
+                    GameProfile gameProfile = new GameProfile(key, null);
+                    gameProfile = Minecraft.getInstance().getMinecraftSessionService().fillProfileProperties(gameProfile, true);
+                    if (gameProfile.isComplete()) {
+                        return new TextComponent(gameProfile.getName());
+                    }
+                    return new TextComponent("Invalid User");
+                }
+            });
     private static final int MOOD_FACE_WIDTH = 16;
     private static final int MOOD_FACE_HEIGHT = 15;
     private static final int MOOD_BAR_WIDTH = 206;
@@ -248,10 +269,14 @@ public class DinopediaScreen extends Screen {
             var tempText = dino.aiResponseType().getName();
             renderHoverInfo(poseStack, x, y + 60, mouseX, mouseY, tempText, dino.aiResponseType().getDescription());
             font.draw(poseStack, dino.getGender().getName(), x, y + 70, col);
-            if (dino.getOwner() == null) {
+            if (dino.getOwnerUUID() == null) {
                 font.draw(poseStack, new TranslatableComponent("pedia.fossil.untamed"), x, y + 80, col);
             } else {
-                font.draw(poseStack, new TranslatableComponent("pedia.fossil.owner", dino.getOwner().getName()), x, y + 80, col);
+                try {
+                    font.draw(poseStack, new TranslatableComponent("pedia.fossil.owner", USERNAMES.get(dino.getOwnerUUID())), x, y + 80, col);
+                } catch (ExecutionException e) {
+                    font.draw(poseStack, new TranslatableComponent("pedia.fossil.owner", "Invalid User"), x, y + 80, col);
+                }
             }
             var order = dino.getCurrentOrder();
             renderHoverInfo(poseStack, x, y + 90, mouseX, mouseY, order.getName(), order.getDescription());
@@ -393,7 +418,8 @@ public class DinopediaScreen extends Screen {
         int right = 0;
         int left = 0;
         int offset = currentPage - 1;
-        List<String> currentLines = currentBio.stream().skip(offset * 42L).limit(42).toList();;
+        List<String> currentLines = currentBio.stream().skip(offset * 42L).limit(42).toList();
+        ;
         for (int i = 0; i < currentLines.size(); i++) {
             if (i <= 20) {//1344, 32 per line
                 font.draw(poseStack, currentLines.get(i), getScaledX(true, xSize / 2, scale), (topPos + 10 + font.lineHeight * ++left) / scale, 0x9D7E67);

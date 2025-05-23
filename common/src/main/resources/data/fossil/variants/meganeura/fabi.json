@@ -1,0 +1,9 @@
+{
+  "textureName": "fabi",
+  "conditions": [
+    {
+      "type": "nametag",
+      "name": "Fabi"
+    }
+  ]
+}

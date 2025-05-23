@@ -77,9 +77,9 @@ public abstract class PrehistoricSwimmingBucketable extends PrehistoricSwimming 
         moodSystem.saveAdditional(tag);
         tag.putInt("MatingCooldown", getMatingCooldown());
         tag.putInt("Hunger", getHunger());
+        tag.putInt("Age", getAge());
         tag.putBoolean("AgingDisabled", isAgingDisabled());
         tag.putByte("Gender", (byte) getGender().ordinal());
-        tag.putInt("Age", getAge());
     }
 
     @Override
@@ -100,14 +100,14 @@ public abstract class PrehistoricSwimmingBucketable extends PrehistoricSwimming 
         if (tag.contains("Hunger")) {
             setHunger(tag.getInt("Hunger"));
         }
+        if (tag.contains("Age")) {
+            setAgeInTicks(tag.getInt("Age"));
+        }
         if (tag.contains("AgingDisabled")) {
             setAgingDisabled(tag.getBoolean("AgingDisabled"));
         }
         if (tag.contains("Gender", Tag.TAG_BYTE)) {
             setGender(Gender.values()[tag.getByte("Gender")]);
-        }
-        if (tag.contains("Age")) {
-            setAgeInTicks(tag.getInt("Age"));
         }
     }
 
