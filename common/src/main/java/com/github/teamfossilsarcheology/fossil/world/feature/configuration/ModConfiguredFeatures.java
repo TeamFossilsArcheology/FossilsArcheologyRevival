@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.world.feature.configuration;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.world.feature.ModFeatures;
+import dev.architectury.registry.registries.DeferredRegister;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.features.FeatureUtils;
@@ -16,7 +17,6 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
  * Calling this class before the mod blocks have been initialized will cause a crash at the moment
  */
 public class ModConfiguredFeatures {
-
     /*public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> CORDAITES_TREE = FeatureUtils.register("cordaites",
             Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
                     BlockStateProvider.simple(ModBlocks.CORDAITES_LOG.get()),
@@ -43,17 +43,19 @@ public class ModConfiguredFeatures {
             NoneFeatureConfiguration.INSTANCE);
     public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> TEMPSKYA_TREE = register("tempskya_tree", ModFeatures.TEMPSKYA_TREE.feature(),
             NoneFeatureConfiguration.INSTANCE);
+    private static final DeferredRegister<ConfiguredFeature<?, ?>> FEATURES = DeferredRegister.create(FossilMod.MOD_ID, Registry.CONFIGURED_FEATURE_REGISTRY);
 
-    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> MOAI_STATUE = register("moai_statue",
-            ModFeatures.MOAI_STATUE.feature(), NoneFeatureConfiguration.INSTANCE);
-    public static final Holder<ConfiguredFeature<AshDiskConfiguration, ?>> ASH_DISK = register("ash_disk",
-            ModFeatures.ASH_DISK.feature(), new AshDiskConfiguration(UniformInt.of(6, 11), false));
-    public static final Holder<ConfiguredFeature<AshDiskConfiguration, ?>> MAGMA_DISK = register("magma_disk",
-            ModFeatures.ASH_DISK.feature(), new AshDiskConfiguration(UniformInt.of(4, 6), true));
-    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> VOLCANO_CONE = register("volcano_cone",
-            ModFeatures.VOLCANO_CONE.feature(), NoneFeatureConfiguration.INSTANCE);
-    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> VOLCANO_VENT = register("volcano_vent",
-            ModFeatures.VOLCANO_VENT.feature(), NoneFeatureConfiguration.INSTANCE);
+    static {
+        FEATURES.register("moai_statue", () -> new ConfiguredFeature<>(ModFeatures.MOAI_STATUE.feature(), NoneFeatureConfiguration.INSTANCE));
+        FEATURES.register("ash_disk", () -> new ConfiguredFeature<>(ModFeatures.ASH_DISK.feature(), new AshDiskConfiguration(UniformInt.of(6, 11), false)));
+        FEATURES.register("magma_disk", () -> new ConfiguredFeature<>(ModFeatures.ASH_DISK.feature(), new AshDiskConfiguration(UniformInt.of(4, 6), true)));
+        FEATURES.register("volcano_cone", () -> new ConfiguredFeature<>(ModFeatures.VOLCANO_CONE.feature(), NoneFeatureConfiguration.INSTANCE));
+        FEATURES.register("volcano_vent", () -> new ConfiguredFeature<>(ModFeatures.VOLCANO_VENT.feature(), NoneFeatureConfiguration.INSTANCE));
+    }
+
+    public static void register() {
+        FEATURES.register();
+    }
 
     private static <C extends FeatureConfiguration, F extends Feature<C>> Holder<ConfiguredFeature<C, ?>> register(String name, F feature, C config) {
         return FeatureUtils.register(FossilMod.MOD_ID + ":" + name, feature, config);

@@ -23,8 +23,8 @@ import com.github.teamfossilsarcheology.fossil.villager.ModVillagers;
 import com.github.teamfossilsarcheology.fossil.world.dimension.ModDimensions;
 import com.github.teamfossilsarcheology.fossil.world.effect.ModEffects;
 import com.github.teamfossilsarcheology.fossil.world.feature.ModFeatures;
+import com.github.teamfossilsarcheology.fossil.world.feature.configuration.ModConfiguredFeatures;
 import com.github.teamfossilsarcheology.fossil.world.feature.structures.ModStructureSets;
-import com.github.teamfossilsarcheology.fossil.world.feature.structures.ModStructureType;
 import com.github.teamfossilsarcheology.fossil.world.feature.structures.ModStructures;
 import com.github.teamfossilsarcheology.fossil.world.feature.village.ModVillages;
 import dev.architectury.registry.ReloadListenerRegistry;
@@ -57,6 +57,7 @@ public class FossilMod {
         ModBlockEntities.register();
         ModParticles.register();
         ModFeatures.register();
+        ModConfiguredFeatures.register();
         ModStructureSets.register();
         ModStructures.register();
         ModVillages.register();

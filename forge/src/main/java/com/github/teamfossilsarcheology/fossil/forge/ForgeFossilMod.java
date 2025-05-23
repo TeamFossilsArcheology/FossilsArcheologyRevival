@@ -10,7 +10,6 @@ import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.fish.Coelacanth;
 import com.github.teamfossilsarcheology.fossil.forge.capabilities.mammal.IMammalCap;
-import com.github.teamfossilsarcheology.fossil.forge.client.ClientModEvents;
 import com.github.teamfossilsarcheology.fossil.forge.client.model.PlantModelLoader;
 import com.github.teamfossilsarcheology.fossil.forge.client.renderer.armor.ForgeAncientHelmetRenderer;
 import com.github.teamfossilsarcheology.fossil.forge.compat.alexsmobs.AlexsMobsCompat;

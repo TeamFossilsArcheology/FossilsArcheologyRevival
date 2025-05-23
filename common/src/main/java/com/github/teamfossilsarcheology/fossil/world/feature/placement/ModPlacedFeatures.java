@@ -3,17 +3,11 @@ package com.github.teamfossilsarcheology.fossil.world.feature.placement;
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.world.feature.ModOreFeatures;
-import com.github.teamfossilsarcheology.fossil.world.feature.configuration.ModConfiguredFeatures;
 import dev.architectury.registry.level.biome.BiomeModifications;
-import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.data.worldgen.features.CaveFeatures;
-import net.minecraft.data.worldgen.features.MiscOverworldFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.valueproviders.ClampedNormalInt;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.placement.*;
 
@@ -26,30 +20,8 @@ public class ModPlacedFeatures {
         return ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, FossilMod.location(name));
     }
 
-    public static final Holder<PlacedFeature> LAKE_LAVA_VOLCANO = PlacementUtils.register("volcano_lake_lava", MiscOverworldFeatures.LAKE_LAVA,
-            RarityFilter.onAverageOnceEvery(6), CountPlacement.of(6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
-            BiomeFilter.biome());
-    public static final Holder<PlacedFeature> FOSSIL_VOLCANO = PlacementUtils.register("volcano_fossil", CaveFeatures.FOSSIL_COAL,
-            RarityFilter.onAverageOnceEvery(10), InSquarePlacement.spread(), HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
-            RandomOffsetPlacement.vertical(ClampedNormalInt.of(-9, 4, -16, -5)), BiomeFilter.biome());
-    public static final Holder<PlacedFeature> MOAI_STATUE = PlacementUtils.register("moai_statue", ModConfiguredFeatures.MOAI_STATUE, BiomeFilter.biome(),
-            new LazyRarityFilter(FossilConfig.MOAI_RARITY), InSquarePlacement.spread(),
-            PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
-    private static Holder<PlacedFeature> ashDiskVolcano;
-    private static Holder<PlacedFeature> magmaDiskVolcano;
-    private static Holder<PlacedFeature> coneVolcano;
-    private static Holder<PlacedFeature> ventVolcano;
-
     public static void register() {
         //Features that depend on ModConfiguredFeatures can't be called before the block registries have been initialized
-        ashDiskVolcano = PlacementUtils.register("volcano_ash_disk", ModConfiguredFeatures.ASH_DISK,
-                RarityFilter.onAverageOnceEvery(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-        magmaDiskVolcano = PlacementUtils.register("volcano_magma_disk", ModConfiguredFeatures.MAGMA_DISK,
-                RarityFilter.onAverageOnceEvery(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-        coneVolcano = PlacementUtils.register("volcano_cone", ModConfiguredFeatures.VOLCANO_CONE,
-                RarityFilter.onAverageOnceEvery(30), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome());
-        ventVolcano = PlacementUtils.register("volcano_vent", ModConfiguredFeatures.VOLCANO_VENT,
-                CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
 
         var upperFossilBlockPlaced = PlacementUtils.register("fossil_block_no_sandstone_placed_upper", ModOreFeatures.FOSSIL_BLOCK_NO_SANDSTONE,
                 commonOrePlacement(FossilConfig.FOSSIL_ORE_RARITY, // VeinsPerChunk
@@ -86,22 +58,6 @@ public class ModPlacedFeatures {
             mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, oreAmber);
             mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, oreAmberBuried);
         });
-    }
-
-    public static Holder<PlacedFeature> ashDiskVolcano() {
-        return ashDiskVolcano;
-    }
-
-    public static Holder<PlacedFeature> magmaDiskVolcano() {
-        return magmaDiskVolcano;
-    }
-
-    public static Holder<PlacedFeature> coneVolcano() {
-        return coneVolcano;
-    }
-
-    public static Holder<PlacedFeature> ventVolcano() {
-        return ventVolcano;
     }
 
     private static List<PlacementModifier> orePlacement(PlacementModifier placementModifier, PlacementModifier placementModifier2) {

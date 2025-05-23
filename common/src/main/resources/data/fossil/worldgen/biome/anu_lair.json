@@ -1,33 +1,38 @@
 {
-  "temperature": 0.5,
-  "downfall": 0.5,
   "precipitation": "none",
-  "category": "none",
+  "carvers": {},
+  "downfall": 0.5,
   "effects": {
-    "sky_color": 0,
     "fog_color": 0,
+    "sky_color": 0,
     "water_color": 4159204,
-    "water_fog_color": 329011,
-    "grass_color": 9551193,
-    "foliage_color": 7842607
+    "water_fog_color": 329011
   },
+  "features": [],
+  "has_precipitation": false,
+  "spawn_costs": {},
   "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [],
+    "misc": [],
     "monster": [
       {
         "type": "minecraft:piglin",
-        "weight": 2,
+        "maxCount": 8,
         "minCount": 1,
-        "maxCount": 8
+        "weight": 2
       },
       {
         "type": "fossil:sentry_piglin",
-        "weight": 6,
+        "maxCount": 8,
         "minCount": 1,
-        "maxCount": 8
+        "weight": 6
       }
-    ]
+    ],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
   },
-  "spawn_costs": {},
-  "carvers": {},
-  "features": []
+  "temperature": 0.5
 }

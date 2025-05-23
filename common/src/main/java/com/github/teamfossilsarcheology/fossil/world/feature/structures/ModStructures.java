@@ -1,8 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.world.feature.structures;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
-import com.github.teamfossilsarcheology.fossil.tags.ModBiomeTags;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
@@ -37,14 +35,14 @@ public class ModStructures {
     }
 
     public static final Holder<Structure> ANU_CASTLE = register(ANU_CASTLE_KEY, new AnuCastleStructure(
-            new Structure.StructureSettings(biomes(ModBiomeTags.HAS_ANU_CASTLE), Map.of(), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.NONE)));
+            new Structure.StructureSettings(HolderSet.direct(), Map.of(), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.NONE)));
 
     public static final Holder<Structure> HELL_BOAT = register(HELL_BOAT_KEY, new HellBoatStructure(
-                    new Structure.StructureSettings(biomes(BiomeTags.IS_NETHER), Map.of(), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.NONE),
-                    UniformHeight.of(VerticalAnchor.absolute(30), VerticalAnchor.absolute(30))));
+            new Structure.StructureSettings(biomes(BiomeTags.IS_NETHER), Map.of(), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.NONE),
+            UniformHeight.of(VerticalAnchor.absolute(30), VerticalAnchor.absolute(30))));
 
     public static final Holder<Structure> TREASURE_ROOM = register(TREASURE_ROOM_KEY, new TreasureRoomStructure(
-            new Structure.StructureSettings(biomes(ModBiomeTags.HAS_TREASURE_ROOM), Map.of(), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.NONE)));
+            new Structure.StructureSettings(HolderSet.direct(), Map.of(), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.NONE)));
 
     public static void register() {
     }

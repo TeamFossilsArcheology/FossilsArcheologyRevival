@@ -8,8 +8,6 @@ import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.Random;
-
 public class VolcanoAshVent extends AirBlock {
     public VolcanoAshVent() {
         super(Properties.copy(Blocks.AIR));
