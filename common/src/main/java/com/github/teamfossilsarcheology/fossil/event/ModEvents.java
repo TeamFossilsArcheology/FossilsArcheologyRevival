@@ -35,10 +35,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
@@ -94,6 +91,7 @@ public class ModEvents {
             }
             DispenserBlock.registerBehavior(ModItems.TAR_BUCKET.get(), new DefaultDispenseItemBehavior() {
                 private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();
+
                 @Override
                 public @NotNull ItemStack execute(BlockSource source, ItemStack stack) {
                     DispensibleContainerItem dispensibleContainerItem = (DispensibleContainerItem) ModItems.TAR_BUCKET.get();
@@ -193,12 +191,17 @@ public class ModEvents {
             } else {
                 newHorse.finalizeSpawn(level, level.getCurrentDifficultyAt(newHorse.blockPosition()), MobSpawnType.BREEDING, null, null);
             }
-        }
-        if (newEntity instanceof Quagga newQuagga) {
+        } else if (newEntity instanceof Quagga newQuagga) {
             double health = parent.getAttribute(Attributes.MAX_HEALTH).getBaseValue() + newQuagga.getAttribute(Attributes.MAX_HEALTH).getBaseValue() + newQuagga.getAttribute(Attributes.MAX_HEALTH).getBaseValue();
             newQuagga.getAttribute(Attributes.MAX_HEALTH).setBaseValue(health / 3);
             double speed = parent.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue() + newQuagga.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue() + newQuagga.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue();
             newQuagga.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(speed / 3);
+        } else if (newEntity instanceof AgeableMob ageableMob) {
+            if (parent.getClass().equals(newEntity.getClass())) {
+                newEntity = ((AgeableMob) parent).getBreedOffspring(level, (AgeableMob) parent);
+            } else {
+                ageableMob.finalizeSpawn(level, level.getCurrentDifficultyAt(parent.blockPosition()), MobSpawnType.BREEDING, null, null);
+            }
         }
         if (newEntity instanceof Prehistoric prehistoric) {
             //Always tame offspring if it's an instance of Prehistoric
