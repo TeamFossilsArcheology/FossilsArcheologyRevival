@@ -253,7 +253,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         entityData.define(AGING_DISABLED, false);
         entityData.define(DIMENSION_VER, new CompoundTag());
         entityData.define(DATA_VARIANT, "");
-        entityData.define(GENDER, (byte) 0);
+        entityData.define(GENDER, random.nextBoolean() ? (byte) 1 : 0);
 
         CompoundTag tag = new CompoundTag();
         tag.putBoolean("disableGoalAI", false);
