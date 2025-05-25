@@ -3,13 +3,15 @@ package com.github.teamfossilsarcheology.fossil.villager;
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.google.common.collect.ImmutableSet;
+import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
+import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,6 +32,16 @@ public class ModVillagers {
     public static void register() {
         POI_TYPES.register();
         PROFESSIONS.register();
+        LifecycleEvent.SETUP.register(() -> {
+            registerBlockStates(ARCHEOLOGIST_POI);
+            registerBlockStates(PALEONTOLOGIST_POI);
+        });
+    }
+
+    private static void registerBlockStates(RegistrySupplier<PoiType> supplier) {
+        Registry.POINT_OF_INTEREST_TYPE.getResourceKey(supplier.get()).ifPresentOrElse(poiTypeResourceKey -> {
+            PoiTypes.registerBlockStates(Registry.POINT_OF_INTEREST_TYPE.getHolderOrThrow(poiTypeResourceKey));
+        }, () -> FossilMod.LOGGER.error("Failed to register point of interest: {}", supplier.getId()));
     }
 
     private static RegistrySupplier<PoiType> register(String name, RegistrySupplier<Block> block) {
@@ -47,5 +59,9 @@ public class ModVillagers {
 
     private static Set<BlockState> getBlockStates(RegistrySupplier<Block> block) {
         return ImmutableSet.copyOf(block.get().getStateDefinition().getPossibleStates());
+    }
+
+    private static ResourceKey<PoiType> key(RegistrySupplier<VillagerProfession> name) {
+        return ResourceKey.create(Registry.POINT_OF_INTEREST_TYPE_REGISTRY, name.getId());
     }
 }
