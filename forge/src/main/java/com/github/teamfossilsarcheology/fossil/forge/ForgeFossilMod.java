@@ -13,7 +13,6 @@ import com.github.teamfossilsarcheology.fossil.forge.capabilities.mammal.IMammal
 import com.github.teamfossilsarcheology.fossil.forge.client.model.PlantModelLoader;
 import com.github.teamfossilsarcheology.fossil.forge.client.renderer.armor.ForgeAncientHelmetRenderer;
 import com.github.teamfossilsarcheology.fossil.forge.compat.alexsmobs.AlexsMobsCompat;
-import com.github.teamfossilsarcheology.fossil.forge.compat.carryon.CarryOnCompat;
 import com.github.teamfossilsarcheology.fossil.forge.compat.farmers.FarmersDelightCompat;
 import com.github.teamfossilsarcheology.fossil.forge.world.biome.ForgeFossilRegion;
 import com.github.teamfossilsarcheology.fossil.item.forge.AncientHelmetItemImpl;
@@ -54,10 +53,6 @@ public class ForgeFossilMod {
         EventBuses.registerModEventBus(FossilMod.MOD_ID, modEventBus);
 
         FossilMod.init();
-
-        if (ModList.get().isLoaded(ModConstants.CARRY_ON)) {
-            MinecraftForge.EVENT_BUS.register(CarryOnCompat.class);
-        }
 
         modEventBus.addListener(this::onClient);
         modEventBus.addListener(this::onCommon);

@@ -91,6 +91,12 @@ public class ClientInit {
                     "category.fossil.debug");
             debugHelpKey = new KeyMapping("key.fossil.debug_help", InputConstants.Type.KEYSYM, InputConstants.KEY_B,
                     "category.fossil.debug");
+            KeyMappingRegistry.register(debugScreenKey);
+            KeyMappingRegistry.register(pathingScreenKey);
+            KeyMappingRegistry.register(debugRepathKey);
+            KeyMappingRegistry.register(debugAdvanceKey);
+            KeyMappingRegistry.register(debugReverseKey);
+            KeyMappingRegistry.register(debugHelpKey);
         }
         if (Minecraft.getInstance() != null) {
             ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, SkeletonGeoModelLoader.INSTANCE);
@@ -103,16 +109,12 @@ public class ClientInit {
         ParticleProviderRegistry.register(ModParticles.VOLCANO_VENT_ASH_EMITTER, new VolcanoVentAshEmitterParticle.Provider());
         ParticleProviderRegistry.register(ModParticles.BUBBLE, BubbleParticle.Provider::new);
         ParticleProviderRegistry.register(ModParticles.TAR_BUBBLE, TarBubbleParticle.Provider::new);
+        KeyMappingRegistry.register(flyUpKey);
+        KeyMappingRegistry.register(flyDownKey);
     }
 
     public static void later() {
         if (Version.debugEnabled()) {
-            KeyMappingRegistry.register(debugScreenKey);
-            KeyMappingRegistry.register(pathingScreenKey);
-            KeyMappingRegistry.register(debugRepathKey);
-            KeyMappingRegistry.register(debugAdvanceKey);
-            KeyMappingRegistry.register(debugReverseKey);
-            KeyMappingRegistry.register(debugHelpKey);
             ClientTickEvent.CLIENT_POST.register(minecraft -> {
                 if (Minecraft.getInstance().isPaused()) return;
                 while (ClientInit.debugHelpKey.consumeClick()) {
@@ -158,8 +160,6 @@ public class ClientInit {
             });
             ClientGuiEvent.RENDER_HUD.register((poseStack, v) -> PathingRenderer.renderOverlay(poseStack));
         }
-        KeyMappingRegistry.register(flyUpKey);
-        KeyMappingRegistry.register(flyDownKey);
         registerBlockRenderers();
         registerEventHandlers();
         MenuScreens.register(ModMenus.FEEDER.get(), FeederScreen::new);
