@@ -69,7 +69,7 @@ public class SleepSystem extends AISystem {
         } else if (mob.aiMovingType() == PrehistoricEntityInfoAI.Moving.SEMI_AQUATIC) {
             return mob.isInWater() || mob.isOnGround();
         } else {
-            return mob.isOnGround();
+            return mob.isOnGround() && !mob.isInWater();
         }
     }
 
