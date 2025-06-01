@@ -11,8 +11,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.Random;
-
 import static com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming.Meganeura.*;
 
 /**

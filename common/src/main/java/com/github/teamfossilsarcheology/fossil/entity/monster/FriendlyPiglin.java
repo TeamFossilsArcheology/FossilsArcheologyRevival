@@ -3,7 +3,6 @@ package com.github.teamfossilsarcheology.fossil.entity.monster;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -78,7 +77,7 @@ public class FriendlyPiglin extends TamableAnimal {
     @Override
     public void aiStep() {
         updateSwingTime();
-        if (level.getLightLevelDependentMagicValue(blockPosition()) > 0.5F) {
+        if (getLightLevelDependentMagicValue() > 0.5F) {
             noActionTime += 2;
         }
         super.aiStep();

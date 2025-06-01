@@ -10,8 +10,6 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.minecraft.world.level.levelgen.placement.RepeatingPlacement;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Random;
-
 /**
  * Custom {@link CountPlacement} that gets its count value
  * from a config entry

@@ -2,9 +2,7 @@ package com.github.teamfossilsarcheology.fossil.forge.client;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
-import com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation.PathingRenderer;
 import com.github.teamfossilsarcheology.fossil.client.renderer.OverlayRenderer;
-import com.github.teamfossilsarcheology.fossil.util.Version;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RenderBlockScreenEffectEvent;

@@ -7,8 +7,8 @@ import com.github.teamfossilsarcheology.fossil.network.debug.C2STameMessage;
 import com.github.teamfossilsarcheology.fossil.network.debug.SyncDebugInfoMessage;
 import com.github.teamfossilsarcheology.fossil.util.Gender;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
@@ -134,9 +134,9 @@ public class InfoTab extends DebugTab<Prehistoric> {
         addWidget(hungerSlider);
         addWidget(moodSlider);
 
-        addWidget(DebugScreen.cycleInstance("Gender", Arrays.stream(Gender.values()).toList(), gender,
-                        (c, value) -> value.getName(), gender -> this.gender = gender)
-                .createButton(Minecraft.getInstance().options, 20, yPos += 30, 150));
+        addWidget(CycleButton.builder(Gender::getName).withValues(Arrays.stream(Gender.values()).toList())
+                .withInitialValue(gender).create(20, yPos += 30, 150, 20, Component.literal("Gender"),
+                        (cycleButton, gender) -> this.gender = gender));
         addWidget(new Button(20, yPos += 30, 150, 20, Component.literal("Set Info"), button -> {
             entity.setGender(gender);
             entity.setScaleOverride(-1);

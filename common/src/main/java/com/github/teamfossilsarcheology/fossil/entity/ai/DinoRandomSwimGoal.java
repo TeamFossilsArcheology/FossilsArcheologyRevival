@@ -11,8 +11,6 @@ import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Random;
-
 /**
  * Will move the mob to a random spot in water if it is not in combat
  */

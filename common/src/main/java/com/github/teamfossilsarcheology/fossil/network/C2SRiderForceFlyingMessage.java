@@ -5,7 +5,6 @@ import dev.architectury.networking.NetworkManager;
 import dev.architectury.utils.Env;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 

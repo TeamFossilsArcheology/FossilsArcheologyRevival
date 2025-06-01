@@ -56,7 +56,6 @@ import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 import java.util.Optional;
-import java.util.Random;
 
 import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.LOOP;
 import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.PLAY_ONCE;

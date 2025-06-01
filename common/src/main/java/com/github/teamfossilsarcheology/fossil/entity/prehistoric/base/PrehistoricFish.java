@@ -34,7 +34,6 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public abstract class PrehistoricFish extends AbstractFish implements PrehistoricAnimatable<PrehistoricFish>, PrehistoricDebug {
     public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.COMPOUND_TAG);

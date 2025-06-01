@@ -5,7 +5,6 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Streams;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;

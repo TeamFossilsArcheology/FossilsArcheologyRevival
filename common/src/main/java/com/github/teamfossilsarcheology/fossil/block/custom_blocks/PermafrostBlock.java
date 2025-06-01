@@ -9,8 +9,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.Random;
-
 public class PermafrostBlock extends Block {
 
     public PermafrostBlock(Properties properties) {

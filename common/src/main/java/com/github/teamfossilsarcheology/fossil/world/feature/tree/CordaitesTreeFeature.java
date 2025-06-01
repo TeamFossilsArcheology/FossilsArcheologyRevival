@@ -11,8 +11,6 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 
-import java.util.Random;
-
 public class CordaitesTreeFeature extends CustomTreeFeature {
     @Override
     protected boolean placeTree(FeaturePlaceContext<NoneFeatureConfiguration> context) {

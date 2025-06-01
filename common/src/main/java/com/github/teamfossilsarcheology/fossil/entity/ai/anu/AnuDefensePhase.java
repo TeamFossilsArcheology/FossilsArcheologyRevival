@@ -11,7 +11,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
@@ -32,7 +31,6 @@ import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
-import java.util.Random;
 
 public class AnuDefensePhase extends AbstractAnuPhaseInstance {
     private static final Component ANU_COMBAT_BRUTES = Component.translatable("entity.fossil.anu.brutes");

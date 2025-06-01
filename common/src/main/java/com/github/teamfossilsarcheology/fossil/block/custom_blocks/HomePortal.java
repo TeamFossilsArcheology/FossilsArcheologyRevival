@@ -21,8 +21,6 @@ import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Random;
-
 public class HomePortal extends HalfTransparentBlock {
     public HomePortal(Properties properties) {
         super(properties);

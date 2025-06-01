@@ -9,9 +9,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.*;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.serialization.Codec;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.screens.Screen;
@@ -35,7 +33,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class DebugScreen extends Screen {
     private static final List<PathInfo> pathTargets = new ArrayList<>();
@@ -206,15 +203,16 @@ public class DebugScreen extends Screen {
             tabs.forEach(tab -> tab.init(width, height));
             Collections.rotate(tabs, -tabShift);
             currentTab = tabs.get(0);
-            addRenderableWidget(DebugScreen.cycleInstance("Tab", tabs, currentTab,
-                            (c, value) -> Component.literal(value.getClass().getSimpleName()), tab -> {
+            addRenderableWidget(CycleButton.<DebugTab<?>>builder(debugTab -> Component.literal(debugTab.getClass().getSimpleName()))
+                    .withValues(tabs).withInitialValue(currentTab)
+                    .create(width / 2, 60, 100, 20, Component.literal("Tab"),
+                            (cycleButton, tab) -> {
                                 tab.onOpen();
                                 addWidget(tab);
                                 removeWidget(currentTab);
                                 currentTab.onClose();
                                 currentTab = tab;
-                            })
-                    .createButton(Minecraft.getInstance().options, width / 2, 60, 100));
+                            }));
             addRenderableWidget(new Button(width / 2, 35, 100, 20, Component.literal("Set default"), button -> {
                 tabShift += tabs.indexOf(currentTab);
             }, (button, poseStack, i, j) -> {
@@ -264,9 +262,5 @@ public class DebugScreen extends Screen {
     }
 
     record PathInfo(BlockPos targetPos, BlockState blockState, boolean below) {
-    }
-
-    public static <T> OptionInstance<T> cycleInstance(String caption, List<T> list, T initial, OptionInstance.CaptionBasedToString<T> valueName, Consumer<T> onClick) {
-        return new OptionInstance<>(caption, OptionInstance.noTooltip(), valueName, new OptionInstance.Enum<>(list, Codec.INT.xmap(list::get, list::indexOf)), initial, onClick);
     }
 }

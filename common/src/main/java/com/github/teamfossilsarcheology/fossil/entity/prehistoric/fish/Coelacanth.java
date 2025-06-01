@@ -10,8 +10,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Random;
-
 public class Coelacanth extends PrehistoricFish {
 
     public Coelacanth(EntityType<Coelacanth> entityType, Level level) {

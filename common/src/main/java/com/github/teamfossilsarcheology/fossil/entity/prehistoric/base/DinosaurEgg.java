@@ -17,7 +17,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -141,11 +140,10 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     public boolean isTooCold() {
         Holder<Biome> biome = level.getBiome(blockPosition());
         level.updateSkyBrightness();
-        float light = level.getLightLevelDependentMagicValue(blockPosition());
         if (biome.value().warmEnoughToRain(blockPosition())) {
-            return light < 0.5f;
+            return getLightLevelDependentMagicValue() < 0.5f;
         } else {
-            return light < 0.75f;
+            return getLightLevelDependentMagicValue() < 0.75f;
         }
     }
 

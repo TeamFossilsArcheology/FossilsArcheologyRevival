@@ -21,8 +21,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.AABB;
 
-import java.util.Random;
-
 public class TarFluid {
 
     private static void animateParticle(Level level, BlockPos pos, FluidState state, RandomSource random) {

@@ -2,8 +2,8 @@ package com.github.teamfossilsarcheology.fossil.client.gui.debug;
 
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation.PathingDebug;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation.PlayerPathNavigation;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -75,8 +75,8 @@ public class PathingScreen extends Screen {
             PathingDebug.pos3 = null;
         }));
         List<PlayerPathNavigation> paths = List.of(PathingDebug.pathNavigation1, PathingDebug.pathNavigation3, PathingDebug.pathNavigation4, PathingDebug.pathNavigation5);
-        addRenderableWidget(DebugScreen.cycleInstance("Path", paths, currentNav, (c, value) -> Component.literal(value.name),
-                        newNav -> currentNav = newNav)
-                .createButton(Minecraft.getInstance().options, 30, 90, 100));
+        addRenderableWidget(CycleButton.<PlayerPathNavigation>builder(nav -> Component.literal(nav.name)).withValues(paths)
+                .withInitialValue(currentNav).create(30, 90, 100, 20, Component.literal("Path"),
+                        (cycleButton, newNav) -> currentNav = newNav));
     }
 }

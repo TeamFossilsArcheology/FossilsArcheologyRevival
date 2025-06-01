@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZonedDateTime;
 import java.util.Objects;
-import java.util.Random;
 
 /**
  * With this condition a variant may be applied on a certain date.

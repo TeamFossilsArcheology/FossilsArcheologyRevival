@@ -8,7 +8,6 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
 
 import java.util.EnumSet;
-import java.util.Random;
 
 import static com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming.MAX_TIME_IN_WATER;
 import static com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming.MAX_TIME_ON_LAND;

@@ -1,6 +1,5 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
-import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.ai.*;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.CustomSwimMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.PrehistoricLookControl;

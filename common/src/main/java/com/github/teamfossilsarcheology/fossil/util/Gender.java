@@ -4,7 +4,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;
 
 import java.util.Locale;
-import java.util.Random;
 
 public enum Gender implements DinopediaInfo {
     MALE,

@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
@@ -96,16 +97,16 @@ public class AnimationTab<T extends Mob & PrehistoricAnimatable<?>> extends Debu
             }
             List<String> controllerNames = controllers.keySet().stream().toList();
             currentControllerName = controllerNames.get(0);
-            addWidget(DebugScreen.cycleInstance("Controller", controllerNames, currentControllerName,
-                            (c, value) -> Component.literal(value), controller -> {
+            addWidget(CycleButton.builder(Component::literal).withValues(controllerNames).withInitialValue(currentControllerName)
+                    .create(buttonX, buttonY, 200, 20, Component.literal("Controller"),
+                            (button, controller) -> {
                                 //Only show pause button for active controller
                                 removeWidget(pauseButtons.get(currentControllerName));
                                 removeWidget(pauseSliders.get(currentControllerName));
                                 addWidget(pauseButtons.get(controller));
                                 addWidget(pauseSliders.get(controller));
                                 currentControllerName = controller;
-                            })
-                    .createButton(Minecraft.getInstance().options, buttonX, buttonY, 200));
+                            }));
             addWidget(new DebugSlider(buttonX, buttonY + 21, 99, 20, Component.literal("Transition: "), Component.literal(""), 0, 20, transitionLength, 1, 3, true) {
                 @Override
                 protected void applyValue() {
@@ -124,18 +125,19 @@ public class AnimationTab<T extends Mob & PrehistoricAnimatable<?>> extends Debu
             for (String controllerName : controllerNames) {
                 if (controllers.get(controllerName) instanceof PausableAnimationController<?> pausableAnimationController) {
                     var slider = createPauseSlider(pausableAnimationController, buttonX, buttonY);
-                    var button = OptionInstance.createBoolean("Pause", pausableAnimationController.isPaused(), paused -> {
-                        pausableAnimationController.pause(paused);
-                        //Only show the pause slider when paused
-                        slider.visible = paused;
-                        if (pausableAnimationController.getCurrentAnimation() != null) {
-                            //Update max value of pause slider
-                            slider.maxValue = pausableAnimationController.getCurrentAnimation().animationLength;
-                        }
-                        if (Boolean.TRUE.equals(paused)) {
-                            slider.setSliderValue(pausableAnimationController.getCurrentTick() / slider.maxValue, true);
-                        }
-                    }).createButton(Minecraft.getInstance().options, buttonX + 102, buttonY + 42, 99);
+                    var button = CycleButton.onOffBuilder(pausableAnimationController.isPaused())
+                            .create(buttonX + 102, buttonY + 42, 99, 20, Component.literal("Pause"), (cycleButton, paused) -> {
+                                pausableAnimationController.pause(paused);
+                                //Only show the pause slider when paused
+                                slider.visible = paused;
+                                if (pausableAnimationController.getCurrentAnimation() != null) {
+                                    //Update max value of pause slider
+                                    slider.maxValue = pausableAnimationController.getCurrentAnimation().animationLength;
+                                }
+                                if (Boolean.TRUE.equals(paused)) {
+                                    slider.setSliderValue(pausableAnimationController.getCurrentTick() / slider.maxValue, true);
+                                }
+                            });
                     pauseSliders.put(controllerName, slider);
                     pauseButtons.put(controllerName, button);
                     if (controllerName.equals(currentControllerName)) {

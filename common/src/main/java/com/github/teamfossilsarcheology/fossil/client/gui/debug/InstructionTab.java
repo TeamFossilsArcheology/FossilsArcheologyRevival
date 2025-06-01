@@ -13,8 +13,8 @@ import com.github.teamfossilsarcheology.fossil.network.debug.InstructionMessage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -226,9 +226,9 @@ public class InstructionTab extends DebugTab<Prehistoric> {
             int buttonX = x0 + rowWidth + 15;
             if (!controllers.isEmpty()) {
                 currentControllerName = controllers.get(0);
-                addWidget(DebugScreen.cycleInstance("", controllers, currentControllerName,
-                                (c, value) -> Component.literal(value), controller -> this.currentControllerName = controller)
-                        .createButton(Minecraft.getInstance().options, buttonX, y0, 100));
+                addWidget(CycleButton.builder(Component::literal).withValues(controllers).withInitialValue(currentControllerName)
+                        .create(buttonX, y0, 100, 20, Component.literal(""),
+                                (cycleButton, controller) -> currentControllerName = controller));
             }
             addWidget(new DebugSlider(buttonX, y0 + 25, 100, 20, Component.literal("Count: "), Component.literal(""), 0, 20, transitionLength, 1, 3, true) {
                 @Override
@@ -236,8 +236,8 @@ public class InstructionTab extends DebugTab<Prehistoric> {
                     transitionLength = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
                 }
             });
-            addWidget(OptionInstance.createBoolean("Time based", loop, newLoop -> this.loop = newLoop)
-                    .createButton(Minecraft.getInstance().options, buttonX, y0 + 50, 100));
+            addWidget(CycleButton.onOffBuilder(loop).create(buttonX, y0 + 50, 100, 20,
+                    Component.literal("Time based"), (button, loop) -> this.loop = loop));
         }
     }
 }

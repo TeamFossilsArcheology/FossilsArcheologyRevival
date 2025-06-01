@@ -22,8 +22,6 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Random;
-
 /**
  * Mood increasing block
  *

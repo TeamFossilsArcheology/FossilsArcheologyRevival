@@ -3,13 +3,11 @@ package com.github.teamfossilsarcheology.fossil.fabric;
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.github.teamfossilsarcheology.fossil.client.ClientInit;
-import com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation.PathingRenderer;
 import com.github.teamfossilsarcheology.fossil.client.renderer.OverlayRenderer;
 import com.github.teamfossilsarcheology.fossil.fabric.client.model.PlantModelProvider;
 import com.github.teamfossilsarcheology.fossil.fabric.client.renderer.CustomItemRendererFabricImpl;
 import com.github.teamfossilsarcheology.fossil.fabric.client.renderer.armor.FabricAncientHelmetRenderer;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
-import com.github.teamfossilsarcheology.fossil.util.Version;
 import com.github.teamfossilsarcheology.fossil.world.effect.ComfyBedEffect;
 import com.github.teamfossilsarcheology.fossil.world.effect.ModEffects;
 import com.mojang.blaze3d.platform.Window;
@@ -24,7 +22,6 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
-import software.bernie.shadowed.eliotlash.mclib.math.functions.limit.Min;
 
 import java.util.Optional;
 

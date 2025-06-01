@@ -82,7 +82,7 @@ public class SkeletonEditTab extends DebugTab<PrehistoricSkeleton> {
 
             ModelEntry(String text) {
                 changeButton = new Button(0, 0, 200, 20, Component.literal(text), button -> {
-                    SkeletonEditTab.this.info = PrehistoricEntityInfo.valueOf(button.getMessage().getString());
+                    SkeletonEditTab.this.info = PrehistoricEntityInfo.valueOf(button.getMessage().getContents().toString());
                 });
             }
 

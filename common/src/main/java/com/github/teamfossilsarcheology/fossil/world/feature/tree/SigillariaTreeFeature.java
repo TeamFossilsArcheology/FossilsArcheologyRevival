@@ -10,8 +10,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-import java.util.Random;
-
 public class SigillariaTreeFeature extends CustomTreeFeature {
     @Override
     protected boolean placeTree(FeaturePlaceContext<NoneFeatureConfiguration> context) {

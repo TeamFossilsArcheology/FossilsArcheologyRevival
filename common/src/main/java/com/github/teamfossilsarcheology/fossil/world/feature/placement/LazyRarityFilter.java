@@ -11,8 +11,6 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.minecraft.world.level.levelgen.placement.RarityFilter;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Random;
-
 /**
  * Custom {@link RarityFilter} that gets its chance value from a config entry
  */
