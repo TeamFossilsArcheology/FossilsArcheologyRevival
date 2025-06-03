@@ -7,6 +7,9 @@ import java.util.*
 plugins {
     id("architectury-plugin") version "3.4-SNAPSHOT"
     id("dev.architectury.loom") version "1.7-SNAPSHOT" apply false
+    id("com.github.johnrengelman.shadow") version "7.1.2" apply false
+    id("com.modrinth.minotaur") version "2.+" apply false
+    id("net.darkhax.curseforgegradle") version "1.1.25" apply false
     java
 }
 

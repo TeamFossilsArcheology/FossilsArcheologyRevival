@@ -4,9 +4,9 @@ import net.darkhax.curseforgegradle.TaskPublishCurseForge
 
 
 plugins {
-    id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("com.modrinth.minotaur") version "2.+"
-    id("net.darkhax.curseforgegradle") version "1.1.25"
+    id("com.github.johnrengelman.shadow")
+    id("com.modrinth.minotaur")
+    id("net.darkhax.curseforgegradle")
 }
 
 architectury {
@@ -104,6 +104,7 @@ dependencies {
     modImplementation("com.jozufozu.flywheel:flywheel-forge-${minecraftVersion}:${flywheelVersion}")
     modImplementation("com.tterrag.registrate:Registrate:${registrateVersion}")
 
+    //modRuntimeOnly("curse.maven:configured-457570:4462832")
 }
 
 loom {

@@ -11,9 +11,9 @@ import net.fabricmc.mappingio.tree.MappingTreeView
 import net.fabricmc.mappingio.tree.MemoryMappingTree
 
 plugins {
-    id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("com.modrinth.minotaur") version "2.+"
-    id("net.darkhax.curseforgegradle") version "1.1.25"
+    id("com.github.johnrengelman.shadow")
+    id("com.modrinth.minotaur")
+    id("net.darkhax.curseforgegradle")
 }
 
 architectury {
