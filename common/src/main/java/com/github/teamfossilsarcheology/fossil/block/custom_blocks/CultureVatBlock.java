@@ -26,6 +26,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -68,7 +69,7 @@ public class CultureVatBlock extends CustomEntityBlock {
                 BlockState blockState = PrehistoricPlantInfo.MUTANT_PLANT.getPlantBlock().defaultBlockState();
                 level.setBlockAndUpdate(pos, blockState);
                 if (level.getBlockState(pos.above()).getMaterial().isReplaceable()) {
-                    level.setBlockAndUpdate(pos.above(), blockState.setValue(TallFlowerBlock.HALF, DoubleBlockHalf.UPPER));
+                    level.setBlockAndUpdate(pos.above(), blockState.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER));
                 }
             } else if (blockEntity.getBlockState().getValue(EMBRYO) == EmbryoType.TREE) {
                 level.setBlockAndUpdate(pos, ModBlocks.MUTANT_TREE_SAPLING.get().defaultBlockState());

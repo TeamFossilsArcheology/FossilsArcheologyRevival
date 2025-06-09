@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class ModStructures {
     public static final ResourceKey<Structure> ANU_CASTLE_KEY = createKey("anu_castle");
-    public static final ResourceKey<Structure> HELL_BOAT_KEY = createKey("hell_boat.json");
+    public static final ResourceKey<Structure> HELL_BOAT_KEY = createKey("hell_boat");
     public static final ResourceKey<Structure> TREASURE_ROOM_KEY = createKey("treasure_room");
 
     private static ResourceKey<Structure> createKey(String name) {
