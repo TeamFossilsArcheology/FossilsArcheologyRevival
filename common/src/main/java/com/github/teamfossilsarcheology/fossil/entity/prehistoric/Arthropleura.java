@@ -7,6 +7,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import com.github.teamfossilsarcheology.fossil.util.Gender;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -39,6 +40,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
+import java.util.Objects;
 
 public class Arthropleura extends Prehistoric {
     public static final EntityDataAccessor<Boolean> IS_BEE = SynchedEntityData.defineId(Arthropleura.class, EntityDataSerializers.BOOLEAN);
@@ -77,7 +79,7 @@ public class Arthropleura extends Prehistoric {
 
     @Override
     public void setCustomName(@Nullable Component name) {
-        if (name != null && name.getContents().equals("Bee")) {
+        if (name != null && Objects.equals(ChatFormatting.stripFormatting(name.getString()), "Bee")) {
             entityData.set(IS_BEE, true);
             navigation.stop();
             setDeltaMovement(Vec3.ZERO);
@@ -98,7 +100,7 @@ public class Arthropleura extends Prehistoric {
             navigation = flyingPathNavigation;
             goalSelector.addGoal(3, temptGoal);
             goalSelector.addGoal(Util.WANDER - 1, wanderGoal);
-        } else if (getName().getContents().equals("Bee")) {
+        } else if (Objects.equals(ChatFormatting.stripFormatting(getName().getString()), "Bee")) {
             navigation.stop();
             setDeltaMovement(Vec3.ZERO);
             entityData.set(IS_BEE, false);
