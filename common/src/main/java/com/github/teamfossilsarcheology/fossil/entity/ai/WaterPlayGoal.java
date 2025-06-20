@@ -77,7 +77,7 @@ public class WaterPlayGoal<T extends Prehistoric & SwimmingAnimal> extends PlayG
                 attackType = -1;
             }
         } else if (currentTime > attackEndTick + 20 && Util.canReachPrey(dino, target)) {
-            boolean tooBig = !Util.isEntitySmallerThan(target, 2 * swimming.getScale() / swimming.data().maxScale());
+            boolean tooBig = Util.isEntityLargerThan(target, 2 * swimming.getScale() / swimming.data().maxScale());
             if (swimming.aiAttackType() != Attacking.GRAB || tooBig || swimming.getRandom().nextInt(5) > 0) {
                 attackType = ATTACK;
                 ServerAnimationInfo animationInfo = dino.startAttack();

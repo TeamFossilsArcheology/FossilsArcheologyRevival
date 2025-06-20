@@ -43,13 +43,13 @@ public abstract class ShortBerryBushBlock extends BushBlock implements Bonemeala
 
     @Override
     public boolean isRandomlyTicking(BlockState state) {
-        return state.getValue(ageProperty()) < info.maxAge;
+        return state.getValue(ageProperty()) < info.maxAge();
     }
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         int i = state.getValue(ageProperty());
-        if (i < info.maxAge && random.nextInt(5) == 0 && level.getRawBrightness(pos.above(), 0) >= 9) {
+        if (i < info.maxAge() && random.nextInt(5) == 0 && level.getRawBrightness(pos.above(), 0) >= 9) {
             updateAge(level, pos, state, i + 1);
         }
     }
@@ -61,15 +61,15 @@ public abstract class ShortBerryBushBlock extends BushBlock implements Bonemeala
     @Override
     public @NotNull InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         int i = state.getValue(ageProperty());
-        boolean ismaxAge = i == info.maxAge;
-        if (!ismaxAge && player.getItemInHand(hand).is(Items.BONE_MEAL)) {
+        boolean isMaxAge = i == info.maxAge();
+        if (!isMaxAge && player.getItemInHand(hand).is(Items.BONE_MEAL)) {
             return InteractionResult.PASS;
         }
-        if (i >= info.berryAge) {
-            int dropAmount = 1 + level.random.nextInt(2) + i - info.berryAge;
-            SweetBerryBushBlock.popResource(level, pos, new ItemStack(info.berryItem.get(), dropAmount));
+        if (i >= info.berryAge()) {
+            int dropAmount = 1 + level.random.nextInt(2) + i - info.berryAge();
+            SweetBerryBushBlock.popResource(level, pos, new ItemStack(info.berryItem().get(), dropAmount));
             level.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1, 0.8f + level.random.nextFloat() * 0.4f);
-            updateAge(level, pos, state, info.berryAge - 1);
+            updateAge(level, pos, state, info.berryAge() - 1);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         return super.use(state, level, pos, player, hand, hit);
@@ -82,7 +82,7 @@ public abstract class ShortBerryBushBlock extends BushBlock implements Bonemeala
 
     @Override
     public boolean isValidBonemealTarget(BlockGetter level, BlockPos pos, BlockState state, boolean isClient) {
-        return state.getValue(ageProperty()) < info.maxAge;
+        return state.getValue(ageProperty()) < info.maxAge();
     }
 
     @Override
@@ -92,6 +92,6 @@ public abstract class ShortBerryBushBlock extends BushBlock implements Bonemeala
 
     @Override
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
-        updateAge(level, pos, state, Math.min(info.maxAge, state.getValue(ageProperty()) + 1));
+        updateAge(level, pos, state, Math.min(info.maxAge(), state.getValue(ageProperty()) + 1));
     }
 }

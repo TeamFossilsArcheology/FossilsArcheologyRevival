@@ -12,6 +12,7 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumSet;
 
@@ -80,8 +81,8 @@ public class CenteredNodeEvaluator extends WalkNodeEvaluator {
      * @implNote This implementation checks neighbours around the target instead of shifted to a positive x and z
      */
     @Override
-    public BlockPathTypes getBlockPathTypes(BlockGetter level, int x, int y, int z, int xSize, int ySize, int zSize, boolean canOpenDoors,
-                                            boolean canEnterDoors, EnumSet<BlockPathTypes> nodeTypeEnum, BlockPathTypes nodeType, BlockPos pos) {
+    public @NotNull BlockPathTypes getBlockPathTypes(BlockGetter level, int x, int y, int z, int xSize, int ySize, int zSize, boolean canOpenDoors,
+                                                     boolean canEnterDoors, EnumSet<BlockPathTypes> nodeTypeEnum, BlockPathTypes nodeType, BlockPos pos) {
         float width = Math.max(0, xSize - 2);
         int widthEachSide = Mth.ceil(width / 2.0f) + 1;
         for (int i = 0; i < widthEachSide; ++i) {

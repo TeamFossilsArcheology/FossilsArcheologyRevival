@@ -416,7 +416,7 @@ public class ModBlocks {
     }
 
     private static ToIntFunction<BlockState> activeBlockEmission(int lightValue) {
-        return arg -> arg.getValue(CustomEntityBlock.ACTIVE) ? lightValue : 0;
+        return arg -> Boolean.TRUE.equals(arg.getValue(CustomEntityBlock.ACTIVE)) ? lightValue : 0;
     }
 
     private static boolean never(BlockState state, BlockGetter blockGetter, BlockPos pos) {
@@ -487,7 +487,7 @@ public class ModBlocks {
         return registerBlock(name, () -> new FourTallFlowerBlock(shape));
     }
 
-    public static RegistrySupplier<GrowableFlowerBlock> registerGrowableFlower(String name, RegistrySupplier<TallFlowerBlock> tallFlower,
+    public static RegistrySupplier<GrowableFlowerBlock> registerGrowableFlower(String name, RegistrySupplier<? extends BushBlock> tallFlower,
                                                                                VoxelShape shape) {
         return registerBlock(name, () -> new GrowableFlowerBlock(tallFlower, shape));
     }

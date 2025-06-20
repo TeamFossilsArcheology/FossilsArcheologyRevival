@@ -135,9 +135,9 @@ public class ModItemProvider extends ItemModelProvider {
         }
         if (plantItems) {
             for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
-                if (info.berryItem != null) {
-                    var resourceLocation = new ResourceLocation(key(info.berryItem.get()).getNamespace(), "item/" + key(info.berryItem.get()).getPath());
-                    builder(resourceLocation, key(info.berryItem.get()));
+                if (info.berryItem() != null) {
+                    var resourceLocation = new ResourceLocation(key(info.berryItem().get()).getNamespace(), "item/" + key(info.berryItem().get()).getPath());
+                    builder(resourceLocation, key(info.berryItem().get()));
                 }
             }
             for (PrehistoricPlantInfo info : PrehistoricPlantInfo.plantsWithSeeds()) {

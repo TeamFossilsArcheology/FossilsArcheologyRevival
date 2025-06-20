@@ -21,7 +21,7 @@ public class AnuBarrierBlockEntity extends BlockEntity {
     public static final int STATE_ENABLED = 1;
     public static final int STATE_GROWING = 2;
     public static final int STATE_SHRINKING = 3;
-    public static float duration = 20 * 3;
+    public static final float DURATION = 20f * 3f;
     public int radius = 1;
     public int height = 1;
     private int state = STATE_DISABLED;
@@ -42,7 +42,7 @@ public class AnuBarrierBlockEntity extends BlockEntity {
     private static void tick(AnuBarrierBlockEntity blockEntity) {
         if (blockEntity.state == STATE_GROWING) {
             blockEntity.barrierTimer++;
-            if (blockEntity.barrierTimer > duration) {
+            if (blockEntity.barrierTimer > DURATION) {
                 blockEntity.state = STATE_ENABLED;
                 blockEntity.setChanged();
             }

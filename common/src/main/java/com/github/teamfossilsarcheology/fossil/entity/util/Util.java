@@ -60,8 +60,8 @@ public class Util {
         spawnParticles(level, new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(item)), count, aabb);
     }
 
-    public static boolean isEntitySmallerThan(Entity entity, float size) {
-        return entity.getBbWidth() <= size;
+    public static boolean isEntityLargerThan(Entity entity, float size) {
+        return entity.getBbWidth() > size;
     }
 
     public static boolean canBreak(Level level, BlockPos targetPos, float maxHardness) {

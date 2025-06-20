@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.item.*;
 import com.github.teamfossilsarcheology.fossil.tags.ModEntityTypeTags;
@@ -213,7 +214,7 @@ public enum PrehistoricEntityInfo implements EntityInfo {
         try {
             className = mob.getClass().getSimpleName();
         } catch (Exception e) {
-            System.out.println(e);
+            FossilMod.LOGGER.warn(e);
         }
         return !className.isEmpty() && (mob instanceof AbstractHorse || className.contains("Cow") || className.contains("Sheep") || className.contains("Pig")
                 || className.contains("Rabbit") || className.contains("Goat") || className.contains("Ferret") || className.contains("Hedgehog")

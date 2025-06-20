@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Map;
 
 public class InstructionRenderer {
-    static Map<BlockPos, Integer> countAtPos = new Object2IntOpenHashMap<>();
-    static List<Pair<Vec3, Instruction>> texts = new ArrayList<>();
+    private static final Map<BlockPos, Integer> countAtPos = new Object2IntOpenHashMap<>();
+    private static final List<Pair<Vec3, Instruction>> texts = new ArrayList<>();
     public static Vec3 rulerStartPos;
     public static Vec3 rulerEndPos;
 

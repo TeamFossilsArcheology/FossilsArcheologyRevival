@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Set;
 
 public class DebugPathFinder extends PlayerPathFinder {
-    public boolean useCentered;
+    private final boolean useCentered;
     public DebugPathFinder(PlayerNodeEvaluator nodeEvaluator, int maxVisitedNodes, boolean useCentered) {
         super(nodeEvaluator, maxVisitedNodes);
         this.useCentered = useCentered;

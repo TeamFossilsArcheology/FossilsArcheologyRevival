@@ -222,18 +222,10 @@ public class PlayerNodeEvaluator {
 
         BlockPathTypes blockPathType = getBlockPathType(level, x, y, z);
         blockPathType = evaluateBlockPathType(level, canOpenDoors, false, BlockPos.ZERO, blockPathType);
-        Node node = null;
-        if (blockPathType == BlockPathTypes.BLOCKED) {
-            node = getNode(x, y, z);
-            node.closed = true;
-            node.type = blockPathType;
-            node.costMalus = blockPathType.getMalus();
-        } else {
-            node = getNode(x, y, z);
-            node.closed = true;
-            node.type = blockPathType;
-            node.costMalus = blockPathType.getMalus();
-        }
+        Node node = getNode(x, y, z);
+        node.closed = true;
+        node.type = blockPathType;
+        node.costMalus = blockPathType.getMalus();
         return node;
     }
 

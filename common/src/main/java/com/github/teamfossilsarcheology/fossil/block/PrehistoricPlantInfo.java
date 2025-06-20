@@ -2,7 +2,6 @@ package com.github.teamfossilsarcheology.fossil.block;
 
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.CrataegusBushBlock;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.EphedraBushBlock;
-import com.github.teamfossilsarcheology.fossil.block.custom_blocks.TallFlowerBlock;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.VacciniumBushBlock;
 import com.github.teamfossilsarcheology.fossil.item.FlowerSeedsItem;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
@@ -50,9 +49,9 @@ public enum PrehistoricPlantInfo {
     private final String resourceName;
     private final VoxelShape shape;
     private PrehistoricPlantInfo tallPlant;
-    public int berryAge;
-    public int maxAge;
-    public RegistrySupplier<Item> berryItem;
+    private int berryAge;
+    private int maxAge;
+    private RegistrySupplier<Item> berryItem;
     private String commonName;
     private RegistrySupplier<? extends BushBlock> plantBlock;
     private RegistrySupplier<Item> fossilizedPlantSeedItem;
@@ -103,7 +102,7 @@ public enum PrehistoricPlantInfo {
                     info.registerPlantSeed(info.resourceName);
                 }
             } else if (info.size == Size.SINGLE_GROWABLE) {
-                info.plantBlock = ModBlocks.registerGrowableFlower(info.resourceName, (RegistrySupplier<TallFlowerBlock>) info.tallPlant.plantBlock,
+                info.plantBlock = ModBlocks.registerGrowableFlower(info.resourceName, info.tallPlant.plantBlock,
                         info.shape);
                 info.registerPlantSeed(info.commonName);
             } else if (info.size == Size.DOUBLE_GROWABLE || info == MUTANT_PLANT) {
@@ -141,7 +140,19 @@ public enum PrehistoricPlantInfo {
         return plantSeedItem.get();
     }
 
+    public int berryAge() {
+        return berryAge;
+    }
+
+    public int maxAge() {
+        return maxAge;
+    }
+
+    public RegistrySupplier<Item> berryItem() {
+        return berryItem;
+    }
+
     enum Size {
-        SINGLE, DOUBLE, SINGLE_GROWABLE, DOUBLE_GROWABLE, FOUR, SINGLE_BERRY, DOUBLE_BERRY;
+        SINGLE, DOUBLE, SINGLE_GROWABLE, DOUBLE_GROWABLE, FOUR, SINGLE_BERRY, DOUBLE_BERRY
     }
 }

@@ -49,7 +49,6 @@ public abstract class CacheMoveToBlockGoal extends Goal {
      * Block to move to
      */
     protected BlockPos targetPos = BlockPos.ZERO;
-    protected int verticalSearchStart;
     protected boolean reachedTarget;
     protected Path path;
     private BlockPos lastStuckPos;
@@ -62,7 +61,6 @@ public abstract class CacheMoveToBlockGoal extends Goal {
         this.entity = entity;
         this.speedModifier = speedModifier;
         this.searchRange = searchRange;
-        this.verticalSearchStart = 0;
         this.verticalSearchRange = verticalSearchRange;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP));
     }

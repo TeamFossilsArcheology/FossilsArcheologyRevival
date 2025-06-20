@@ -201,10 +201,7 @@ public class SweepPathNavigation extends PlayerPathNavigation {
         if (below == BlockPathTypes.WATER || below == BlockPathTypes.LAVA || below == BlockPathTypes.OPEN) {
             return true;
         }
-        if (in == BlockPathTypes.DAMAGE_FIRE || in == BlockPathTypes.DANGER_FIRE || in == BlockPathTypes.DAMAGE_OTHER) {
-            return true;
-        }
-        return false;
+        return in == BlockPathTypes.DAMAGE_FIRE || in == BlockPathTypes.DANGER_FIRE || in == BlockPathTypes.DAMAGE_OTHER;
     }
 
     static float chooseLengthForAxis(Direction.Axis axis, Vec3 vec) {

@@ -155,7 +155,6 @@ public class InstructionSystem extends AISystem {
                     mob.getAnimationLogic().cancelAnimation(playAnim.controller);
                     return false;
                 }
-                return true;
             } else {
                 if (mob.getAnimationLogic().isAnimationDone(activeAnim)) {
                     animCount--;
@@ -165,8 +164,8 @@ public class InstructionSystem extends AISystem {
                         return false;
                     }
                 }
-                return true;
             }
+            return true;
         }
         return false;
     }

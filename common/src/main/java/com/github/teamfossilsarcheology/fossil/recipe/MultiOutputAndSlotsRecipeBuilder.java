@@ -39,14 +39,14 @@ public abstract class MultiOutputAndSlotsRecipeBuilder<T extends MultiOutputAndS
         this.tagInput = tagInput;
     }
 
-    public T addOutput(ItemLike itemLike, double weight) {
+    public MultiOutputAndSlotsRecipeBuilder<T> addOutput(ItemLike itemLike, double weight) {
         return addOutput(itemLike, 1, weight);
     }
 
-    public T addOutput(ItemLike itemLike, int count, double weight) {
+    public MultiOutputAndSlotsRecipeBuilder<T> addOutput(ItemLike itemLike, int count, double weight) {
         total += weight;
         weightedOutputs.put(new ItemHolder(Registry.ITEM.getKey(itemLike.asItem()), count), weight);
-        return (T) this;
+        return this;
     }
 
     @Override

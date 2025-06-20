@@ -133,8 +133,8 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         for (PrehistoricPlantInfo info : PrehistoricPlantInfo.plantsWithSeeds()) {
             fossilSeeds.add(info.getFossilizedPlantSeedItem());
             restoredSeeds.add(info.getPlantSeedItem());
-            if (info.berryItem != null && info.berryItem.isPresent()) {
-                filterPlants.add(info.berryItem.get());
+            if (info.berryItem() != null && info.berryItem().isPresent()) {
+                filterPlants.add(info.berryItem().get());
             }
         }
         addTag(ModItemTags.FOSSIL_SAPLINGS, CALAMITES_FOSSIL_SAPLING, CORDAITES_FOSSIL_SAPLING, PALM_FOSSIL_SAPLING, SIGILLARIA_FOSSIL_SAPLING, TEMPSKYA_FOSSIL_SAPLING);

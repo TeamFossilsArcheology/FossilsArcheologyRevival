@@ -189,7 +189,7 @@ public class DebugScreen extends Screen {
         });
         builder.withInitialValue(showPaths);
         addRenderableWidget(builder.create(width / 2 - 91, height - 45, 91, 20, Component.literal("Show Paths"), (cycleButton, object) -> {
-            showPaths = (boolean) cycleButton.getValue();
+            showPaths = cycleButton.getValue();
         }));
         addRenderableWidget(new Button(width / 2, height - 45, 91, 20, Component.literal("Clear Paths"), button -> clearPaths(), (button, poseStack, i, j) -> {
             renderTooltip(poseStack, Component.literal("Mostly unused"), i, j);

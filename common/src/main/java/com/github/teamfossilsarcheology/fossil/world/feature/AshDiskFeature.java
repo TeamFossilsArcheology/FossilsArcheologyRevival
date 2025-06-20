@@ -11,7 +11,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
 /**
- * Custom implementation of the {@link net.minecraft.world.level.levelgen.feature.BaseDiskFeature} that has no options for height but
+ * Custom implementation of the {@link net.minecraft.world.level.levelgen.feature.DiskFeature} that has no options for height but
  * instead a boolean to enable a few additional random blocks
  */
 public class AshDiskFeature extends Feature<AshDiskConfiguration> {

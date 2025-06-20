@@ -9,6 +9,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Stream;
 
@@ -31,7 +32,7 @@ public class BelowSurfacePlacement extends PlacementModifier {
     }
 
     @Override
-    public Stream<BlockPos> getPositions(PlacementContext context, RandomSource random, BlockPos pos) {
+    public @NotNull Stream<BlockPos> getPositions(PlacementContext context, RandomSource random, BlockPos pos) {
         int j = pos.getZ();
         int i = pos.getX();
         int k = context.getHeight(this.heightmap, i, j) - (5 + random.nextInt(12));
@@ -42,7 +43,7 @@ public class BelowSurfacePlacement extends PlacementModifier {
     }
 
     @Override
-    public PlacementModifierType<?> type() {
+    public @NotNull PlacementModifierType<?> type() {
         return FOSSIL_HEIGHTMAP;
     }
 }

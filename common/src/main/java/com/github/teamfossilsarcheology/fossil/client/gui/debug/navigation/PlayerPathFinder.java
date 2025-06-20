@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class PlayerPathFinder {
     protected static final float FUDGING = 1.5f;
     protected final Node[] neighbors = new Node[32];
-    protected int maxVisitedNodes;
+    protected final int maxVisitedNodes;
     public final PlayerNodeEvaluator nodeEvaluator;
     protected final BinaryHeap openSet = new BinaryHeap();
     protected final List<Node> closedSet = new ArrayList<>();

@@ -92,7 +92,7 @@ public class Failuresaurus extends Monster implements IAnimatable {
         for (int i = 0; i < 4; i++) {
             int x = Mth.floor(position().x + (i % 2 * 2 - 1) * 0.025);
             int y = Mth.floor(position().y);
-            int z = Mth.floor(position().z + (i / 2 * 2 - 1) * 0.25);
+            int z = Mth.floor(position().z + ((i >> 1) * 2 - 1) * 0.25);
             BlockPos blockPos = new BlockPos(x, y, z);
             BlockState slime = ModBlocks.SLIME_TRAIL.get().defaultBlockState();
             if (level.getBlockState(blockPos).isAir() && slime.canSurvive(level, blockPos)) {

@@ -13,6 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 public class ToyScratchingPostItem extends Item {
     private final WoodType woodType;
@@ -23,7 +24,7 @@ public class ToyScratchingPostItem extends Item {
     }
 
     @Override
-    public InteractionResult useOn(UseOnContext context) {
+    public @NotNull InteractionResult useOn(UseOnContext context) {
         BlockPlaceContext context1 = new BlockPlaceContext(context);
         Level level = context.getLevel();
         BlockPos blockPos = context1.getClickedPos();

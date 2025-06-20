@@ -31,7 +31,7 @@ public class AmphibiousPathNavigation<T extends Prehistoric & SwimmingAnimal> ex
 
     @Override
     protected boolean canUpdatePath() {
-        return ((T) mob).isAmphibious() || super.canUpdatePath();
+        return ((SwimmingAnimal) mob).isAmphibious() || super.canUpdatePath();
     }
 
     @Override
@@ -75,7 +75,7 @@ public class AmphibiousPathNavigation<T extends Prehistoric & SwimmingAnimal> ex
 
     @Override
     public boolean isStableDestination(BlockPos pos) {
-        if (((T) mob).isAmphibious()) {
+        if (((SwimmingAnimal) mob).isAmphibious()) {
             return !level.isEmptyBlock(pos.below());
         }
         return super.isStableDestination(pos);

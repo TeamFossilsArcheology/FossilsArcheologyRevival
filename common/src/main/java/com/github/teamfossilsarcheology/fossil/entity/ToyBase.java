@@ -24,20 +24,20 @@ public abstract class ToyBase extends Entity {
         this.attackNoise = attackNoise;
     }
 
-    protected boolean skipAI() {
-        return true;
+    protected boolean tickAI() {
+        return false;
     }
 
     @Override
     public void baseTick() {
-        if (!skipAI()) {
+        if (tickAI()) {
             super.baseTick();
         }
     }
 
     @Override
     public void tick() {
-        if (!skipAI()) {
+        if (tickAI()) {
             super.tick();
         }
     }

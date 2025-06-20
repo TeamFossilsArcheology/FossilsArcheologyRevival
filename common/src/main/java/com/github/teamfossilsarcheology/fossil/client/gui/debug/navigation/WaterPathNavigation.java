@@ -203,10 +203,7 @@ public class WaterPathNavigation extends PlayerPathNavigation {
         }
         BlockPathTypes in = nodeEvaluator.getBlockPathType(level, x, minY, z);
         float malus = PathingDebug.getPathfindingMalus(in);
-        if (malus < 0.0F || malus >= 8.0F) {
-            return true;
-        }
-        return false;
+        return malus < 0.0F || malus >= 8.0F;
     }
 
     static float chooseLengthForAxis(Direction.Axis axis, Vec3 vec) {

@@ -1,6 +1,5 @@
 package com.github.teamfossilsarcheology.fossil.client;
 
-import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
@@ -30,7 +29,7 @@ public class DinopediaBioLoader extends ClientResourceLoader<Map<String, Map<Str
     private ImmutableMap<String, String> dinopediaTexts = ImmutableMap.of();
 
     public DinopediaBioLoader() {
-        super(FossilMod.MOD_ID, "dinopedia", ".txt");
+        super("dinopedia", ".txt");
     }
 
     @Override

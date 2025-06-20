@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 public class PermafrostBlock extends Block {
 
@@ -46,7 +47,7 @@ public class PermafrostBlock extends Block {
     }
 
     @Override
-    public SoundType getSoundType(BlockState p_49963_) {
+    public @NotNull SoundType getSoundType(BlockState blockState) {
         return SoundType.GRASS;
     }
 }

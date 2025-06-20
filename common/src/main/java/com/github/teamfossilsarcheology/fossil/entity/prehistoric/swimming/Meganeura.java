@@ -206,16 +206,6 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
     }
 
     @Override
-    public void absMoveTo(double x, double y, double z, float yRot, float xRot) {
-        if (Thread.currentThread().getStackTrace()[2].getClassName().contains("SpawnEntityPacket")) {
-            //TODO: Bug in Architectury. Is removed in 1.19
-            super.absMoveTo(x, y, z, xRot, yRot);
-        } else {
-            super.absMoveTo(x, y, z, yRot, xRot);
-        }
-    }
-
-    @Override
     protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos) {
 
     }

@@ -16,7 +16,7 @@ public class DebugMoveControl {
     protected double wantedY;
     protected double wantedZ;
     public double speedModifier = 1;
-    private Player player;
+    private final Player player;
     public Vec3 move = Vec3.ZERO;
     public DebugMoveControl(Player player) {
         this.player = player;
@@ -99,7 +99,7 @@ public class DebugMoveControl {
         WAIT,
         MOVE_TO,
         STRAFE,
-        JUMPING;
+        JUMPING
 
     }
 }

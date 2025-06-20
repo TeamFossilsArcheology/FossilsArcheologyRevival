@@ -217,8 +217,8 @@ public class ToyBall extends ToyBase {
     }
 
     @Override
-    protected boolean skipAI() {
-        return false;
+    protected boolean tickAI() {
+        return true;
     }
 
     @Override

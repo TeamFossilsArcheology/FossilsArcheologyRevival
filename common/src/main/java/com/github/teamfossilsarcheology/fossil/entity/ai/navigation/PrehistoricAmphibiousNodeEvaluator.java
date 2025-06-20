@@ -99,9 +99,10 @@ public class PrehistoricAmphibiousNodeEvaluator extends WalkNodeEvaluator {
         int y = node.y;
         int z = node.z;
         BlockPathTypes type = getCachedBlockType(mob, x, y, z);
+        int i;
         if (type == BlockPathTypes.WATER || type == BlockPathTypes.WATER_BORDER) {
             //SwimNodeEvaluator code
-            int i = 0;
+            i = 0;
             EnumMap<Direction, Node> map = Maps.newEnumMap(Direction.class);
             for (Direction direction : Direction.values()) {
                 Node faceNode = getNode(x + direction.getStepX(), y + direction.getStepY(), z + direction.getStepZ());
@@ -115,10 +116,9 @@ public class PrehistoricAmphibiousNodeEvaluator extends WalkNodeEvaluator {
                 if (!isDiagonalNodeValid(diagonalNode, map.get(direction), map.get(direction2))) continue;
                 nodes[i++] = diagonalNode;
             }
-            return i;
         } else {
             //AmphibiousNodeEvaluator code
-            int i = super.getNeighbors(nodes, node);
+            i = super.getNeighbors(nodes, node);
             BlockPathTypes typeAbove = getCachedBlockType(mob, x, y + 1, z);
             int j = mob.getPathfindingMalus(type) > 0 && typeAbove != BlockPathTypes.STICKY_HONEY ? Mth.floor(Math.max(1, mob.maxUpStep)) : 0;
             double floorLevel = getFloorLevel(new BlockPos(x, y, z));
@@ -130,8 +130,8 @@ public class PrehistoricAmphibiousNodeEvaluator extends WalkNodeEvaluator {
             if (isNeighborValid(nodeBelow, node) && type != BlockPathTypes.TRAPDOOR) {
                 nodes[i++] = nodeBelow;
             }
-            return i;
         }
+        return i;
     }
 
     protected boolean isNodeValid(@Nullable Node node) {

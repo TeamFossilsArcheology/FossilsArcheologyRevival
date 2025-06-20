@@ -357,6 +357,6 @@ public abstract class Instruction {
     }
 
     public enum Type {
-        MOVE_TO, FLY_TO, FLY_LAND, PLAY_ANIM, IDLE, TELEPORT_TO, LEAP_ATTACK, LEAP_LAND, ATTACH_TO, SLEEP;
+        MOVE_TO, FLY_TO, FLY_LAND, PLAY_ANIM, IDLE, TELEPORT_TO, LEAP_ATTACK, LEAP_LAND, ATTACH_TO, SLEEP
     }
 }

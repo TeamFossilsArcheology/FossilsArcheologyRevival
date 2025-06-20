@@ -25,7 +25,7 @@ public class SkeletonGeoModelLoader extends ClientResourceLoader<Map<ResourceLoc
     private Map<ResourceLocation, GeoModel> geoModels = ImmutableMap.of();
 
     public SkeletonGeoModelLoader() {
-        super(FossilMod.MOD_ID, "geo/entity", ".json");
+        super("geo/entity", ".json");
     }
 
     @Override

@@ -54,7 +54,7 @@ public class VolcanoConeFeature extends Feature<NoneFeatureConfiguration> {
                             Math.floor(center.getZ() + Math.cos(j) * extra + random.nextInt(2)));
                     if (updateLava) {
                         level.setBlock(lavaPos, lava, 3);
-                        Direction.Plane.HORIZONTAL.stream().map(direction -> lavaPos.relative(direction))
+                        Direction.Plane.HORIZONTAL.stream().map(lavaPos::relative)
                                 .filter(fixPos -> level.getBlockState(fixPos).isAir())
                                 .forEach(fixPos -> level.setBlock(lavaPos, rock, 18));
                     } else {

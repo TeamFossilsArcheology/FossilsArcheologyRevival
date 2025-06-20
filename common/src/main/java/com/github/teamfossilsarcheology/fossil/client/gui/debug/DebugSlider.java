@@ -10,12 +10,12 @@ import java.text.DecimalFormat;
 public class DebugSlider extends AbstractSliderButton {
 
     private final DecimalFormat format;
-    protected Component prefix;
-    protected Component suffix;
+    private final Component prefix;
+    private final Component suffix;
+    protected final double stepSize;
+    protected final boolean drawString;
     protected double minValue;
     protected double maxValue;
-    protected double stepSize;
-    protected boolean drawString;
 
     DebugSlider(int x, int y, int width, int height, Component prefix, Component suffix, double minValue, double maxValue, double currentValue,
                 double stepSize, int precision, boolean drawString) {

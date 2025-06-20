@@ -25,9 +25,8 @@ public class NautilusMeatItem extends MeatItem {
         if (itemStack.isEmpty()) {
             return new ItemStack(Items.NAUTILUS_SHELL);
         } else {
-            if (livingEntity instanceof Player && !((Player) livingEntity).getAbilities().instabuild) {
+            if (livingEntity instanceof Player player && !player.getAbilities().instabuild) {
                 ItemStack shell = new ItemStack(Items.NAUTILUS_SHELL);
-                Player player = (Player) livingEntity;
                 if (!player.getInventory().add(shell)) {
                     player.drop(shell, false);
                 }

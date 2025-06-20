@@ -46,7 +46,7 @@ public class PlayerPathNavigation {
      */
     private int reachRange;
     protected float maxVisitedNodesMultiplier = 1.0f;
-    private PlayerPathFinder pathFinder;
+    private final PlayerPathFinder pathFinder;
     private boolean isStuck;
 
     //Render

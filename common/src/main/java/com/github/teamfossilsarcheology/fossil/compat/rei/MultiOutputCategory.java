@@ -50,9 +50,9 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
 
 
     private static class ScrollableSlotsWidget extends WidgetWithBounds {
-        private static float defaultSpace = 25;
+        private static final float DEFAULT_SPACE = 25;
         private static final DecimalFormat FORMAT = new DecimalFormat("#.#'%'");
-        private final Rectangle bounds;
+        private final Rectangle boundsRect;
         private final Map<Slot, Double> probabilities;
         private final List<Slot> widgets;
         private final ScrollingContainer scrolling = new ScrollingContainer() {
@@ -65,7 +65,7 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
 
             @Override
             public int getMaxScrollHeight() {
-                double numPerRow = Math.floor(bounds.width / defaultSpace);
+                double numPerRow = Math.floor(boundsRect.width / DEFAULT_SPACE);
                 return Mth.ceil(widgets.size() / numPerRow) * 24 + 4;
             }
 
@@ -77,9 +77,9 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
                     int actualHeight = bounds.height;
                     if (mouseY >= bounds.y && mouseY <= bounds.getMaxY()) {
                         double maxScroll = Math.max(1, getMaxScroll());
-                        double int_3 = Mth.clamp((double)(actualHeight * actualHeight) / (double)height, 32.0, (actualHeight - 8));
-                        double double_6 = Math.max(1.0, maxScroll / (actualHeight - int_3));
-                        float to = Mth.clamp((float)(scrollAmount() + dy * double_6), 0.0F, getMaxScroll());
+                        double int3 = Mth.clamp((double)(actualHeight * actualHeight) / (double)height, 32.0, (actualHeight - 8));
+                        double double6 = Math.max(1.0, maxScroll / (actualHeight - int3));
+                        float to = Mth.clamp((float)(scrollAmount() + dy * double6), 0.0F, getMaxScroll());
                         if (snapToRows) {
                             double nearestRow = Math.round(to / rowSize) * rowSize;
                             scrollTo(nearestRow, false);
@@ -100,7 +100,7 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
                     return false;
                 } else {
                     //Fix cloth config scrolling
-                    int height = getMaxScroll() + bounds.height;
+                    int height = getMaxScroll() + boundsRect.height;
                     Rectangle bounds = getBounds();
                     int actualHeight = bounds.height;
                     if (height > actualHeight && mouseY >= bounds.y && mouseY <= bounds.getMaxY()) {
@@ -118,7 +118,7 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
         };
 
         public ScrollableSlotsWidget(Rectangle bounds, List<MultiOutputDisplay.WeightedItem> outputs) {
-            this.bounds = Objects.requireNonNull(bounds);
+            this.boundsRect = Objects.requireNonNull(bounds);
             this.probabilities = new Object2DoubleOpenHashMap<>();
             this.widgets = new ArrayList<>();
             for (MultiOutputDisplay.WeightedItem weightedItem : outputs) {
@@ -139,7 +139,7 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
 
         @Override
         public Rectangle getBounds() {
-            return bounds;
+            return boundsRect;
         }
 
         @Override
@@ -158,7 +158,7 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
 
         private double calcActualSpace(Rectangle innerBounds, double numPerRow) {
             if (widgets.size() <= numPerRow) {
-                return defaultSpace;
+                return DEFAULT_SPACE;
             }
             return Math.floor(innerBounds.width / numPerRow);
         }
@@ -168,7 +168,7 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
             scrolling.updatePosition(delta);
             Rectangle innerBounds = scrolling.getScissorBounds();
             try (CloseableScissors ignored = scissor(poseStack, innerBounds)) {
-                double numPerRow = Math.floor(innerBounds.width / defaultSpace);
+                double numPerRow = Math.floor(innerBounds.width / DEFAULT_SPACE);
                 double actualSpace = calcActualSpace(innerBounds, numPerRow);
                 double xOffset = (actualSpace - 18f) / 2;
                 for (int y = 0; y < Math.ceil(widgets.size() / numPerRow); y++) {
@@ -177,7 +177,7 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
                         if (widgets.size() <= index)
                             break;
                         Slot widget = widgets.get(index);
-                        widget.getBounds().setLocation(bounds.x + xOffset + x * actualSpace, bounds.y + 1 + y * defaultSpace - scrolling.scrollAmountInt());
+                        widget.getBounds().setLocation(boundsRect.x + xOffset + x * actualSpace, boundsRect.y + 1 + y * DEFAULT_SPACE - scrolling.scrollAmountInt());
                         widget.render(poseStack, mouseX, mouseY, delta);
                         renderProbability(poseStack, Minecraft.getInstance().font, probabilities.get(widget), widget.getBounds().x, widget.getBounds().y);
                     }

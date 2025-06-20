@@ -25,6 +25,13 @@ import java.util.Objects;
 
 public class InstructionsList extends AbstractContainerEventHandler implements Widget {
     static final ResourceLocation ICON_OVERLAY_LOCATION = new ResourceLocation("textures/gui/resource_packs.png");
+    private static final int WIDTH = 200;
+    private static final int ITEM_HEIGHT = 20;
+    private static final int Y_0 = 5;
+    private static final int Y_1 = Y_0 + 295;
+    private static final int X_0 = 5;
+    private static final int X_1 = X_0 + WIDTH;
+    private static final int ROW_WIDTH = X_1 - X_0 - 10;
     private final List<InstructionEntry> children = new ArrayList<>();
     private final List<Instruction> instructions;
     private final Minecraft minecraft;
@@ -32,13 +39,6 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
     private InstructionEntry selected;
     @Nullable
     private InstructionEntry hovered;
-    protected int width = 200;
-    protected int y0 = 5;
-    protected int y1 = y0 + 300;
-    protected int x0 = 5;
-    protected int x1 = x0 + width;
-    protected int itemHeight = 20;
-    protected int rowWidth = x1 - x0 - 10;
     private final Button removeButton;
     private final Button upButton;
     private final Button downButton;
@@ -55,7 +55,7 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
         this.minecraft = minecraft;
         this.instructions = pair.instructions();
         instructions.forEach(instruction -> children.add(new InstructionEntry(instruction, minecraft)));
-        removeButton = new Button(x0, y1 + 5, 70, 20, Component.literal("Remove item"), button -> {
+        removeButton = new Button(X_0, Y_1 + 5, 70, 20, Component.literal("Remove item"), button -> {
             if (selected != null) {
                 instructions.remove(children.indexOf(selected));
                 children.remove(selected);
@@ -65,7 +65,7 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
                 }
             }
         });
-        upButton = new Button(x0 + 110, y1 + 5, 20, 20, Component.literal(""), button -> {
+        upButton = new Button(X_0 + 110, Y_1 + 5, 20, 20, Component.literal(""), button -> {
             int i = children.indexOf(selected);
             if (i != 0) {
                 Collections.swap(children, i, i - 1);
@@ -82,7 +82,7 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
             }
         };
-        downButton = new Button(x0 + 80, y1 + 5, 20, 20, Component.literal(""), button -> {
+        downButton = new Button(X_0 + 80, Y_1 + 5, 20, 20, Component.literal(""), button -> {
             int i = children.indexOf(selected);
             if (i != children.size() - 1) {
                 Collections.swap(children, i, i + 1);
@@ -148,8 +148,8 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
                 if (compare.x < getRowLeft()) {
                     compare = pair.getSecond().add(dragMoveX, dragMoveY, 0);
                 }
-                InstructionEntry above = getEntryAtPosition(compare.x, compare.y - itemHeight / 2d);
-                InstructionEntry below = getEntryAtPosition(compare.x, compare.y + itemHeight / 2d);
+                InstructionEntry above = getEntryAtPosition(compare.x, compare.y - ITEM_HEIGHT / 2d);
+                InstructionEntry below = getEntryAtPosition(compare.x, compare.y + ITEM_HEIGHT / 2d);
                 if (above == null && below != null) {
                     dragIndex = 0;
                 } else if (below == null && above != null) {
@@ -171,7 +171,7 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
     }
 
     private int getRowLeft() {
-        return x0 + width / 2 - rowWidth / 2;
+        return X_0 + WIDTH / 2 - ROW_WIDTH / 2;
     }
 
     @Override
@@ -199,28 +199,27 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
 
     @Override
     public boolean isMouseOver(double mouseX, double mouseY) {
-        return mouseY >= y0 && mouseY <= y1 && mouseX >= x0 && mouseX <= x1;
+        return mouseY >= Y_0 && mouseY <= Y_1 && mouseX >= X_0 && mouseX <= X_1;
     }
 
     private Pair<Vec3, Vec3> getPositionOfEntry(InstructionEntry entry) {
         int left = getRowLeft();
-        int right = left + rowWidth;
-        int centerY = children.indexOf(entry) * itemHeight + y0 + 2 + itemHeight / 2;
+        int right = left + ROW_WIDTH;
+        int centerY = children.indexOf(entry) * ITEM_HEIGHT + Y_0 + 2 + ITEM_HEIGHT / 2;
         return new Pair<>(new Vec3(left, centerY, 0), new Vec3(right, centerY, 0));
     }
 
     @Nullable
     private InstructionEntry getEntryAtPosition(double mouseX, double mouseY) {
         int left = getRowLeft();
-        int right = left + rowWidth;
-        int m = Mth.floor(mouseY - y0) - 2;
-        int n = m / itemHeight;
+        int right = left + ROW_WIDTH;
+        int m = Mth.floor(mouseY - Y_0) - 2;
+        int n = m / ITEM_HEIGHT;
         return mouseX >= left && mouseX <= right && n >= 0 && m >= 0 && n < children.size() ? (InstructionEntry) children().get(n) : null;
     }
 
     @Override
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        y1 = Math.max(300, 300);
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferBuilder = tesselator.getBuilder();
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
@@ -229,15 +228,15 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
         RenderSystem.setShaderTexture(0, GuiComponent.BACKGROUND_LOCATION);
         RenderSystem.setShaderColor(1, 1, 1, 1);
         bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-        bufferBuilder.vertex(x0, y1, 0).uv(x0 / 32f, y1 / 32f).color(32, 32, 32, 255).endVertex();
-        bufferBuilder.vertex(x1, y1, 0).uv(x1 / 32f, y1 / 32f).color(32, 32, 32, 255).endVertex();
-        bufferBuilder.vertex(x1, y0, 0).uv(x1 / 32f, y0 / 32f).color(32, 32, 32, 255).endVertex();
-        bufferBuilder.vertex(x0, y0, 0).uv(x0 / 32f, y0 / 32f).color(32, 32, 32, 255).endVertex();
+        bufferBuilder.vertex(X_0, Y_1, 0).uv(X_0 / 32f, Y_1 / 32f).color(32, 32, 32, 255).endVertex();
+        bufferBuilder.vertex(X_1, Y_1, 0).uv(X_1 / 32f, Y_1 / 32f).color(32, 32, 32, 255).endVertex();
+        bufferBuilder.vertex(X_1, Y_0, 0).uv(X_1 / 32f, Y_0 / 32f).color(32, 32, 32, 255).endVertex();
+        bufferBuilder.vertex(X_0, Y_0, 0).uv(X_0 / 32f, Y_0 / 32f).color(32, 32, 32, 255).endVertex();
         tesselator.end();
         //}
 
-        int rowLeft = x0 + width / 2 - rowWidth / 2 + 2;
-        renderList(poseStack, rowLeft, y0 + 4, mouseX, mouseY, partialTick);
+        int rowLeft = X_0 + WIDTH / 2 - ROW_WIDTH / 2 + 2;
+        renderList(poseStack, rowLeft, Y_0 + 4, mouseX, mouseY, partialTick);
         removeButton.render(poseStack, mouseX, mouseY, partialTick);
         upButton.render(poseStack, mouseX, mouseY, partialTick);
         downButton.render(poseStack, mouseX, mouseY, partialTick);
@@ -252,12 +251,12 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
         BufferBuilder bufferBuilder = tesselator.getBuilder();
 
         int rowLeft = getRowLeft();
-        int rowRight = rowLeft + rowWidth;
-        int rowHeight = itemHeight - 4;
+        int rowRight = rowLeft + ROW_WIDTH;
+        int rowHeight = ITEM_HEIGHT - 4;
         for (int i = 0; i < itemCount; ++i) {
-            int rowTop = y + i * itemHeight;
-            int rowBottom = rowTop + itemHeight;
-            if (rowBottom >= y0 && rowTop <= y1) {
+            int rowTop = y + i * ITEM_HEIGHT;
+            int rowBottom = rowTop + ITEM_HEIGHT;
+            if (rowBottom >= Y_0 && rowTop <= Y_1) {
                 InstructionEntry entry = children.get(i);
                 if (Objects.equals(selected, entry)) {
                     renderEntry(tesselator, bufferBuilder, rowLeft, rowRight, rowTop, rowHeight);
@@ -265,9 +264,9 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
                 entry.render(poseStack, rowTop, rowLeft, Objects.equals(hovered, entry) && dragging == null);
 
                 if (Objects.equals(dragging, entry)) {
-                    int dragLeft = (int) ((dragStartX + dragMoveX) + width / 2d - rowWidth / 2d);
-                    int dragRight = (int) ((dragStartX + dragMoveX) + width / 2d + rowWidth / 2d);
-                    int dragTop = (int) (rowTop + ((dragStartY + dragMoveY) - y0));
+                    int dragLeft = (int) ((dragStartX + dragMoveX) + WIDTH / 2d - ROW_WIDTH / 2d);
+                    int dragRight = (int) ((dragStartX + dragMoveX) + WIDTH / 2d + ROW_WIDTH / 2d);
+                    int dragTop = (int) (rowTop + ((dragStartY + dragMoveY) - Y_0));
                     renderEntry(tesselator, bufferBuilder, dragLeft, dragRight, dragTop, rowHeight);
                     entry.render(poseStack, dragTop, dragLeft, true);
                 }
@@ -276,7 +275,7 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
         if (dragging != null && dragIndex != -1) {
             int arrowLeft = rowLeft - 2;
             int arrowHeight = rowHeight / 2;
-            int arrowTop = y + dragIndex * itemHeight - arrowHeight;
+            int arrowTop = y + dragIndex * ITEM_HEIGHT - arrowHeight;
             RenderSystem.disableTexture();
             RenderSystem.setShader(GameRenderer::getPositionShader);
             if (dragIndex == children.indexOf(dragging) + (dragOffset ? 1 : 0)) {
@@ -335,8 +334,8 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
         public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
             if (button == 0) {
                 if (InstructionsList.this.dragging == null) {
-                    InstructionsList.this.dragStartX = x0;
-                    InstructionsList.this.dragStartY = y0;
+                    InstructionsList.this.dragStartX = X_0;
+                    InstructionsList.this.dragStartY = Y_0;
                     InstructionsList.this.dragMoveX = 0;
                     InstructionsList.this.dragMoveY = 0;
                 }

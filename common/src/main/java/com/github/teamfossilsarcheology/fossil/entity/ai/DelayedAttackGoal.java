@@ -88,10 +88,7 @@ public class DelayedAttackGoal<T extends Prehistoric> extends Goal {
         if (!mob.isWithinRestriction(target.blockPosition())) {
             return false;
         }
-        if (!CAN_ATTACK_TARGET.test(target)) {
-            return false;
-        }
-        return true;
+        return CAN_ATTACK_TARGET.test(target);
     }
 
     @Override

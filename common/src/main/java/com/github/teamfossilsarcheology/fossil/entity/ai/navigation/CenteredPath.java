@@ -5,6 +5,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class CenteredPath extends Path {
     }
 
     @Override
-    public Vec3 getEntityPosAtNode(Entity entity, int index) {
+    public @NotNull Vec3 getEntityPosAtNode(Entity entity, int index) {
         Node node = getNode(index);
         return new Vec3(node.x + 0.5, node.y, node.z + 0.5);
     }

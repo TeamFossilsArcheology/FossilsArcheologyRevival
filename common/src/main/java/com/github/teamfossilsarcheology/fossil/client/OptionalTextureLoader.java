@@ -1,6 +1,5 @@
 package com.github.teamfossilsarcheology.fossil.client;
 
-import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceLocation;
@@ -17,7 +16,7 @@ public class OptionalTextureLoader extends ClientResourceLoader<Pair<Set<String>
     private final Set<String> teenTextures = new HashSet<>();
 
     public OptionalTextureLoader() {
-        super(FossilMod.MOD_ID, "textures/entity", ".png");
+        super("textures/entity", ".png");
     }
 
 

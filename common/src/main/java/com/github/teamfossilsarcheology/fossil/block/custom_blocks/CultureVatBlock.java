@@ -143,11 +143,6 @@ public class CultureVatBlock extends CustomEntityBlock {
     }
 
     @Override
-    public @NotNull RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
-    }
-
-    @Override
     public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }

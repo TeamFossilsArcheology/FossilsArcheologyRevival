@@ -458,7 +458,7 @@ public class DinopediaScreen extends Screen {
         int left = 0;
         int offset = currentPage - 1;
         List<String> currentLines = currentBio.stream().skip(offset * 42L).limit(42).toList();
-        ;
+
         for (int i = 0; i < currentLines.size(); i++) {
             if (i <= 20) {//1344, 32 per line
                 font.draw(poseStack, currentLines.get(i), getScaledX(true, xSize / 2, scale), (topPos + 10 + font.lineHeight * ++left) / scale, 0x9D7E67);

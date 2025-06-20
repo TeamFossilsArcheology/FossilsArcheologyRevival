@@ -21,8 +21,8 @@ import net.minecraft.util.Mth;
 import java.util.stream.IntStream;
 
 public class AnuBarrierRenderer implements BlockEntityRenderer<AnuBarrierBlockEntity> {
-    private final float textureWidth = 16;
-    private final float textureHeight = 16;
+    private static final float TEXTURE_WIDTH = 16;
+    private static final float TEXTURE_HEIGHT = 16;
     private static final ResourceLocation[] LOCATIONS = IntStream.range(1, 32)
             .mapToObj(idx -> FossilMod.location("textures/block/anu_portal/anu_portal_" + idx + ".png"))
             .toArray(ResourceLocation[]::new);
@@ -56,7 +56,7 @@ public class AnuBarrierRenderer implements BlockEntityRenderer<AnuBarrierBlockEn
             renderRectangle(poseStack, vertexConsumer, maxWidth, 0, maxHeight, packedLight);
         } else if (blockEntity.getState() != AnuBarrierBlockEntity.STATE_DISABLED) {
             //This algorithm renders a growing/shrinking circle
-            float step = Mth.lerp(blockEntity.getBarrierTimer() / AnuBarrierBlockEntity.duration, 0, maxHeight);
+            float step = Mth.lerp(blockEntity.getBarrierTimer() / AnuBarrierBlockEntity.DURATION, 0, maxHeight);
             int rowWidth = (int) (2 + step * 2);
             int colCount = rowWidth / 2;
             int x = colCount;
@@ -92,11 +92,11 @@ public class AnuBarrierRenderer implements BlockEntityRenderer<AnuBarrierBlockEn
         float maxY = y + height;
         //Offset the texture horizontally by half the width
         float offset = -Mth.floor(width / 2f);
-        float minTexX = (width + offset) / textureWidth;
-        float maxTexX = offset / textureWidth;
+        float minTexX = (width + offset) / TEXTURE_WIDTH;
+        float maxTexX = offset / TEXTURE_WIDTH;
         //Offset the texture vertically depending on the height and y position in the circle
-        float minTexY = (textureHeight - y) / textureHeight;
-        float maxTexY = minTexY - height / textureHeight;
+        float minTexY = (TEXTURE_HEIGHT - y) / TEXTURE_HEIGHT;
+        float maxTexY = minTexY - height / TEXTURE_HEIGHT;
         //Front
         vertex(matrix4f, matrix3f, vertexConsumer, maxX, y, maxTexX, minTexY, packedLight, false);
         vertex(matrix4f, matrix3f, vertexConsumer, minX, y, minTexX, minTexY, packedLight, false);

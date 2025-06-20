@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client;
 
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -12,8 +13,8 @@ public abstract class ClientResourceLoader<T> extends SimplePreparableReloadList
     protected final String directory;
     protected final String suffix;
 
-    protected ClientResourceLoader(String modId, String directory, String suffix) {
-        this.modId = modId;
+    protected ClientResourceLoader(String directory, String suffix) {
+        this.modId = FossilMod.MOD_ID;
         this.directory = directory;
         this.suffix = suffix;
     }

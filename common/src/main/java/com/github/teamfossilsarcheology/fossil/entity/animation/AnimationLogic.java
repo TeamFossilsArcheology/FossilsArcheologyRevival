@@ -520,7 +520,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         private final double endTick;
         private final AnimationCategory category;
         private boolean forced;
-        private double transitionLength = 5;
+        private double transitionLength;
         private double speed = 1;
         private boolean loop;
         private boolean keepActive;

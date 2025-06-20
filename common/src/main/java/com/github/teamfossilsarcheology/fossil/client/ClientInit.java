@@ -67,9 +67,9 @@ public class ClientInit {
     public static KeyMapping debugReverseKey;
     public static KeyMapping debugHelpKey;
 
-    public static KeyMapping flyUpKey = new KeyMapping("key.fossil.fly_up", InputConstants.Type.KEYSYM, InputConstants.KEY_SPACE,
+    public static final KeyMapping flyUpKey = new KeyMapping("key.fossil.fly_up", InputConstants.Type.KEYSYM, InputConstants.KEY_SPACE,
             "category.fossil.controls");
-    public static KeyMapping flyDownKey = new KeyMapping("key.fossil.fly_down", InputConstants.Type.KEYSYM, InputConstants.KEY_LALT,
+    public static final KeyMapping flyDownKey = new KeyMapping("key.fossil.fly_down", InputConstants.Type.KEYSYM, InputConstants.KEY_LALT,
             "category.fossil.controls");
 
     private static boolean jumpLastTick;
