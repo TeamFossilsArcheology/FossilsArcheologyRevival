@@ -2,12 +2,15 @@ package com.github.teamfossilsarcheology.fossil.entity.ai.navigation;
 
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.Path;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Set;
+
 public class PrehistoricWallClimberNavigation extends PrehistoricPathNavigation {
+    //Remembers target even if no path can be found and then walks towards it.
+    //The idea is that it can climb over walls that way but this does also mean that it will ignore danger like spiders do
     @Nullable
     private BlockPos pathToPosition;
 
@@ -15,25 +18,19 @@ public class PrehistoricWallClimberNavigation extends PrehistoricPathNavigation 
         super(mob, level);
     }
 
-    public Path createPath(BlockPos pos, int accuracy) {
-        pathToPosition = pos;
-        return super.createPath(pos, accuracy);
+    @Override
+    protected @Nullable Path createPath(Set<BlockPos> targets, int regionOffset, boolean offsetUpward, int accuracy, float followRange) {
+        targets.stream().findFirst().ifPresent(blockPos -> pathToPosition = blockPos);
+        return super.createPath(targets, regionOffset, offsetUpward, accuracy, followRange);
     }
 
-    public Path createPath(Entity entity, int accuracy) {
-        pathToPosition = entity.blockPosition();
-        return super.createPath(entity, accuracy);
-    }
-
-    public boolean moveTo(Entity entity, double speed) {
-        Path path = createPath(entity, 0);
-        if (path != null) {
-            return moveTo(path, speed);
-        } else {
-            pathToPosition = entity.blockPosition();
-            speedModifier = speed;
-            return true;
+    @Override
+    public boolean moveTo(@Nullable Path pathentity, double speed) {
+        if (pathentity != null && pathentity.getEndNode() != null) {
+            //Override old pathToPosition before new path gets trimmed
+            pathToPosition = pathentity.getEndNode().asBlockPos();
         }
+        return super.moveTo(pathentity, speed);
     }
 
     public void tick() {
