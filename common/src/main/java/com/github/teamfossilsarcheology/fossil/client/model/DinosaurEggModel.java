@@ -36,7 +36,7 @@ public class DinosaurEggModel extends EntityModel<DinosaurEgg> {
         egg1.yRot = defaultYRot;
         egg1.zRot = defaultZRot;
         egg1.y = defaultY;
-        if (entity.getHatchingTime() > entity.getTotalHatchingTime() * 0.9) {
+        if (!entity.isTooCold() && entity.getHatchingTime() > entity.getTotalHatchingTime() * 0.9) {
             egg1.yRot += calcRotation(0.3F, 0.5F, false, 0.25F, 0, ageInTicks, 1);
             egg1.zRot += calcRotation(0.3F, 0.5F, true, 0.25F, 0, ageInTicks, 1);
             egg1.y += calcBob(0.3F, 0.9F, true, ageInTicks, 1);
