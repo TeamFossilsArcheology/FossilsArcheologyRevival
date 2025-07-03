@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.item;
 
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.EntityInfo;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class EggItem extends PrehistoricEntityItem {
@@ -23,12 +25,32 @@ public abstract class EggItem extends PrehistoricEntityItem {
         super(new Properties().stacksTo(8), info, category);
     }
 
-    protected abstract boolean spawnMob(ServerPlayer player, ServerLevel level, double x, double y, double z);
+    /**
+     * @param aquatic if the position is in water
+     * @return if the entity has been spawned
+     */
+    protected abstract boolean spawnMob(ServerPlayer player, ServerLevel level, double x, double y, double z, boolean aquatic);
 
     @Override
     public @NotNull InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
-        BlockPos offset = context.getClickedPos().relative(context.getClickedFace());
+        if (level.isClientSide) {
+            return InteractionResult.SUCCESS;
+        }
+        Vec3 clickedLocation = context.getClickLocation();
+        Direction direction = context.getClickedFace();
+        if (direction != Direction.UP) {
+            clickedLocation = clickedLocation.add(Vec3.atLowerCornerOf(direction.getNormal()).multiply(0.5, 1, 0.5));
+        }
+        BlockPos clickedPos = new BlockPos(clickedLocation);
+        ServerPlayer player = (ServerPlayer) context.getPlayer();
+        if (spawnMob(player, (ServerLevel) level, clickedLocation.x, clickedLocation.y, clickedLocation.z, level.getBlockState(clickedPos).getBlock() instanceof LiquidBlock)) {
+            if (!player.getAbilities().instabuild) {
+                context.getItemInHand().shrink(1);
+            }
+            player.awardStat(Stats.ITEM_USED.get(this));
+            return InteractionResult.CONSUME;
+        }
         return super.useOn(context);
     }
 
@@ -49,7 +71,8 @@ public abstract class EggItem extends PrehistoricEntityItem {
         if (!level.mayInteract(player, blockPos) || !player.mayUseItemAt(blockPos, hitResult.getDirection(), itemStack)) {
             return InteractionResultHolder.fail(itemStack);
         }
-        if (spawnMob((ServerPlayer) player, (ServerLevel) level, blockPos.getX(), blockPos.getY(), blockPos.getZ())) {
+        Vec3 location = hitResult.getLocation();
+        if (spawnMob((ServerPlayer) player, (ServerLevel) level, location.x, blockPos.getY(), location.z, true)) {
             if (!player.getAbilities().instabuild) {
                 itemStack.shrink(1);
             }

@@ -16,7 +16,7 @@ public class DinoEggItem extends EggItem {
     }
 
     @Override
-    protected boolean spawnMob(ServerPlayer player, ServerLevel level, double x, double y, double z) {
+    protected boolean spawnMob(ServerPlayer player, ServerLevel level, double x, double y, double z, boolean aquatic) {
         if (player == null) {
             return false;
         }
@@ -24,6 +24,9 @@ public class DinoEggItem extends EggItem {
             return true;
         }
         PrehistoricEntityInfo prehistoricInfo = ((PrehistoricEntityInfo) info);
+        if (aquatic && !prehistoricInfo.isViviparousAquatic()) {
+            return false;
+        }
         if (!prehistoricInfo.isViviparousAquatic()) {
             DinosaurEgg egg = ModEntities.DINOSAUR_EGG.get().create(level);
             if (egg == null) {
