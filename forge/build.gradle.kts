@@ -9,11 +9,9 @@ plugins {
     id("net.darkhax.curseforgegradle")
 }
 
-
 repositories {
     maven("https://modmaven.dev/")
 }
-
 
 architectury {
     platformSetupLoomIde()
