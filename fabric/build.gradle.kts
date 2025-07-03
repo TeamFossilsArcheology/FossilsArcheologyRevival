@@ -131,6 +131,7 @@ dependencies {
     modRuntimeOnly("maven.modrinth:auth-me:3.1.0")
     modRuntimeOnly("curse.maven:hugestructureblocks-474114:3647042")
     modRuntimeOnly("curse.maven:worldedit-225608:3697298")
+    modRuntimeOnly("curse.maven:cyanide-543444:3811794")
     modRuntimeOnly("maven.modrinth:smoothboot-fabric:1.18.2-1.7.0")
     modRuntimeOnly("curse.maven:commandstructures-565119:3733097")
     modRuntimeOnly("maven.modrinth:betterf3:qUyRV6XT")

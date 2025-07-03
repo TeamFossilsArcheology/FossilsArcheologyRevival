@@ -105,6 +105,7 @@ dependencies {
     modImplementation("com.tterrag.registrate:Registrate:${registrateVersion}")
 
     //modRuntimeOnly("curse.maven:configured-457570:4462832")
+    //modRuntimeOnly("curse.maven:cyanide-541676:3811793")
 }
 
 loom {
