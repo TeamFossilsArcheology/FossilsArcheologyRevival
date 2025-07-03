@@ -1,12 +1,38 @@
 package com.github.teamfossilsarcheology.fossil.forge.compat.farmers;
 
+import com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.util.AddonConstants;
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
+import net.minecraftforge.fml.ModList;
 import vectorwing.farmersdelight.common.block.PieBlock;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
 import vectorwing.farmersdelight.common.registry.ModItems;
 
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.AlexDelightCompat.registerAlexDelightFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.ArgentinaDelightCompat.registerArgentinaDelightFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.BrewinAndChewinCompat.registerBrewinAndChewinFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.ButcherDelightFoodCompat.registerButcherDelightFoodFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.CasualnessDelightCompat.registerCasualnessDelightFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.CoffeeDelightCompat.registerCoffeeDelightFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.CornDelightCompat.registerCornDelightFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.CrabberDelightCompat.registerCrabberDelightFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.CulturalDelightCompat.registerCulturalDelightFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.DelightfulCompat.registerDelightfulFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.EndDelightCompat.registerEndDelightFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.EnderDelightCompat.registerEnderDelightFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.FarmerRespiteCompat.registerFarmerRespiteFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.FestiveDelightCompat.registerFestiveDelightFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.HoneyExpansionCompat.registerHoneyExpansionFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.ItalianDelightCompat.registerItalianDelightFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.LargeMealsCompat.registerLargeMealsFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.MinerDelightCompat.registerMinerDelightFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.NetherDelightCompat.registerNetherDelightFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.OceanDelightCompat.registerOceanDelightFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.PineappleDelightCompat.registerPineappleDelightFoodMappings;
+import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.SeedDelightCompat.registerSeedDelightFoodMappings;
+
 public class FarmersDelightCompat {
     public static void registerFoodMappings() {
+        ModList mods = ModList.get();
         FoodMappings.addPlant(ModItems.CABBAGE.get());
         FoodMappings.addPlant(ModItems.TOMATO.get());
         FoodMappings.addPlant(ModItems.ONION.get());
@@ -89,9 +115,98 @@ public class FarmersDelightCompat {
         FoodMappings.addFish(ModItems.GRILLED_SALMON.get());
         FoodMappings.addFish(ModItems.COD_ROLL.get());
         FoodMappings.addFish(ModItems.COD_ROLL.get());
+
+        registerAddonFoodMappings();
     }
 
-    private static int getPieValue(PieBlock block) {
+    public static void registerAddonFoodMappings(){
+        //We cycle through each addon and check if it is loaded
+        for(String addonId : AddonConstants.SUPPORTED_ADDONS){
+            if(!ModList.get().isLoaded(addonId)){
+                continue;
+            }
+            if(addonId.equals("delightful")){
+                registerDelightfulFoodMappings( //Delightful supports some more mods.
+                        ModList.get().isLoaded("byg"), //Biomes you'll go
+                        ModList.get().isLoaded("ars_nouveau") //Ars Nouveau
+                );
+                continue;
+            }
+            registerFoodMappingsByAddonId(addonId);
+        }
+    }
+
+    public static void registerFoodMappingsByAddonId(String addonId){
+        switch (addonId) {
+            //We have to have a unique class for each food mapping because if the class uses something from an unloaded mod it and we call one of its methods it causes issues in the FML Common Setup
+            case "oceansdelight" -> {
+                registerOceanDelightFoodMappings();
+            }
+            case "nethersdelight" -> {
+                registerNetherDelightFoodMappings();
+            }
+            case "endersdelight" -> {
+                registerEnderDelightFoodMappings();
+            }
+            case "ends_delight" -> {
+                registerEndDelightFoodMappings();
+            }
+            case "crabbersdelight" -> {
+                registerCrabberDelightFoodMappings();
+            }
+            case "miners_delight" -> {
+                registerMinerDelightFoodMappings();
+            }
+            case "corn_delight" -> {
+                registerCornDelightFoodMappings();
+            }
+            case "culturaldelights" -> {
+                registerCulturalDelightFoodMappings();
+            }
+            case "pineapple_delight" -> {
+                registerPineappleDelightFoodMappings();
+            }
+            case "largemeals" -> {
+                registerLargeMealsFoodMappings();
+            }
+            case "festive_delight" -> {
+                registerFestiveDelightFoodMappings();
+            }
+            case "butchersdelightfoods" -> {
+                registerButcherDelightFoodFoodMappings();
+            }
+            case "coffee_delight" -> {
+                registerCoffeeDelightFoodMappings();
+            }
+            case "casualness_delight" -> {
+                registerCasualnessDelightFoodMappings();
+            }
+            case "italian_delight" -> {
+                registerItalianDelightFoodMappings();
+            }
+            case "seeddelight" -> {
+                registerSeedDelightFoodMappings();
+            }
+            case "argentinas_delight" -> {
+                registerArgentinaDelightFoodMappings();
+            }
+            case "honeyexpansion" -> {
+                registerHoneyExpansionFoodMappings();
+            }
+            case "brewinandchewin" -> {
+                registerBrewinAndChewinFoodMappings();
+            }
+            case "alexsdelight" -> {
+                registerAlexDelightFoodMappings();
+            }
+            case "farmersrespite" -> {
+                registerFarmerRespiteFoodMappings();
+            }
+        }
+    }
+
+    public static int getPieValue(PieBlock block) {
         return block.getPieSliceItem().getItem().getFoodProperties().getNutrition() * block.getMaxBites();
     }
+
 }

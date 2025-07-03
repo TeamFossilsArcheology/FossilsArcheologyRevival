@@ -66,7 +66,37 @@ dependencies {
     modImplementation("maven.modrinth:jade:L2um3gq1")
     modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
     modCompileOnly("maven.modrinth:carry-on:$carryOnVersion")
+    //(Optional) FD & Addons
     modCompileOnly("maven.modrinth:farmers-delight:$farmersDelightVersion")
+    modCompileOnly("curse.maven:oceans-delight-841262:4462935") //1.18.2 1.0.0
+    modCompileOnly("curse.maven:nethers-delight-496394:3756127") //1.18.2 2.2.0
+    modCompileOnly("curse.maven:delightful-637529:4275637") //1.18.2 3.2.1
+    modCompileOnly("curse.maven:oh-the-biomes-youll-go-247560:4971536") //1.18.2 1.5.1, for delightful
+    modCompileOnly("curse.maven:ars-nouveau-401955:4543053") //1.18.2 2.9.0, for delightful
+    modCompileOnly("curse.maven:enders-delight-827163:4668841") //1.18.2 1.2.1
+    modCompileOnly("curse.maven:ends-delight-662675:4675472") //1.18.2 1.2.1
+    modCompileOnly("curse.maven:crabbers-delight-892827:4762846") //1.18.2 1.1.2
+    modCompileOnly("curse.maven:miners-delight-plus-689630:4738271") //1.18.2 1.1.2
+    modCompileOnly("curse.maven:corn-delight-577805:4000542") //1.18.2 1.0.6
+    modCompileOnly("curse.maven:mysterious-mountain-lib-368098:5414927") //For corn delight
+    modCompileOnly("curse.maven:cultural-delights-574622:4000179") //1.18.2 0.14
+    modCompileOnly("curse.maven:pineapple-delight-687974:4554347") //1.18.2 1.0.6 Fix1
+    modCompileOnly("curse.maven:large-meals-an-add-on-for-farmers-delight-625110:4032025") //1.18.2 1.2.0
+    modCompileOnly("curse.maven:festive-delight-711672:4707741") //1.18.2 1.1
+    modCompileOnly("maven.modrinth:butchers-delight:1.18.22.1.0") //1.18.2 2.1.0
+    modCompileOnly("maven.modrinth:butchers-delight-foods:1.18.21.0.3") //1.18.2 2.1.0
+    modCompileOnly("curse.maven:coffee-delight-835597:4707181") //1.18.2 1.4
+    modCompileOnly("curse.maven:casualness-delight-909519:5194377") //1.18.2 0.4
+    modCompileOnly("curse.maven:italians-delight-669167:4435561") //1.18.2 1.5
+    modCompileOnly("curse.maven:seed-delight-1016377:5736715") //1.18.2 1.0.1
+    modCompileOnly("curse.maven:argentinasdelight-831127:4818251") //1.18.2 3.0 beta
+    modCompileOnly("curse.maven:honey-expansion-add-on-for-farmers-delight-541951:3751480") //1.18.2 1.1.1
+    modCompileOnly("curse.maven:brewin-and-chewin-637808:3851036") //1.18.2 1.0.0
+    modCompileOnly("curse.maven:alexs-delight-556448:3984913") //1.18.2 1.3.3
+    modCompileOnly("curse.maven:farmers-respite-551453:3859156") //1.18.2 1.3.0
+    //modCompileOnly("curse.maven:citadel-331936:3783096") //For alex's delight/alex's mobs
+    //modCompileOnly("curse.maven:curios-309927:4985315") //For ars nouveau
+    //modCompileOnly("curse.maven:patchouli-306770:3846086") //For ars nouveau
     modCompileOnly("maven.modrinth:alexs-mobs:$alexsMobsVersion")
     modCompileOnly("curse.maven:radium-570017:3707226")
 
