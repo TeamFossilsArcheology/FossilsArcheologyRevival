@@ -87,6 +87,8 @@ dependencies {
     //modImplementation("com.jozufozu.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}")
     //modImplementation("com.tterrag.registrate:Registrate:${registrate_version}")
 
+    //modImplementation "curse.maven:cyanide-541676:4481355"
+
 }
 
 loom {

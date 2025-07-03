@@ -81,7 +81,8 @@ public class ModPlacedFeatures {
         PlacementUtils.register(context, MOAI_STATUE_KEY, moaiStatue,
                 RarityFilter.onAverageOnceEvery(400),
                 InSquarePlacement.spread(),
-                PlacementUtils.HEIGHTMAP_WORLD_SURFACE
+                PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                BiomeFilter.biome()
         );
     }
 

@@ -5302,7 +5302,7 @@
 							"vector": ["-10+math.sin(query.anim_time*720/0.5)*2", 0, 0]
 						},
 						"1.75": {
-							"vector": ["-20+math.sin(query.anim_time*720/0.5+)*2", 0, 0]
+							"vector": ["-20+math.sin(query.anim_time*720/0.5)*2", 0, 0]
 						},
 						"2.0": {
 							"vector": [0, 0, 0]

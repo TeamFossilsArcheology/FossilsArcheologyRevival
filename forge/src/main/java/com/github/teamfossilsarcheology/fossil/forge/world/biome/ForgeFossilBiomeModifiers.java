@@ -23,7 +23,6 @@ import static net.minecraftforge.common.world.ForgeBiomeModifiers.AddFeaturesBio
 import static net.minecraftforge.common.world.ForgeBiomeModifiers.AddSpawnsBiomeModifier;
 
 public class ForgeFossilBiomeModifiers {
-    public static final ResourceKey<BiomeModifier> ADD_TAR_PIT = createKey("add_tar_pit");
     public static final ResourceKey<BiomeModifier> ADD_MOAI_STATUE = createKey("add_moai_statue");
     public static final ResourceKey<BiomeModifier> ADD_ALLIGATOR_GAR = createKey("add_alligator_gar");
     public static final ResourceKey<BiomeModifier> ADD_COELACANTH = createKey("add_coelacanth");
