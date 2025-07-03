@@ -9,6 +9,10 @@ plugins {
     id("net.darkhax.curseforgegradle")
 }
 
+repositories {
+    maven("https://modmaven.dev/")
+}
+
 architectury {
     platformSetupLoomIde()
     forge()
@@ -63,6 +67,8 @@ dependencies {
     include("io.github.llamalad7:mixinextras-forge:0.4.1")?.let { implementation(it) }
 
     //Optional
+    modImplementation("com.simibubi.create:create-${minecraftVersion}:${createVersion}:slim") { isTransitive = false }
+    modImplementation("com.jozufozu.flywheel:flywheel-forge-${minecraftVersion}:${flywheelVersion}")
     modImplementation("maven.modrinth:jade:L2um3gq1")
     modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
     modCompileOnly("maven.modrinth:carry-on:$carryOnVersion")
