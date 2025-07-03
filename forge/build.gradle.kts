@@ -9,9 +9,11 @@ plugins {
     id("net.darkhax.curseforgegradle")
 }
 
+
 repositories {
     maven("https://modmaven.dev/")
 }
+
 
 architectury {
     platformSetupLoomIde()
@@ -67,8 +69,6 @@ dependencies {
     include("io.github.llamalad7:mixinextras-forge:0.4.1")?.let { implementation(it) }
 
     //Optional
-    modImplementation("com.simibubi.create:create-${minecraftVersion}:${createVersion}:slim") { isTransitive = false }
-    modImplementation("com.jozufozu.flywheel:flywheel-forge-${minecraftVersion}:${flywheelVersion}")
     modImplementation("maven.modrinth:jade:L2um3gq1")
     modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
     modCompileOnly("maven.modrinth:carry-on:$carryOnVersion")
@@ -76,6 +76,8 @@ dependencies {
     modCompileOnly("maven.modrinth:alexs-mobs:$alexsMobsVersion")
     modCompileOnly("curse.maven:radium-570017:3707226")
 
+    modImplementation("com.simibubi.create:create-${minecraftVersion}:${createVersion}:slim") { isTransitive = false }
+    modImplementation("com.jozufozu.flywheel:flywheel-forge-${minecraftVersion}:${flywheelVersion}")
     modImplementation("com.tterrag.registrate:Registrate:${registrateVersion}")
 
     //modRuntimeOnly("curse.maven:configured-457570:4462832")
@@ -131,4 +133,37 @@ val javaComponent = components["java"] as AdhocComponentWithVariants
 javaComponent.withVariantsFromConfiguration(configurations["shadowRuntimeElements"]) {
     skip()
 }
+modrinth {
+    token = "${project.property("MODRINTH_TOKEN") ?: "no value"}"
+    projectId = "IJY7IqPP"
+    versionNumber.set("$minecraftVersion-$modVersion-${project.name}")
+    versionType.set("release")
+    uploadFile.set(tasks.remapJar)
+    versionName = "$modVersion for Forge $minecraftVersion"
+    debugMode = true
+    dependencies {
+        required.project("architectury-api")
+        required.project("geckolib")
+        required.project("terrablender")
+        required.project("more-hitboxes")
+    }
+    changelog.set(rootProject.file("CHANGELOG.md").readText())
+}
 
+tasks.register<TaskPublishCurseForge>("publishCurseForge") {
+    group = "publishing"
+    description = "Publishes jar to CurseForge"
+    apiToken = project.property("CURSEFORGE_TOKEN") ?: "no value"
+    debugMode = true
+    val mainFile = upload(223908, tasks.remapJar)
+    mainFile.displayName = "$modVersion for Forge $minecraftVersion"
+    mainFile.changelog = rootProject.file("CHANGELOG.md").readText()
+    mainFile.addEnvironment("Forge")
+    mainFile.changelogType = "markdown"
+    mainFile.releaseType = "release"
+    mainFile.addRequirement("architectury-api", "geckolib", "terrablender", "more-hitboxes")
+}
+
+tasks.named("publish") {
+    finalizedBy("modrinth", "publishCurseForge")
+}
