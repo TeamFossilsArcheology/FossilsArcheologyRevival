@@ -1069,7 +1069,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         entityData.set(GENDER, (byte) gender.ordinal());
     }
 
-    private String getVariantId() {
+    public String getVariantId() {
         return entityData.get(DATA_VARIANT);
     }
 

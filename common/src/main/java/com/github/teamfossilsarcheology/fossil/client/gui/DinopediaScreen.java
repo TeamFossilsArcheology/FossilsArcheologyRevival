@@ -8,6 +8,7 @@ import com.github.teamfossilsarcheology.fossil.entity.Quagga;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFish;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricShearable;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.MoodSystem;
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 import com.google.common.cache.CacheBuilder;
@@ -37,7 +38,9 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -67,6 +70,9 @@ public class DinopediaScreen extends Screen {
                     return new TextComponent("Invalid User");
                 }
             });
+    private static final Component STUNTED_GROWTH = new TranslatableComponent("pedia.fossil.condition.stunted");
+    private static final Component SHEARED = new TranslatableComponent("pedia.fossil.condition.sheared");
+    private static final Component NOT_SHEARED = new TranslatableComponent("pedia.fossil.condition.not_sheared");
     private static final int MOOD_FACE_WIDTH = 16;
     private static final int MOOD_FACE_HEIGHT = 15;
     private static final int MOOD_BAR_WIDTH = 206;
@@ -375,8 +381,8 @@ public class DinopediaScreen extends Screen {
             var keys = foodMap.keySet().stream().filter(itemLike -> itemLike instanceof Item).sorted(
                     Comparator.comparingInt(item -> Item.getId(item.asItem()))).limit(64).toList();
             int itemCount = 0;
+            int renderSize = 16;
             for (ItemLike itemLike : keys) {
-                int renderSize = 16;
                 x = (leftPos + xSize / 2 + (xSize / 2 - renderSize * 8) / 2) + renderSize * (itemCount % 8);
                 y = topPos + 65 + renderSize * (itemCount / 8);
                 itemCount++;
@@ -386,7 +392,42 @@ public class DinopediaScreen extends Screen {
                     toolTipList.addAll(getTooltipFromItem(itemStack));
                 }
             }
-
+            x = leftPos + 4 + xSize / 2;
+            y = topPos + 70 + renderSize * (itemCount / 8);
+            if (dino.isAgingDisabled()) {
+                x += 16;
+                itemRenderer.renderAndDecorateItem(new ItemStack(Items.POISONOUS_POTATO), x, y);
+                if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + renderSize && mouseY < y + renderSize) {
+                    toolTipList.add(STUNTED_GROWTH);
+                }
+            }
+            if (dino instanceof PrehistoricShearable shearable) {
+                x += 16;
+                itemRenderer.renderAndDecorateItem(new ItemStack(Items.SHEARS), x, y);
+                if (shearable.isSheared()) {
+                    itemRenderer.renderAndDecorateItem(new ItemStack(Blocks.BARRIER), x, y);
+                }
+                if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + renderSize && mouseY < y + renderSize) {
+                    toolTipList.add(shearable.isSheared() ? SHEARED : NOT_SHEARED);
+                }
+            }
+            if (Minecraft.getInstance().player.isCreative()) {
+                var tag = dino.getDebugTag();
+                if (dino.isNoAi() || tag.getBoolean("disableGoalAI") || tag.getBoolean("disableMoveAI") || tag.getBoolean("disableLookAI")) {
+                    x += 16;
+                    itemRenderer.renderAndDecorateItem(new ItemStack(Items.DEBUG_STICK), x, y);
+                    if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + renderSize && mouseY < y + renderSize) {
+                        toolTipList.add(new TextComponent(String.format("Disabled AI: %b, Goal: %b, Move: %b, Look: %b", dino.isNoAi(), tag.getBoolean("disableGoalAI"), tag.getBoolean("disableMoveAI"), tag.getBoolean("disableLookAI"))));
+                    }
+                }
+                if (!dino.getVariantId().isBlank()) {
+                    x += 16;
+                    itemRenderer.renderAndDecorateItem(new ItemStack(Items.RED_DYE), x, y);
+                    if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + renderSize && mouseY < y + renderSize) {
+                        toolTipList.add(new TextComponent("Variant: " + dino.getVariantId()));
+                    }
+                }
+            }
         }
     }
 
