@@ -6,8 +6,8 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ButcherDelightFoodCompat {
-    public static void registerButcherDelightFoodFoodMappings(){
-        for(RegistryObject<Item> meat: ButchersdelightfoodsModItems.REGISTRY.getEntries()){
+    public static void registerButcherDelightFoodFoodMappings() {
+        for (RegistryObject<Item> meat : ButchersdelightfoodsModItems.REGISTRY.getEntries()) {
             FoodMappings.addMeat(meat.get());
         }
         //This is safe to do because literally all Butcher Delight Foods items are raw and cooked meat

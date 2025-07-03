@@ -8,10 +8,10 @@ import vectorwing.farmersdelight.common.block.PieBlock;
 import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.FarmersDelightCompat.getPieValue;
 
 public class EndDelightCompat {
-    public static void registerEndDelightFoodMappings(){
+    public static void registerEndDelightFoodMappings() {
         FoodMappings.addPlant(ItemRegistry.AssortedSalad.get());
         FoodMappings.addPlant(ItemRegistry.ChorusCookie.get());
-        FoodMappings.addPlant(ItemRegistry.ChorusFruitPie.get(),getPieValue((PieBlock) BlockRegistry.ChorusFruitPie.get()));
+        FoodMappings.addPlant(ItemRegistry.ChorusFruitPie.get(), getPieValue((PieBlock) BlockRegistry.ChorusFruitPie.get()));
         FoodMappings.addPlant(ItemRegistry.ChorusFlowerPie.get());
         FoodMappings.addPlant(ItemRegistry.ChorusFruitPieSlice.get());
         FoodMappings.addPlant(ItemRegistry.ChorusFruitGrain.get());

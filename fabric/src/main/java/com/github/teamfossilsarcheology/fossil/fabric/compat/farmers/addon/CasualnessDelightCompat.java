@@ -4,7 +4,7 @@ import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 import org.va11halla.casualness_delight.registry.ItemRegistry;
 
 public class CasualnessDelightCompat {
-    public static void registerCasualnessDelightFoodMappings(){
+    public static void registerCasualnessDelightFoodMappings() {
         FoodMappings.addFish(ItemRegistry.FishAndChips.get());
         FoodMappings.addPlant(ItemRegistry.YorkshirePudding.get());
         FoodMappings.addMeat(ItemRegistry.BeefNoodles.get());
@@ -24,17 +24,17 @@ public class CasualnessDelightCompat {
         FoodMappings.addMeat(ItemRegistry.RawDonkeyMeat.get());
         FoodMappings.addMeat(ItemRegistry.CookedDonkeyMeat.get());
         FoodMappings.addMeat(ItemRegistry.DonkeyBurger.get());
-        FoodMappings.addPlant(ItemRegistry.RawPotatoBoboChicken.get(), 4*7); //This is just a potato+a stick
-        FoodMappings.addPlant(ItemRegistry.RawCabbageBoboChicken.get(), 4*7); //This is just a cabbage+a stick
-        FoodMappings.addMeat(ItemRegistry.RawChickenBoboChicken.get(), 4*7);
+        FoodMappings.addPlant(ItemRegistry.RawPotatoBoboChicken.get(), 4 * 7); //This is just a potato+a stick
+        FoodMappings.addPlant(ItemRegistry.RawCabbageBoboChicken.get(), 4 * 7); //This is just a cabbage+a stick
+        FoodMappings.addMeat(ItemRegistry.RawChickenBoboChicken.get(), 4 * 7);
         FoodMappings.addPlant(ItemRegistry.PotatoBoboChicken.get());
         FoodMappings.addPlant(ItemRegistry.CabbageBoboChicken.get());
-        FoodMappings.addMeat(ItemRegistry.RawChickenBoboChicken.get(), 4*7);
-        FoodMappings.addPlant(ItemRegistry.PotatoSlice.get(), 4*7);
+        FoodMappings.addMeat(ItemRegistry.RawChickenBoboChicken.get(), 4 * 7);
+        FoodMappings.addPlant(ItemRegistry.PotatoSlice.get(), 4 * 7);
         FoodMappings.addPlant(ItemRegistry.PotatoChip.get());
-        FoodMappings.addMeat(ItemRegistry.RawSpringRoll.get(), 4*7);
+        FoodMappings.addMeat(ItemRegistry.RawSpringRoll.get(), 4 * 7);
         FoodMappings.addMeat(ItemRegistry.SpringRoll.get());
-        FoodMappings.addMeat(ItemRegistry.SpringRollMedley.get(), 6*6*7); //Made of 6 spring rolls
+        FoodMappings.addMeat(ItemRegistry.SpringRollMedley.get(), 6 * 6 * 7); //Made of 6 spring rolls
         FoodMappings.addMeat(ItemRegistry.FriedChickenChip.get());
         FoodMappings.addFish(ItemRegistry.FriedFish.get());
         FoodMappings.addMeat(ItemRegistry.Tonkatsu.get());

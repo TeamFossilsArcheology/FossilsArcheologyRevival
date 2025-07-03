@@ -7,7 +7,7 @@ import vectorwing.farmersdelight.common.block.PieBlock;
 import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.FarmersDelightCompat.getPieValue;
 
 public class EnderDelightCompat {
-    public static void registerEnderDelightFoodMappings(){
+    public static void registerEnderDelightFoodMappings() {
         FoodMappings.addPlant(ModItems.CHORUS_STEW.get());
         FoodMappings.addPlant(ModItems.CHORUS_STEW_WOOD.get());
         FoodMappings.addMeat(ModItems.CRAWLING_SANDWICH.get());

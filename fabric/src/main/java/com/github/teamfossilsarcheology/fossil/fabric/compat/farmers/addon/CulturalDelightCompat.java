@@ -6,7 +6,7 @@ import dev.sterner.culturaldelights.common.registry.CDObjects;
 import java.util.Objects;
 
 public class CulturalDelightCompat {
-    public static void registerCulturalDelightFoodMappings(){
+    public static void registerCulturalDelightFoodMappings() {
         FoodMappings.addPlant(CDObjects.CUCUMBER_SEEDS, 5);
         FoodMappings.addPlant(CDObjects.CORN_KERNELS, 5);
         FoodMappings.addPlant(CDObjects.EGGPLANT_SEEDS, 5);
@@ -54,10 +54,10 @@ public class CulturalDelightCompat {
         FoodMappings.addFish(CDObjects.TROPICAL_ROLL);
         FoodMappings.addFish(CDObjects.RICE_BALL); //This has fish in it so I count it as fish
         FoodMappings.addFish(CDObjects.CALAMARI_ROLL);
-        FoodMappings.addPlant(CDObjects.AVOCADO_LEAVES,20);
-        FoodMappings.addPlant(CDObjects.AVOCADO_SAPLING,15);
+        FoodMappings.addPlant(CDObjects.AVOCADO_LEAVES, 20);
+        FoodMappings.addPlant(CDObjects.AVOCADO_SAPLING, 15);
         FoodMappings.addPlant(CDObjects.AVOCADO_TOAST);
-        FoodMappings.addPlant(CDObjects.ITEMS.keySet().stream().filter(v-> Objects.equals(v.toString(),"avocado_pit")).toList().get(0),5);
+        FoodMappings.addPlant(CDObjects.ITEMS.keySet().stream().filter(v -> Objects.equals(v.toString(), "avocado_pit")).toList().get(0), 5);
         //51/51 added! That is a lot of food!
     }
 }

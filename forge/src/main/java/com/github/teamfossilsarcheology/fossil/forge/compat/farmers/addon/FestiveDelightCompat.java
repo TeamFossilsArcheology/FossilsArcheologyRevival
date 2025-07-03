@@ -5,7 +5,7 @@ import net.mcreator.festivedelight.init.FestiveDelightModBlocks;
 import net.mcreator.festivedelight.init.FestiveDelightModItems;
 
 public class FestiveDelightCompat {
-    public static void registerFestiveDelightFoodMappings(){
+    public static void registerFestiveDelightFoodMappings() {
         FoodMappings.addMeat(FestiveDelightModItems.FESTIVE_CHIKEN.get());
         FoodMappings.addPlant(FestiveDelightModItems.CINNAMON_POWDER.get(), 10);
         FoodMappings.addPlant(FestiveDelightModItems.GINGERBREAD_DOUGH.get(), 10);
@@ -20,7 +20,7 @@ public class FestiveDelightCompat {
         FoodMappings.addPlant(FestiveDelightModItems.GINGERBREAD_MAN_BASE.get());
         FoodMappings.addPlant(FestiveDelightModItems.GINGERBREAD.get());
         //FoodMappings.addPlant(FestiveDelightModItems.SUGAR_CANE.get()); Not suitable for dinos
-        FoodMappings.addPlant(FestiveDelightModBlocks.CINNAMON_BUSH.get(),15);
+        FoodMappings.addPlant(FestiveDelightModBlocks.CINNAMON_BUSH.get(), 15);
         //14/15 added, 1 excluded
     }
 }

@@ -7,12 +7,12 @@ import vectorwing.farmersdelight.common.block.PieBlock;
 import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.FarmersDelightCompat.getPieValue;
 
 public class SeedDelightCompat {
-    public static void registerSeedDelightFoodMappings(){
-        FoodMappings.addPlant(ItemRegistry.Acorn.get(),5);
+    public static void registerSeedDelightFoodMappings() {
+        FoodMappings.addPlant(ItemRegistry.Acorn.get(), 5);
         FoodMappings.addPlant(ItemRegistry.AcornKernel.get());
-        FoodMappings.addPlant(ItemRegistry.Pinecone.get(),5);
+        FoodMappings.addPlant(ItemRegistry.Pinecone.get(), 5);
         FoodMappings.addPlant(ItemRegistry.PineNutKernel.get());
-        FoodMappings.addPlant(ItemRegistry.SunflowerSeed.get(),5);
+        FoodMappings.addPlant(ItemRegistry.SunflowerSeed.get(), 5);
         FoodMappings.addPlant(ItemRegistry.FriedSunflowerSeed.get());
         FoodMappings.addPlant(ItemRegistry.DriedWatermelonSeed.get());
         FoodMappings.addPlant(ItemRegistry.DriedWatermelonSeed.get());

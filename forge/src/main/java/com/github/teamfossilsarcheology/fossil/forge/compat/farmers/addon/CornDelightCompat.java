@@ -4,7 +4,7 @@ import cn.mcmod.corn_delight.item.ItemRegistry;
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 
 public class CornDelightCompat {
-    public static void registerCornDelightFoodMappings(){
+    public static void registerCornDelightFoodMappings() {
         FoodMappings.addPlant(ItemRegistry.BOILED_CORN.get());
         FoodMappings.addPlant(ItemRegistry.CARAMEL_POPCORN.get());
         FoodMappings.addMeat(ItemRegistry.CLASSIC_CORN_DOG.get());

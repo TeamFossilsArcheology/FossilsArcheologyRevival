@@ -4,7 +4,7 @@ import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 import net.mcreator.cambiandoversion.init.ArgentinasDelightModItems;
 
 public class ArgentinaDelightCompat {
-    public static void registerArgentinaDelightFoodMappings(){
+    public static void registerArgentinaDelightFoodMappings() {
         //The mod author put every mod item in his/her native language
         FoodMappings.addMeat(ArgentinasDelightModItems.NALGA.get()); //Beef rump
         FoodMappings.addMeat(ArgentinasDelightModItems.PECHUGACRUDA.get()); //Chicken breasts

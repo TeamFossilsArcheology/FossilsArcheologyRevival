@@ -4,7 +4,7 @@ import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 import com.sammy.minersdelight.setup.MDItems;
 
 public class MinerDelightCompat {
-    public static void registerMinerDelightFoodMappings(){
+    public static void registerMinerDelightFoodMappings() {
         FoodMappings.addPlant(MDItems.BAKED_CAVE_CARROT.get());
         FoodMappings.addFish(MDItems.BAKED_SQUID.get());
         FoodMappings.addFish(MDItems.BAKED_TENTACLES.get());

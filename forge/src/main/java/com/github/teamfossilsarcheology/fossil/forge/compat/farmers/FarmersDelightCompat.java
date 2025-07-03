@@ -119,13 +119,13 @@ public class FarmersDelightCompat {
         registerAddonFoodMappings();
     }
 
-    public static void registerAddonFoodMappings(){
+    public static void registerAddonFoodMappings() {
         //We cycle through each addon and check if it is loaded
-        for(String addonId : AddonConstants.SUPPORTED_ADDONS){
-            if(!ModList.get().isLoaded(addonId)){
+        for (String addonId : AddonConstants.SUPPORTED_ADDONS) {
+            if (!ModList.get().isLoaded(addonId)) {
                 continue;
             }
-            if(addonId.equals("delightful")){
+            if (addonId.equals("delightful")) {
                 registerDelightfulFoodMappings( //Delightful supports some more mods.
                         ModList.get().isLoaded("byg"), //Biomes you'll go
                         ModList.get().isLoaded("ars_nouveau") //Ars Nouveau
@@ -136,7 +136,7 @@ public class FarmersDelightCompat {
         }
     }
 
-    public static void registerFoodMappingsByAddonId(String addonId){
+    public static void registerFoodMappingsByAddonId(String addonId) {
         switch (addonId) {
             //We have to have a unique class for each food mapping because if the class uses something from an unloaded mod it and we call one of its methods it causes issues in the FML Common Setup
             case "oceansdelight" -> {

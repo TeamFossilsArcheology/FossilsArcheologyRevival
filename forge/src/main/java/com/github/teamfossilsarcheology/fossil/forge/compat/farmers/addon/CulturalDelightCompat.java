@@ -7,7 +7,7 @@ import com.ncpbails.culturaldelights.item.ModItems;
 import java.util.Objects;
 
 public class CulturalDelightCompat {
-    public static void registerCulturalDelightFoodMappings(){
+    public static void registerCulturalDelightFoodMappings() {
         FoodMappings.addPlant(ModItems.CUCUMBER_SEEDS.get(), 5);
         FoodMappings.addPlant(ModItems.CORN_KERNELS.get(), 5);
         FoodMappings.addPlant(ModItems.EGGPLANT_SEEDS.get(), 5);
@@ -55,10 +55,10 @@ public class CulturalDelightCompat {
         FoodMappings.addFish(ModItems.TROPICAL_ROLL.get());
         FoodMappings.addFish(ModItems.RICE_BALL.get()); //This has fish in it so I count it as fish
         FoodMappings.addFish(ModItems.CALAMARI_ROLL.get());
-        FoodMappings.addPlant(ModBlocks.AVOCADO_LEAVES.get(),20);
-        FoodMappings.addPlant(ModBlocks.AVOCADO_SAPLING.get(),15);
+        FoodMappings.addPlant(ModBlocks.AVOCADO_LEAVES.get(), 20);
+        FoodMappings.addPlant(ModBlocks.AVOCADO_SAPLING.get(), 15);
         FoodMappings.addPlant(ModItems.AVOCADO_TOAST.get());
-        FoodMappings.addPlant(ModItems.ITEMS.getEntries().stream().filter(v-> Objects.equals(v.get().toString(),"avocado_pit")).toList().get(0).get(),5);
+        FoodMappings.addPlant(ModItems.ITEMS.getEntries().stream().filter(v -> Objects.equals(v.get().toString(), "avocado_pit")).toList().get(0).get(), 5);
         //51/51 added! That is a lot of food!
     }
 }

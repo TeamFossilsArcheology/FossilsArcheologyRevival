@@ -105,18 +105,18 @@ public class FarmersDelightCompat {
         registerAddonFoodMappings();
     }
 
-    public static void registerAddonFoodMappings(){
+    public static void registerAddonFoodMappings() {
         //We cycle through each addon and check if it is loaded
-        for(String addonId : AddonConstants.SUPPORTED_ADDONS){
-            if(!FabricLoader.getInstance().isModLoaded(addonId)){
+        for (String addonId : AddonConstants.SUPPORTED_ADDONS) {
+            if (!FabricLoader.getInstance().isModLoaded(addonId)) {
                 continue;
             }
             registerFoodMappingsByAddonId(addonId);
         }
     }
 
-    public static void registerFoodMappingsByAddonId(String addonId){
-        switch(addonId) {
+    public static void registerFoodMappingsByAddonId(String addonId) {
+        switch (addonId) {
             case "oceansdelight" -> {
                 registerOceanDelightFoodMappings();
             }
