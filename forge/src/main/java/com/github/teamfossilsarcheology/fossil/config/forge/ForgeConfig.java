@@ -105,6 +105,8 @@ public class ForgeConfig {
         FISH_ARE_PERSISTENT = COMMON.boolEntry("True if fish spawned via fish egg item should never despawn", FossilConfig.FISH_ARE_PERSISTENT, true);
         COMMON.builder.pop();
         COMMON.builder.push("Mob Config");
+        FEATHERED_DILO = COMMON.boolEntry("True if Dilophosaurus should be feathered", FossilConfig.FEATHERED_DILO, false);
+        FEATHERED_DRYO = COMMON.boolEntry("True if Dryosaurus should be feathered", FossilConfig.FEATHERED_DRYO, false);
         HEALING_DINOS = COMMON.boolEntry("True if Dinosaurs can be healed by hand feeding it food", FossilConfig.HEALING_DINOS, true);
         ENABLE_HUNGER = COMMON.boolEntry("True if Dinosaurs have hunger", FossilConfig.ENABLE_HUNGER, true);
         ENABLE_STARVATION = COMMON.boolEntry("True if Dinosaurs can die of hunger", FossilConfig.ENABLE_STARVATION, false);
@@ -132,8 +134,6 @@ public class ForgeConfig {
         FERN_TICK_RATE = COMMON.intEntry("How often ferns try to grow. Higher number = less growth", FossilConfig.FERN_TICK_RATE, 2, 1, 1000000);
         COMMON_SPEC = COMMON.builder.build();
 
-        FEATHERED_DILO = CLIENT.boolEntry("True if Dilophosaurus should be feathered", FossilConfig.FEATHERED_DILO, false);
-        FEATHERED_DRYO = CLIENT.boolEntry("True if Dryosaurus should be feathered", FossilConfig.FEATHERED_DRYO, false);
         CUSTOM_MAIN_MENU = CLIENT.boolEntry("True if the Custom Main Menu should be enabled", FossilConfig.CUSTOM_MAIN_MENU, true);
         HELMET_OVERLAYS = CLIENT.boolEntry("True if skull helmet and ancient helmet should render overlays like vanilla pumpkin", FossilConfig.HELMET_OVERLAYS, true);
         CLIENT_SPEC = CLIENT.builder.build();
