@@ -1871,7 +1871,7 @@
 				},
 				"tail1": {
 					"rotation": {
-						"vector": ["-14.7674+math.cos(query.anim_time*90*1-60)*1", 11.964, "0.0271+"]
+						"vector": ["-14.7674+math.cos(query.anim_time*90*1-60)*1", 11.964, 0.0271]
 					}
 				},
 				"tail2": {
