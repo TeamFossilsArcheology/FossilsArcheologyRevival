@@ -1,8 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.compat.geckolib;
 
 import software.bernie.geckolib.core.molang.MolangParser;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 
 public class AnimationProcessorOverride {
 

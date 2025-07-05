@@ -50,9 +50,7 @@
   },
   "suggests": {
     "cloth_config": ">=9",
-    "roughlyenoughitems": ">=10",
-    "coffee_delight": ">=1.3",
-    "expandeddelight": ">=0.1.9.2"
+    "roughlyenoughitems": ">=10"
   },
   "custom": {
     "cardinal-components": [

@@ -1,18 +1,15 @@
 package com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon;
 
-import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
-import umpaz.brewinandchewin.common.registry.BCItems;
-
 public class BrewinAndChewinCompat {
     public static void registerFoodMappings() {
-        FoodMappings.addPlant(BCItems.KIMCHI.get());
-        FoodMappings.addMeat(BCItems.JERKY.get());
-        FoodMappings.addPlant(BCItems.PICKLED_PICKLES.get());
-        FoodMappings.addFish(BCItems.KIPPERS.get());
-        FoodMappings.addPlant(BCItems.COCOA_FUDGE.get());
-        FoodMappings.addPlant(BCItems.KIMCHI.get());
-        FoodMappings.addMeat(BCItems.PIZZA_SLICE.get()); //Contains meat
-        FoodMappings.addMeat(BCItems.HAM_AND_CHEESE_SANDWICH.get());
+        //FoodMappings.addPlant(BCItems.KIMCHI.get());
+        //FoodMappings.addMeat(BCItems.JERKY.get());
+        //FoodMappings.addPlant(BCItems.PICKLED_PICKLES.get());
+        //FoodMappings.addFish(BCItems.KIPPERS.get());
+        //FoodMappings.addPlant(BCItems.COCOA_FUDGE.get());
+        //FoodMappings.addPlant(BCItems.KIMCHI.get());
+        //FoodMappings.addMeat(BCItems.PIZZA_SLICE.get()); //Contains meat
+        //FoodMappings.addMeat(BCItems.HAM_AND_CHEESE_SANDWICH.get());
         //8/8 added
     }
 }

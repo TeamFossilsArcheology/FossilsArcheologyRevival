@@ -62,7 +62,7 @@ dependencies {
     //FD addons
     //modCompileOnly "maven.modrinth:oceans-delight:fdrf-fabric-1.0.2-1.20"
     //modCompileOnly "curse.maven:nethers-delight-fabric-701831:4353098" //1.19.2 1.0.1
-    modCompileOnly "maven.modrinth:biomesyougo:1.19.3-3.0.1.1-fabric"
+    //modCompileOnly "maven.modrinth:biomesyougo:1.19.3-3.0.1.1-fabric"
     //modCompileOnly "maven.modrinth:ends-delight:VQxr0ozB" //1.19.2-2.0
     //modCompileOnly "maven.modrinth:cultural-delights-fabric:1.0.5+1.20.1"
     //modCompileOnly "maven.modrinth:pineapple-delight:x85UwMri" //1.20.1-1.0.13

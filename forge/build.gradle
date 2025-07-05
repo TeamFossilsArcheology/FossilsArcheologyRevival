@@ -58,7 +58,7 @@ dependencies {
     //modCompileOnly "curse.maven:nethers-delight-496394:4736227" //1.20.1-4.0
     //modCompileOnly "maven.modrinth:delightful:3.7.3-1.20.1"
     //modCompileOnly "maven.modrinth:ars-nouveau:4.12.7" //for delightful
-    modCompileOnly "maven.modrinth:biomesyougo:1.19.3-3.0.1.1-forge"
+    //modCompileOnly "maven.modrinth:biomesyougo:1.19.3-3.0.1.1-forge"
     //modCompileOnly "maven.modrinth:enders-delight:1.19-1.2.2"
     //modCompileOnly "maven.modrinth:ends-delight:2.5.1+forge.1.20.1"
     //modCompileOnly "maven.modrinth:crabbers-delight:1.1.7" //1.20-1.1.7
