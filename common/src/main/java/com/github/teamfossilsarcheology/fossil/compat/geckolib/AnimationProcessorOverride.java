@@ -1,106 +1,102 @@
 package com.github.teamfossilsarcheology.fossil.compat.geckolib;
 
-import software.bernie.geckolib.core.molang.MolangParser;
+import com.github.teamfossilsarcheology.fossil.mixin.AnimatableManagerAccessor;
+import com.github.teamfossilsarcheology.fossil.mixin.AnimationControllerAccessor;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
+import software.bernie.geckolib.core.animatable.model.CoreGeoModel;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.keyframe.AnimationPoint;
+import software.bernie.geckolib.core.keyframe.BoneAnimationQueue;
+import software.bernie.geckolib.core.state.BoneSnapshot;
+
+import java.util.Map;
 
 public class AnimationProcessorOverride {
 
     /**
-     * Replaces parts of  {@link software.bernie.geckolib3.core.processor.AnimationProcessor#tickAnimation(IAnimatable, int, double, AnimationEvent, MolangParser, boolean) AnimationProcessor#tickAnimation}
+     * Replaces parts of  {@link AnimationProcessor#tickAnimation}
      * with the goal of making animations additive across controllers
      */
-   /* public static <T extends IAnimatable> void tickAdditiveAnimations(double seekTime, AnimationEvent<T> event, boolean reloadAnimations,
-                                                                      List<IBone> modelRendererList, MolangParser parser, boolean crashWhenCantFindBone,
-                                                                      AnimationData manager, Map<String, DirtyTracker> modelTracker,
-                                                                      Map<String, Pair<IBone, BoneSnapshot>> boneSnapshots) {
+    public static <T extends GeoAnimatable> void tickAdditiveAnimations(T animatable, CoreGeoModel<T> model, double animTime, AnimationState<T> state, boolean reloadAnimations,
+                                                                        Map<String, CoreGeoBone> bones, boolean crashWhenCantFindBone,
+                                                                        AnimatableManager<T> manager, Map<String, BoneSnapshot> boneSnapshots) {
         for (AnimationController<T> controller : manager.getAnimationControllers().values()) {
             if (reloadAnimations) {
-                controller.markNeedsReload();
+                controller.forceAnimationReset();
                 controller.getBoneAnimationQueues().clear();
             }
 
-            controller.isJustStarting = manager.isFirstTick;
+            ((AnimationControllerAccessor<?>) controller).setIsJustStarting(((AnimatableManagerAccessor) manager).isFirstTick());
 
-            // Set current controller to animation test event
-            event.setController(controller);
-
+            state.withController(controller);
             // Process animations and add new values to the point queues
-            controller.process(seekTime, event, modelRendererList, boneSnapshots, parser, crashWhenCantFindBone);
+            controller.process(model, state, bones, boneSnapshots, animTime, crashWhenCantFindBone);
         }
-        //TODO: Do some bug testing to make sure this doesnt cause issues
 
         //FA: Moved bone iteration to outer loop to have an easier time adding the animations
-        for (IBone bone : modelRendererList) {
-            DirtyTracker dirtyTracker = modelTracker.get(bone.getName());
-            if (dirtyTracker == null) {
-                continue;
-            }
+        for (CoreGeoBone bone : bones.values()) {
             //FA: These are only true for the first animation. When false the previous bone value will be added to the new one
             boolean firstRot = true;
             boolean firstPos = true;
             boolean firstScale = true;
-            BoneSnapshot snapshot = boneSnapshots.get(bone.getName()).getRight();
+            BoneSnapshot snapshot = boneSnapshots.get(bone.getName());
             BoneSnapshot initialSnapshot = bone.getInitialSnapshot();
             for (AnimationController<T> controller : manager.getAnimationControllers().values()) {
-                // Loop through every single bone and lerp each property
+                if (controller.getBoneAnimationQueues().isEmpty()) {
+                    continue;
+                }
                 BoneAnimationQueue boneAnimation = controller.getBoneAnimationQueues().get(bone.getName());
 
-                AnimationPoint rXPoint = boneAnimation.rotationXQueue().poll();
-                AnimationPoint rYPoint = boneAnimation.rotationYQueue().poll();
-                AnimationPoint rZPoint = boneAnimation.rotationZQueue().poll();
+                AnimationPoint rotXPoint = boneAnimation.rotationXQueue().poll();
+                AnimationPoint rotYPoint = boneAnimation.rotationYQueue().poll();
+                AnimationPoint rotZPoint = boneAnimation.rotationZQueue().poll();
 
-                AnimationPoint pXPoint = boneAnimation.positionXQueue().poll();
-                AnimationPoint pYPoint = boneAnimation.positionYQueue().poll();
-                AnimationPoint pZPoint = boneAnimation.positionZQueue().poll();
+                AnimationPoint posXPoint = boneAnimation.positionXQueue().poll();
+                AnimationPoint posYPoint = boneAnimation.positionYQueue().poll();
+                AnimationPoint posZPoint = boneAnimation.positionZQueue().poll();
 
-                AnimationPoint sXPoint = boneAnimation.scaleXQueue().poll();
-                AnimationPoint sYPoint = boneAnimation.scaleYQueue().poll();
-                AnimationPoint sZPoint = boneAnimation.scaleZQueue().poll();
+                AnimationPoint scaleXPoint = boneAnimation.scaleXQueue().poll();
+                AnimationPoint scaleYPoint = boneAnimation.scaleYQueue().poll();
+                AnimationPoint scaleZPoint = boneAnimation.scaleZQueue().poll();
+                EasingType easingType = ((AnimationControllerAccessor<T>) controller).getOverrideEasingTypeFunction().apply(animatable);
 
                 // If there's any rotation points for this bone
-                if (rXPoint != null && rYPoint != null && rZPoint != null) {
-                    bone.setRotationX(MathUtil.lerpValues(rXPoint, controller.easingType, controller.customEasingMethod)
-                            + (firstRot ? initialSnapshot.rotationValueX : bone.getRotationX()));
-                    bone.setRotationY(MathUtil.lerpValues(rYPoint, controller.easingType, controller.customEasingMethod)
-                            + (firstRot ? initialSnapshot.rotationValueY : bone.getRotationY()));
-                    bone.setRotationZ(MathUtil.lerpValues(rZPoint, controller.easingType, controller.customEasingMethod)
-                            + (firstRot ? initialSnapshot.rotationValueZ : bone.getRotationZ()));
-                    snapshot.rotationValueX = bone.getRotationX();
-                    snapshot.rotationValueY = bone.getRotationY();
-                    snapshot.rotationValueZ = bone.getRotationZ();
-                    snapshot.isCurrentlyRunningRotationAnimation = true;
-                    dirtyTracker.hasRotationChanged = true;
+                if (rotXPoint != null && rotYPoint != null && rotZPoint != null) {
+                    bone.setRotX((float) EasingType.lerpWithOverride(rotXPoint, easingType)
+                            + (firstRot ? initialSnapshot.getRotX() : bone.getRotX()));
+                    bone.setRotY((float) EasingType.lerpWithOverride(rotYPoint, easingType)
+                            + (firstRot ? initialSnapshot.getRotY() : bone.getRotY()));
+                    bone.setRotZ((float) EasingType.lerpWithOverride(rotZPoint, easingType)
+                            + (firstRot ? initialSnapshot.getRotZ() : bone.getRotZ()));
+                    snapshot.updateRotation(bone.getRotX(), bone.getRotY(), bone.getRotZ());
+                    snapshot.startRotAnim();
+                    bone.markRotationAsChanged();
                     firstRot = false;
                 }
 
                 // If there's any position points for this bone
-                if (pXPoint != null && pYPoint != null && pZPoint != null) {
-                    bone.setPositionX(
-                            MathUtil.lerpValues(pXPoint, controller.easingType, controller.customEasingMethod) + (firstPos ? 0 : bone.getPositionX()));
-                    bone.setPositionY(
-                            MathUtil.lerpValues(pYPoint, controller.easingType, controller.customEasingMethod) + (firstPos ? 0 : bone.getPositionY()));
-                    bone.setPositionZ(
-                            MathUtil.lerpValues(pZPoint, controller.easingType, controller.customEasingMethod) + (firstPos ? 0 : bone.getPositionZ()));
-                    snapshot.positionOffsetX = bone.getPositionX();
-                    snapshot.positionOffsetY = bone.getPositionY();
-                    snapshot.positionOffsetZ = bone.getPositionZ();
-                    snapshot.isCurrentlyRunningPositionAnimation = true;
-                    dirtyTracker.hasPositionChanged = true;
+                if (posXPoint != null && posYPoint != null && posZPoint != null) {
+                    bone.setPosX((float) EasingType.lerpWithOverride(posXPoint, easingType) + (firstPos ? 0 : bone.getPosX()));
+                    bone.setPosY((float) EasingType.lerpWithOverride(posYPoint, easingType) + (firstPos ? 0 : bone.getPosY()));
+                    bone.setPosZ((float) EasingType.lerpWithOverride(posZPoint, easingType) + (firstPos ? 0 : bone.getPosZ()));
+                    snapshot.updateOffset(bone.getPosX(), bone.getPosY(), bone.getPosZ());
+                    snapshot.startPosAnim();
+                    bone.markPositionAsChanged();
                     firstPos = false;
                 }
 
                 // If there's any scale points for this bone
-                if (sXPoint != null && sYPoint != null && sZPoint != null) {
-                    bone.setScaleX(MathUtil.lerpValues(sXPoint, controller.easingType, controller.customEasingMethod) * (firstScale ? 1 : bone.getScaleX()));
-                    bone.setScaleY(MathUtil.lerpValues(sYPoint, controller.easingType, controller.customEasingMethod) * (firstScale ? 1 : bone.getScaleY()));
-                    bone.setScaleZ(MathUtil.lerpValues(sZPoint, controller.easingType, controller.customEasingMethod) * (firstScale ? 1 : bone.getScaleZ()));
-                    snapshot.scaleValueX = bone.getScaleX();
-                    snapshot.scaleValueY = bone.getScaleY();
-                    snapshot.scaleValueZ = bone.getScaleZ();
-                    snapshot.isCurrentlyRunningScaleAnimation = true;
-                    dirtyTracker.hasScaleChanged = true;
+                if (scaleXPoint != null && scaleYPoint != null && scaleZPoint != null) {
+                    bone.setScaleX((float) EasingType.lerpWithOverride(scaleXPoint, easingType) * (firstScale ? 1 : bone.getScaleX()));
+                    bone.setScaleY((float) EasingType.lerpWithOverride(scaleYPoint, easingType) * (firstScale ? 1 : bone.getScaleY()));
+                    bone.setScaleZ((float) EasingType.lerpWithOverride(scaleZPoint, easingType) * (firstScale ? 1 : bone.getScaleZ()));
+                    snapshot.updateScale(bone.getScaleX(), bone.getScaleY(), bone.getScaleZ());
+                    snapshot.startScaleAnim();
+                    bone.markScaleAsChanged();
                     firstScale = false;
                 }
             }
         }
-    }*/
+    }
 }

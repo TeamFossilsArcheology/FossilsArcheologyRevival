@@ -107,6 +107,7 @@ loom {
         convertAccessWideners = true
         extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
         mixinConfig "fossil_forge.mixins.json"
+        mixinConfig "fossil_common.mixins.json"
     }
 }
 

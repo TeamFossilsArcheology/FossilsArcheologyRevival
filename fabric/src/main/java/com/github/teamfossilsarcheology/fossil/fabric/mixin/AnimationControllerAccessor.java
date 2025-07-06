@@ -10,6 +10,6 @@ public interface AnimationControllerAccessor {
     @Accessor("tickOffset")
     double getTickOffset();
 
-    @Accessor("tickOffset")
-    void setTickOffset(double tickOffset);
+    @Accessor("isJustStarting")
+    void setIsJustStarting(boolean isJustStarting);
 }

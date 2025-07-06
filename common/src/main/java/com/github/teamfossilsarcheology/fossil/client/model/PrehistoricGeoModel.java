@@ -16,13 +16,13 @@ import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 
 import java.util.function.Function;
 
-public class PrehistoricGeoModel<T extends Prehistoric> extends DefaultedEntityGeoModel<T> {
+public class PrehistoricGeoModel<T extends Prehistoric> extends DefaultedEntityGeoModel<T> implements AdditiveAnimationModel {
     private final Function<ResourceLocation, RenderType> renderType;
     /**
      * @param assetName the asset files name (excluding extension)
      */
     public PrehistoricGeoModel(String assetName, Function<ResourceLocation, RenderType> renderType) {
-        super(FossilMod.location(assetName), true);
+        super(FossilMod.location(assetName), false);
         this.renderType = renderType;
     }
 
