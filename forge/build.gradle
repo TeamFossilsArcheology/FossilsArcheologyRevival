@@ -56,7 +56,7 @@ dependencies {
     modCompileOnly("maven.modrinth:oceans-delight:1.0.2-1.19.2")
     modCompileOnly("curse.maven:nethers-delight-496394:4731072") //1.19.2 3.1
     modCompileOnly("maven.modrinth:delightful:3.4.1-1.19.2")
-    modCompileOnly("maven.modrinth:ars-nouveau:3.22.3") //for delightful
+    //modCompileOnly("maven.modrinth:ars-nouveau:3.22.3") //for delightful
     modCompileOnly("maven.modrinth:biomesyougo:ImjAT2Uf") //1.19.2-2.0.1.6
     modCompileOnly("maven.modrinth:enders-delight:1.19-1.2.2")
     modCompileOnly("maven.modrinth:ends-delight:1.19.2-2.1")
