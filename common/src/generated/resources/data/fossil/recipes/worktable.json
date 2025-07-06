@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "fossil:worktable"
-  }
+  },
+  "show_notification": true
 }

@@ -13,12 +13,12 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 public abstract class AncientHelmetItem extends ArmorItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    protected AncientHelmetItem(ArmorMaterial material, EquipmentSlot slot, Properties properties) {
-        super(material, slot, properties);
+    protected AncientHelmetItem(ArmorMaterial material, Type type, Properties properties) {
+        super(material, type, properties);
     }
 
     @ExpectPlatform
-    public static ArmorItem get(ArmorMaterial material, EquipmentSlot slot, Item.Properties properties) {
+    public static ArmorItem get(ArmorMaterial material, ArmorItem.Type type, Item.Properties properties) {
         throw new AssertionError();
     }
 

@@ -5,6 +5,9 @@ import net.minecraft.resources.ResourceLocation;
 
 import static com.github.teamfossilsarcheology.fossil.world.feature.village.ModVillages.*;
 
+/**
+ * @see com.github.teamfossilsarcheology.fossil.world.feature.village.ModVillages
+ */
 public class ModVillagesImpl {
     public static void register() {
         ResourceLocation desert = new ResourceLocation("minecraft:village/desert/houses");

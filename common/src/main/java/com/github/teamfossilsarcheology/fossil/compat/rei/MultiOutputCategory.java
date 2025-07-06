@@ -198,7 +198,7 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
             MultiBufferSource.BufferSource bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
             float xOffset = Math.min(11, fr.width(string) / 2f);
             fr.drawInBatch(string, (xPosition + 8 - xOffset), (yPosition + 16 + 1), 16777215, true,
-                    poseStack.last().pose(), bufferSource, false, 0, 15728880);
+                    poseStack.last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
             bufferSource.endBatch();
             poseStack.popPose();
         }
@@ -220,7 +220,6 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
             float bottomC = (hovered ? 0.67F : 0.5F) * scrollBarAlphaOffset;
             float topC = (hovered ? 0.87F : 0.67F) * scrollBarAlphaOffset;
             RenderSystem.setShader(GameRenderer::getPositionColorShader);
-            RenderSystem.disableTexture();
             Tesselator tesselator = Tesselator.getInstance();
             BufferBuilder buffer = tesselator.getBuilder();
             buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
@@ -242,7 +241,6 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
             buffer.vertex(scrollbarPositionMinX, minY, 10.0).color(topC, topC, topC, alpha).endVertex();
             tesselator.end();
             RenderSystem.disableBlend();
-            RenderSystem.enableTexture();
         }
 
         @Override

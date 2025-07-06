@@ -63,18 +63,18 @@ public class SigillariaTreeFeature extends CustomTreeFeature {
         BlockState log = ModBlocks.SIGILLARIA_LOG.get().defaultBlockState();
         BlockState leaves = ModBlocks.SIGILLARIA_LEAVES.get().defaultBlockState();
         float f = (size + height + size) * 0.333f + 0.5f;
-        for (BlockPos blockpos : BlockPos.betweenClosed(pos.offset(-size, -height, -size), pos.offset(size, height, size))) {
+        for (BlockPos blockpos : BlockPos.betweenClosed(pos.offset((int) -size, (int) -height, (int) -size), pos.offset((int) size, (int) height, (int) size))) {
             int distanceX = Math.abs(blockpos.getX() - pos.getX());
             int distanceZ = Math.abs(blockpos.getZ() - pos.getZ());
             int distanceY = Math.abs(blockpos.getY() - pos.getY());
-            if (blockpos.distSqr(pos) <= (double) (f * f)) {
+            if (blockpos.distSqr(pos) <= (f * f)) {
                 if (distanceX * distanceX + distanceZ * distanceZ < (f * f * (0.5f + random.nextFloat() * 0.5f)) * ((1 - distanceY % 2) + 0.25f)) {
                     placeLeaf(level, blockpos, leaves);
                 }
             }
         }
         for (BlockPos blockpos : BlockPos.betweenClosed(pos.below((int) height), pos.above((int) height - 4))) {
-            if (blockpos.distSqr(pos) <= (double) (f * f)) {
+            if (blockpos.distSqr(pos) <= (f * f)) {
                 level.setBlock(blockpos, log, 19);
             }
         }

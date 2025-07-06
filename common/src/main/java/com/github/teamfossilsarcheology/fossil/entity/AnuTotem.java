@@ -19,7 +19,7 @@ public class AnuTotem extends Mob {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source == DamageSource.OUT_OF_WORLD) {
+        if (source == level.damageSources().outOfWorld()) {
             return super.hurt(source, amount);
         }
         return false;

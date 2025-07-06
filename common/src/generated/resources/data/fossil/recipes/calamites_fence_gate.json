@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "fossil:calamites_fence_gate"
-  }
+  },
+  "show_notification": true
 }

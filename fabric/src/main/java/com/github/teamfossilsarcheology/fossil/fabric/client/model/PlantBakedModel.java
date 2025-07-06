@@ -39,7 +39,7 @@ public class PlantBakedModel implements BakedModel, FabricBakedModel {
 
     @Override
     public void emitBlockQuads(BlockAndTintGetter blockView, BlockState state, BlockPos pos, Supplier<RandomSource> randomSupplier, RenderContext context) {
-        context.meshConsumer().accept(mesh);
+        mesh.outputTo(context.getEmitter());
     }
 
     @Override

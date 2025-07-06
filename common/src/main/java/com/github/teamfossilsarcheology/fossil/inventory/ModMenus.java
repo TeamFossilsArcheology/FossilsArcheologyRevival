@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.FossilMod;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 
@@ -21,6 +22,6 @@ public class ModMenus {
     public static final RegistrySupplier<MenuType<CultureVatMenu>> CULTURE_VAT = register("culture_vat", CultureVatMenu::new);
 
     private static <T extends AbstractContainerMenu> RegistrySupplier<MenuType<T>> register(String key, MenuType.MenuSupplier<T> factory) {
-        return MENUS.register(key, () -> new MenuType<>(factory));
+        return MENUS.register(key, () -> new MenuType<>(factory, FeatureFlags.VANILLA_SET));
     }
 }

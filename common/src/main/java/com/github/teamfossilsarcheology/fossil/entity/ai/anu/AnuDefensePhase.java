@@ -72,7 +72,7 @@ public class AnuDefensePhase extends AbstractAnuPhaseInstance {
                     float r = (float) (AnuBoss.ARENA_RADIUS * Math.sqrt(anu.getRandom().nextFloat()));
                     float t = anu.getRandom().nextFloat() * 2 * Mth.PI;
                     away = new Vec3(anu.getSpawnPos().x + r * Mth.cos(t), anu.getY(), anu.getSpawnPos().z + r * Mth.sin(t));
-                    if (anu.level.isEmptyBlock(new BlockPos(away)) && away.subtract(player.position()).horizontalDistance() > 5) {
+                    if (anu.level.isEmptyBlock(BlockPos.containing(away)) && away.subtract(player.position()).horizontalDistance() > 5) {
                         break;
                     }
                 }
@@ -112,10 +112,10 @@ public class AnuDefensePhase extends AbstractAnuPhaseInstance {
             } else if (summonDefenses) {
                 anu.playSound(SoundEvents.STONE_HIT, 1, 1);
                 Vec3 pos = anu.position();
-                AnuDefenseHut.generateDefenseHutP2(level, new BlockPos(pos));
-                AnuDefenseHut.generateDefenseHutP2(level, new BlockPos(pos.add(0, 1, 0)));
-                AnuDefenseHut.generateDefenseHutP2(level, new BlockPos(pos.add(0, 2, 0)));
-                AnuDefenseHut.generateDefenseHutP1(level, new BlockPos(pos.add(0, 4, 0)));
+                AnuDefenseHut.generateDefenseHutP2(level, BlockPos.containing(pos));
+                AnuDefenseHut.generateDefenseHutP2(level, BlockPos.containing(pos.add(0, 1, 0)));
+                AnuDefenseHut.generateDefenseHutP2(level, BlockPos.containing(pos.add(0, 2, 0)));
+                AnuDefenseHut.generateDefenseHutP1(level, BlockPos.containing(pos.add(0, 4, 0)));
             }
         }
         if (summonPiglin) {

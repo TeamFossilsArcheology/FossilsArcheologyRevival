@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "fossil:palm_fence_gate"
-  }
+  },
+  "show_notification": true
 }

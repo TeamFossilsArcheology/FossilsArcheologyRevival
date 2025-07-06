@@ -76,7 +76,7 @@ public class WaterPathNavigation extends PlayerPathNavigation {
         setSweepWantedPosition(vec3.x, getGroundY(vec3), vec3.z);
         if (isDone()) {
             if (pathToPosition != null) {
-                if (pathToPosition.closerToCenterThan(player.position(), PathingRenderer.getBbWidth()) || player.getY() > (double) pathToPosition.getY() && new BlockPos(pathToPosition.getX(), player.getY(), pathToPosition.getZ()).closerToCenterThan(player.position(), PathingRenderer.getBbWidth())) {
+                if (pathToPosition.closerToCenterThan(player.position(), PathingRenderer.getBbWidth()) || player.getY() > (double) pathToPosition.getY() && BlockPos.containing(pathToPosition.getX(), player.getY(), pathToPosition.getZ()).closerToCenterThan(player.position(), PathingRenderer.getBbWidth())) {
                     pathToPosition = null;
                 } else {
                     setNextWantedPosition(pathToPosition.getX(), pathToPosition.getY(), pathToPosition.getZ());

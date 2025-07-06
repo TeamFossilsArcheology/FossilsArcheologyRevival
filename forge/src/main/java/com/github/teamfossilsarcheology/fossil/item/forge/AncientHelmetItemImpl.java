@@ -17,12 +17,12 @@ import java.util.function.Consumer;
 
 public class AncientHelmetItemImpl extends AncientHelmetItem {
 
-    public AncientHelmetItemImpl(ArmorMaterial armorMaterial, EquipmentSlot slot, Properties properties) {
-        super(armorMaterial, slot, properties);
+    public AncientHelmetItemImpl(ArmorMaterial armorMaterial, Type type, Properties properties) {
+        super(armorMaterial, type, properties);
     }
 
-    public static ArmorItem get(ArmorMaterial material, EquipmentSlot slot, Item.Properties properties) {
-        return new AncientHelmetItemImpl(material, slot, properties);
+    public static ArmorItem get(ArmorMaterial material, Type type, Item.Properties properties) {
+        return new AncientHelmetItemImpl(material, type, properties);
     }
 
     @Override

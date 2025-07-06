@@ -13,5 +13,6 @@
   ],
   "result": {
     "item": "fossil:vase_amphora_damaged"
-  }
+  },
+  "show_notification": true
 }

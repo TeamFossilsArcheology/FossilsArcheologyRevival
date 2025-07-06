@@ -114,8 +114,8 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
         Advancement.Builder builder = Advancement.Builder.advancement().display(item, title(key), description(key),
                         null, FrameType.TASK, true, true, false)
                 .parent(parent).requirements(RequirementsStrategy.OR);
-        for (int i = 0; i < items.length; i++) {
-            builder.addCriterion(key(items[i].asItem()).getPath(), InventoryChangeTrigger.TriggerInstance.hasItems(items[i]));
+        for (ItemLike itemLike : items) {
+            builder.addCriterion(key(itemLike.asItem()).getPath(), InventoryChangeTrigger.TriggerInstance.hasItems(itemLike));
         }
         return builder.save(consumer, FossilMod.MOD_ID + ":fossil/" + key);
     }

@@ -83,7 +83,7 @@ public class TrilobiteNodeEvaluator extends NodeEvaluator {
         BlockPathTypes blockPathTypes = getCachedBlockType(mob, node.x, node.y + 1, node.z);
         BlockPathTypes blockPathTypes2 = getCachedBlockType(mob, node.x, node.y, node.z);
         if (mob.getPathfindingMalus(blockPathTypes) >= 0.0F && blockPathTypes2 != BlockPathTypes.STICKY_HONEY) {
-            j = Mth.floor(Math.max(1.0F, mob.maxUpStep));
+            j = Mth.floor(Math.max(1.0F, mob.maxUpStep()));
         }
 
         double d = getFloorLevel(new BlockPos(node.x, node.y, node.z));
@@ -264,15 +264,14 @@ public class TrilobiteNodeEvaluator extends NodeEvaluator {
      * Returns a cached path node type for specified position or calculates it
      */
     protected BlockPathTypes getCachedBlockType(Mob entity, int x, int y, int z) {
-        return pathTypesByPosCache.computeIfAbsent(BlockPos.asLong(x, y, z), l ->
-                getBlockPathType(level, x, y, z, entity, entityWidth, entityHeight, entityDepth, false, false));
+        return pathTypesByPosCache.computeIfAbsent(BlockPos.asLong(x, y, z), l -> getBlockPathType(level, x, y, z, entity));
     }
 
     @Override
-    public @NotNull BlockPathTypes getBlockPathType(BlockGetter blockaccess, int x, int y, int z, Mob entityliving, int xSize, int ySize, int zSize, boolean canBreakDoors, boolean canEnterDoors) {
+    public @NotNull BlockPathTypes getBlockPathType(BlockGetter blockaccess, int x, int y, int z, Mob entityliving) {
         EnumSet<BlockPathTypes> enumSet = EnumSet.noneOf(BlockPathTypes.class);
         BlockPathTypes blockPathTypes = BlockPathTypes.BLOCKED;
-        blockPathTypes = getBlockPathTypes(blockaccess, x, y, z, xSize, ySize, zSize, enumSet, blockPathTypes);
+        blockPathTypes = getBlockPathTypes(blockaccess, x, y, z, enumSet, blockPathTypes);
         BlockPathTypes result = BlockPathTypes.BLOCKED;
 
         for (BlockPathTypes tested : enumSet) {
@@ -285,17 +284,16 @@ public class TrilobiteNodeEvaluator extends NodeEvaluator {
             }
         }
 
-        return blockPathTypes == BlockPathTypes.OPEN && entityliving.getPathfindingMalus(result) == 0 && xSize <= 1 ? BlockPathTypes.OPEN : result;
+        return blockPathTypes == BlockPathTypes.OPEN && entityliving.getPathfindingMalus(result) == 0 && entityWidth <= 1 ? BlockPathTypes.OPEN : result;
     }
 
     /**
      * Populates the nodeTypeEnum with all the surrounding node types and returns the center one
      */
-    public BlockPathTypes getBlockPathTypes(BlockGetter level, int x, int y, int z, int xSize, int ySize, int zSize,
-                                            Set<BlockPathTypes> nodeTypeEnum, BlockPathTypes nodeType) {
-        for (int i = 0; i < xSize; i++) {
-            for (int j = 0; j < ySize; j++) {
-                for (int k = 0; k < zSize; k++) {
+    public BlockPathTypes getBlockPathTypes(BlockGetter level, int x, int y, int z, Set<BlockPathTypes> nodeTypeEnum, BlockPathTypes nodeType) {
+        for (int i = 0; i < entityWidth; i++) {
+            for (int j = 0; j < entityHeight; j++) {
+                for (int k = 0; k < entityDepth; k++) {
                     int l = i + x;
                     int m = j + y;
                     int n = k + z;

@@ -111,7 +111,7 @@ public class LeapSystem extends AISystem {
             }
             if (isAttackRiding() && target != null) {
                 if (mob.tickCount % 20 == 0) {
-                    target.hurt(DamageSource.mobAttack(mob), (float) mob.getAttributeValue(Attributes.ATTACK_DAMAGE));
+                    target.hurt(mob.level.damageSources().mobAttack(mob), (float) mob.getAttributeValue(Attributes.ATTACK_DAMAGE));
                 }
                 if (target.isDeadOrDying()) {
                     stopAttackRiding();
@@ -157,7 +157,7 @@ public class LeapSystem extends AISystem {
             setLeapFlying(false);
             setAttackRiding(true);
         } else {
-            target.hurt(DamageSource.mobAttack(mob), (float) mob.getAttributeValue(Attributes.ATTACK_DAMAGE));
+            target.hurt(mob.level.damageSources().mobAttack(mob), (float) mob.getAttributeValue(Attributes.ATTACK_DAMAGE));
         }
     }
 

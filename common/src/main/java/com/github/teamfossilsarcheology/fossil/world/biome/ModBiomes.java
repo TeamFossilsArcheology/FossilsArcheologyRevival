@@ -47,13 +47,13 @@ public class ModBiomes {
         biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_STRUCTURES, ModPlacedFeatures.VOLCANO_FOSSIL_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, ModPlacedFeatures.VOLCANO_CONE_KEY);
 
-        return biome(Biome.Precipitation.NONE, 2, 0, 0x981010, 0x4c0808, 0x504040, calculateSkyColor(2),
+        return biome(false, 2, 0, 0x981010, 0x4c0808, 0x504040, calculateSkyColor(2),
                 new MobSpawnSettings.Builder(), biomeBuilder);
     }
 
     public static Biome treasureRoom(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
         BiomeGenerationSettings.Builder biomeBuilder = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers);
-        return biome(Biome.Precipitation.NONE, 0.5f, 0.5f, 0, 0, 0, 0,
+        return biome(false, 0.5f, 0.5f, 0, 0, 0, 0,
                 new MobSpawnSettings.Builder(), biomeBuilder);
     }
 
@@ -62,7 +62,7 @@ public class ModBiomes {
         MobSpawnSettings.Builder mobs = new MobSpawnSettings.Builder();
         mobs.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.PIGLIN, 2, 1, 8));
         mobs.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(ModEntities.SENTRY_PIGLIN.get(), 6, 1, 8));
-        return biome(Biome.Precipitation.NONE, 0.5f, 0.5f, 0x3F76E4, 0x50533, 0, 0,
+        return biome(false, 0.5f, 0.5f, 0x3F76E4, 0x50533, 0, 0,
                 mobs, biomeBuilder);
     }
 
@@ -71,10 +71,10 @@ public class ModBiomes {
         return Mth.hsvToRgb(0.62222224f - i * 0.05f, 0.5f + i * 0.1f, 1.0f);
     }
 
-    private static Biome biome(Biome.Precipitation precipitation, float temperature, float downfall, int waterColor,
+    private static Biome biome(boolean precipitation, float temperature, float downfall, int waterColor,
                                int waterFogColor, int fogColor, int skyColor, MobSpawnSettings.Builder spawnBuilder,
                                BiomeGenerationSettings.Builder biomeBuilder) {
-        return new Biome.BiomeBuilder().precipitation(precipitation).temperature(temperature).downfall(downfall)
+        return new Biome.BiomeBuilder().hasPrecipitation(precipitation).temperature(temperature).downfall(downfall)
                 .specialEffects(new BiomeSpecialEffects.Builder().waterColor(waterColor).waterFogColor(waterFogColor).fogColor(fogColor).skyColor(
                         skyColor).build())
                 .mobSpawnSettings(spawnBuilder.build())

@@ -40,13 +40,13 @@ public class PrehistoricWallClimberNavigation extends PrehistoricPathNavigation 
             if (pathToPosition != null) {
                 float width = mob.getBbWidth();
                 if (width > 1) {
-                    if (pathToPosition.closerToCenterThan(mob.position(), width) || (mob.getY() > pathToPosition.getY() && (new BlockPos(pathToPosition.getX(), mob.getY(), pathToPosition.getZ())).closerToCenterThan(mob.position(), width))) {
+                    if (pathToPosition.closerToCenterThan(mob.position(), width) || (mob.getY() > pathToPosition.getY() && (BlockPos.containing(pathToPosition.getX(), mob.getY(), pathToPosition.getZ())).closerToCenterThan(mob.position(), width))) {
                         pathToPosition = null;
                     } else {
                         mob.getMoveControl().setWantedPosition(pathToPosition.getX(), pathToPosition.getY(), pathToPosition.getZ(), this.speedModifier);
                     }
                 } else {
-                    if (pathToPosition.distToCenterSqr(mob.position()) < width * 2 || (mob.getY() > pathToPosition.getY() && new BlockPos(pathToPosition.getX(), mob.getY(), pathToPosition.getZ()).distToCenterSqr(mob.position()) < width * 2)) {
+                    if (pathToPosition.distToCenterSqr(mob.position()) < width * 2 || (mob.getY() > pathToPosition.getY() && BlockPos.containing(pathToPosition.getX(), mob.getY(), pathToPosition.getZ()).distToCenterSqr(mob.position()) < width * 2)) {
                         pathToPosition = null;
                     } else {
                         mob.getMoveControl().setWantedPosition(pathToPosition.getX(), pathToPosition.getY(), pathToPosition.getZ(), this.speedModifier);

@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "fossil:sifter"
-  }
+  },
+  "show_notification": true
 }

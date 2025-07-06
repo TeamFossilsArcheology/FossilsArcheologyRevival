@@ -23,6 +23,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
@@ -168,7 +169,7 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         Entity trueSource = source.getEntity();
-        if (source == DamageSource.IN_WALL || source.isExplosion() && trueSource == null) {
+        if (source == level.damageSources().inWall() || source.is(DamageTypeTags.IS_EXPLOSION) && trueSource == null) {
             return false;
         }
         phaseSystem.getCurrentPhase().onHurt(source, amount);
@@ -176,7 +177,7 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
             super.hurt(source, 20.0f);
             return true;
         }
-        if (source == DamageSource.OUT_OF_WORLD && getY() < level.getMinBuildHeight()) {
+        if (source == level.damageSources().outOfWorld() && getY() < level.getMinBuildHeight()) {
             moveTo(spawnPosition);
             return false;
         }
@@ -186,7 +187,7 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
                 player.displayClientMessage(ANU_COMBAT_ANCIENT, false);
             } else if (itemStack.getItem() instanceof SwordItem) {
                 player.displayClientMessage(ANU_COMBAT_SWORD, false);
-            } else if (source.isProjectile()) {
+            } else if (source.is(DamageTypeTags.IS_PROJECTILE)) {
                 player.displayClientMessage(ANU_COMBAT_BOW, false);
             } else if (itemStack.isEmpty()) {
                 player.displayClientMessage(ANU_COMBAT_FIST, false);

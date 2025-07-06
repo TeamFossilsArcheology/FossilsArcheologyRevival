@@ -132,7 +132,7 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
     private ItemStack checkSmelt(ItemStack input, ItemStack fuel) {
         WorktableRecipe recipeWorktable = ModRecipes.getWorktableRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(input, fuel), level);
         if (recipeWorktable != null) {
-            return recipeWorktable.getResultItem();
+            return recipeWorktable.getResultItem(level.registryAccess());
         }
         return ItemStack.EMPTY;
     }

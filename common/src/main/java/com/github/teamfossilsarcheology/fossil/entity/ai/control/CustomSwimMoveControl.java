@@ -53,7 +53,7 @@ public class CustomSwimMoveControl<T extends Prehistoric & SwimmingAnimal> exten
                     float l = Mth.sin(mob.getXRot() * Mth.DEG_TO_RAD);
                     mob.zza = k * i;
                     mob.yya = -l * i;
-                    if (mob.isAmphibious() && mob.level.getFluidState(new BlockPos(wantedX, wantedY, wantedZ)).isEmpty()) {
+                    if (mob.isAmphibious() && mob.level.getFluidState(BlockPos.containing(wantedX, wantedY, wantedZ)).isEmpty()) {
                         mob.getJumpControl().jump();
                         operation = MoveControl.Operation.JUMPING;
                     }

@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "fossil:toy_scratching_post_birch"
-  }
+  },
+  "show_notification": true
 }

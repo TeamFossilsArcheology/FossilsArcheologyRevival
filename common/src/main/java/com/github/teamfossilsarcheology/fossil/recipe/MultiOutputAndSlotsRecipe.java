@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -62,7 +63,7 @@ public abstract class MultiOutputAndSlotsRecipe implements Recipe<Container> {
     }
 
     @Override
-    public @NotNull ItemStack assemble(Container container) {
+    public @NotNull ItemStack assemble(Container container, RegistryAccess registryAccess) {
         if (container instanceof BlockEntity blockEntity) {
             return weightedOutputs.higherEntry(blockEntity.getLevel().random.nextDouble() * weightedOutputs.lastKey()).getValue().copy();
         }
@@ -75,7 +76,7 @@ public abstract class MultiOutputAndSlotsRecipe implements Recipe<Container> {
     }
 
     @Override
-    public @NotNull ItemStack getResultItem() {
+    public @NotNull ItemStack getResultItem(RegistryAccess registryAccess) {
         return ItemStack.EMPTY;
     }
 

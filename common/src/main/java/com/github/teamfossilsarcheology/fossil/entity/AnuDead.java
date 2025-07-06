@@ -76,7 +76,7 @@ public class AnuDead extends LivingEntity {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source == DamageSource.OUT_OF_WORLD) {
+        if (source == level.damageSources().outOfWorld()) {
             discard();
             return true;
         }

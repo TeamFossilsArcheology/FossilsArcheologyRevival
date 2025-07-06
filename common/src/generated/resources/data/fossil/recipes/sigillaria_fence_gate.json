@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "fossil:sigillaria_fence_gate"
-  }
+  },
+  "show_notification": true
 }

@@ -60,8 +60,8 @@ public class C2SStructureMessage {
             Prehistoric prehistoric = toAdd.get(i);
             double xOffset = i * 5d + 3;
             List<Instruction> instructions = List.of(
-                    new Instruction.TeleportTo(new BlockPos(xOffset, 120, 0), 0),
-                    new Instruction.MoveTo(new BlockPos(xOffset, 120, 45)));
+                    new Instruction.TeleportTo(BlockPos.containing(xOffset, 120, 0), 0),
+                    new Instruction.MoveTo(BlockPos.containing(xOffset, 120, 45)));
             prehistoric.finalizeSpawn(level, level.getCurrentDifficultyAt(prehistoric.blockPosition()), MobSpawnType.SPAWN_EGG, null, null);
             prehistoric.moveTo(xOffset, 120, 0, 0, 0);
             if (prehistoric instanceof PrehistoricSwimming swimming && !swimming.isAmphibious()) {

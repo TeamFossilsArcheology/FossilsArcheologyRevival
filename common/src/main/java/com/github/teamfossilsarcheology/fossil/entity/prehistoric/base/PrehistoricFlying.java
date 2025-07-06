@@ -189,7 +189,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     }
 
     @Override
-    public boolean canJump(Player player) {
+    public boolean canJump() {
         return false;
     }
 
@@ -218,7 +218,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
             }
         } else {
             setDeltaMovement(Vec3.ZERO);
-            calculateEntityAnimation(this, this instanceof FlyingAnimal);
+            calculateEntityAnimation(this instanceof FlyingAnimal);
         }
     }
 
@@ -305,7 +305,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
             int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z);
             pos = new BlockPos.MutableBlockPos(x, y - 1, z);
         } else {
-            pos = new BlockPos(vec3).mutable().move(Direction.DOWN);
+            pos = BlockPos.containing(vec3).mutable().move(Direction.DOWN);
         }
         if (force || GoalUtils.isSolid(this, pos)) {
             BlockHitResult result = level.clip(new ClipContext(position(), Vec3.atCenterOf(pos), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
@@ -396,7 +396,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         float angle = (Mth.DEG_TO_RAD * yBodyRot) + 3.15f + (random.nextFloat() * neg);
         double extraX = radius * Mth.sin((float) (Math.PI + angle));
         double extraZ = radius * Mth.cos(angle);
-        BlockPos radialPos = new BlockPos(getX() + extraX, 0, getZ() + extraZ);
+        BlockPos radialPos = BlockPos.containing(getX() + extraX, 0, getZ() + extraZ);
         BlockPos ground = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, radialPos);
         int distFromGround = (int) getY() - ground.getY();
         BlockPos newPos = radialPos.above(distFromGround > 16 ? (int) Math.min(FossilConfig.getInt(FossilConfig.FLYING_TARGET_MAX_HEIGHT), getY() + random.nextInt(16) - 8) : (int) getY() + random.nextInt(16) + 1);

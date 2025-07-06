@@ -115,7 +115,7 @@ public class PlayGoal extends Goal {
                 dino.getNavigation().stop();
             }
             if (attackDamageTick > 0 && currentTime == attackDamageTick) {
-                target.hurt(DamageSource.mobAttack(dino), 0);
+                target.hurt(dino.level.damageSources().mobAttack(dino), 0);
                 attackDamageTick = -1;
             }
         }

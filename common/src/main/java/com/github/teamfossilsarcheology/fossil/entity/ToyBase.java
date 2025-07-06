@@ -6,7 +6,9 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
@@ -62,12 +64,12 @@ public abstract class ToyBase extends Entity {
                 prehistoric.moodSystem.useToy(moodBonus);
                 playSound(attackNoise, 1, getVoicePitch());
                 return false;
-            } else if (source == DamageSource.CRAMMING || source.isFire()) {
+            } else if (source == level.damageSources().cramming() || source.is(DamageTypeTags.IS_FIRE)) {
                 Block.popResource(level, blockPosition(), getPickResult());
                 discard();
             }
         }
-        return source != DamageSource.OUT_OF_WORLD;
+        return source != level.damageSources().outOfWorld();
     }
 
     @Override

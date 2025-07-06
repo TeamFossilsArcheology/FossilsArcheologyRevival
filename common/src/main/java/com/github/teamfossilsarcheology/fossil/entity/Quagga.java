@@ -27,9 +27,9 @@ public class Quagga extends AbstractChestedHorse {
 
     @Override
     protected void randomizeAttributes(RandomSource random) {
-        getAttribute(Attributes.MAX_HEALTH).setBaseValue(generateRandomMaxHealth(random));
-        getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(generateRandomSpeed(random));
-        getAttribute(Attributes.JUMP_STRENGTH).setBaseValue(generateRandomJumpStrength(random));
+        getAttribute(Attributes.MAX_HEALTH).setBaseValue(generateMaxHealth(random::nextInt));
+        getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(generateSpeed(random::nextDouble));
+        getAttribute(Attributes.JUMP_STRENGTH).setBaseValue(generateJumpStrength(random::nextDouble));
     }
 
     @Override

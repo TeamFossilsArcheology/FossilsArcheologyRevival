@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import it.unimi.dsi.fastutil.Pair;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -18,7 +19,6 @@ import java.util.List;
 
 public class InstructionRenderUtil {
     public static void renderTextBatch(PoseStack poseStack, Minecraft minecraft, List<Pair<Vec3, Instruction>> positions) {
-        RenderSystem.enableTexture();
         RenderSystem.depthMask(true);
         MultiBufferSource.BufferSource bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
 
@@ -44,7 +44,7 @@ public class InstructionRenderUtil {
             if (InstructionTab.highlightInstruction == instruction) {
                 color = Color.RED.hashCode();
             }
-            minecraft.font.drawInBatch(string, g, 0, color, false, poseStack.last().pose(), bufferSource, true, 0, 15728880);
+            minecraft.font.drawInBatch(string, g, 0, color, false, poseStack.last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
             poseStack.popPose();
         }
         bufferSource.endBatch();
@@ -54,7 +54,6 @@ public class InstructionRenderUtil {
     }
 
     public static void renderFloatingText(PoseStack poseStack, Minecraft minecraft, String text, Vec3 pos) {
-        RenderSystem.enableTexture();
         RenderSystem.depthMask(true);
         MultiBufferSource.BufferSource bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
 
@@ -65,7 +64,7 @@ public class InstructionRenderUtil {
         poseStack.scale(-1, 1, 1);
         float g = -minecraft.font.width(text) / 2f;
         int color = -1;
-        minecraft.font.drawInBatch(text, g, 0, color, false, poseStack.last().pose(), bufferSource, true, 0, 15728880);
+        minecraft.font.drawInBatch(text, g, 0, color, false, poseStack.last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
         bufferSource.endBatch();
         RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.enableDepthTest();

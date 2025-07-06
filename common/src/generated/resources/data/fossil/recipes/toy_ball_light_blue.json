@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "fossil:toy_ball_light_blue"
-  }
+  },
+  "show_notification": true
 }

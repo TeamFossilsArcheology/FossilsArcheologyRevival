@@ -191,7 +191,7 @@ public class CultureVatBlockEntityImpl extends ForgeEnergyContainerBlockEntity i
         CultureVatRecipe recipe = ModRecipes.getCultureVatRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(inputStack, fuelStack), level);
         if (recipe != null) {
             ItemStack output = items.get(CultureVatMenu.OUTPUT_SLOT_ID);
-            return output.isEmpty() || output.sameItem(recipe.getResultItem());
+            return output.isEmpty() || output.sameItem(recipe.getResultItem(level.registryAccess()));
         }
         return false;
     }
@@ -215,7 +215,7 @@ public class CultureVatBlockEntityImpl extends ForgeEnergyContainerBlockEntity i
         if (canProcess(fuel)) {
             ItemStack inputStack = items.get(CultureVatMenu.INPUT_SLOT_ID);
             CultureVatRecipe recipe = ModRecipes.getCultureVatRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(inputStack, fuel), level);
-            ItemStack result = recipe.getResultItem();
+            ItemStack result = recipe.getResultItem(level.registryAccess());
             ItemStack output = items.get(CultureVatMenu.OUTPUT_SLOT_ID);
             if (output.isEmpty()) {
                 items.set(CultureVatMenu.OUTPUT_SLOT_ID, result);

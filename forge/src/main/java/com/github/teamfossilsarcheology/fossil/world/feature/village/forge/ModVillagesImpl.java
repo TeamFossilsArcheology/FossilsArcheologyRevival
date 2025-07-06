@@ -9,6 +9,9 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.github.teamfossilsarcheology.fossil.world.feature.village.ModVillages.*;
 
+/**
+ * @see com.github.teamfossilsarcheology.fossil.world.feature.village.ModVillages
+ */
 @Mod.EventBusSubscriber(modid = FossilMod.MOD_ID)
 public class ModVillagesImpl {
     public static void register() {

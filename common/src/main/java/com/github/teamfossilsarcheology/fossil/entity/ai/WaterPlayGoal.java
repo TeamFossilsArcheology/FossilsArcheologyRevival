@@ -72,7 +72,7 @@ public class WaterPlayGoal<T extends Prehistoric & SwimmingAnimal> extends PlayG
             }
         } else if (attackType == ATTACK) {
             if (attackDamageTick > 0 && currentTime >= attackDamageTick) {
-                target.hurt(DamageSource.mobAttack(dino), 0);
+                target.hurt(dino.level.damageSources().mobAttack(dino), 0);
                 attackDamageTick = -1;
                 attackType = -1;
             }

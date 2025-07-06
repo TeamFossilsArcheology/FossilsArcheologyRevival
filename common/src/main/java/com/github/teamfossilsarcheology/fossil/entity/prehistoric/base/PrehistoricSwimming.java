@@ -8,7 +8,7 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.AmphibiousPa
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.animation.PausableAnimationController;
-import com.github.teamfossilsarcheology.fossil.entity.damagesource.ModDamageSources;
+import com.github.teamfossilsarcheology.fossil.entity.damagesource.ModDamageTypes;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.util.Diet;
 import net.minecraft.nbt.CompoundTag;
@@ -205,7 +205,7 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
                 timeInWater++;
                 timeOnLand = 0;
                 setNoGravity(true);
-                if (isSleeping() && level.getBlockState(blockPosition().offset(0, getBbHeight() + 1, 0)).isAir()) {
+                if (isSleeping() && level.getBlockState(blockPosition().offset(0, (int) (getBbHeight() + 1), 0)).isAir()) {
                     setNoGravity(false);
                 }
             } else if (onGround) {
@@ -234,8 +234,8 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
     }
 
     @Override
-    public void calculateEntityAnimation(LivingEntity livingEntity, boolean isFlying) {
-        super.calculateEntityAnimation(livingEntity, isInWater());
+    public void calculateEntityAnimation(boolean isFlying) {
+        super.calculateEntityAnimation(isInWater());
     }
 
     @Override
@@ -251,7 +251,7 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
             setAirSupply(airSupply - 1);
             if (getAirSupply() == -40) {
                 setAirSupply(0);
-                hurt(ModDamageSources.SUFFOCATE, 2);
+                hurt(level.damageSources().source(ModDamageTypes.SUFFOCATE_KEY), 2);
             }
         } else {
             setAirSupply(500);
@@ -344,7 +344,7 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
             steering.waterTravel(new Vec3(newStrafeMovement, travelVector.y, newForwardMovement), (Player) rider);
         } else {
             setDeltaMovement(Vec3.ZERO);
-            calculateEntityAnimation(this, this instanceof FlyingAnimal);
+            calculateEntityAnimation(this instanceof FlyingAnimal);
         }
     }
 

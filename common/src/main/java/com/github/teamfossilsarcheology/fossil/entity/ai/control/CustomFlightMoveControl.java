@@ -104,12 +104,12 @@ public class CustomFlightMoveControl extends SmoothTurningMoveControl {
                 }
                 if (shouldLandAtTarget) {
                     if (!mob.level.isEmptyBlock(mob.blockPosition().below())) {
-                        mob.onReachAirTarget(new BlockPos(flyingWanted));//TODO: Maybe onReachGroundTarget?
+                        mob.onReachAirTarget(BlockPos.containing(flyingWanted));//TODO: Maybe onReachGroundTarget?
                         mob.setFlying(false);
                         operation = Operation.WAIT;
                     }
                 } else {
-                    mob.onReachAirTarget(new BlockPos(flyingWanted));
+                    mob.onReachAirTarget(BlockPos.containing(flyingWanted));
                     operation = Operation.WAIT;
                 }
             }

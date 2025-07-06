@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -47,13 +48,6 @@ public class PathingRenderUtil {
     }
 
     public static void renderTextBatch(PoseStack poseStack, Minecraft minecraft, Node[] nodes, int end) {
-        RenderSystem.enableTexture();
-        boolean transparent = true;
-        if (transparent) {
-            RenderSystem.disableDepthTest();
-        } else {
-            RenderSystem.enableDepthTest();
-        }
         RenderSystem.depthMask(true);
         MultiBufferSource.BufferSource bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
 
@@ -66,12 +60,11 @@ public class PathingRenderUtil {
             poseStack.scale(-1, 1, 1);
             String string = String.format("%s", nodes[i].type);
             float g = -minecraft.font.width(string) / 2f;
-            minecraft.font.drawInBatch(string, g, 0, -1, false, poseStack.last().pose(), bufferSource, transparent, 0, 15728880);
+            minecraft.font.drawInBatch(string, g, 0, -1, false, poseStack.last().pose(), bufferSource, Font.DisplayMode.SEE_THROUGH, 0, 15728880);
             poseStack.popPose();
         }
         bufferSource.endBatch();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.enableDepthTest();
         poseStack.popPose();
     }
 }

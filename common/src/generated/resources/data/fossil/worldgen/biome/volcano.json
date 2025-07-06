@@ -43,7 +43,7 @@
       "minecraft:underwater_magma"
     ]
   ],
-  "precipitation": "none",
+  "has_precipitation": false,
   "spawn_costs": {},
   "spawners": {
     "ambient": [],

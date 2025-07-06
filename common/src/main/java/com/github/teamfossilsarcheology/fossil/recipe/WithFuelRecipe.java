@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.recipe;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -36,7 +37,7 @@ public abstract class WithFuelRecipe implements Recipe<WithFuelRecipe.ContainerW
     }
 
     @Override
-    public @NotNull ItemStack assemble(ContainerWithAnyFuel container) {
+    public @NotNull ItemStack assemble(ContainerWithAnyFuel container, RegistryAccess registryAccess) {
         ItemStack itemStack = result.copy();
         CompoundTag compoundTag = container.getItem(0).getTag();
         if (compoundTag != null) {
@@ -52,7 +53,7 @@ public abstract class WithFuelRecipe implements Recipe<WithFuelRecipe.ContainerW
     }
 
     @Override
-    public @NotNull ItemStack getResultItem() {
+    public @NotNull ItemStack getResultItem(RegistryAccess registryAccess) {
         return result.copy();
     }
 

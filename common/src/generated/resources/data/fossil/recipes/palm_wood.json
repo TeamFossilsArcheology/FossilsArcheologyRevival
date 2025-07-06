@@ -14,5 +14,6 @@
   "result": {
     "count": 3,
     "item": "fossil:palm_wood"
-  }
+  },
+  "show_notification": true
 }

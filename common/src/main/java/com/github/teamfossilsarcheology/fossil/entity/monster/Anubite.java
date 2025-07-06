@@ -3,8 +3,8 @@ package com.github.teamfossilsarcheology.fossil.entity.monster;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -109,9 +109,9 @@ public class Anubite extends PathfinderMob {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (isInvulnerableTo(source) && !source.isExplosion()) {
+        if (isInvulnerableTo(source) && !source.is(DamageTypeTags.IS_EXPLOSION)) {
             return false;
-        } else if (source instanceof IndirectEntityDamageSource) {
+        } else if (source.isIndirect()) {
             for (int i = 0; i < 64; i++) {
                 if (teleportRandomly()) {
                     return true;
@@ -120,7 +120,7 @@ public class Anubite extends PathfinderMob {
             return false;
         } else {
             boolean flag = super.hurt(source, amount);
-            if (source.isBypassArmor() && random.nextInt(10) != 0) {
+            if (source.is(DamageTypeTags.BYPASSES_SHIELD) && random.nextInt(10) != 0) {
                 teleportRandomly();
             }
             return flag;

@@ -12,5 +12,6 @@
   ],
   "result": {
     "item": "fossil:mutant_tree_pressure_plate"
-  }
+  },
+  "show_notification": true
 }

@@ -134,7 +134,7 @@ public class AnalyzerBlockEntityImpl extends FabricEnergyContainerBlockEntity im
             if (recipe == null) {
                 return;
             }
-            ItemStack output = recipe.assemble(this).copy();
+            ItemStack output = recipe.assemble(this, level.registryAccess()).copy();
             if (output.getCount() > 1) {
                 output.setCount(1 + level.random.nextInt(output.getCount() - 1));
             }

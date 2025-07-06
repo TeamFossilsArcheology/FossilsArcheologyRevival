@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "fossil:whip"
-  }
+  },
+  "show_notification": true
 }

@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "fossil:essence_stunted"
-  }
+  },
+  "show_notification": true
 }

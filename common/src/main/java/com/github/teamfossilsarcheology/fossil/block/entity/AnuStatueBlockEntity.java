@@ -21,7 +21,7 @@ public class AnuStatueBlockEntity extends BlockEntity {
     public static void serverTick(Level level, BlockPos pos, BlockState state, AnuStatueBlockEntity blockEntity) {
         if (hasFigurines(level, pos) && hasRedstone(level, pos)) {
             level.explode(null, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 5f, true, Level.ExplosionInteraction.BLOCK);
-            ModEntities.ANU_TOTEM.get().spawn((ServerLevel) level, pos.offset(0.5f, 0, 0.5f), MobSpawnType.EVENT);
+            ModEntities.ANU_TOTEM.get().spawn((ServerLevel) level, pos, MobSpawnType.EVENT);
             level.playSound(null, pos, ModSounds.ANU_TOTEM.get(), SoundSource.BLOCKS, 1, 1);
             level.removeBlock(pos.north().east(), false);
             level.removeBlock(pos.north().west(), false);

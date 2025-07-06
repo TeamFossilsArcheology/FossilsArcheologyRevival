@@ -15,5 +15,6 @@
   "result": {
     "count": 3,
     "item": "fossil:tempskya_door"
-  }
+  },
+  "show_notification": true
 }

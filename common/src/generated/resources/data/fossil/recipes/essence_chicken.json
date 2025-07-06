@@ -17,5 +17,6 @@
   "result": {
     "count": 8,
     "item": "fossil:essence_chicken"
-  }
+  },
+  "show_notification": true
 }

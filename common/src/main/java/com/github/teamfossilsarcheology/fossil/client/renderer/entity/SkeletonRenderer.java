@@ -123,6 +123,11 @@ public class SkeletonRenderer extends EntityRenderer<PrehistoricSkeleton> implem
     }
 
     @Override
+    public void updateAnimatedTextureFrame(PrehistoricSkeleton animatable) {
+
+    }
+
+    @Override
     public void fireCompileRenderLayersEvent() {
 
     }

@@ -1,4 +1,4 @@
-// 1.19.3	2025-06-22T00:46:24.6634315	Item Models: fossil
+// 1.19.4	2025-07-07T01:21:07.6293076	Item Models: fossil
 85278cf934a028444f8b185c2c311b061e0ea0bd assets/fossil/models/item/alligator_gar_dna.json
 51ab511af360e56776aeb0c4922c7c04017afa87 assets/fossil/models/item/allosaurus_dna.json
 7479d6547547a6569fb486a85a75cd7fd3a2c826 assets/fossil/models/item/ankylosaurus_dna.json
@@ -866,6 +866,7 @@ b8cde98f73c44aeb34edf616b6f19bd02af097ed assets/fossil/models/item/toy_ball_whit
 6c1376a527a9266b6d52831acb12f49f43cfe19e assets/fossil/models/item/toy_scratching_post_acacia.json
 51c458a4ebee2d130e6ec97adc1cd1aa8d92bb54 assets/fossil/models/item/toy_scratching_post_bamboo.json
 b17e8bcf2d04a9e8ee7cec97183a1c45b9bfd3eb assets/fossil/models/item/toy_scratching_post_birch.json
+e66464f5990e1138938a15af852770067a504c59 assets/fossil/models/item/toy_scratching_post_cherry.json
 f1412c515eac71cf3571a82601489377982349f1 assets/fossil/models/item/toy_scratching_post_crimson.json
 40ca03cf88b2aa1cfcd0342181b3a68394b688d0 assets/fossil/models/item/toy_scratching_post_dark_oak.json
 48cec41896bc01263a7b5f1f36ea487ea67cd52d assets/fossil/models/item/toy_scratching_post_jungle.json
@@ -876,6 +877,7 @@ bbce03015e623580fe3418e87b5570040373b027 assets/fossil/models/item/toy_scratchin
 f33135a9bc02b70b502bb3ec6aa8d94b4f0e9272 assets/fossil/models/item/toy_tethered_log_acacia.json
 561809f403f02f2db772316d52ca705c532c220f assets/fossil/models/item/toy_tethered_log_bamboo.json
 7631f5e03e8291dc3c292d536bb5096e9e94cace assets/fossil/models/item/toy_tethered_log_birch.json
+f4f4c88a8833c40a90ccf9534832525f66507998 assets/fossil/models/item/toy_tethered_log_cherry.json
 8f280599702642d3a206d6d35b26d3ec0859fa4b assets/fossil/models/item/toy_tethered_log_crimson.json
 a2cbcac565097ffdfc5ba3cbd9fdfdfd0b2c9c4d assets/fossil/models/item/toy_tethered_log_dark_oak.json
 6b9fd26ce3abb8f0a7cc2ae10c58cd2b2fccbb20 assets/fossil/models/item/toy_tethered_log_jungle.json

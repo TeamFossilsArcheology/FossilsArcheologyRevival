@@ -22,6 +22,7 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 public class AncientChestRenderer implements BlockEntityRenderer<AncientChestBlockEntity> {
@@ -78,7 +79,7 @@ public class AncientChestRenderer implements BlockEntityRenderer<AncientChestBlo
             }
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
-            itemRenderer.renderStatic(mc.player, new ItemStack(ModItems.ANCIENT_KEY.get()), ItemTransforms.TransformType.FIXED, false, poseStack,
+            itemRenderer.renderStatic(mc.player, new ItemStack(ModItems.ANCIENT_KEY.get()), ItemDisplayContext.FIXED, false, poseStack,
                     bufferSource, mc.level, packedLight, packedOverlay, 0);
             poseStack.popPose();
         }

@@ -2,7 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming;
 
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoHurtByTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
-import com.github.teamfossilsarcheology.fossil.entity.damagesource.ModDamageSources;
+import com.github.teamfossilsarcheology.fossil.entity.damagesource.ModDamageTypes;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
@@ -36,7 +36,7 @@ public class Megalodon extends PrehistoricSwimming {
             setAirSupply(airSupply - 1);
             if (getAirSupply() == -20) {
                 setAirSupply(0);
-                hurt(ModDamageSources.SUFFOCATE, 2.0f);
+                hurt(level.damageSources().source(ModDamageTypes.SUFFOCATE_KEY), 2.0f);
             }
         } else {
             setAirSupply(1000);

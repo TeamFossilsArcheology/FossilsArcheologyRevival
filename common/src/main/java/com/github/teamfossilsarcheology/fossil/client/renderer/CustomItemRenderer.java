@@ -13,11 +13,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
@@ -37,7 +37,7 @@ public class CustomItemRenderer extends BlockEntityWithoutLevelRenderer {
     }
 
     @Override
-    public void renderByItem(ItemStack stack, ItemTransforms.TransformType transformType, PoseStack poseStack, MultiBufferSource buffer,
+    public void renderByItem(ItemStack stack, ItemDisplayContext itemDisplayContext, PoseStack poseStack, MultiBufferSource buffer,
                              int packedLight, int packedOverlay) {
         Item item = stack.getItem();
         if (item instanceof BlockItem) {
@@ -57,6 +57,6 @@ public class CustomItemRenderer extends BlockEntityWithoutLevelRenderer {
             }
             return;
         }
-        super.renderByItem(stack, transformType, poseStack, buffer, packedLight, packedOverlay);
+        super.renderByItem(stack, itemDisplayContext, poseStack, buffer, packedLight, packedOverlay);
     }
 }

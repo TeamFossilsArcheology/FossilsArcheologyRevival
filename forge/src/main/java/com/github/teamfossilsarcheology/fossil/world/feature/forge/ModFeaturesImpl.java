@@ -9,6 +9,9 @@ import net.minecraftforge.registries.RegisterEvent;
 
 import static com.github.teamfossilsarcheology.fossil.world.feature.ModFeatures.*;
 
+/**
+ * @see com.github.teamfossilsarcheology.fossil.world.feature.ModFeatures
+ */
 @Mod.EventBusSubscriber(modid = FossilMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModFeaturesImpl {
     @SubscribeEvent

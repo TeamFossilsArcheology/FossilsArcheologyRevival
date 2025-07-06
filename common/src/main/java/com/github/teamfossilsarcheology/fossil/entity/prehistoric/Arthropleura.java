@@ -224,7 +224,7 @@ public class Arthropleura extends Prehistoric {
         public void start() {
             Vec3 vec3 = findPos();
             if (vec3 != null) {
-                Arthropleura.this.navigation.moveTo(Arthropleura.this.navigation.createPath(new BlockPos(vec3), 1), 1.0);
+                Arthropleura.this.navigation.moveTo(Arthropleura.this.navigation.createPath(BlockPos.containing(vec3), 1), 1.0);
             }
         }
 

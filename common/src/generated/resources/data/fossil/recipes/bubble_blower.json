@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "fossil:bubble_blower"
-  }
+  },
+  "show_notification": true
 }

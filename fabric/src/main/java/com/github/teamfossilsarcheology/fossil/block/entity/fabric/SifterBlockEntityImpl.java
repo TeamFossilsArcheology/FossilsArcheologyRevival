@@ -106,7 +106,7 @@ public class SifterBlockEntityImpl extends FabricContainerBlockEntity implements
     protected void createItem() {
         if (canProcess()) {
             ItemStack result = ModRecipes.getSifterRecipeForItem(new SimpleContainer(items.get(0)), level)
-                    .assemble(this).copy();
+                    .assemble(this, level.registryAccess()).copy();
             for (int slot = 1; slot <= 5; slot++) {
                 ItemStack stackInSlot = items.get(slot);
                 if (stackInSlot.sameItem(result) && stackInSlot.getCount() + result.getCount() < 64) {

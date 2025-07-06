@@ -16,6 +16,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -112,7 +113,7 @@ public class Mammoth extends PrehistoricFlocking implements PrehistoricShearable
 
     @Override
     public void aiStep() {
-        boolean tooWarm = level.getBiome(blockPosition()).value().shouldSnowGolemBurn(blockPosition());
+        boolean tooWarm = level.getBiome(blockPosition()).is(BiomeTags.SNOW_GOLEM_MELTS);
         if (tooWarm && getEffect(MobEffects.WEAKNESS) != null && !isSheared()) {
             addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 60, 1));
         }

@@ -19,12 +19,12 @@ import java.util.function.Supplier;
 public class AncientHelmetItemImpl extends AncientHelmetItem {
     private final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
 
-    public AncientHelmetItemImpl(ArmorMaterial materialIn, EquipmentSlot slot, Item.Properties builder) {
-        super(materialIn, slot, builder);
+    public AncientHelmetItemImpl(ArmorMaterial armorMaterial, Type type, Properties properties) {
+        super(armorMaterial, type, properties);
     }
 
-    public static ArmorItem get(ArmorMaterial material, EquipmentSlot slot, Item.Properties properties) {
-        return new AncientHelmetItemImpl(material, slot, properties);
+    public static ArmorItem get(ArmorMaterial material, Type type, Item.Properties properties) {
+        return new AncientHelmetItemImpl(material, type, properties);
     }
 
     @Override
@@ -45,6 +45,7 @@ public class AncientHelmetItemImpl extends AncientHelmetItem {
             }
         });
     }
+
     @Override
     public Supplier<Object> getRenderProvider() {
         return renderProvider;

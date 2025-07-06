@@ -26,7 +26,7 @@ public abstract class WithFuelDisplay implements Display {
 
     protected WithFuelDisplay(WithFuelRecipe recipe) {
         this(EntryIngredients.ofIngredient(recipe.getInput()), EntryIngredients.ofIngredient(recipe.getFuel()),
-                EntryStacks.of(recipe.getResultItem()), recipe.getId());
+                EntryStacks.of(recipe.getResultItem(null)), recipe.getId());
     }
 
     protected WithFuelDisplay(EntryIngredient input, EntryIngredient fuel, EntryStack<?> output, ResourceLocation location) {

@@ -27,7 +27,7 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), (DataProvider.Factory<DataProvider>) output -> new ModItemProvider(output, efh));
         var blockTags = new ModBlockTagsProvider(generator.getPackOutput(), lookup, efh);
         generator.addProvider(event.includeServer(), blockTags);
-        generator.addProvider(event.includeServer(), (DataProvider.Factory<DataProvider>) output -> new ModItemTagsProvider(output, lookup, blockTags, efh));
+        generator.addProvider(event.includeServer(), (DataProvider.Factory<DataProvider>) output -> new ModItemTagsProvider(output, lookup, blockTags.contentsGetter(), efh));
         generator.addProvider(event.includeServer(), (DataProvider.Factory<DataProvider>) output -> new ModEntityTypeTagsProvider(output, lookup, efh));
         generator.addProvider(event.includeServer(), (DataProvider.Factory<DataProvider>) ModRecipeProvider::new);
         generator.addProvider(event.includeServer(), (DataProvider.Factory<DataProvider>) output -> new ForgeAdvancementProvider(

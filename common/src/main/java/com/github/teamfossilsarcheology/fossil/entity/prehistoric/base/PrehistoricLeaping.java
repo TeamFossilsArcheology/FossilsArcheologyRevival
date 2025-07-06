@@ -140,7 +140,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
         var controller = new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::leapingPredicate);
         registerEatingListeners(controller, effect -> {
             if ("land".equals(effect) && isOnGround()) {
-                BlockState below = level.getBlockState(new BlockPos(getX(), getY() - 0.2, getZ()));
+                BlockState below = level.getBlockState(BlockPos.containing(getX(), getY() - 0.2, getZ()));
                 if (below.getRenderShape() != RenderShape.INVISIBLE) {
                     Vec3 vec3 = getDeltaMovement();
                     level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, below),

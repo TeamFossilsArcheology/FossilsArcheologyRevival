@@ -110,13 +110,13 @@ public class FilterTab {
         }
 
         @Override
-        public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+        public void renderWidget(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
             RenderSystem.setShaderTexture(0, FILTER_TEXTURE);
             ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
             float j = left ? 0 : 64;
             j = filter.enabled ? j + 32 : j;
             GuiComponent.blit(poseStack, getX(), getY(), 0, j, 0, 32, 28, 128, 128);
-            itemRenderer.renderAndDecorateItem(filter.icon, getX() + 8, getY() + 6);
+            itemRenderer.renderAndDecorateItem(poseStack, filter.icon, getX() + 8, getY() + 6);
             if (mouseX > getX() && mouseY > getY() && mouseX < getX() + 32 && mouseY < getY() + 28) {
                 screen.renderTooltip(poseStack, filter.tooltip, mouseX, mouseY);
             }

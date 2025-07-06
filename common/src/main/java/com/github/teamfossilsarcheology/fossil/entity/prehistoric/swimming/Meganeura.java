@@ -151,7 +151,7 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source == DamageSource.IN_WALL) {
+        if (source == level.damageSources().inWall()) {
             return false;
         }
         boolean hurt = super.hurt(source, amount);

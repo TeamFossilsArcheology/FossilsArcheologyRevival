@@ -108,7 +108,7 @@ public class AnuFlightPhase extends AbstractAnuPhaseInstance {
             float t = anu.getRandom().nextFloat() * 2 * Mth.PI;
             float targetY = Mth.randomBetween(anu.getRandom(), -0, 4);
             targetLocation = anu.getSpawnPos().add(r * Mth.cos(t), targetY, r * Mth.sin(t));
-            if (anu.level.isEmptyBlock(new BlockPos(targetLocation))) {
+            if (anu.level.isEmptyBlock(BlockPos.containing(targetLocation))) {
                 if (player != null) {
                     return targetLocation.subtract(player.position()).horizontalDistance() > 5;
                 }

@@ -34,7 +34,7 @@ public class BatchTestCommand {
         Collection<GameTestBatch> batched = groupTestsIntoBatches(collection, batchName);
         say(source, "Running all " + batched.size() + " tests in batch " + batchName + "...");
         GameTestRegistry.forgetFailedTests();
-        BlockPos blockPos = new BlockPos(source.getPosition());
+        BlockPos blockPos = BlockPos.containing(source.getPosition());
         BlockPos blockPos2 = new BlockPos(blockPos.getX(), source.getLevel().getHeightmapPos(Heightmap.Types.WORLD_SURFACE, blockPos).getY(), blockPos.getZ() + 3);
         Collection<GameTestInfo> collection2 = GameTestRunner.runTestBatches(batched, blockPos2, Rotation.NONE, source.getLevel(), GameTestTicker.SINGLETON, 8);
         MultipleTestTracker multipleTestTracker = new MultipleTestTracker(collection2);

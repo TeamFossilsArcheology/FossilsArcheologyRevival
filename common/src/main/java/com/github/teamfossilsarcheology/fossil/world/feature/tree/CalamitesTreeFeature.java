@@ -62,7 +62,7 @@ public class CalamitesTreeFeature extends CustomTreeFeature {
 
     private void genCircle(WorldGenLevel level, BlockPos pos, float size, boolean spikes) {
         BlockState leaves = ModBlocks.CALAMITES_LEAVES.get().defaultBlockState();
-        for (BlockPos blockpos : BlockPos.betweenClosed(pos.offset(-size, 0, -size), pos.offset(size, 0, size))) {
+        for (BlockPos blockpos : BlockPos.betweenClosed(pos.offset((int) -size, 0, (int) -size), pos.offset((int) size, 0, (int) size))) {
             int distanceX = Math.abs(blockpos.getX() - pos.getX());
             int distanceZ = Math.abs(blockpos.getZ() - pos.getZ());
             if (spikes) {

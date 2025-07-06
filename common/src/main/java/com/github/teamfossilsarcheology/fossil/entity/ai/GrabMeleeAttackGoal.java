@@ -62,7 +62,7 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal<PrehistoricSwimming> 
             for (Entity passenger : mob.getPassengers()) {
                 if (passenger instanceof LivingEntity && passenger != mob.getRidingPlayer()) {
                     if (mob.tickCount % 20 == 0) {
-                        boolean hurt = passenger.hurt(DamageSource.mobAttack(mob), (float) mob.getAttributeValue(Attributes.ATTACK_DAMAGE));
+                        boolean hurt = passenger.hurt(mob.level.damageSources().mobAttack(mob), (float) mob.getAttributeValue(Attributes.ATTACK_DAMAGE));
                         if (!hurt || (currentTime >= grabStartTick + GRAB_DURATION && mob.getRandom().nextInt(5) == 0)) {
                             attackEndTick = currentTime + 20;
                             mob.stopGrabAttack(passenger);

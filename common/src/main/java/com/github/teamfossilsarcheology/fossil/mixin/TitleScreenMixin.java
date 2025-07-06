@@ -38,7 +38,6 @@ public abstract class TitleScreenMixin extends Screen {
         if (FossilConfig.isEnabled(FossilConfig.CUSTOM_MAIN_MENU)) {
             fossil$layerTick++;
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.enableTexture();
             RenderSystem.setShaderColor(1, 1, 1, 1);
             RenderSystem.enableBlend();
             RenderSystem.setShaderTexture(0, LAYER_TEXTURE_BACK);

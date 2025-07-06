@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "fossil:bone_boots"
-  }
+  },
+  "show_notification": true
 }

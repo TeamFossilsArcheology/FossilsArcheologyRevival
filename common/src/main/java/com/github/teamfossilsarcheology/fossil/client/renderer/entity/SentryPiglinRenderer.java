@@ -19,7 +19,7 @@ public class SentryPiglinRenderer extends HumanoidMobRenderer<SentryPiglin, Sent
     public SentryPiglinRenderer(EntityRendererProvider.Context context) {
         super(context, new SentryPiglinModel(), 0.5f);
         this.addLayer(new HumanoidArmorLayer<>(this, new HumanoidModel<>(context.bakeLayer(ModelLayers.PIGLIN_BRUTE_INNER_ARMOR)),
-                new HumanoidModel<>(context.bakeLayer(ModelLayers.PIGLIN_BRUTE_OUTER_ARMOR))));
+                new HumanoidModel<>(context.bakeLayer(ModelLayers.PIGLIN_BRUTE_OUTER_ARMOR)), context.getModelManager()));
     }
 
     @Override

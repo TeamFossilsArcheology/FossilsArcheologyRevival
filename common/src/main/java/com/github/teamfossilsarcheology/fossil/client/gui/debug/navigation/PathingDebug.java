@@ -109,7 +109,7 @@ public class PathingDebug {
         Vec3 view = camera.getViewVector(1.0f);
         double range = 30;
         Vec3 end = eye.add(view.x * range, view.y * range, view.z * range);
-        if (!mc.level.getFluidState(new BlockPos(eye)).isEmpty()) {
+        if (!mc.level.getFluidState(BlockPos.containing(eye)).isEmpty()) {
             eye = eye.add(view.scale(2));
         }
         return camera.level.clip(new ClipContext(eye.add(view.scale(pickBlockOffset)), end, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, camera));
@@ -124,7 +124,7 @@ public class PathingDebug {
         Entity camera = mc.getCameraEntity();
         Vec3 eye = camera.getEyePosition();
         Vec3 view = camera.getViewVector(1.0f);
-        return new BlockPos(eye.add(view.scale(pickBlockOffset+1)));
+        return BlockPos.containing(eye.add(view.scale(pickBlockOffset+1)));
     }
 
     public static float getPathfindingMalus(BlockPathTypes nodeType) {

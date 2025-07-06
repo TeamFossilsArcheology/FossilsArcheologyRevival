@@ -136,7 +136,7 @@ public class PlayerNodeEvaluator {
         BlockPathTypes blockTypeAbove = getCachedBlockType(player, node.x, node.y + 1, node.z);
         BlockPathTypes blockType = getCachedBlockType(player, node.x, node.y, node.z);
         if (PathingDebug.getPathfindingMalus(blockTypeAbove) >= 0 && blockType != BlockPathTypes.STICKY_HONEY) {
-            j = Mth.floor(Math.max(1, player.maxUpStep));
+            j = Mth.floor(Math.max(1, player.maxUpStep()));
         }
         if (isNeighborValid(node2 = findAcceptedNode(node.x, node.y, node.z + 1, j, d = getFloorLevel(new BlockPos(node.x, node.y, node.z)), Direction.SOUTH, blockType), node)) {
             nodes[i++] = node2;
@@ -403,9 +403,6 @@ public class PlayerNodeEvaluator {
             if (blockTypeBelow == BlockPathTypes.DAMAGE_FIRE) {
                 blockPathTypes = BlockPathTypes.DAMAGE_FIRE;
             }
-            if (blockTypeBelow == BlockPathTypes.DAMAGE_CACTUS) {
-                blockPathTypes = BlockPathTypes.DAMAGE_CACTUS;
-            }
             if (blockTypeBelow == BlockPathTypes.DAMAGE_OTHER) {
                 blockPathTypes = BlockPathTypes.DAMAGE_OTHER;
             }
@@ -435,9 +432,6 @@ public class PlayerNodeEvaluator {
                     if (l == 0 && n == 0) continue;
                     centerPos.set(i + l, j + m, k + n);
                     BlockState blockState = level.getBlockState(centerPos);
-                    if (blockState.is(Blocks.CACTUS)) {
-                        return BlockPathTypes.DANGER_CACTUS;
-                    }
                     if (blockState.is(Blocks.SWEET_BERRY_BUSH)) {
                         return BlockPathTypes.DANGER_OTHER;
                     }
@@ -464,9 +458,6 @@ public class PlayerNodeEvaluator {
         }
         if (blockState.is(Blocks.POWDER_SNOW)) {
             return BlockPathTypes.POWDER_SNOW;
-        }
-        if (blockState.is(Blocks.CACTUS)) {
-            return BlockPathTypes.DAMAGE_CACTUS;
         }
         if (blockState.is(Blocks.SWEET_BERRY_BUSH)) {
             return BlockPathTypes.DAMAGE_OTHER;

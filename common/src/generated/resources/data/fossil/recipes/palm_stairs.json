@@ -15,5 +15,6 @@
   "result": {
     "count": 4,
     "item": "fossil:palm_stairs"
-  }
+  },
+  "show_notification": true
 }

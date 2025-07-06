@@ -121,7 +121,7 @@ shadowJar {
 remapJar {
     inputFile.set shadowJar.archiveFile
     dependsOn shadowJar
-    //TODO: Needed? archiveAppendix = "forge-$minecraft_version"
+    archiveAppendix = "forge-$minecraft_version"
 }
 
 sourcesJar {

@@ -583,7 +583,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
-    public boolean canJump(Player player) {
+    public boolean canJump() {
         return isVehicle();
     }
 
@@ -603,7 +603,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     // @Override
     public boolean canBeControlledByRider() {
-        return data().canBeRidden() && getControllingPassenger() instanceof LivingEntity rider && isOwnedBy(rider);
+        return data().canBeRidden() && isOwnedBy(getControllingPassenger());
     }
 
     @Override
@@ -650,7 +650,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             }
         } else {
             setDeltaMovement(Vec3.ZERO);
-            calculateEntityAnimation(this, this instanceof FlyingAnimal);
+            calculateEntityAnimation(this instanceof FlyingAnimal);
         }
         if (isOnGround()) {
             playerJumpPendingScale = 0;
@@ -659,18 +659,13 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     @Nullable
-    public Entity getControllingPassenger() {
+    public LivingEntity getControllingPassenger() {
         for (Entity passenger : getPassengers()) {
             if (passenger instanceof Player player && isOwnedBy(player) && getTarget() != passenger) {
                 return player;
             }
         }
         return null;
-    }
-
-    @Override
-    public boolean rideableUnderWater() {
-        return true;
     }
 
     @Override
@@ -718,9 +713,9 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         super.aiStep();
 
         if (getRidingPlayer() != null) {
-            maxUpStep = 1;
+            setMaxUpStep(1);
         } else {
-            maxUpStep = 0.6f;
+            setMaxUpStep(0.6f);
         }
 
         if (!level.isClientSide) {
@@ -779,7 +774,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 }
             }
             if (tickCount % 40 == 0 && getHunger() == 0 && getHealth() > (FossilConfig.isEnabled(FossilConfig.ENABLE_STARVATION) ? 0 : getMaxHealth() / 2)) {
-                hurt(DamageSource.STARVE, 1);
+                hurt(level.damageSources().starve(), 1);
             }
 
             if (aiClimbType() == Climbing.ARTHROPOD) {
@@ -1164,7 +1159,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source == DamageSource.IN_WALL) {
+        if (source == level.damageSources().inWall()) {
             return false;
         }
         boolean hurt = super.hurt(source, amount);
@@ -1465,7 +1460,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public void handleEntityEvent(byte id) {
-        float prev = animationSpeed;
+        float prev = walkAnimation.speed();
         if (id == WHEAT_SEEDS_PARTICLES) {
             Util.spawnItemParticles(this, Items.WHEAT_SEEDS, 3);
         } else if (id == BREAD_PARTICLES) {
@@ -1480,8 +1475,8 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         } else {
             super.handleEntityEvent(id);
         }
-        if (prev != animationSpeed && getAttributeValue(Attributes.KNOCKBACK_RESISTANCE) >= 1) {
-            animationSpeed = 0;
+        if (prev != walkAnimation.speed() && getAttributeValue(Attributes.KNOCKBACK_RESISTANCE) >= 1) {
+            walkAnimation.setSpeed(0);
         }
     }
 

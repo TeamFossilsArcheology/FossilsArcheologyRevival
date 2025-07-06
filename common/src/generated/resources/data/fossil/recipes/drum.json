@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "fossil:drum"
-  }
+  },
+  "show_notification": true
 }

@@ -41,7 +41,7 @@ public class ToyScratchingPost extends ToyBase {
     }
 
     private boolean isOnBlock() {
-        return !level.isEmptyBlock(new BlockPos(position().add(0, -1, 0)));
+        return !level.isEmptyBlock(BlockPos.containing(position().add(0, -1, 0)));
     }
 
     @Nullable

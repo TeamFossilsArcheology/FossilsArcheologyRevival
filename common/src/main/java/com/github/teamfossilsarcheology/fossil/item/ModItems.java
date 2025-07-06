@@ -54,7 +54,7 @@ public class ModItems {
     public static final RegistrySupplier<Item> BROKEN_SWORD = ITEMS.register("broken_sword", () -> new Item(new Item.Properties().arch$tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<Item> BROKEN_HELMET = ITEMS.register("broken_helmet", () -> new Item(new Item.Properties().arch$tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<Item> ANCIENT_SWORD = ITEMS.register("ancient_sword", () -> new AncientSwordItem(Tiers.IRON, 3, -2.4f));
-    public static final RegistrySupplier<Item> ANCIENT_HELMET = ITEMS.register("ancient_helmet", () -> AncientHelmetItem.get(ModArmorMaterials.ANCIENT, EquipmentSlot.HEAD, new Item.Properties().arch$tab(ModTabs.FA_OTHER_ITEM_TAB)));
+    public static final RegistrySupplier<Item> ANCIENT_HELMET = ITEMS.register("ancient_helmet", () -> AncientHelmetItem.get(ModArmorMaterials.ANCIENT, ArmorItem.Type.HELMET, new Item.Properties().arch$tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<Item> FROZEN_MEAT = ITEMS.register("frozen_meat",
             () -> new Item(new Item.Properties().arch$tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<Item> TOOTH_DAGGER = ITEMS.register("tooth_dagger",
@@ -73,13 +73,13 @@ public class ModItems {
     public static final RegistrySupplier<HoeItem> SCARAB_HOE = ITEMS.register("scarab_hoe", () -> new HoeItem(ModToolTiers.SCARAB, -2, -1, new Item.Properties().arch$tab(ModTabs.FA_OTHER_ITEM_TAB)));
 
     public static final RegistrySupplier<Item> BONE_HELMET = ITEMS.register("bone_helmet",
-            () -> new ArmorItem(ModArmorMaterials.BONE, EquipmentSlot.HEAD, new Item.Properties().arch$tab(ModTabs.FA_OTHER_ITEM_TAB)));
+            () -> new ArmorItem(ModArmorMaterials.BONE, ArmorItem.Type.HELMET, new Item.Properties().arch$tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<Item> BONE_CHESTPLATE = ITEMS.register("bone_chestplate",
-            () -> new ArmorItem(ModArmorMaterials.BONE, EquipmentSlot.CHEST, new Item.Properties().arch$tab(ModTabs.FA_OTHER_ITEM_TAB)));
+            () -> new ArmorItem(ModArmorMaterials.BONE, ArmorItem.Type.CHESTPLATE, new Item.Properties().arch$tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<Item> BONE_LEGGINGS = ITEMS.register("bone_leggings",
-            () -> new ArmorItem(ModArmorMaterials.BONE, EquipmentSlot.LEGS, new Item.Properties().arch$tab(ModTabs.FA_OTHER_ITEM_TAB)));
+            () -> new ArmorItem(ModArmorMaterials.BONE, ArmorItem.Type.LEGGINGS, new Item.Properties().arch$tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<Item> BONE_BOOTS = ITEMS.register("bone_boots",
-            () -> new ArmorItem(ModArmorMaterials.BONE, EquipmentSlot.FEET, new Item.Properties().arch$tab(ModTabs.FA_OTHER_ITEM_TAB)));
+            () -> new ArmorItem(ModArmorMaterials.BONE, ArmorItem.Type.BOOTS, new Item.Properties().arch$tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<Item> WHIP = ITEMS.register("whip", WhipItem::new);
     public static final RegistrySupplier<Item> CHICKEN_ESSENCE = ITEMS.register("essence_chicken",
             () -> new DescriptiveItem(new Item.Properties().arch$tab(ModTabs.FA_OTHER_ITEM_TAB)));

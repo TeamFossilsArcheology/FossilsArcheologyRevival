@@ -12,5 +12,6 @@
   ],
   "result": {
     "item": "fossil:vase_kylix_damaged"
-  }
+  },
+  "show_notification": true
 }

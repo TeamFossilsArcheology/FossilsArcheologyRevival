@@ -333,7 +333,7 @@ public class ModBlocks {
     }
 
     private static BlockBehaviour.Properties woodProp(ModWoodTypes.WoodInfo woodInfo) {
-        return Properties.of(Material.WOOD, woodInfo.materialColor()).strength(2, 3).sound(SoundType.WOOD);
+        return Properties.of(Material.WOOD, woodInfo.materialColor()).strength(2, 3).sound(woodInfo.woodType().soundType());
     }
 
     private static RegistrySupplier<Block> planks(ModWoodTypes.WoodInfo woodInfo) {
@@ -353,31 +353,31 @@ public class ModBlocks {
     }
 
     private static RegistrySupplier<FenceGateBlock> fenceGate(ModWoodTypes.WoodInfo woodInfo) {
-        return registerBlock(woodInfo.name() + "_fence_gate", () -> new FenceGateBlock(woodProp(woodInfo), SoundEvents.FENCE_GATE_CLOSE, SoundEvents.FENCE_GATE_OPEN));
+        return registerBlock(woodInfo.name() + "_fence_gate", () -> new FenceGateBlock(woodProp(woodInfo), woodInfo.woodType()));
     }
 
     private static RegistrySupplier<DoorBlock> door(ModWoodTypes.WoodInfo woodInfo) {
-        return registerBlock(woodInfo.name() + "_door", () -> new DoorBlock(woodProp(woodInfo).strength(3).noOcclusion(), SoundEvents.WOODEN_DOOR_CLOSE, SoundEvents.WOODEN_DOOR_OPEN));
+        return registerBlock(woodInfo.name() + "_door", () -> new DoorBlock(woodProp(woodInfo).strength(3).noOcclusion(), woodInfo.setType()));
     }
 
     private static RegistrySupplier<TrapDoorBlock> trapDoor(ModWoodTypes.WoodInfo woodInfo) {
         return registerBlock(woodInfo.name() + "_trapdoor", () -> new TrapDoorBlock(woodProp(woodInfo)
-                .strength(3).noOcclusion().isValidSpawn(ModBlocks::never), SoundEvents.NETHER_WOOD_TRAPDOOR_CLOSE, SoundEvents.NETHER_WOOD_TRAPDOOR_OPEN));
+                .strength(3).noOcclusion().isValidSpawn(ModBlocks::never), woodInfo.setType()));
     }
 
     private static RegistrySupplier<ButtonBlock> woodenButton(ModWoodTypes.WoodInfo woodInfo) {
         return registerBlock(woodInfo.name() + "_button", () -> new ButtonBlock(Properties.of(Material.DECORATION)
-                .strength(0.5f).noCollission(), 30, true, SoundEvents.WOODEN_BUTTON_CLICK_OFF, SoundEvents.WOODEN_BUTTON_CLICK_ON));
+                .strength(0.5f).noCollission(), woodInfo.setType(), 30, true));
     }
 
     private static RegistrySupplier<ButtonBlock> stoneButton(ModWoodTypes.WoodInfo woodInfo) {
         return registerBlock(woodInfo.name() + "_button", () -> new ButtonBlock(Properties.of(Material.DECORATION)
-                .strength(0.5f).noCollission(), 30, true, SoundEvents.STONE_BUTTON_CLICK_OFF, SoundEvents.STONE_BUTTON_CLICK_ON));
+                .strength(0.5f).noCollission(), woodInfo.setType(), 30, true));
     }
 
     private static RegistrySupplier<PressurePlateBlock> pressurePlate(ModWoodTypes.WoodInfo woodInfo) {
         return registerBlock(woodInfo.name() + "_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING,
-                woodProp(woodInfo).strength(0.5f).noCollission(), SoundEvents.WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.WOODEN_PRESSURE_PLATE_CLICK_ON));
+                woodProp(woodInfo).strength(0.5f).noCollission(), woodInfo.setType()));
     }
 
     private static RegistrySupplier<RotatedPillarBlock> log(ModWoodTypes.WoodInfo woodInfo, boolean stripped) {

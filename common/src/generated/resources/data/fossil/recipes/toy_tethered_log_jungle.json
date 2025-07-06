@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "fossil:toy_tethered_log_jungle"
-  }
+  },
+  "show_notification": true
 }

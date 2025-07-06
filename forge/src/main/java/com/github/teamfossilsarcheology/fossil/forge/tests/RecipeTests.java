@@ -137,8 +137,8 @@ public class RecipeTests {
                 });
                 helper.runAtTickTime(startTick + 1, () -> dataAccess.set(2, CultureVatMenu.CULTIVATION_DURATION - 1));
                 helper.runAtTickTime(startTick + 2, () -> {
-                    if (!cultureVatEntity.getItem(CultureVatMenu.OUTPUT_SLOT_ID).sameItem(recipe.getResultItem())) {
-                        throw new GameTestAssertException("Output does not contain " + recipe.getResultItem().getItem() + " but instead " + cultureVatEntity.getItem(CultureVatMenu.OUTPUT_SLOT_ID));
+                    if (!cultureVatEntity.getItem(CultureVatMenu.OUTPUT_SLOT_ID).sameItem(recipe.getResultItem(null))) {
+                        throw new GameTestAssertException("Output does not contain " + recipe.getResultItem(null).getItem() + " but instead " + cultureVatEntity.getItem(CultureVatMenu.OUTPUT_SLOT_ID));
                     }
                     cultureVatEntity.setItem(CultureVatMenu.OUTPUT_SLOT_ID, ItemStack.EMPTY);
                 });
@@ -163,8 +163,8 @@ public class RecipeTests {
             ContainerData dataAccess = cultureVatEntity.getDataAccess();
             helper.runAtTickTime(1, () -> dataAccess.set(2, CultureVatMenu.CULTIVATION_DURATION - 10));
             helper.runAtTickTime(11, () -> {
-                if (!cultureVatEntity.getItem(CultureVatMenu.OUTPUT_SLOT_ID).sameItem(recipe.getResultItem())) {
-                    throw new GameTestAssertException("Output does not contain " + recipe.getResultItem().getItem() + " but instead " + cultureVatEntity.getItem(CultureVatMenu.OUTPUT_SLOT_ID));
+                if (!cultureVatEntity.getItem(CultureVatMenu.OUTPUT_SLOT_ID).sameItem(recipe.getResultItem(null))) {
+                    throw new GameTestAssertException("Output does not contain " + recipe.getResultItem(null).getItem() + " but instead " + cultureVatEntity.getItem(CultureVatMenu.OUTPUT_SLOT_ID));
                 }
             });
             helper.runAtTickTime(12, helper::succeed);
@@ -268,8 +268,8 @@ public class RecipeTests {
                     dataAccess.set(2, smeltTime - 1);
                 });
                 helper.runAtTickTime(startTick + 2, () -> {
-                    if (!worktableEntity.getItem(WorktableMenu.OUTPUT_SLOT_ID).sameItem(recipe.getResultItem())) {
-                        throw new GameTestAssertException("Output does not contain " + recipe.getResultItem().getItem() + " but instead " + worktableEntity.getItem(WorktableMenu.OUTPUT_SLOT_ID));
+                    if (!worktableEntity.getItem(WorktableMenu.OUTPUT_SLOT_ID).sameItem(recipe.getResultItem(null))) {
+                        throw new GameTestAssertException("Output does not contain " + recipe.getResultItem(null).getItem() + " but instead " + worktableEntity.getItem(WorktableMenu.OUTPUT_SLOT_ID));
                     }
                     worktableEntity.setItem(WorktableMenu.OUTPUT_SLOT_ID, ItemStack.EMPTY);
                 });
@@ -295,8 +295,8 @@ public class RecipeTests {
             int smeltTime = worktableEntity.timeToSmelt(new ItemStack(inputItem), new ItemStack(fuelItem));
             helper.runAtTickTime(1, () -> dataAccess.set(2, smeltTime - 10));
             helper.runAtTickTime(11, () -> {
-                if (!worktableEntity.getItem(WorktableMenu.OUTPUT_SLOT_ID).sameItem(recipe.getResultItem())) {
-                    throw new GameTestAssertException("Output does not contain " + recipe.getResultItem().getItem() + " but instead " + worktableEntity.getItem(WorktableMenu.OUTPUT_SLOT_ID));
+                if (!worktableEntity.getItem(WorktableMenu.OUTPUT_SLOT_ID).sameItem(recipe.getResultItem(null))) {
+                    throw new GameTestAssertException("Output does not contain " + recipe.getResultItem(null).getItem() + " but instead " + worktableEntity.getItem(WorktableMenu.OUTPUT_SLOT_ID));
                 }
             });
             helper.runAtTickTime(12, helper::succeed);

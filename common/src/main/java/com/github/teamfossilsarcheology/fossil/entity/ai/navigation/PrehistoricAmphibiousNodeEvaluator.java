@@ -120,7 +120,7 @@ public class PrehistoricAmphibiousNodeEvaluator extends WalkNodeEvaluator {
             //AmphibiousNodeEvaluator code
             i = super.getNeighbors(nodes, node);
             BlockPathTypes typeAbove = getCachedBlockType(mob, x, y + 1, z);
-            int j = mob.getPathfindingMalus(type) > 0 && typeAbove != BlockPathTypes.STICKY_HONEY ? Mth.floor(Math.max(1, mob.maxUpStep)) : 0;
+            int j = mob.getPathfindingMalus(type) > 0 && typeAbove != BlockPathTypes.STICKY_HONEY ? Mth.floor(Math.max(1, mob.maxUpStep())) : 0;
             double floorLevel = getFloorLevel(new BlockPos(x, y, z));
             Node nodeAbove = findAcceptedNode(x, y + 1, z, Math.max(0, j - 1), floorLevel, Direction.UP, type);
             Node nodeBelow = findAcceptedNode(x, y - 1, z, j, floorLevel, Direction.DOWN, type);

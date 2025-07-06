@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "fossil:bone_leggings"
-  }
+  },
+  "show_notification": true
 }

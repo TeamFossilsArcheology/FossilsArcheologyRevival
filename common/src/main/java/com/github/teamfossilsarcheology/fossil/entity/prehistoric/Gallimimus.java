@@ -42,9 +42,9 @@ public class Gallimimus extends PrehistoricFlocking {
     public void aiStep() {
         super.aiStep();
         if (getRidingPlayer() != null) {
-            maxUpStep = 2;
+            setMaxUpStep(2);
         } else {
-            maxUpStep = 0.6f;
+            setMaxUpStep(0.6f);
         }
     }
 

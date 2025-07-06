@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "fossil:mutant_tree_fence_gate"
-  }
+  },
+  "show_notification": true
 }

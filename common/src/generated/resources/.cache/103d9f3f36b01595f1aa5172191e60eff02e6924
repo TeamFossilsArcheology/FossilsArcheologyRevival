@@ -1,4 +1,5 @@
-// 1.19.3	2025-08-24T15:34:12.0919496	Registries
+// 1.19.4	2025-07-07T01:21:07.6243086	Registries
+1a7a829524ea52685fb92fe64ce72b0ab8bf2f9d data/fossil/damage_type/aquatic_suffocate.json
 0a18cb6c39dcc0e3f588b34606cabd656e0c267f data/fossil/dimension_type/anu_lair.json
 0a18cb6c39dcc0e3f588b34606cabd656e0c267f data/fossil/dimension_type/treasure_room.json
 8defbd79b2fd744928d2da7756c7ee3cb334f678 data/fossil/forge/biome_modifier/add_alligator_gar.json

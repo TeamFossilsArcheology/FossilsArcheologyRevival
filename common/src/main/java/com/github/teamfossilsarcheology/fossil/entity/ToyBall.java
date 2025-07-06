@@ -88,7 +88,7 @@ public class ToyBall extends ToyBase {
                 }
 
                 if (j > i - 1) {
-                    hurt(DamageSource.CRAMMING, 6.0F);
+                    hurt(level.damageSources().cramming(), 6.0F);
                 }
             }
 

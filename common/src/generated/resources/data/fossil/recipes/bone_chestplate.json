@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "fossil:bone_chestplate"
-  }
+  },
+  "show_notification": true
 }

@@ -35,20 +35,20 @@ public class FlightPathNavigation extends FlyingPathNavigation {
 
     private static class FlightNodeEvaluator extends FlyNodeEvaluator {
         @Override
-        public @NotNull BlockPathTypes getBlockPathTypes(BlockGetter level, int x, int y, int z, int xSize, int ySize, int zSize, boolean canOpenDoors, boolean canEnterDoors, EnumSet<BlockPathTypes> nodeTypeEnum, BlockPathTypes nodeType, BlockPos pos) {
-            float width = Math.max(0, xSize - 2);
+        public BlockPathTypes getBlockPathTypes(BlockGetter level, int x, int y, int z, EnumSet<BlockPathTypes> nodeTypeEnum, BlockPathTypes nodeType, BlockPos pos) {
+            float width = Math.max(0, entityWidth - 2);
             int widthEachSide = Mth.ceil(width / 2.0f) + 1;
             for (int i = 0; i < widthEachSide; ++i) {
-                for (int j = 0; j < ySize; ++j) {
+                for (int j = 0; j < entityHeight; ++j) {
                     for (int k = 0; k < widthEachSide; ++k) {
                         BlockPathTypes blockPathType = this.getBlockPathType(level, x + i, y + j, z + k);
-                        blockPathType = this.evaluateBlockPathType(level, canOpenDoors, canEnterDoors, pos, blockPathType);
+                        blockPathType = this.evaluateBlockPathType(level, pos, blockPathType);
                         nodeTypeEnum.add(blockPathType);
                         if (i == 0 && j == 0 && k == 0) {
                             nodeType = blockPathType;
                         } else if (i != 0 || k != 0) {
                             blockPathType = this.getBlockPathType(level, x - i, y + j, z - k);
-                            blockPathType = this.evaluateBlockPathType(level, canOpenDoors, canEnterDoors, pos, blockPathType);
+                            blockPathType = this.evaluateBlockPathType(level, pos, blockPathType);
                             nodeTypeEnum.add(blockPathType);
                         }
                     }

@@ -71,7 +71,7 @@ public class ThrownBirdEgg extends ThrowableItemProjectile {
     @Override
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
-        result.getEntity().hurt(DamageSource.thrown(this, getOwner()), 0);
+        result.getEntity().hurt(damageSources().thrown(this, getOwner()), 0);
     }
 
     @Override

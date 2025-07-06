@@ -385,7 +385,7 @@ public class DinopediaScreen extends Screen {
                 y = topPos + 65 + renderSize * (itemCount / 8);
                 itemCount++;
                 ItemStack itemStack = new ItemStack(itemLike);
-                itemRenderer.renderAndDecorateItem(itemStack, x, y);
+                itemRenderer.renderAndDecorateItem(poseStack, itemStack, x, y);
                 if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + renderSize && mouseY < y + renderSize) {
                     toolTipList.addAll(getTooltipFromItem(itemStack));
                 }
@@ -394,16 +394,16 @@ public class DinopediaScreen extends Screen {
             y = topPos + 70 + renderSize * (itemCount / 8);
             if (dino.isAgingDisabled()) {
                 x += 16;
-                itemRenderer.renderAndDecorateItem(new ItemStack(Items.POISONOUS_POTATO), x, y);
+                itemRenderer.renderAndDecorateItem(poseStack, new ItemStack(Items.POISONOUS_POTATO), x, y);
                 if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + renderSize && mouseY < y + renderSize) {
                     toolTipList.add(STUNTED_GROWTH);
                 }
             }
             if (dino instanceof PrehistoricShearable shearable) {
                 x += 16;
-                itemRenderer.renderAndDecorateItem(new ItemStack(Items.SHEARS), x, y);
+                itemRenderer.renderAndDecorateItem(poseStack, new ItemStack(Items.SHEARS), x, y);
                 if (shearable.isSheared()) {
-                    itemRenderer.renderAndDecorateItem(new ItemStack(Blocks.BARRIER), x, y);
+                    itemRenderer.renderAndDecorateItem(poseStack, new ItemStack(Blocks.BARRIER), x, y);
                 }
                 if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + renderSize && mouseY < y + renderSize) {
                     toolTipList.add(shearable.isSheared() ? SHEARED : NOT_SHEARED);
@@ -413,14 +413,14 @@ public class DinopediaScreen extends Screen {
                 var tag = dino.getDebugTag();
                 if (dino.isNoAi() || tag.getBoolean("disableGoalAI") || tag.getBoolean("disableMoveAI") || tag.getBoolean("disableLookAI")) {
                     x += 16;
-                    itemRenderer.renderAndDecorateItem(new ItemStack(Items.DEBUG_STICK), x, y);
+                    itemRenderer.renderAndDecorateItem(poseStack, new ItemStack(Items.DEBUG_STICK), x, y);
                     if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + renderSize && mouseY < y + renderSize) {
                         toolTipList.add(Component.literal(String.format("Disabled AI: %b, Goal: %b, Move: %b, Look: %b", dino.isNoAi(), tag.getBoolean("disableGoalAI"), tag.getBoolean("disableMoveAI"), tag.getBoolean("disableLookAI"))));
                     }
                 }
                 if (!dino.getVariantId().isBlank()) {
                     x += 16;
-                    itemRenderer.renderAndDecorateItem(new ItemStack(Items.RED_DYE), x, y);
+                    itemRenderer.renderAndDecorateItem(poseStack, new ItemStack(Items.RED_DYE), x, y);
                     if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + renderSize && mouseY < y + renderSize) {
                         toolTipList.add(Component.literal("Variant: " + dino.getVariantId()));
                     }
@@ -483,7 +483,7 @@ public class DinopediaScreen extends Screen {
         }
 
         @Override
-        public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+        public void renderWidget(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderColor(1, 1, 1, 1);
             RenderSystem.setShaderTexture(0, DINOPEDIA_BACKGROUND);

@@ -42,7 +42,7 @@ public abstract class EggItem extends PrehistoricEntityItem {
         if (direction != Direction.UP) {
             clickedLocation = clickedLocation.add(Vec3.atLowerCornerOf(direction.getNormal()).multiply(0.5, 1, 0.5));
         }
-        BlockPos clickedPos = new BlockPos(clickedLocation);
+        BlockPos clickedPos = BlockPos.containing(clickedLocation);
         ServerPlayer player = (ServerPlayer) context.getPlayer();
         if (spawnMob(player, (ServerLevel) level, clickedLocation.x, clickedLocation.y, clickedLocation.z, level.getBlockState(clickedPos).getBlock() instanceof LiquidBlock)) {
             if (!player.getAbilities().instabuild) {

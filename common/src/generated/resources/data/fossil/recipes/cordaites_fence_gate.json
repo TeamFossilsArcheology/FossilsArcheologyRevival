@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "fossil:cordaites_fence_gate"
-  }
+  },
+  "show_notification": true
 }

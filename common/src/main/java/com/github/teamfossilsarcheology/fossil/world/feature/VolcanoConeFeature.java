@@ -38,7 +38,7 @@ public class VolcanoConeFeature extends Feature<NoneFeatureConfiguration> {
             final BlockState rock = ModBlocks.VOLCANIC_ROCK.get().defaultBlockState();
             for (float i = 0; i < layer * 0.5; i += 0.5f) {
                 for (float j = 0; j < 2 * Math.PI * i + random.nextInt(2); j += 0.5f) {
-                    BlockPos stonePos = new BlockPos(Math.floor(center.getX() + Math.sin(j) * i + random.nextInt(2)), center.getY(),
+                    BlockPos stonePos = BlockPos.containing(Math.floor(center.getX() + Math.sin(j) * i + random.nextInt(2)), center.getY(),
                             Math.floor(center.getZ() + Math.cos(j) * i + random.nextInt(2)));
                     if (level.isEmptyBlock(stonePos) || level.getBlockState(stonePos).is(Blocks.WATER)) {
                         level.setBlock(stonePos, rock, 18);
@@ -50,7 +50,7 @@ public class VolcanoConeFeature extends Feature<NoneFeatureConfiguration> {
             for (float i = 0; i < (first ? 0.45f : Math.max(layer * 0.2, 1)); i += 0.5f) {
                 float extra = i == 0 ? 3 : 1;
                 for (float j = 0; j < 2 * Math.PI * extra + random.nextInt(2); j += 0.5f) {
-                    BlockPos lavaPos = new BlockPos(Math.floor(center.getX() + Math.sin(j) * extra + random.nextInt(2)), center.getY(),
+                    BlockPos lavaPos = BlockPos.containing(Math.floor(center.getX() + Math.sin(j) * extra + random.nextInt(2)), center.getY(),
                             Math.floor(center.getZ() + Math.cos(j) * extra + random.nextInt(2)));
                     if (updateLava) {
                         level.setBlock(lavaPos, lava, 3);

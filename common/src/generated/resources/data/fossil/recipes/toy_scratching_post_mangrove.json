@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "fossil:toy_scratching_post_mangrove"
-  }
+  },
+  "show_notification": true
 }

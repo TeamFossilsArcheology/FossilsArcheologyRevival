@@ -39,7 +39,7 @@ import static com.github.teamfossilsarcheology.fossil.item.ModItems.*;
 public class ModItemTagsProvider extends ItemTagsProvider {
 
 
-    public ModItemTagsProvider(PackOutput arg, CompletableFuture<HolderLookup.Provider> lookup, TagsProvider<Block> tagLookup, @Nullable ExistingFileHelper existingFileHelper) {
+    public ModItemTagsProvider(PackOutput arg, CompletableFuture<HolderLookup.Provider> lookup, CompletableFuture<TagLookup<Block>> tagLookup, @Nullable ExistingFileHelper existingFileHelper) {
         super(arg, lookup, tagLookup, FossilMod.MOD_ID, existingFileHelper);
     }
 

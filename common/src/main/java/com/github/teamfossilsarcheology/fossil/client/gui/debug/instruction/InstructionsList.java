@@ -73,8 +73,8 @@ public class InstructionsList extends AbstractContainerEventHandler implements R
             }
         }) {
             @Override
-            public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-                super.renderButton(poseStack, mouseX, mouseY, partialTick);
+            public void renderWidget(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+                super.renderWidget(poseStack, mouseX, mouseY, partialTick);
                 RenderSystem.setShaderTexture(0, ICON_OVERLAY_LOCATION);
                 int left = getX() + width / 2;
                 int top = getY() + (height - 8) / 2;
@@ -90,8 +90,8 @@ public class InstructionsList extends AbstractContainerEventHandler implements R
             }
         }) {
             @Override
-            public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-                super.renderButton(poseStack, mouseX, mouseY, partialTick);
+            public void renderWidget(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+                super.renderWidget(poseStack, mouseX, mouseY, partialTick);
                 RenderSystem.setShaderTexture(0, ICON_OVERLAY_LOCATION);
                 int left = getX() + width / 2;
                 int top = getY() + (height - 8) / 2;
@@ -241,7 +241,6 @@ public class InstructionsList extends AbstractContainerEventHandler implements R
         upButton.render(poseStack, mouseX, mouseY, partialTick);
         downButton.render(poseStack, mouseX, mouseY, partialTick);
 
-        RenderSystem.enableTexture();
         RenderSystem.disableBlend();
     }
 
@@ -276,7 +275,6 @@ public class InstructionsList extends AbstractContainerEventHandler implements R
             int arrowLeft = rowLeft - 2;
             int arrowHeight = rowHeight / 2;
             int arrowTop = y + dragIndex * ITEM_HEIGHT - arrowHeight;
-            RenderSystem.disableTexture();
             RenderSystem.setShader(GameRenderer::getPositionShader);
             if (dragIndex == children.indexOf(dragging) + (dragOffset ? 1 : 0)) {
                 RenderSystem.setShaderColor(1, 0.5f, 0.5f, 1);
@@ -288,12 +286,10 @@ public class InstructionsList extends AbstractContainerEventHandler implements R
             bufferBuilder.vertex(arrowLeft + 6, arrowTop + arrowHeight / 2d + 2, 0.0).endVertex();
             bufferBuilder.vertex(arrowLeft, arrowTop, 0.0).endVertex();
             tesselator.end();
-            RenderSystem.enableTexture();
         }
     }
 
     private void renderEntry(Tesselator tesselator, BufferBuilder bufferBuilder, int rowLeft, int rowRight, int rowTop, int rowHeight) {
-        RenderSystem.disableTexture();
         RenderSystem.setShader(GameRenderer::getPositionShader);
         float f = 0.75f;
         RenderSystem.setShaderColor(f, f, f, 1);
@@ -310,7 +306,6 @@ public class InstructionsList extends AbstractContainerEventHandler implements R
         bufferBuilder.vertex(rowRight - 1, rowTop - 1, 0.0).endVertex();
         bufferBuilder.vertex(rowLeft + 1, rowTop - 1, 0.0).endVertex();
         tesselator.end();
-        RenderSystem.enableTexture();
     }
 
     static class MoveButton extends Button {
@@ -350,6 +345,16 @@ public class InstructionsList extends AbstractContainerEventHandler implements R
                 InstructionsList.this.dragMoveY += dragY;
                 return true;
             }
+            return false;
+        }
+
+        @Override
+        public void setFocused(boolean focused) {
+
+        }
+
+        @Override
+        public boolean isFocused() {
             return false;
         }
 

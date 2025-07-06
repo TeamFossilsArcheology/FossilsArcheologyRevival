@@ -29,7 +29,7 @@ public class ObsidianSpikesBlock extends Block {
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (!(entity instanceof AnuTotem)) {
-            entity.hurt(DamageSource.CACTUS, 4.0f);
+            entity.hurt(level.damageSources().cactus(), 4.0f);
             if (entity instanceof LivingEntity && entity.getDeltaMovement().x != 0 && entity.getDeltaMovement().z != 0) {
                 ((LivingEntity) entity).knockback(0.5f, entity.getDeltaMovement().x, entity.getDeltaMovement().z);
             }

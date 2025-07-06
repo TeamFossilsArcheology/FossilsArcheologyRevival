@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "fossil:toy_tethered_log_crimson"
-  }
+  },
+  "show_notification": true
 }

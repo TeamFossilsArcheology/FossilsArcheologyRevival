@@ -233,7 +233,7 @@ public class PlayerPathNavigation {
     }
 
     protected double getGroundY(Vec3 vec) {
-        BlockPos blockPos = new BlockPos(vec);
+        BlockPos blockPos = BlockPos.containing(vec);
         return level.getBlockState(blockPos.below()).isAir() ? vec.y : WalkNodeEvaluator.getFloorLevel(level, blockPos);
     }
 
@@ -241,10 +241,10 @@ public class PlayerPathNavigation {
         Vec3 vec3 = getTempMobPos();
         maxDistanceToWaypoint = PathingRenderer.getBbWidth() > 0.75f ? PathingRenderer.getBbWidth() / 2.0f : 0.75f - PathingRenderer.getBbWidth() / 2.0f;
         BlockPos vec3i = path.getNextNodePos();
-        double d = Math.abs(player.getX() - ((double) vec3i.getX() + 0.5));
-        double e = Math.abs(player.getY() - (double) vec3i.getY());
-        double f = Math.abs(player.getZ() - ((double) vec3i.getZ() + 0.5));
-        boolean bl = d < (double) maxDistanceToWaypoint && f < (double) maxDistanceToWaypoint && e < 1.0;
+        double d = Math.abs(player.getX() - (vec3i.getX() + 0.5));
+        double e = Math.abs(player.getY() - vec3i.getY());
+        double f = Math.abs(player.getZ() - (vec3i.getZ() + 0.5));
+        boolean bl = d < maxDistanceToWaypoint && f < maxDistanceToWaypoint && e < 1.0;
         if (bl || canCutCorner(path.getNextNode().type) && shouldTargetNextNodeInDirection(vec3)) {
             path.advance();
         }
@@ -252,7 +252,7 @@ public class PlayerPathNavigation {
     }
 
     public boolean canCutCorner(BlockPathTypes pathType) {
-        return pathType != BlockPathTypes.DANGER_FIRE && pathType != BlockPathTypes.DANGER_CACTUS && pathType != BlockPathTypes.DANGER_OTHER && pathType != BlockPathTypes.WALKABLE_DOOR;
+        return pathType != BlockPathTypes.DANGER_FIRE && pathType != BlockPathTypes.DANGER_OTHER && pathType != BlockPathTypes.WALKABLE_DOOR;
     }
 
     private boolean shouldTargetNextNodeInDirection(Vec3 vec) {
@@ -337,10 +337,10 @@ public class PlayerPathNavigation {
             return Mth.floor(player.getY() + 0.5);
         }
         int i = player.getBlockY();
-        BlockState blockState = level.getBlockState(new BlockPos(player.getX(), i, player.getZ()));
+        BlockState blockState = level.getBlockState(BlockPos.containing(player.getX(), i, player.getZ()));
         int j = 0;
         while (blockState.is(Blocks.WATER)) {
-            blockState = level.getBlockState(new BlockPos(player.getX(), ++i, player.getZ()));
+            blockState = level.getBlockState(BlockPos.containing(player.getX(), ++i, player.getZ()));
             if (++j <= 16) continue;
             return player.getBlockY();
         }

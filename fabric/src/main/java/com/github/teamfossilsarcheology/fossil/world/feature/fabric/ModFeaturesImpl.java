@@ -6,6 +6,9 @@ import net.minecraft.core.registries.BuiltInRegistries;
 
 import static com.github.teamfossilsarcheology.fossil.world.feature.ModFeatures.*;
 
+/**
+ * @see com.github.teamfossilsarcheology.fossil.world.feature.ModFeatures
+ */
 public class ModFeaturesImpl {
     public static void register() {
         register(ASH_DISK);

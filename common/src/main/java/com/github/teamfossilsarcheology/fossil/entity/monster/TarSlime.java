@@ -112,7 +112,7 @@ public class TarSlime extends Slime {
                 }
                 if (tickCount % 20 == 0) {
                     if (!level.isClientSide) {
-                        vehicle.hurt(DamageSource.mobAttack(this), getSize());
+                        vehicle.hurt(level.damageSources().mobAttack(this), getSize());
                         playSound(getJumpSound(), getSoundVolume(), getVoicePitch());
                     }
                     targetSquish = 0.7f;
