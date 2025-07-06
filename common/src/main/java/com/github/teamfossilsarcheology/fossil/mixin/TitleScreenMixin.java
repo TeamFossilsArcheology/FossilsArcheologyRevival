@@ -1,4 +1,4 @@
-package com.github.teamfossilsarcheology.fossil.fabric.mixin;
+package com.github.teamfossilsarcheology.fossil.mixin;
 
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;

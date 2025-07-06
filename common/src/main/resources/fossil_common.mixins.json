@@ -3,8 +3,12 @@
   "package": "com.github.teamfossilsarcheology.fossil.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "CameraMixin", "DebugLevelRendererMixin", "DebugMinecraftMixin", "DebugMouseHandlerMixin", "ParticleAccessor", "PlayerInfoMixin", "TerrainParticleMixin", "TitleScreenMixin"
   ],
-  "mixins": ["AnimatableManagerAccessor", "AnimationControllerAccessor"],
+  "mixins": [
+    "AbstractFishMixin", "AnimatableManagerAccessor", "AnimationControllerAccessor", "AnimationControllerMixin", "AnimationProcessorMixin", "ExplosionMixin",
+    "JigsawPlacementMixin", "MobMixin", "NaturalSpawnerMixin", "ServerEntityMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

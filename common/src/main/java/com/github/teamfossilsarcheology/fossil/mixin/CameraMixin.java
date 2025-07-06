@@ -1,4 +1,4 @@
-package com.github.teamfossilsarcheology.fossil.forge.mixin;
+package com.github.teamfossilsarcheology.fossil.mixin;
 
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import net.minecraft.client.Camera;

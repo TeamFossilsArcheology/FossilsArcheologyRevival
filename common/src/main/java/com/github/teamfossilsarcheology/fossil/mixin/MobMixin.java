@@ -1,4 +1,4 @@
-package com.github.teamfossilsarcheology.fossil.forge.mixin;
+package com.github.teamfossilsarcheology.fossil.mixin;
 
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricDebug;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;

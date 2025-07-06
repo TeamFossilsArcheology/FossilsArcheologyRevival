@@ -1,4 +1,4 @@
-package com.github.teamfossilsarcheology.fossil.fabric.mixin;
+package com.github.teamfossilsarcheology.fossil.mixin;
 
 import net.minecraft.client.particle.Particle;
 import org.spongepowered.asm.mixin.Mixin;

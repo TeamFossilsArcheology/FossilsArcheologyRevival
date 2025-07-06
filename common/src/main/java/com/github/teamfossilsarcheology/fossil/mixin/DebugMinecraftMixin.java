@@ -1,4 +1,4 @@
-package com.github.teamfossilsarcheology.fossil.forge.mixin;
+package com.github.teamfossilsarcheology.fossil.mixin;
 
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.DebugScreen;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.InstructionTab;

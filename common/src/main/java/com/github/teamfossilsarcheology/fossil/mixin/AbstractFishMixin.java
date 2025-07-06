@@ -1,4 +1,4 @@
-package com.github.teamfossilsarcheology.fossil.fabric.mixin;
+package com.github.teamfossilsarcheology.fossil.mixin;
 
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.fish.Nautilus;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;

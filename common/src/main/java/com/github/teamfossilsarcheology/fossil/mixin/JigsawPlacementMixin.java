@@ -1,4 +1,4 @@
-package com.github.teamfossilsarcheology.fossil.forge.mixin;
+package com.github.teamfossilsarcheology.fossil.mixin;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.Lists;
@@ -59,7 +59,9 @@ public abstract class JigsawPlacementMixin {
     @Shadow
     private List<? super PoolElementStructurePiece> pieces;
 
-    @Shadow @Final private StructureTemplateManager structureTemplateManager;
+    @Shadow
+    @Final
+    private StructureTemplateManager structureTemplateManager;
 
     @Shadow
     private static ResourceKey<StructureTemplatePool> readPoolName(StructureTemplate.StructureBlockInfo structureBlockInfo) {
@@ -171,7 +173,6 @@ public abstract class JigsawPlacementMixin {
                             mutableObject3.setValue(Shapes.joinUnoptimized(mutableObject3.getValue(), Shapes.create(AABB.of(boundingBox4)), BooleanOp.ONLY_FIRST));
                             s = structurePiece.getGroundLevelDelta();
                             int t = targetIsRigid ? s - p : targetElement.getGroundLevelDelta();
-
                             PoolElementStructurePiece targetStructurePiece = new PoolElementStructurePiece(
                                     structureTemplateManager, targetElement, blockPos6, t, targetElementRotation, boundingBox4);
                             if (baseIsRigid) {

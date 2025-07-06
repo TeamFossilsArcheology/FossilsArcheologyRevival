@@ -1,4 +1,4 @@
-package com.github.teamfossilsarcheology.fossil.forge.mixin;
+package com.github.teamfossilsarcheology.fossil.mixin;
 
 import com.github.teamfossilsarcheology.fossil.entity.monster.AnuBoss;
 import com.github.teamfossilsarcheology.fossil.world.dimension.ModDimensions;
@@ -26,7 +26,7 @@ public class ExplosionMixin {
     private Level level;
 
     @Inject(method = "explode", at = @At(value = "INVOKE", target = "Lit/unimi/dsi/fastutil/objects/ObjectArrayList;addAll(Ljava/util/Collection;)Z", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILSOFT)
-    public void doNotAddMultiPart(CallbackInfo ci) {
+    public void preventExplosion(CallbackInfo ci) {
         if (level.dimension() == ModDimensions.ANU_LAIR && level instanceof ServerLevel serverLevel) {
             AnuBoss.AnuLair anuLair = serverLevel.getDataStorage().get(c -> new AnuBoss.AnuLair(), "anu_lair");
             if (anuLair == null || !anuLair.isAnuKilled()) {

@@ -1,4 +1,4 @@
-package com.github.teamfossilsarcheology.fossil.forge.mixin;
+package com.github.teamfossilsarcheology.fossil.mixin;
 
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.InstructionRenderer;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation.PathingRenderer;
@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,7 +27,7 @@ public class DebugLevelRendererMixin {
     private Frustum cullingFrustum;
 
     @Inject(method = "renderLevel", at = @At(value = "TAIL"))
-    private void renderDebugPaths(PoseStack poseStack, float partialTick, long finishNanoTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, org.joml.Matrix4f projectionMatrix, CallbackInfo ci) {
+    private void renderDebugPaths(PoseStack poseStack, float partialTick, long finishNanoTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f projectionMatrix, CallbackInfo ci) {
         if (Version.debugEnabled()) {
             MultiBufferSource.BufferSource bufferSource = renderBuffers.bufferSource();
             final Minecraft mc = Minecraft.getInstance();

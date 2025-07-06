@@ -1,5 +1,4 @@
-package com.github.teamfossilsarcheology.fossil.forge.mixin;
-
+package com.github.teamfossilsarcheology.fossil.mixin;
 
 import com.github.teamfossilsarcheology.fossil.world.dimension.ModDimensions;
 import net.minecraft.core.BlockPos;
@@ -17,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(NaturalSpawner.class)
 public class NaturalSpawnerMixin {
 
-    @Inject(method="getRandomPosWithin", at= @At("RETURN"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
+    @Inject(method = "getRandomPosWithin", at = @At("RETURN"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
     private static void fixAnuLairMobSpawning(Level level, LevelChunk chunk, CallbackInfoReturnable<BlockPos> cir, ChunkPos chunkPos, int x, int z, int maxY, int y) {
         //Prevent spawning of our sentries in the void
         if (level.dimension().location().equals(ModDimensions.ANU_LAIR.location())) {
