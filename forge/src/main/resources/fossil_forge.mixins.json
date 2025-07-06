@@ -4,7 +4,7 @@
   "package": "com.github.teamfossilsarcheology.fossil.forge.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "AnimationControllerMixin", "AnimationProcessorMixin", "CameraMixin", "DebugLevelRendererMixin", "DebugMinecraftMixin", "DebugMouseHandlerMixin",
+    "AnimationControllerMixin", "AnimationProcessorMixin", "CameraMixin", "DebugLevelRendererMixin", "DebugMinecraftMixin", "DebugMouseHandlerMixin", "GeoEntityRendererMixin",
     "ParticleAccessor", "PlayerInfoMixin", "TerrainParticleMixin", "TitleScreenMixin"
   ],
   "mixins": [
