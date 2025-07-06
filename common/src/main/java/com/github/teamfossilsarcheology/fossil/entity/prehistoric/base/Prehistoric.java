@@ -255,6 +255,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         entityData.define(AGING_DISABLED, false);
         entityData.define(DIMENSION_VER, new CompoundTag());
         entityData.define(DATA_VARIANT, "");
+        //TODO: Is this not synced to client?
         entityData.define(GENDER, random.nextBoolean() ? (byte) 1 : 0);
 
         CompoundTag tag = new CompoundTag();
@@ -302,6 +303,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public void saveAdditionalSpawnData(FriendlyByteBuf buf) {
+        buf.writeBoolean(getGender() == Gender.MALE);
         buf.writeInt(getAge());
         buf.writeFloat(getXRot());
         buf.writeUtf(getVariantId());
@@ -310,6 +312,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public void loadAdditionalSpawnData(FriendlyByteBuf buf) {
+        if (buf.readBoolean()) {
+            setGender(Gender.MALE);
+        } else {
+            setGender(Gender.FEMALE);
+        }
         setAgeInTicks(buf.readInt());
         setXRot(buf.readFloat());
         setVariantId(buf.readUtf());
