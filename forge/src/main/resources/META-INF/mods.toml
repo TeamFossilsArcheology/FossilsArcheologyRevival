@@ -32,14 +32,14 @@ side = "BOTH"
 [[dependencies.${mod_id}]]
 modId = "architectury"
 mandatory = true
-versionRange = "[6.6.92,)"
+versionRange = "[8.1.7.3,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.${mod_id}]]
 modId = "geckolib"
 mandatory = true
-versionRange = "[4,)"
+versionRange = "[4.1,)"
 ordering = "AFTER"
 side = "BOTH"
 
@@ -53,7 +53,7 @@ side = "BOTH"
 [[dependencies.${mod_id}]]
 modId = "terrablender"
 mandatory = true
-versionRange = "[2,)"
+versionRange = "[2.2,)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.${mod_id}]]
@@ -66,7 +66,7 @@ side = "BOTH"
 [[dependencies.${mod_id}]]
 modId = "carryon"
 mandatory = false
-versionRange = "[2.0.1.9,)"
+versionRange = "[2.0.5.20,)"
 ordering = "NONE"
 side = "BOTH"
 

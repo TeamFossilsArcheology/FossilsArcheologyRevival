@@ -57,7 +57,7 @@ dependencies {
     modRuntimeOnly "maven.modrinth:jade:$jade_version_fabric"
     modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
     modCompileOnly "maven.modrinth:carry-on:$carry_on_version_fabric"
-    //modCompileOnly "maven.modrinth:farmers-delight-fabric:$farmers_delight_version_fabric" 1.19.4
+    //modCompileOnly "maven.modrinth:farmers-delight-fabric:$farmers_delight_version_fabric"
 
     //FD addons
     //modCompileOnly "maven.modrinth:oceans-delight:fdrf-fabric-1.0.2-1.20"
@@ -98,6 +98,7 @@ dependencies {
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
 }
 shadowJar {
+    exclude "architectury.common.json"
     configurations = [project.configurations.shadowBundle]
     archiveClassifier = 'dev-shadow'
 }
@@ -106,7 +107,7 @@ remapJar {
     injectAccessWidener = true
     inputFile.set shadowJar.archiveFile
     dependsOn shadowJar
-    archiveAppendix = "fabric-$minecraft_version"
+    //TODO: Needed? archiveAppendix = "fabric-$minecraft_version"
 }
 
 sourcesJar {

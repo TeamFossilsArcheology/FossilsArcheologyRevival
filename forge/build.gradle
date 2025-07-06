@@ -81,7 +81,7 @@ dependencies {
     //modCompileOnly "curse.maven:curios-309927:4985315" //For ars nouveau
     //modCompileOnly "curse.maven:patchouli-306770:3846086" //For ars nouveau
 
-    //modCompileOnly "maven.modrinth:alexs-mobs:$alex_mobs_version"
+    modCompileOnly "maven.modrinth:alexs-mobs:$alex_mobs_version"
 
     //modImplementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive false }
     //modImplementation("com.jozufozu.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}")
@@ -112,6 +112,8 @@ loom {
 }
 
 shadowJar {
+    exclude "fabric.mod.json"
+    exclude "architectury.common.json"
     configurations = [project.configurations.shadowBundle]
     archiveClassifier = 'dev-shadow'
 }
@@ -119,7 +121,7 @@ shadowJar {
 remapJar {
     inputFile.set shadowJar.archiveFile
     dependsOn shadowJar
-    archiveAppendix = "forge-$minecraft_version"
+    //TODO: Needed? archiveAppendix = "forge-$minecraft_version"
 }
 
 sourcesJar {
