@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -38,7 +39,9 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
         super.tick();
         if (isReachedTarget()) {
             //Only start if entity has stopped because eating and moving animations cant stack
-            if (entity.level.getBlockEntity(targetPos) instanceof FeederBlockEntity feeder && Math.abs(entity.animationSpeed) <= Util.SWING_ANIM_THRESHOLD) {
+            Vec3 velocity = entity.getDeltaMovement();
+            float avgVelocity = (float)(Math.abs(velocity.x) + Math.abs(velocity.z) / 2f);
+            if (entity.level.getBlockEntity(targetPos) instanceof FeederBlockEntity feeder && avgVelocity < Util.SWING_ANIM_THRESHOLD) {
                 feedingTicks++;
                 if (entity.getHunger() < entity.getMaxHunger()) {
                     //Prevent overfeeding when goal is not done due to the running animation
