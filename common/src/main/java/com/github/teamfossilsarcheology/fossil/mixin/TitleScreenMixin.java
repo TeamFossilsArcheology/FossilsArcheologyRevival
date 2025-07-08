@@ -1,12 +1,11 @@
 package com.github.teamfossilsarcheology.fossil.mixin;
 
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.PanoramaRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -18,11 +17,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Random;
 
-import static com.github.teamfossilsarcheology.fossil.client.gui.CustomTitleScreen.LAYER_TEXTURE_BACK;
-import static com.github.teamfossilsarcheology.fossil.client.gui.CustomTitleScreen.LAYER_TEXTURE_FRONT;
-
 @Mixin(TitleScreen.class)
 public abstract class TitleScreenMixin extends Screen {
+    @Unique
+    private static final ResourceLocation LAYER_TEXTURE_BACK = FossilMod.location("textures/gui/parallax/layer_0.png");
+    @Unique
+    private static final ResourceLocation LAYER_TEXTURE_FRONT = FossilMod.location("textures/gui/parallax/layer_1.png");
     @Unique
     private final int fossil$initialOffsetFront = new Random().nextInt(1027);
     @Unique
@@ -38,16 +38,11 @@ public abstract class TitleScreenMixin extends Screen {
     protected void renderCustomTitleScreen(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
         if (FossilConfig.isEnabled(FossilConfig.CUSTOM_MAIN_MENU)) {
             fossil$layerTick++;
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderColor(1, 1, 1, 1);
-            RenderSystem.enableBlend();
-            RenderSystem.setShaderTexture(0, LAYER_TEXTURE_BACK);
             float u = fossil$initialOffsetBack + ((fossil$layerTick + partialTick) / 2f) + 1;
             guiGraphics.blit(LAYER_TEXTURE_BACK, 0, 0, u / (960f / width), 0, width, height, (int) (1024 * (height / 128f)), height);
 
-            RenderSystem.setShaderTexture(0, LAYER_TEXTURE_FRONT);
             u = fossil$initialOffsetFront + fossil$layerTick + partialTick + 2 + 512;
-            guiGraphics.blit(LAYER_TEXTURE_BACK, 0, 0, u / (960f / width), 0, width, height, (int) (2048 * (height / 128f)), height);
+            guiGraphics.blit(LAYER_TEXTURE_FRONT, 0, 0, u / (960f / width), 0, width, height, (int) (2048 * (height / 128f)), height);
         }
     }
 

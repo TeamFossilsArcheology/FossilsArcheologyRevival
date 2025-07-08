@@ -26,4 +26,8 @@ public class ModTabs {
     public static final RegistrySupplier<CreativeModeTab> FA_OTHER_ITEM_TAB = TABS.register("fa_other_item_tab",
             () -> CreativeTabRegistry.create(Component.translatable("category.fa_other_item_tab"),
                     () -> new ItemStack(ModItems.BIO_FOSSIL.get())));
+
+    public static void register() {
+        TABS.register();
+    }
 }

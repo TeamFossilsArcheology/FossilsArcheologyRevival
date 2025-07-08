@@ -12,6 +12,7 @@ import com.github.teamfossilsarcheology.fossil.entity.variant.VariantRegistry;
 import com.github.teamfossilsarcheology.fossil.event.ModEvents;
 import com.github.teamfossilsarcheology.fossil.inventory.ModMenus;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
+import com.github.teamfossilsarcheology.fossil.item.ModTabs;
 import com.github.teamfossilsarcheology.fossil.loot.ModLootItemFunctionTypes;
 import com.github.teamfossilsarcheology.fossil.material.ModFluids;
 import com.github.teamfossilsarcheology.fossil.network.*;
@@ -51,6 +52,7 @@ public class FossilMod {
         ModParticles.register();
         ModEntities.register(); //Before ModItems
         ModItems.register();
+        ModTabs.register();
         ModEnchantments.register();
         ModBlockEntities.register();
         ModMenus.register();

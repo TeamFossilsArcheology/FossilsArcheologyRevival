@@ -204,7 +204,7 @@ public class Parasaurolophus extends Prehistoric {
             setAnimationSpeed(controller, animationSpeed, state.getAnimationTick());
             Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
             if (newAnimation.isPresent()) {
-                controller.setTransitionLength(newAnimation.get().transitionLength());
+                controller.transitionLength(newAnimation.get().transitionLength());
                 controller.setAnimation(RawAnimation.begin().then(newAnimation.get().animationName(), newAnimation.get().loop() ? LOOP : PLAY_ONCE));
             }
             return PlayState.CONTINUE;
