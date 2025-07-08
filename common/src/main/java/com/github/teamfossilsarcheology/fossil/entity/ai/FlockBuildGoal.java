@@ -26,7 +26,7 @@ public class FlockBuildGoal extends Goal {
     @Override
     public void start() {
         Predicate<PrehistoricFlocking> canJoin = other -> other.canGroupGrow() || !other.hasGroupLeader();
-        var potentialFlock = entity.level.getEntitiesOfClass(entity.getClass(), entity.getBoundingBox().inflate(entity.getFlockDistance()),
+        var potentialFlock = entity.level().getEntitiesOfClass(entity.getClass(), entity.getBoundingBox().inflate(entity.getFlockDistance()),
                 canJoin);
         var newGroupLeader = DataFixUtils.orElse(potentialFlock.stream().findFirst(), entity);
         newGroupLeader.addFollowers(potentialFlock.stream().filter(flocking -> !flocking.hasGroupLeader()));

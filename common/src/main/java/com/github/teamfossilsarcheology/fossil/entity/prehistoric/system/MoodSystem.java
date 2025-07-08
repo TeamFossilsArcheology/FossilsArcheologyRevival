@@ -34,7 +34,7 @@ public class MoodSystem extends AISystem {
         for (int i = Mth.floor(entity.getX() - range); i < Mth.ceil(entity.getX() + range); i++) {
             for (int j = Mth.floor(entity.getY() - range / 2.0); j < Mth.ceil(entity.getY() + range / 2.0); j++) {
                 for (int k = Mth.floor(entity.getZ() - range); k < Mth.ceil(entity.getZ() + range); k++) {
-                    if (j <= entity.level.getHeight() + 1D && isPlantBlock(entity.level.getBlockState(new BlockPos(i, j, k)))) {
+                    if (j <= entity.level().getHeight() + 1D && isPlantBlock(entity.level().getBlockState(new BlockPos(i, j, k)))) {
                         return true;
                     }
                 }
@@ -112,7 +112,7 @@ public class MoodSystem extends AISystem {
     public void useToy(int playBonus) {
         if (getPlayingCooldown() == 0) {
             setMood(getMood() + playBonus);
-            mob.level.broadcastEntityEvent(mob, Prehistoric.HAPPY_VILLAGER_PARTICLES);
+            mob.level().broadcastEntityEvent(mob, Prehistoric.HAPPY_VILLAGER_PARTICLES);
             setPlayingCooldown(mob.getRandom().nextInt(600) + 600);
         }
     }

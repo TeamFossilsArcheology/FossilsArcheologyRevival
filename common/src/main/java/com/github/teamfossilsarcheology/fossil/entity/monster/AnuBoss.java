@@ -98,7 +98,7 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         super.onSyncedDataUpdated(key);
-        if (DATA_PHASE.equals(key) && level.isClientSide) {
+        if (DATA_PHASE.equals(key) && level().isClientSide) {
             phaseSystem.setPhase(AnuPhase.values()[(entityData.get(DATA_PHASE))]);
         }
     }
@@ -124,7 +124,7 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     @Override
     public void baseTick() {
         super.baseTick();
-        if (level.isClientSide) {
+        if (level().isClientSide) {
             if (songTick < SONG_LENGTH) {
                 songTick++;
             }
@@ -146,7 +146,7 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (level.isClientSide) {
+        if (level().isClientSide) {
             phaseSystem.getCurrentPhase().doClientTick();
         }
     }
@@ -169,7 +169,7 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         Entity trueSource = source.getEntity();
-        if (source == level.damageSources().inWall() || source.is(DamageTypeTags.IS_EXPLOSION) && trueSource == null) {
+        if (source == damageSources().inWall() || source.is(DamageTypeTags.IS_EXPLOSION) && trueSource == null) {
             return false;
         }
         phaseSystem.getCurrentPhase().onHurt(source, amount);
@@ -177,11 +177,11 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
             super.hurt(source, 20.0f);
             return true;
         }
-        if (source == level.damageSources().outOfWorld() && getY() < level.getMinBuildHeight()) {
+        if (source == damageSources().fellOutOfWorld() && getY() < level().getMinBuildHeight()) {
             moveTo(spawnPosition);
             return false;
         }
-        if (level.isClientSide && trueSource instanceof Player player && random.nextInt(10) == 0) {
+        if (level().isClientSide && trueSource instanceof Player player && random.nextInt(10) == 0) {
             ItemStack itemStack = player.getInventory().getSelected();
             if (itemStack.is(ModItems.ANCIENT_SWORD.get())) {
                 player.displayClientMessage(ANU_COMBAT_ANCIENT, false);
@@ -197,16 +197,16 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     }
 
     private void removeBarriers() {
-        if (!level.isClientSide && level.dimension() == ModDimensions.ANU_LAIR) {
-            AnuLair anuLair = ((ServerLevel) level).getDataStorage().get(AnuLair::load, "anu_lair");
+        if (!level().isClientSide && level().dimension() == ModDimensions.ANU_LAIR) {
+            AnuLair anuLair = ((ServerLevel) level()).getDataStorage().get(AnuLair::load, "anu_lair");
             if (anuLair != null) {
                 for (BlockPos barrierPosition : anuLair.barrierPositions) {
-                    if (level.getBlockEntity(barrierPosition) instanceof AnuBarrierBlockEntity blockEntity) {
+                    if (level().getBlockEntity(barrierPosition) instanceof AnuBarrierBlockEntity blockEntity) {
                         blockEntity.disable();
                     }
                 }
             }
-            ((ServerLevel) level).getDataStorage().set("anu_lair", AnuLair.killed());
+            ((ServerLevel) level()).getDataStorage().set("anu_lair", AnuLair.killed());
         }
     }
 
@@ -218,14 +218,14 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
 
     @Override
     public void die(DamageSource damageSource) {
-        if (!level.isClientSide) {
-            AnuDead anuDead = ModEntities.ANU_DEAD.get().create(level);
+        if (!level().isClientSide) {
+            AnuDead anuDead = ModEntities.ANU_DEAD.get().create(level());
             anuDead.moveTo(getX(), getY(), getZ(), getYRot(), getXRot());
-            level.addFreshEntity(anuDead);
+            level().addFreshEntity(anuDead);
             removeBarriers();
         } else {
             MusicHandler.stopMusic(ModSounds.MUSIC_ANU.get());
-            List<Player> players = level.getNearbyPlayers(TargetingConditions.forCombat(), this, getBoundingBox().inflate(30, 15, 30));
+            List<Player> players = level().getNearbyPlayers(TargetingConditions.forCombat(), this, getBoundingBox().inflate(30, 15, 30));
             for (Player player : players) {
                 player.displayClientMessage(ANU_DEATH, false);
             }
@@ -255,9 +255,9 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     @Override
     public boolean doHurtTarget(Entity target) {
         if (random.nextInt(4) == 0) {
-            LightningBolt lightningBolt = ModEntities.ANCIENT_LIGHTNING_BOLT.get().create(level);
+            LightningBolt lightningBolt = ModEntities.ANCIENT_LIGHTNING_BOLT.get().create(level());
             lightningBolt.moveTo(target.position());
-            level.addFreshEntity(lightningBolt);
+            level().addFreshEntity(lightningBolt);
         }
         return super.doHurtTarget(target);
     }
@@ -268,9 +268,9 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
         double y = target.getBoundingBox().minY - (getY() + (getBbHeight() / 2));
         double z = target.getZ() - getZ();
         playSound(SoundEvents.GHAST_SHOOT, 1, 1);
-        LargeFireball largeFireball = new LargeFireball(level, this, x, y, z, 2);
+        LargeFireball largeFireball = new LargeFireball(level(), this, x, y, z, 2);
         largeFireball.setPos(getX() + x * 0.1, getY() + (getBbHeight() / 2) + 0.5, getZ() + z * 0.1);
-        level.addFreshEntity(largeFireball);
+        level().addFreshEntity(largeFireball);
     }
 
     @Override

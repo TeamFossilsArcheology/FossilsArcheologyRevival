@@ -49,11 +49,11 @@ public class Util {
     }
 
     public static void spawnParticles(Entity entity, ParticleOptions particleOptions, int count) {
-        spawnParticles(entity.level, particleOptions, count, entity.getBoundingBoxForCulling());
+        spawnParticles(entity.level(), particleOptions, count, entity.getBoundingBoxForCulling());
     }
 
     public static void spawnItemParticles(Entity entity, Item item, int count) {
-        spawnItemParticles(entity.level, item, count, entity.getBoundingBoxForCulling());
+        spawnItemParticles(entity.level(), item, count, entity.getBoundingBoxForCulling());
     }
 
     public static void spawnItemParticles(Level level, Item item, int count, AABB aabb) {
@@ -82,7 +82,7 @@ public class Util {
         if (!(dino instanceof SwimmingAnimal)) {
             fluid = ClipContext.Fluid.ANY;
         }
-        BlockHitResult rayTrace = dino.getLevel().clip(new ClipContext(dino.getEyePosition(), target, ClipContext.Block.COLLIDER, fluid, dino));
+        BlockHitResult rayTrace = dino.level().clip(new ClipContext(dino.getEyePosition(), target, ClipContext.Block.COLLIDER, fluid, dino));
         return position.equals(rayTrace.getBlockPos());
     }
 
@@ -140,7 +140,7 @@ public class Util {
      */
     @Nullable
     public static <T extends Entity> T getNearestEntity(Class<? extends T> entityClazz, Mob attacker, AABB searchArea, Predicate<T> predicate) {
-        List<? extends T> entities = attacker.level.getEntitiesOfClass(entityClazz, searchArea, entity -> true);
+        List<? extends T> entities = attacker.level().getEntitiesOfClass(entityClazz, searchArea, entity -> true);
         double shortestDist = -1;
         T target = null;
         for (T entity : entities) {

@@ -38,7 +38,7 @@ public class FlyingWanderGoal extends Goal {
             }
             targetPos = findAirTarget();
             return targetPos != null;
-        } else if (dino.isOnGround()) {
+        } else if (dino.onGround()) {
             boolean debug = false;
             if (debug||dino.getRandom().nextInt(250) == 0) {
                 targetPos = findAirTarget();

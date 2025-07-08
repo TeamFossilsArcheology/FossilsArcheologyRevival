@@ -71,8 +71,8 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
     public static final EntityDataAccessor<Direction> ATTACHED_FACE = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.DIRECTION);
     public static final EntityDataAccessor<Boolean> ATTACHED = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.BOOLEAN);
     private final MeganeuraAttachSystem attachSystem = registerSystem(new MeganeuraAttachSystem(this));
-    private final PathNavigation flightNav = new FlyingPathNavigation(this, level);
-    private final PathNavigation amphibiousNav = new AmphibiousPathNavigation<>(this, level);
+    private final PathNavigation flightNav = new FlyingPathNavigation(this, level());
+    private final PathNavigation amphibiousNav = new AmphibiousPathNavigation<>(this, level());
     private final MoveControl flightMoveControl = new MeganeuraFlyingMoveControl(this);
     private final MoveControl aquaticMoveControl = new CustomSwimMoveControl<>(this);
     private final MoveControl landMoveControl = new SmoothTurningMoveControl(this);
@@ -151,7 +151,7 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source == level.damageSources().inWall()) {
+        if (source == damageSources().inWall()) {
             return false;
         }
         boolean hurt = super.hurt(source, amount);
@@ -187,7 +187,7 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
         if (isInWater()) {
             timeInWater++;
             timeOnLand = 0;
-        } else if (onGround) {
+        } else if (onGround()) {
             timeInWater = 0;
             timeOnLand++;
         }
@@ -216,7 +216,7 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
     }
 
     public boolean isFlying() {
-        return !isOnGround() && !attachSystem.isAttached();
+        return !onGround() && !attachSystem.isAttached();
     }
 
     private void switchNavigator() {
@@ -248,7 +248,7 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
             }
         } else {//isWaterNavigator
             if (isBaby()) {
-                if (!isInWater() && isOnGround()) {
+                if (!isInWater() && onGround()) {
                     //Baby start walking
                     moveControl = landMoveControl;
                     lookControl = new LookControl(this);
@@ -441,7 +441,7 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
         protected @Nullable Vec3 getPosition() {
             if (meganeura.attachSystem.getAttachCooldown() == 0) {
                 RandomSource random = meganeura.random;
-                Level level = mob.level;
+                Level level = mob.level();
                 for (int i = 0; i < 5; i++) {
                     BlockPos blockPos = mob.blockPosition().offset(random.nextInt(16) - 8, random.nextInt(10) - 2, random.nextInt(16) - 8);
                     BlockHitResult hitResult = level.clip(new ClipContext(mob.getEyePosition(), Vec3.atCenterOf(blockPos), ClipContext.Block.COLLIDER, ClipContext.Fluid.WATER, mob));

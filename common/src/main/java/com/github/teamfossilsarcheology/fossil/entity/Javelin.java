@@ -75,11 +75,11 @@ public class Javelin extends AbstractArrow {
     protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
         setPierceLevel((byte) 16);
-        if (level instanceof ServerLevel && isAncient() && random.nextInt(100) < 30) {
-            LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(level);
+        if (level() instanceof ServerLevel && isAncient() && random.nextInt(100) < 30) {
+            LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(level());
             lightningBolt.moveTo(Vec3.atBottomCenterOf(blockPosition()));
             lightningBolt.setCause(getOwner() instanceof ServerPlayer ? (ServerPlayer) getOwner() : null);
-            level.addFreshEntity(lightningBolt);
+            level().addFreshEntity(lightningBolt);
         }
     }
 

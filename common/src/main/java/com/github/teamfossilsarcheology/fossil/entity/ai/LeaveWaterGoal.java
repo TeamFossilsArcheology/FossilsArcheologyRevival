@@ -49,7 +49,7 @@ public class LeaveWaterGoal<T extends Prehistoric & SwimmingAnimal> extends Goal
 
     private boolean findPossibleShelter() {
         RandomSource random = dino.getRandom();
-        Level level = dino.level;
+        Level level = dino.level();
         BlockPos original = dino.blockPosition();
         BlockPos.MutableBlockPos mutable = original.mutable();
 

@@ -130,7 +130,7 @@ public class AnuCastleStructure extends Structure {
             BoundingBox baseStructureBoundingBox = baseStructurePiece.getBoundingBox();
             block0:
             for (StructureTemplate.StructureBlockInfo baseStructureJigSaw : structurePoolElement.getShuffledJigsawBlocks(structureTemplateManager, baseStructurePosition, baseStructureRotation, random)) {
-                ResourceLocation poolLocation = new ResourceLocation(baseStructureJigSaw.nbt.getString("pool"));
+                ResourceLocation poolLocation = new ResourceLocation(baseStructureJigSaw.nbt().getString("pool"));
                 Optional<StructureTemplatePool> baseTargetPool = pools.getOptional(poolLocation);
                 if (baseTargetPool.isEmpty() || baseTargetPool.get().size() == 0 && !Objects.equals(poolLocation, Pools.EMPTY.location())) {
                     FossilMod.LOGGER.warn("Empty or non-existent pool: {}", poolLocation);
@@ -143,8 +143,8 @@ public class AnuCastleStructure extends Structure {
                 if (targetPoolElements.isEmpty()) {
                     continue;
                 }
-                BlockPos baseJigsawPosition = baseStructureJigSaw.pos;
-                Direction baseJigsawDirection = JigsawBlock.getFrontFacing(baseStructureJigSaw.state);
+                BlockPos baseJigsawPosition = baseStructureJigSaw.pos();
+                Direction baseJigsawDirection = JigsawBlock.getFrontFacing(baseStructureJigSaw.state());
                 BlockPos expectedJigsawPosition = baseJigsawPosition.relative(baseJigsawDirection);
                 int baseMinY = baseStructureBoundingBox.minY();
                 int baseJigsawOffset = baseJigsawPosition.getY() - baseMinY;
@@ -153,7 +153,7 @@ public class AnuCastleStructure extends Structure {
                 for (StructureTemplate.StructureBlockInfo targetJigsaw : allTargetJigsaws) {
                     int groundLevelDelta = baseStructurePiece.getGroundLevelDelta();
                     if (!JigsawBlock.canAttach(baseStructureJigSaw, targetJigsaw)) continue;
-                    BlockPos targetJigsawPosition = targetJigsaw.pos;
+                    BlockPos targetJigsawPosition = targetJigsaw.pos();
                     BlockPos vecToTargetJigsaw = expectedJigsawPosition.subtract(targetJigsawPosition);
                     BoundingBox targetBoundingBox = targetElement.getBoundingBox(structureTemplateManager, vecToTargetJigsaw, baseStructureRotation);
                     PoolElementStructurePiece poolElementStructurePiece2 = new PoolElementStructurePiece(structureTemplateManager, targetElement, vecToTargetJigsaw, groundLevelDelta, baseStructureRotation, targetBoundingBox);

@@ -87,7 +87,7 @@ public class Nautilus extends PrehistoricFish {
     @Override
     public void travel(Vec3 travelVector) {
         if (isInShell() && isInWater()) {
-            if (!level.isClientSide) {
+            if (!level().isClientSide) {
                 setDeltaMovement(0, -0.05, 0);
                 move(MoverType.SELF, getDeltaMovement());
             }
@@ -99,7 +99,7 @@ public class Nautilus extends PrehistoricFish {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             if (ticksUntilShellUpdate > 0) {
                 ticksUntilShellUpdate--;
             }
@@ -110,7 +110,7 @@ public class Nautilus extends PrehistoricFish {
                 resetFallDistance();
             }
             if (ticksUntilShellUpdate == 0) {
-                List<LivingEntity> nearbyMobs = level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(2, 2, 2), Nautilus::getsScaredBy);
+                List<LivingEntity> nearbyMobs = level().getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(2, 2, 2), Nautilus::getsScaredBy);
                 if (!nearbyMobs.isEmpty()) {
                     closeShell();
                 }
@@ -138,10 +138,10 @@ public class Nautilus extends PrehistoricFish {
     protected @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
         if (itemStack.is(Items.FLINT)) {
-            if (!level.isClientSide) {
+            if (!level().isClientSide) {
                 openShell();
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level().isClientSide);
         }
         return super.mobInteract(player, hand);
     }
@@ -172,10 +172,10 @@ public class Nautilus extends PrehistoricFish {
     }
 
     private boolean shouldBeBeached() {
-        if (isInWater() || level.getFluidState(blockPosition()).is(FluidTags.WATER)) {
+        if (isInWater() || level().getFluidState(blockPosition()).is(FluidTags.WATER)) {
             return false;
         }
-        return isOnGround() || !level.getFluidState(blockPosition().below()).is(FluidTags.WATER);
+        return onGround() || !level().getFluidState(blockPosition().below()).is(FluidTags.WATER);
     }
 
     public boolean isInShell() {
@@ -191,7 +191,7 @@ public class Nautilus extends PrehistoricFish {
     }
 
     public void closeShell() {
-        if (!entityData.get(IS_IN_SHELL)) {
+        if (Boolean.FALSE.equals(entityData.get(IS_IN_SHELL))) {
             ticksInShell = 0;
         }
         entityData.set(IS_IN_SHELL, true);

@@ -8,8 +8,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -48,7 +48,7 @@ public abstract class ForgeEnergyContainerBlockEntity extends ForgeContainerBloc
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (!remove && side != null && cap == CapabilityEnergy.ENERGY && FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY)) {
+        if (!remove && side != null && cap == ForgeCapabilities.ENERGY && FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY)) {
             return lazyEnergyStorage.cast();
         }
         return super.getCapability(cap, side);

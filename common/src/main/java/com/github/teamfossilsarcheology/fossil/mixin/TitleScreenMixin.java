@@ -3,12 +3,13 @@ package com.github.teamfossilsarcheology.fossil.mixin;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.PanoramaRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,7 +35,7 @@ public abstract class TitleScreenMixin extends Screen {
     }
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/PanoramaRenderer;render(FF)V"))
-    protected void renderCustomTitleScreen(PoseStack poseStack, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
+    protected void renderCustomTitleScreen(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
         if (FossilConfig.isEnabled(FossilConfig.CUSTOM_MAIN_MENU)) {
             fossil$layerTick++;
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -42,11 +43,11 @@ public abstract class TitleScreenMixin extends Screen {
             RenderSystem.enableBlend();
             RenderSystem.setShaderTexture(0, LAYER_TEXTURE_BACK);
             float u = fossil$initialOffsetBack + ((fossil$layerTick + partialTick) / 2f) + 1;
-            blit(poseStack, 0, 0, u / (960f / width), 0, width, height, (int) (1024 * (height / 128f)), height);
+            guiGraphics.blit(LAYER_TEXTURE_BACK, 0, 0, u / (960f / width), 0, width, height, (int) (1024 * (height / 128f)), height);
 
             RenderSystem.setShaderTexture(0, LAYER_TEXTURE_FRONT);
             u = fossil$initialOffsetFront + fossil$layerTick + partialTick + 2 + 512;
-            blit(poseStack, 0, 0, u / (960f / width), 0, width, height, (int) (2048 * (height / 128f)), height);
+            guiGraphics.blit(LAYER_TEXTURE_BACK, 0, 0, u / (960f / width), 0, width, height, (int) (2048 * (height / 128f)), height);
         }
     }
 
@@ -55,8 +56,8 @@ public abstract class TitleScreenMixin extends Screen {
         return !FossilConfig.isEnabled(FossilConfig.CUSTOM_MAIN_MENU);
     }
 
-    @WrapWithCondition(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/TitleScreen;blit(Lcom/mojang/blaze3d/vertex/PoseStack;IIIIFFIIII)V"))
-    protected boolean removeOverlay(PoseStack poseStack, int a, int b, int c, int d, float e, float f, int g, int h, int i, int j) {
+    @WrapWithCondition(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blit(Lnet/minecraft/resources/ResourceLocation;IIIIFFIIII)V"))
+    protected boolean removeOverlay(GuiGraphics instance, ResourceLocation atlasLocation, int x, int y, int width, int height, float uOffset, float vOffset, int uWidth, int vHeight, int textureWidth, int textureHeight) {
         return !FossilConfig.isEnabled(FossilConfig.CUSTOM_MAIN_MENU);
     }
 }

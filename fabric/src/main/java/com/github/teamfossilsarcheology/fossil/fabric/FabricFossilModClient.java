@@ -34,13 +34,13 @@ public class FabricFossilModClient implements ClientModInitializer {
             OverlayRenderer.renderHelmet(window.getGuiScaledWidth(), window.getGuiScaledHeight());
         });
         EntitySleepEvents.ALLOW_SLEEP_TIME.register((player, sleepingPos, vanillaResult) -> {
-            if (ComfyBedEffect.canApply(Optional.of(sleepingPos), player.level)) {
-                return InteractionResult.sidedSuccess(player.level.isClientSide);
+            if (ComfyBedEffect.canApply(Optional.of(sleepingPos), player.level())) {
+                return InteractionResult.sidedSuccess(player.level().isClientSide);
             }
             return InteractionResult.PASS;
         });
         EntitySleepEvents.STOP_SLEEPING.register((entity, sleepingPos) -> {
-            if (ComfyBedEffect.canApply(Optional.of(sleepingPos), entity.level)) {
+            if (ComfyBedEffect.canApply(Optional.of(sleepingPos), entity.level())) {
                 entity.addEffect(new MobEffectInstance(ModEffects.COMFY_BED.get(), 24000, 0));
             }
         });

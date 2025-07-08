@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.client.gui.debug;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -59,9 +59,9 @@ public class DebugSelectionList<E extends ContainerObjectSelectionList.Entry<E>>
     }
 
     @Override
-    protected void renderList(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        super.renderList(poseStack, mouseX, mouseY, partialTick);
-        renderables.forEach(widget -> widget.render(poseStack, mouseX, mouseY, partialTick));
+    protected void renderList(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.renderList(guiGraphics, mouseX, mouseY, partialTick);
+        renderables.forEach(renderable -> renderable.render(guiGraphics, mouseX, mouseY, partialTick));
     }
 
     protected <T extends Renderable & GuiEventListener> void removeWidget(T widget) {

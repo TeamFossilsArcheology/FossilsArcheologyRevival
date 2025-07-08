@@ -123,13 +123,13 @@ public class ModEvents {
                             double x = animal.getX() + random.nextFloat() * animal.getBbWidth() * 2 - animal.getBbWidth();
                             double y = animal.getY() + 0.5 + random.nextFloat() * animal.getBbHeight();
                             double z = animal.getZ() + random.nextFloat() * animal.getBbWidth() * 2 - animal.getBbWidth();
-                            player.level.addParticle(ParticleTypes.SMOKE, x, y, z, random.nextGaussian() * 0.02, random.nextGaussian() * 0.02, random.nextGaussian() * 0.02);
+                            player.level().addParticle(ParticleTypes.SMOKE, x, y, z, random.nextGaussian() * 0.02, random.nextGaussian() * 0.02, random.nextGaussian() * 0.02);
                         }
                     }
                     return EventResult.interruptTrue();
                 }
             } else if (stack.is(ModItems.WHIP.get())) {
-                if (!player.level.isClientSide && player.isPassenger() && player.getVehicle() == entity) {
+                if (!player.level().isClientSide && player.isPassenger() && player.getVehicle() == entity) {
                     stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
                     player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
                     player.playSound(ModSounds.WHIP.get(), 1, 1);
@@ -163,17 +163,17 @@ public class ModEvents {
     }
 
     public static void growEntity(EntityInfo embryo, LivingEntity parent) {
-        RandomSource random = parent.level.random;
-        if (parent.level.isClientSide) {
+        RandomSource random = parent.level().random;
+        if (parent.level().isClientSide) {
             for (int i = 0; i < 7; ++i) {
                 double d = random.nextGaussian() * 0.02;
                 double e = random.nextGaussian() * 0.02;
                 double f = random.nextGaussian() * 0.02;
-                parent.level.addParticle(ParticleTypes.HEART, parent.getRandomX(1.0), parent.getRandomY() + 0.5, parent.getRandomZ(1.0), d, e, f);
+                parent.level().addParticle(ParticleTypes.HEART, parent.getRandomX(1.0), parent.getRandomY() + 0.5, parent.getRandomZ(1.0), d, e, f);
             }
             return;
         }
-        ServerLevel level = (ServerLevel) parent.level;
+        ServerLevel level = (ServerLevel) parent.level();
         Entity newEntity = embryo.entityType().create(level);
         int result = random.nextInt(100);
         if (newEntity instanceof AbstractHorse newHorse) {

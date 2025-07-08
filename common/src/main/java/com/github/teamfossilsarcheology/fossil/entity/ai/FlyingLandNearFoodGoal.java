@@ -61,7 +61,7 @@ public class FlyingLandNearFoodGoal extends MoveToFoodGoal {
         BlockPos mobPos = dino.blockPosition();
         //chunkRadius of 2 is 25 chunks. Should not be too slow
         Optional<BlockPos> target = ChunkPos.rangeClosed(new ChunkPos(mobPos), chunkRadius)
-                .flatMap(chunkPos -> dino.level.getChunk(chunkPos.x, chunkPos.z).getBlockEntities().entrySet().stream())
+                .flatMap(chunkPos -> dino.level().getChunk(chunkPos.x, chunkPos.z).getBlockEntities().entrySet().stream())
                 .filter(this::isValidTarget)
                 .map(Map.Entry::getKey)
                 .min(Comparator.comparingInt(pos -> pos.distManhattan(mobPos)));

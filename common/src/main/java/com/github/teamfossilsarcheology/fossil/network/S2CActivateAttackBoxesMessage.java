@@ -33,9 +33,9 @@ public class S2CActivateAttackBoxesMessage {
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         if (contextSupplier.get().getEnvironment() == Env.SERVER) return;
         contextSupplier.get().queue(() -> {
-            Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
+            Entity entity = contextSupplier.get().getPlayer().level().getEntity(entityId);
             if (entity instanceof Prehistoric prehistoric) {
-                prehistoric.getEntityHitboxData().getAttackBoxData().activateAttackBoxes(contextSupplier.get().getPlayer().level, attackDuration);
+                prehistoric.getEntityHitboxData().getAttackBoxData().activateAttackBoxes(contextSupplier.get().getPlayer().level(), attackDuration);
             }
         });
     }

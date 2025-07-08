@@ -25,7 +25,7 @@ public class Dodo extends Prehistoric {
     public void aiStep() {
         super.aiStep();
         Vec3 movement = getDeltaMovement();
-        if (!isOnGround() && movement.y < 0) {
+        if (!onGround() && movement.y < 0) {
             setDeltaMovement(movement.x, movement.y * 0.6, movement.z);
         }
     }

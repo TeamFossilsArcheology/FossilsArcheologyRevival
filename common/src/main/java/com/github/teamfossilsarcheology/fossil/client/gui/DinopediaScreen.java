@@ -22,12 +22,13 @@ import com.mojang.math.Axis;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.StringSplitter;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -38,7 +39,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Blocks;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -175,13 +175,13 @@ public class DinopediaScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        renderBackground(poseStack);
-        renderBackgroundLayer(poseStack, mouseX, mouseY);
-        super.render(poseStack, mouseX, mouseY, partialTick);
-        renderForegroundLayer(poseStack, mouseX, mouseY, partialTick);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        renderBackground(guiGraphics);
+        renderBackgroundLayer(guiGraphics, mouseX, mouseY);
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
+        renderForegroundLayer(guiGraphics, mouseX, mouseY, partialTick);
         if (!toolTipList.isEmpty()) {
-            renderComponentTooltip(poseStack, toolTipList, mouseX, mouseY);
+            guiGraphics.renderComponentTooltip(font, toolTipList, mouseX, mouseY);
             toolTipList.clear();
         }
     }
@@ -189,11 +189,8 @@ public class DinopediaScreen extends Screen {
     /**
      * Renders the background texture and the entity
      */
-    private void renderBackgroundLayer(PoseStack poseStack, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1, 1, 1, 1);
-        RenderSystem.setShaderTexture(0, DINOPEDIA_BACKGROUND);
-        blit(poseStack, leftPos, topPos, 0, 0, xSize, ySize, 390, 390);
+    private void renderBackgroundLayer(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        guiGraphics.blit(DINOPEDIA_BACKGROUND, leftPos, topPos, 0, 0, xSize, ySize, 390, 390);
         if (currentPage == PAGE_1) {
             renderEntityInDinopedia(leftPos + 100, topPos + 80, entity);
         }
@@ -202,16 +199,16 @@ public class DinopediaScreen extends Screen {
     /**
      * Renders the information about the entity
      */
-    private void renderForegroundLayer(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+    private void renderForegroundLayer(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         if (currentPage == PAGE_1) {
-            renderFirstPage(poseStack, mouseX, mouseY);
+            renderFirstPage(guiGraphics, mouseX, mouseY);
         } else if (currentPage >= PAGE_2) {
             if (currentBio == null) {
                 currentBio = loadBio(entity);
                 updateButtonVisibility();
             }
             if (!currentBio.isEmpty()) {
-                renderPrehistoricBio(poseStack);
+                renderPrehistoricBio(guiGraphics);
             }
         }
     }
@@ -226,8 +223,8 @@ public class DinopediaScreen extends Screen {
     /**
      * Returns the x position so that the scaled element will be centered on the left or right page
      */
-    private float getScaledX(boolean left, int width, float scale) {
-        return (leftPos + (left ? 0 : xSize / 2f) + (xSize / 2f - width * scale) / 2) / scale;
+    private int getScaledX(boolean left, int width, float scale) {
+        return (int) ((leftPos + (left ? 0 : xSize / 2f) + (xSize / 2f - width * scale) / 2) / scale);
     }
 
     private static float roundToHalf(double value) {
@@ -237,70 +234,68 @@ public class DinopediaScreen extends Screen {
     /**
      * Renders the first page usually containing direct info about the mob/egg
      */
-    private void renderFirstPage(PoseStack poseStack, int mouseX, int mouseY) {
+    private void renderFirstPage(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         int col = (157 << 16) | (126 << 8) | 103;
-        boolean drawLeftPage = true;
         if (entity instanceof Animal animal) {
             float embryoProgress = ModCapabilities.getEmbryoProgress(animal);
             if (embryoProgress > 0) {
-                drawLeftPage = false;
                 float quot = roundToHalf(embryoProgress / (FossilConfig.getInt(FossilConfig.PREGNANCY_DURATION) + 1) * 100);
                 var progress = Component.translatable("pedia.fossil.pregnantTime", quot);
-                font.draw(poseStack, progress, getScaledX(true, font.width(progress), 1), topPos + 135, col);
-                poseStack.pushPose();
+                guiGraphics.drawString(font, progress, getScaledX(true, font.width(progress), 1), topPos + 135, col);
+                guiGraphics.pose().pushPose();
                 float scale = 1.5f;
-                poseStack.scale(scale, scale, scale);
-                Component name = Component.translatable("pedia.fossil.pregnant", entity.getType().getDescription());
-                font.draw(poseStack, name, getScaledX(true, font.width(name), scale), (topPos + 85) / scale, (66 << 16) | (48 << 8) | 36);
-                poseStack.popPose();
+                guiGraphics.pose().scale(scale, scale, scale);
+                MutableComponent name = Component.translatable("pedia.fossil.pregnant", entity.getType().getDescription());
+                guiGraphics.drawString(font, name, getScaledX(true, font.width(name), scale), (int) ((topPos + 85) / scale), (66 << 16) | (48 << 8) | 36);
+                guiGraphics.pose().popPose();
             }
         }
-        renderFirstPageRight(poseStack, mouseX, mouseY);
-        if (entity instanceof Prehistoric dino && drawLeftPage) {
-            poseStack.pushPose();
+        renderFirstPageRight(guiGraphics, mouseX, mouseY);
+        if (entity instanceof Prehistoric dino) {
+            guiGraphics.pose().pushPose();
             float scale = 1.5f;
-            poseStack.scale(scale, scale, scale);
+            guiGraphics.pose().scale(scale, scale, scale);
             Component name = entity.getType().getDescription();
-            font.draw(poseStack, name, getScaledX(true, font.width(name), scale), (topPos + 85) / scale, (66 << 16) | (48 << 8) | 36);
-            poseStack.popPose();
+            guiGraphics.drawString(font, name, getScaledX(true, font.width(name), scale), (int) ((topPos + 85) / scale), (66 << 16) | (48 << 8) | 36);
+            guiGraphics.pose().popPose();
             int x = leftPos + 30;
             int y = topPos + 85;
-            font.draw(poseStack, Component.translatable("pedia.fossil.age", dino.getAgeInDays()), x, y + 20, col);
-            font.draw(poseStack, Component.translatable("pedia.fossil.health", entity.getHealth() + "/" + entity.getMaxHealth()), x, y + 30, col);
-            font.draw(poseStack, Component.translatable("pedia.fossil.hunger", dino.getHunger() + "/" + dino.getMaxHunger()), x, y + 40, col);
+            guiGraphics.drawString(font, Component.translatable("pedia.fossil.age", dino.getAgeInDays()), x, y + 20, col);
+            guiGraphics.drawString(font, Component.translatable("pedia.fossil.health", entity.getHealth() + "/" + entity.getMaxHealth()), x, y + 30, col);
+            guiGraphics.drawString(font, Component.translatable("pedia.fossil.hunger", dino.getHunger() + "/" + dino.getMaxHunger()), x, y + 40, col);
             var dietText = dino.data().diet().getName();
-            renderHoverInfo(poseStack, x, y + 50, mouseX, mouseY, dietText, dino.data().diet().getDescription());
+            renderHoverInfo(guiGraphics, x, y + 50, mouseX, mouseY, dietText, dino.data().diet().getDescription());
             var tempText = dino.aiResponseType().getName();
-            renderHoverInfo(poseStack, x, y + 60, mouseX, mouseY, tempText, dino.aiResponseType().getDescription());
-            font.draw(poseStack, dino.getGender().getName(), x, y + 70, col);
-            if (dino.getOwnerUUID() == null) {
-                font.draw(poseStack, Component.translatable("pedia.fossil.untamed"), x, y + 80, col);
+            renderHoverInfo(guiGraphics, x, y + 60, mouseX, mouseY, tempText, dino.aiResponseType().getDescription());
+            guiGraphics.drawString(font, dino.getGender().getName(), x, y + 70, col);
+            if (dino.getOwner() == null) {
+                guiGraphics.drawString(font, Component.translatable("pedia.fossil.untamed"), x, y + 80, col);
             } else {
                 try {
-                    font.draw(poseStack, Component.translatable("pedia.fossil.owner", USERNAMES.get(dino.getOwnerUUID())), x, y + 80, col);
+                    guiGraphics.drawString(font, Component.translatable("pedia.fossil.owner", USERNAMES.get(dino.getOwnerUUID())), x, y + 80, col);
                 } catch (ExecutionException e) {
-                    font.draw(poseStack, Component.translatable("pedia.fossil.owner", "Invalid User"), x, y + 80, col);
+                    guiGraphics.drawString(font, Component.translatable("pedia.fossil.owner", "Invalid User"), x, y + 80, col);
                 }
             }
             var order = dino.getCurrentOrder();
-            renderHoverInfo(poseStack, x, y + 90, mouseX, mouseY, order.getName(), order.getDescription());
+            renderHoverInfo(guiGraphics, x, y + 90, mouseX, mouseY, order.getName(), order.getDescription());
 
-            font.draw(poseStack, Component.translatable("pedia.fossil.order.item", Component.translatable(dino.getOrderItem().getDescriptionId())), x, y + 100, col);
+            guiGraphics.drawString(font, Component.translatable("pedia.fossil.order.item", Component.translatable(dino.getOrderItem().getDescriptionId())), x, y + 100, col);
 
             var activity = dino.aiActivityType();
-            renderHoverInfo(poseStack, x, y + 110, mouseX, mouseY, activity.getName(), activity.getDescription());
+            renderHoverInfo(guiGraphics, x, y + 110, mouseX, mouseY, activity.getName(), activity.getDescription());
 
-            font.draw(poseStack, Component.translatable("pedia.fossil.population", dino.data().maxPopulation()), x, y + 120, col);
+            guiGraphics.drawString(font, Component.translatable("pedia.fossil.population", dino.data().maxPopulation()), x, y + 120, col);
         } else if (entity instanceof DinosaurEgg egg) {
-            poseStack.pushPose();
+            guiGraphics.pose().pushPose();
             float scale = 1.5f;
-            poseStack.scale(scale, scale, scale);
+            guiGraphics.pose().scale(scale, scale, scale);
             var name = Component.translatable("pedia.fossil.egg", egg.getPrehistoricEntityInfo().displayName.get());
-            font.draw(poseStack, name, getScaledX(true, font.width(name), scale), (topPos + 85) / scale, (66 << 16) | (48 << 8) | 36);
-            poseStack.popPose();
+            guiGraphics.drawString(font, name, getScaledX(true, font.width(name), scale), (int) ((topPos + 85) / scale), (66 << 16) | (48 << 8) | 36);
+            guiGraphics.pose().popPose();
             int time = Mth.floor((float) egg.getHatchingTime() / egg.getTotalHatchingTime() * 100);
             var progress = Component.translatable("pedia.fossil.egg.time", Math.max(time, 0));
-            font.draw(poseStack, progress, getScaledX(true, font.width(progress), 1), topPos + 120, (157 << 16) | (126 << 8) | 103);
+            guiGraphics.drawString(font, progress, getScaledX(true, font.width(progress), 1), topPos + 120, (157 << 16) | (126 << 8) | 103);
 
             Component status;
             if (egg.isInWater()) {
@@ -313,22 +308,22 @@ public class DinopediaScreen extends Screen {
                 }
             }
             status = Component.translatable("pedia.fossil.egg.status", status);
-            font.draw(poseStack, status, getScaledX(true, font.width(status), 1), topPos + 140, (157 << 16) | (126 << 8) | 103);
+            guiGraphics.drawString(font, status, getScaledX(true, font.width(status), 1), topPos + 140, (157 << 16) | (126 << 8) | 103);
         } else if (entity instanceof PrehistoricFish || entity instanceof Quagga) {
-            poseStack.pushPose();
+            guiGraphics.pose().pushPose();
             float scale = 1.5f;
-            poseStack.scale(scale, scale, scale);
+            guiGraphics.pose().scale(scale, scale, scale);
             Component name = entity.getType().getDescription();
-            font.draw(poseStack, name, getScaledX(true, font.width(name), scale), (topPos + 85) / scale, (66 << 16) | (48 << 8) | 36);
-            poseStack.popPose();
+            guiGraphics.drawString(font, name, getScaledX(true, font.width(name), scale), (int) ((topPos + 85) / scale), (66 << 16) | (48 << 8) | 36);
+            guiGraphics.pose().popPose();
         }
     }
 
     /**
      * Used to render dino info and potentially render its tooltip
      */
-    private void renderHoverInfo(PoseStack poseStack, int x, int y, int mouseX, int mouseY, Component text, Component hoverText) {
-        font.draw(poseStack, text, x, y, (157 << 16) | (126 << 8) | 103);
+    private void renderHoverInfo(GuiGraphics guiGraphics, int x, int y, int mouseX, int mouseY, Component text, Component hoverText) {
+        guiGraphics.drawString(font, text, x, y, (157 << 16) | (126 << 8) | 103);
         if (mouseX >= x && mouseY >= y && mouseX < x + font.width(text) && mouseY < y + font.lineHeight) {
             toolTipList.add(hoverText);
         }
@@ -337,17 +332,16 @@ public class DinopediaScreen extends Screen {
     /**
      * Renders the mood bar and food list
      */
-    private void renderFirstPageRight(PoseStack poseStack, int mouseX, int mouseY) {
+    private void renderFirstPageRight(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         if (entity instanceof Prehistoric dino) {
-            RenderSystem.setShaderTexture(0, MOODS);
-            poseStack.pushPose();
+            guiGraphics.pose().pushPose();
             float scale = 1.75f;
-            poseStack.scale(scale, scale, scale);
+            guiGraphics.pose().scale(scale, scale, scale);
             int x = (int) getScaledX(false, MOOD_FACE_WIDTH, scale);
             int y = (int) ((topPos + 16) / scale);
             MoodSystem moodSystem = dino.moodSystem;
-            blit(poseStack, x, y, moodSystem.getMoodFace().uOffset, 10, MOOD_FACE_WIDTH, MOOD_FACE_HEIGHT);
-            poseStack.popPose();
+            guiGraphics.blit(MOODS, x, y, moodSystem.getMoodFace().uOffset, 10, MOOD_FACE_WIDTH, MOOD_FACE_HEIGHT);
+            guiGraphics.pose().popPose();
             x = (int) (x * scale);
             y = (int) (y * scale);
             if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + MOOD_FACE_WIDTH * scale && mouseY < y + MOOD_FACE_HEIGHT * scale) {
@@ -355,13 +349,13 @@ public class DinopediaScreen extends Screen {
                 toolTipList.add(moodSystem.getMoodFace().getDescription());
             }
 
-            poseStack.pushPose();
+            guiGraphics.pose().pushPose();
             scale = 0.75f;
-            poseStack.scale(scale, scale, scale);
+            guiGraphics.pose().scale(scale, scale, scale);
             x = (int) getScaledX(false, MOOD_BAR_WIDTH, scale);
             y = (int) ((topPos + 49) / scale);
-            blit(poseStack, x, y, 0, 0, MOOD_BAR_WIDTH, MOOD_BAR_HEIGHT);
-            poseStack.popPose();
+            guiGraphics.blit(MOODS, x, y, 0, 0, MOOD_BAR_WIDTH, MOOD_BAR_HEIGHT);
+            guiGraphics.pose().popPose();
             x = (int) (x * scale);
             y = (int) (y * scale);
             if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + MOOD_BAR_WIDTH * scale && mouseY < y + MOOD_BAR_HEIGHT * scale) {
@@ -369,11 +363,11 @@ public class DinopediaScreen extends Screen {
                 toolTipList.add(Component.translatable("pedia.fossil.mood_status", mood));
             }
 
-            poseStack.pushPose();
+            guiGraphics.pose().pushPose();
             x = (int) getScaledX(false, 4, 1);
             y = topPos + 9 + 38;
-            blit(poseStack, x - moodSystem.getMoodPosition(), y, 0, 26, 4, 10);
-            poseStack.popPose();
+            guiGraphics.blit(MOODS, x - moodSystem.getMoodPosition(), y, 0, 26, 4, 10);
+            guiGraphics.pose().popPose();
 
             var foodMap = FoodMappings.getFoodRenderList(dino.data().diet());
             var keys = foodMap.keySet().stream().filter(itemLike -> itemLike instanceof Item).sorted(
@@ -385,25 +379,25 @@ public class DinopediaScreen extends Screen {
                 y = topPos + 65 + renderSize * (itemCount / 8);
                 itemCount++;
                 ItemStack itemStack = new ItemStack(itemLike);
-                itemRenderer.renderAndDecorateItem(poseStack, itemStack, x, y);
+                guiGraphics.renderItem(itemStack, x, y);
                 if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + renderSize && mouseY < y + renderSize) {
-                    toolTipList.addAll(getTooltipFromItem(itemStack));
+                    toolTipList.addAll(getTooltipFromItem(minecraft, itemStack));
                 }
             }
             x = leftPos + 4 + xSize / 2;
             y = topPos + 70 + renderSize * (itemCount / 8);
             if (dino.isAgingDisabled()) {
                 x += 16;
-                itemRenderer.renderAndDecorateItem(poseStack, new ItemStack(Items.POISONOUS_POTATO), x, y);
+                guiGraphics.renderItem(new ItemStack(Items.POISONOUS_POTATO), x, y);
                 if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + renderSize && mouseY < y + renderSize) {
                     toolTipList.add(STUNTED_GROWTH);
                 }
             }
             if (dino instanceof PrehistoricShearable shearable) {
                 x += 16;
-                itemRenderer.renderAndDecorateItem(poseStack, new ItemStack(Items.SHEARS), x, y);
+                guiGraphics.renderItem(new ItemStack(Items.SHEARS), x, y);
                 if (shearable.isSheared()) {
-                    itemRenderer.renderAndDecorateItem(poseStack, new ItemStack(Blocks.BARRIER), x, y);
+                    guiGraphics.renderItem(new ItemStack(Items.BARRIER), x, y);
                 }
                 if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + renderSize && mouseY < y + renderSize) {
                     toolTipList.add(shearable.isSheared() ? SHEARED : NOT_SHEARED);
@@ -413,14 +407,14 @@ public class DinopediaScreen extends Screen {
                 var tag = dino.getDebugTag();
                 if (dino.isNoAi() || tag.getBoolean("disableGoalAI") || tag.getBoolean("disableMoveAI") || tag.getBoolean("disableLookAI")) {
                     x += 16;
-                    itemRenderer.renderAndDecorateItem(poseStack, new ItemStack(Items.DEBUG_STICK), x, y);
+                    guiGraphics.renderItem(new ItemStack(Items.DEBUG_STICK), x, y);
                     if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + renderSize && mouseY < y + renderSize) {
                         toolTipList.add(Component.literal(String.format("Disabled AI: %b, Goal: %b, Move: %b, Look: %b", dino.isNoAi(), tag.getBoolean("disableGoalAI"), tag.getBoolean("disableMoveAI"), tag.getBoolean("disableLookAI"))));
                     }
                 }
                 if (!dino.getVariantId().isBlank()) {
                     x += 16;
-                    itemRenderer.renderAndDecorateItem(poseStack, new ItemStack(Items.RED_DYE), x, y);
+                    guiGraphics.renderItem(new ItemStack(Items.RED_DYE), x, y);
                     if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + renderSize && mouseY < y + renderSize) {
                         toolTipList.add(Component.literal("Variant: " + dino.getVariantId()));
                     }
@@ -450,10 +444,10 @@ public class DinopediaScreen extends Screen {
         return list;
     }
 
-    private void renderPrehistoricBio(PoseStack poseStack) {
-        poseStack.pushPose();
+    private void renderPrehistoricBio(GuiGraphics guiGraphics) {
+        guiGraphics.pose().pushPose();
         float scale = 0.75f;
-        poseStack.scale(scale, scale, scale);
+        guiGraphics.pose().scale(scale, scale, scale);
         int right = 0;
         int left = 0;
         int offset = currentPage - 1;
@@ -461,12 +455,12 @@ public class DinopediaScreen extends Screen {
 
         for (int i = 0; i < currentLines.size(); i++) {
             if (i <= 20) {//1344, 32 per line
-                font.draw(poseStack, currentLines.get(i), getScaledX(true, xSize / 2, scale), (topPos + 10 + font.lineHeight * ++left) / scale, 0x9D7E67);
+                guiGraphics.drawString(font, currentLines.get(i), getScaledX(true, xSize / 2, scale), (int) ((topPos + 10 + font.lineHeight * ++left) / scale), 0x9D7E67);
             } else {
-                font.draw(poseStack, currentLines.get(i), getScaledX(false, xSize / 2, scale), (topPos + 10 + font.lineHeight * ++right) / scale, 0x9D7E67);
+                guiGraphics.drawString(font, currentLines.get(i), getScaledX(false, xSize / 2, scale), (int) ((topPos + 10 + font.lineHeight * ++right) / scale), 0x9D7E67);
             }
         }
-        poseStack.popPose();
+        guiGraphics.pose().popPose();
     }
 
     @Override
@@ -483,11 +477,8 @@ public class DinopediaScreen extends Screen {
         }
 
         @Override
-        public void renderWidget(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderColor(1, 1, 1, 1);
-            RenderSystem.setShaderTexture(0, DINOPEDIA_BACKGROUND);
-            blit(poseStack, getX(), getY(), isForward ? 0 : 34, 223, 34, 30);
+        public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+            guiGraphics.blit(DINOPEDIA_BACKGROUND, getX(), getY(), isForward ? 0 : 34, 223, 34, 30);
         }
     }
 }

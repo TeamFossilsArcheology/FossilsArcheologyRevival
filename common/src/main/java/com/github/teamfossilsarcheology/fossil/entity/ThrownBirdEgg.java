@@ -12,7 +12,6 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -77,7 +76,7 @@ public class ThrownBirdEgg extends ThrowableItemProjectile {
     @Override
     protected void onHit(HitResult result) {
         super.onHit(result);
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             if (cultivated) {
                 spawnAnimal(1);
             } else if (random.nextInt(8) == 0) {
@@ -90,7 +89,7 @@ public class ThrownBirdEgg extends ThrowableItemProjectile {
             discard();
         } else {
             for (int i = 0; i < 8; ++i) {
-                level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, getItem()), getX(), getY(), getZ(), (random.nextDouble() - 0.5) * 0.08, (this.random.nextDouble() - 0.5) * 0.08, (this.random.nextDouble() - 0.5) * 0.08);
+                level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, getItem()), getX(), getY(), getZ(), (random.nextDouble() - 0.5) * 0.08, (this.random.nextDouble() - 0.5) * 0.08, (this.random.nextDouble() - 0.5) * 0.08);
             }
         }
     }
@@ -98,14 +97,14 @@ public class ThrownBirdEgg extends ThrowableItemProjectile {
     private void spawnAnimal(int amount) {
         if (info.mobType() != PrehistoricMobType.VANILLA_BIRD) {
             for (int i = 0; i < amount; ++i) {
-                Prehistoric entity = (Prehistoric) info.entityType().create(level);
-                entity.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);
+                Prehistoric entity = (Prehistoric) info.entityType().create(level());
+                entity.finalizeSpawn((ServerLevel) level(), level().getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);
                 entity.moveTo(getX(), getY(), getZ(), getYRot(), 0);
-                level.addFreshEntity(entity);
+                level().addFreshEntity(entity);
                 if (getOwner() instanceof ServerPlayer player) {
                     ModTriggers.INCUBATE_EGG_TRIGGER.trigger(player, entity);
                 }
-                Player nearestPlayer = level.getNearestPlayer(entity, 5);
+                Player nearestPlayer = level().getNearestPlayer(entity, 5);
                 if (nearestPlayer != null) {
                     entity.tame(nearestPlayer);
                 }
@@ -114,14 +113,14 @@ public class ThrownBirdEgg extends ThrowableItemProjectile {
             for (int i = 0; i < amount; ++i) {
                 AgeableMob entity;
                 if (info == VanillaEntityInfo.PARROT) {
-                    entity = EntityType.PARROT.create(level);
+                    entity = EntityType.PARROT.create(level());
                 } else {
-                    entity = EntityType.CHICKEN.create(level);
+                    entity = EntityType.CHICKEN.create(level());
                 }
-                entity.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(blockPosition()), MobSpawnType.BREEDING, null, null);
+                entity.finalizeSpawn((ServerLevel) level(), level().getCurrentDifficultyAt(blockPosition()), MobSpawnType.BREEDING, null, null);
                 entity.setAge(-24000);
                 entity.moveTo(getX(), getY(), getZ(), getYRot(), 0);
-                level.addFreshEntity(entity);
+                level().addFreshEntity(entity);
             }
         }
     }

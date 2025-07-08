@@ -45,7 +45,7 @@ public class StoneTabletRenderer extends EntityRenderer<StoneTablet> implements 
         if (direction == Direction.EAST) {
             z = Mth.floor(entity.getZ() + centerX / 16);
         }
-        return LevelRenderer.getLightColor(entity.level, new BlockPos(x, y, z));
+        return LevelRenderer.getLightColor(entity.level(), new BlockPos(x, y, z));
     }
 
     @Override

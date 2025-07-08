@@ -41,7 +41,7 @@ public class C2SForceAnimationMessage {
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> {
-            Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
+            Entity entity = contextSupplier.get().getPlayer().level().getEntity(entityId);
             if (entity instanceof PrehistoricAnimatable<?> animatable && Version.debugEnabled()) {
                 animatable.getAnimationLogic().forceAnimation(controller, animatable.getAllAnimations().get(animation), AnimationCategory.IDLE, speed, transitionLength, loop);
             }

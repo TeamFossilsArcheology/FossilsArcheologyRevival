@@ -48,9 +48,9 @@ public class SitSystem extends AISystem {
         if ((mob.aiMovingType() == Moving.AQUATIC)) {
             return mob.isInWater();
         } else if (mob.aiMovingType() == Moving.SEMI_AQUATIC) {
-            return mob.isInWater() || mob.isOnGround();
+            return mob.isInWater() || mob.onGround();
         } else {
-            return mob.isOnGround();
+            return mob.onGround();
         }
     }
 

@@ -38,9 +38,9 @@ public class Megalania extends Prehistoric {
         if (super.doHurtTarget(target)) {
             if (target instanceof LivingEntity living) {
                 int i = 3;
-                if (level.getDifficulty() == Difficulty.NORMAL) {
+                if (level().getDifficulty() == Difficulty.NORMAL) {
                     i = 10;
-                } else if (level.getDifficulty() == Difficulty.HARD) {
+                } else if (level().getDifficulty() == Difficulty.HARD) {
                     i = 15;
                 }
                 living.addEffect(new MobEffectInstance(MobEffects.POISON, i * 20, 0), this);

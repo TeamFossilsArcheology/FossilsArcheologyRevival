@@ -36,7 +36,7 @@ public class FlyingSleepSystem extends SleepSystem {
                     trySleepingOrLanding();
                 }
             }
-        } else if (nextTryTick == mob.level.getGameTime()) {
+        } else if (nextTryTick == mob.level().getGameTime()) {
             trySleepingOrLanding();
         }
     }
@@ -47,7 +47,7 @@ public class FlyingSleepSystem extends SleepSystem {
             if (landingPos != null) {
                 mob.moveTo(Vec3.atCenterOf(landingPos), true, true);
             } else {
-                nextTryTick = mob.level.getGameTime() + 20;
+                nextTryTick = mob.level().getGameTime() + 20;
             }
         } else {
             setSleeping(true);
@@ -63,7 +63,7 @@ public class FlyingSleepSystem extends SleepSystem {
         if (disabled || mob.hasTarget() || mob.getLastHurtByMob() != null || mob.isVehicle()) {
             return false;
         }
-        if (mob.isOnGround() || mob.isInWater()) {
+        if (mob.onGround() || mob.isInWater()) {
             return false;
         }
         return mob.getCurrentOrder() != OrderType.FOLLOW;
@@ -90,10 +90,10 @@ public class FlyingSleepSystem extends SleepSystem {
     }
 
     private BlockPos findGroundTarget() {
-        if (!mob.level.isEmptyBlock(mob.blockPosition().below())) {
+        if (!mob.level().isEmptyBlock(mob.blockPosition().below())) {
             return mob.blockPosition().below();
         }
-        if (!mob.level.isEmptyBlock(mob.blockPosition().below(2))) {
+        if (!mob.level().isEmptyBlock(mob.blockPosition().below(2))) {
             return mob.blockPosition().below(2);
         }
         BlockPos sleepPos = findTreePosition(16);
@@ -115,19 +115,19 @@ public class FlyingSleepSystem extends SleepSystem {
             if (-radius < x && x <= radius && -radius < z && z <= radius) {
                 int bX = x + mob.blockPosition().getX();
                 int bZ = z + mob.blockPosition().getZ();
-                int height = mob.level.getHeight(Heightmap.Types.MOTION_BLOCKING, bX, bZ);
-                int leaves = mob.level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, bX, bZ);
+                int height = mob.level().getHeight(Heightmap.Types.MOTION_BLOCKING, bX, bZ);
+                int leaves = mob.level().getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, bX, bZ);
                 if (height > mob.getY()) continue;
                 mutable.set(bX, height - 1, bZ);
-                if (mob.level.getBlockState(mutable).is(BlockTags.LEAVES)) {
+                if (mob.level().getBlockState(mutable).is(BlockTags.LEAVES)) {
                     //Looking for leaves that are a few blocks above the ground
                     if (height > leaves + 3) {
                         return mutable.immutable();
                     }
                     //Looking for leaves that are above the stem of the tree
-                    if (mob.level.getBlockState(mutable2.set(bX, leaves, bZ)).is(BlockTags.LOGS)) {
+                    if (mob.level().getBlockState(mutable2.set(bX, leaves, bZ)).is(BlockTags.LOGS)) {
                         for (Direction dir : Direction.Plane.HORIZONTAL) {
-                            if (mob.level.getHeight(Heightmap.Types.MOTION_BLOCKING, bX + dir.getStepX(), bZ + dir.getStepZ()) < height) {
+                            if (mob.level().getHeight(Heightmap.Types.MOTION_BLOCKING, bX + dir.getStepX(), bZ + dir.getStepZ()) < height) {
                                 return mutable.immutable();
                             }
                         }

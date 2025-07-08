@@ -26,11 +26,11 @@ public final class AnuPhaseSystem {
             currentPhase.end();
 
             currentPhase = getPhase(phase);
-            if (!anu.level.isClientSide) {
+            if (!anu.level().isClientSide) {
                 anu.getEntityData().set(AnuBoss.DATA_PHASE, phase.ordinal());
             }
 
-            LOGGER.debug("Anu is now in phase {} on the {}", phase, anu.level.isClientSide ? "client" : "server");
+            LOGGER.debug("Anu is now in phase {} on the {}", phase, anu.level().isClientSide ? "client" : "server");
             currentPhase.begin(duration);
         }
     }

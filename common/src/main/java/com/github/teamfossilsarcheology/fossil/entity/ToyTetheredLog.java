@@ -48,11 +48,11 @@ public class ToyTetheredLog extends ToyBase {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         boolean hurt = super.hurt(source, amount);
-        if (!hurt && source.getDirectEntity() != null && !level.isClientSide) {
+        if (!hurt && source.getDirectEntity() != null && !level().isClientSide) {
             Vec3 direction = source.getDirectEntity().position().vectorTo(position());
             double dist = direction.horizontalDistance();
             AABB area = getBoundingBox().inflate(16, 16, 16);
-            List<ServerPlayer> players = ((ServerLevel)level).getPlayers(serverPlayer -> area.contains(serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ()));
+            List<ServerPlayer> players = ((ServerLevel)level()).getPlayers(serverPlayer -> area.contains(serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ()));
             MessageHandler.SYNC_CHANNEL.sendToPlayers(players, new S2CSyncToyAnimationMessage(getId(), (float) (direction.z / dist), (float) (direction.x / dist)));
         }
         return hurt;
@@ -63,13 +63,13 @@ public class ToyTetheredLog extends ToyBase {
         super.tick();
         setDeltaMovement(0, 0, 0);
         if (!isAttachedToBlock()) {
-            if (!level.isClientSide) {
-                Block.popResource(level, blockPosition(), getPickResult());
+            if (!level().isClientSide) {
+                Block.popResource(level(), blockPosition(), getPickResult());
             }
             discard();
             playSound(attackNoise, 1, getVoicePitch());
         }
-        if (level.isClientSide) {
+        if (level().isClientSide) {
             if (animationPlaying) {
                 animationTick++;
             }
@@ -81,7 +81,7 @@ public class ToyTetheredLog extends ToyBase {
     }
 
     private boolean isAttachedToBlock() {
-        return !level.isEmptyBlock(blockPosition().above(2));
+        return !level().isEmptyBlock(blockPosition().above(2));
     }
 
     @Nullable

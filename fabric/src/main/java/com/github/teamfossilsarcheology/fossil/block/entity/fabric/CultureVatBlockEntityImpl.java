@@ -186,7 +186,7 @@ public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity 
         CultureVatRecipe recipe = ModRecipes.getCultureVatRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(inputStack, fuelStack), level);
         if (recipe != null) {
             ItemStack output = items.get(CultureVatMenu.OUTPUT_SLOT_ID);
-            return output.isEmpty() || output.sameItem(recipe.getResultItem(level.registryAccess()));
+            return output.isEmpty() || ItemStack.isSameItem(output, recipe.getResultItem(level.registryAccess()));
         }
         return false;
     }
@@ -214,7 +214,7 @@ public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity 
             ItemStack output = items.get(CultureVatMenu.OUTPUT_SLOT_ID);
             if (output.isEmpty()) {
                 items.set(CultureVatMenu.OUTPUT_SLOT_ID, result);
-            } else if (output.sameItem(result)) {
+            } else if (ItemStack.isSameItem(output, result)) {
                 output.grow(result.getCount());
             }
             this.items.get(CultureVatMenu.INPUT_SLOT_ID).shrink(1);
@@ -239,7 +239,7 @@ public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity 
     @Override
     public void setItem(int slot, @NotNull ItemStack stack) {
         ItemStack current = items.get(slot);
-        boolean sameItems = !stack.isEmpty() && stack.sameItem(current) && ItemStack.tagMatches(stack, current);
+        boolean sameItems = !stack.isEmpty() && ItemStack.isSameItem(stack, current) && ItemStack.isSameItemSameTags(stack, current);
         items.set(slot, stack);
         if (stack.getCount() > getMaxStackSize()) {
             stack.setCount(getMaxStackSize());

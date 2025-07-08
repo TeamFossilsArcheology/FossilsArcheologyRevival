@@ -83,7 +83,7 @@ public class WorktableMenu extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
                 }
             } else {
-                if (ModRecipes.getWorktableRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(true, itemStack), player.level) != null) {
+                if (ModRecipes.getWorktableRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(true, itemStack), player.level()) != null) {
                     if (!moveItemStackTo(current, INPUT_SLOT_ID, INPUT_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }

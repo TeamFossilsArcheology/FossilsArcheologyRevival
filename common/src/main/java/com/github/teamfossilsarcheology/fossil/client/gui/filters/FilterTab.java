@@ -1,14 +1,11 @@
 package com.github.teamfossilsarcheology.fossil.client.gui.filters;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import dev.architectury.hooks.client.screen.ScreenAccess;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -65,8 +62,8 @@ public class FilterTab {
         return enabledButton.map(filterButton -> filterButton.filter.tag);
     }
 
-    public void renderButtons(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-        buttons.forEach(button -> button.render(poseStack, mouseX, mouseY, partialTicks));
+    public void renderButtons(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        buttons.forEach(button -> button.render(guiGraphics, mouseX, mouseY, partialTicks));
     }
 
     private void enableButton(FilterButton button) {
@@ -110,15 +107,13 @@ public class FilterTab {
         }
 
         @Override
-        public void renderWidget(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-            RenderSystem.setShaderTexture(0, FILTER_TEXTURE);
-            ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+        public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
             float j = left ? 0 : 64;
             j = filter.enabled ? j + 32 : j;
-            GuiComponent.blit(poseStack, getX(), getY(), 0, j, 0, 32, 28, 128, 128);
-            itemRenderer.renderAndDecorateItem(poseStack, filter.icon, getX() + 8, getY() + 6);
+            guiGraphics.blit(FILTER_TEXTURE, getX(), getY(), 0, j, 0, 32, 28, 128, 128);
+            guiGraphics.renderItem(filter.icon, getX() + 8, getY() + 6);
             if (mouseX > getX() && mouseY > getY() && mouseX < getX() + 32 && mouseY < getY() + 28) {
-                screen.renderTooltip(poseStack, filter.tooltip, mouseX, mouseY);
+                guiGraphics.renderTooltip(Minecraft.getInstance().font, filter.tooltip, mouseX, mouseY);
             }
         }
     }

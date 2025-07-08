@@ -9,7 +9,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,19 +24,19 @@ public class FossilBlock extends Block {
     }
 
     @Override
-    public @NotNull List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+    public @NotNull List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         List<ItemStack> items = new ArrayList<>();
         int idx = builder.getLevel().random.nextInt(PrehistoricEntityInfo.entitiesWithBones().size());
         PrehistoricEntityInfo info = PrehistoricEntityInfo.entitiesWithBones().get(idx);
         builder = builder
-                .withDynamicDrop(ModItemTags.ARM_BONES.location(), (a, c) -> c.accept(new ItemStack(info.armBoneItem)))
-                .withDynamicDrop(ModItemTags.FOOT_BONES.location(), (a, c) -> c.accept(new ItemStack(info.footBoneItem)))
-                .withDynamicDrop(ModItemTags.LEG_BONES.location(), (a, c) -> c.accept(new ItemStack(info.legBoneItem)))
-                .withDynamicDrop(ModItemTags.RIBCAGE_BONES.location(), (a, c) -> c.accept(new ItemStack(info.ribcageBoneItem)))
-                .withDynamicDrop(ModItemTags.SKULL_BONES.location(), (a, c) -> c.accept(new ItemStack(info.skullBoneItem)))
-                .withDynamicDrop(ModItemTags.TAIL_BONES.location(), (a, c) -> c.accept(new ItemStack(info.tailBoneItem)))
-                .withDynamicDrop(ModItemTags.UNIQUE_BONES.location(), (a, c) -> c.accept(new ItemStack(info.uniqueBoneItem)))
-                .withDynamicDrop(ModItemTags.VERTEBRAE_BONES.location(), (a, c) -> c.accept(new ItemStack(info.vertebraeBoneItem)));
+                .withDynamicDrop(ModItemTags.ARM_BONES.location(), c -> c.accept(new ItemStack(info.armBoneItem)))
+                .withDynamicDrop(ModItemTags.FOOT_BONES.location(), c -> c.accept(new ItemStack(info.footBoneItem)))
+                .withDynamicDrop(ModItemTags.LEG_BONES.location(), c -> c.accept(new ItemStack(info.legBoneItem)))
+                .withDynamicDrop(ModItemTags.RIBCAGE_BONES.location(), c -> c.accept(new ItemStack(info.ribcageBoneItem)))
+                .withDynamicDrop(ModItemTags.SKULL_BONES.location(), c -> c.accept(new ItemStack(info.skullBoneItem)))
+                .withDynamicDrop(ModItemTags.TAIL_BONES.location(), c -> c.accept(new ItemStack(info.tailBoneItem)))
+                .withDynamicDrop(ModItemTags.UNIQUE_BONES.location(), c -> c.accept(new ItemStack(info.uniqueBoneItem)))
+                .withDynamicDrop(ModItemTags.VERTEBRAE_BONES.location(), c -> c.accept(new ItemStack(info.vertebraeBoneItem)));
         Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments( builder.getParameter(LootContextParams.TOOL));
         int count = 1;
         int fortune = enchantments.getOrDefault(Enchantments.BLOCK_FORTUNE, 0);

@@ -142,8 +142,8 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
             return false;
         } else {
             ItemStack result = checkSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), fuelStack);
-            return !result.isEmpty() && (items.get(WorktableMenu.OUTPUT_SLOT_ID).isEmpty() || items.get(
-                    WorktableMenu.OUTPUT_SLOT_ID).sameItem(result) && (items.get(WorktableMenu.OUTPUT_SLOT_ID).getCount() < 64 && items.get(WorktableMenu.OUTPUT_SLOT_ID).getCount() < items.get(WorktableMenu.OUTPUT_SLOT_ID).getMaxStackSize() || items.get(
+            return !result.isEmpty() && (items.get(WorktableMenu.OUTPUT_SLOT_ID).isEmpty() || ItemStack.isSameItem(items.get(WorktableMenu.OUTPUT_SLOT_ID), result)
+                    && (items.get(WorktableMenu.OUTPUT_SLOT_ID).getCount() < 64 && items.get(WorktableMenu.OUTPUT_SLOT_ID).getCount() < items.get(WorktableMenu.OUTPUT_SLOT_ID).getMaxStackSize() || items.get(
                     WorktableMenu.OUTPUT_SLOT_ID).getCount() < result.getMaxStackSize()));
         }
     }
@@ -202,7 +202,7 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
     @Override
     public void setItem(int slot, ItemStack stack) {
         ItemStack itemStack = items.get(slot);
-        boolean sameItem = (!stack.isEmpty() && stack.sameItem(itemStack) && ItemStack.tagMatches(stack, itemStack));
+        boolean sameItem = (!stack.isEmpty() && ItemStack.isSameItem(stack, itemStack) && ItemStack.isSameItemSameTags(stack, itemStack));
         items.set(slot, stack);
         if (stack.getCount() > getMaxStackSize()) {
             stack.setCount(getMaxStackSize());

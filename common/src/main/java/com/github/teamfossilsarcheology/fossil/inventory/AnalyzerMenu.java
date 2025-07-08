@@ -58,7 +58,7 @@ public class AnalyzerMenu extends AbstractContainerMenu {
                 if (!moveItemStackTo(current, analyzerSlots, bottomRowEnd, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (ModRecipes.getAnalyzerRecipeForItem(new SimpleContainer(itemStack), player.level) != null) {
+            } else if (ModRecipes.getAnalyzerRecipeForItem(new SimpleContainer(itemStack), player.level()) != null) {
                 if (!moveItemStackTo(current, 0, 9, false)) {
                     return ItemStack.EMPTY;
                 }

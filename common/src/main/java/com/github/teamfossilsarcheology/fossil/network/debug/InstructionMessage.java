@@ -36,8 +36,8 @@ public class InstructionMessage {
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> {
             if (Version.debugEnabled()) {
-                Level level = contextSupplier.get().getPlayer().level;
-                Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
+                Level level = contextSupplier.get().getPlayer().level();
+                Entity entity = level.getEntity(entityId);
                 if (entity instanceof Prehistoric prehistoric) {
                     if (level.isClientSide) {
                         if (InstructionTab.activeEntity == null || InstructionTab.activeEntity.getId() != entity.getId()) {

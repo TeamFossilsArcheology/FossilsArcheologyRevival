@@ -4,7 +4,7 @@ import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.SyncDebugInfoMessage;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
@@ -39,12 +39,12 @@ public class EggTab extends DebugTab<DinosaurEgg> {
             }
 
             @Override
-            public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-                super.render(poseStack, mouseX, mouseY, partialTick);
+            public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+                super.render(guiGraphics, mouseX, mouseY, partialTick);
                 int j = active ? 16777215 : 10526880;
                 String currentEggScale = String.valueOf(data.eggScale());
                 int currentScaleX = (int) (((data.eggScale() - minValue) / (maxValue - minValue)) * (width - minecraft.font.width(currentEggScale)));
-                drawString(poseStack, minecraft.font, currentEggScale, getX() + currentScaleX, getY() - 8, j | Mth.ceil(alpha * 255.0F) << 24);
+                guiGraphics.drawString(minecraft.font, currentEggScale, getX() + currentScaleX, getY() - 8, j | Mth.ceil(alpha * 255.0F) << 24);
             }
         };
 

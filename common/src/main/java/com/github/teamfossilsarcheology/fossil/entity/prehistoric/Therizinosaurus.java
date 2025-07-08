@@ -44,7 +44,7 @@ public class Therizinosaurus extends Prehistoric implements PrehistoricShearable
 
     @Override
     public void refreshTexturePath() {
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             return;
         }
         StringBuilder builder = new StringBuilder();
@@ -115,10 +115,10 @@ public class Therizinosaurus extends Prehistoric implements PrehistoricShearable
         if (itemStack.is(Items.SHEARS) && readyForShearing()) {
             shear(SoundSource.PLAYERS);
             gameEvent(GameEvent.SHEAR, player);
-            if (!level.isClientSide) {
+            if (!level().isClientSide) {
                 itemStack.hurtAndBreak(1, player, player2 -> player2.broadcastBreakEvent(hand));
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level().isClientSide);
         }
         return super.mobInteract(player, hand);
     }

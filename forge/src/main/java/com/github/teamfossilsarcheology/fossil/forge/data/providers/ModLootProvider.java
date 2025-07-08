@@ -6,8 +6,9 @@ import com.github.teamfossilsarcheology.fossil.forge.data.loot.ModGenericLootTab
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.LootDataId;
+import net.minecraft.world.level.storage.loot.LootDataType;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.LootTables;
 import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import org.jetbrains.annotations.NotNull;
@@ -27,6 +28,9 @@ public class ModLootProvider extends LootTableProvider {
 
     @Override
     protected void validate(Map<ResourceLocation, LootTable> map, @NotNull ValidationContext validationcontext) {
-        map.forEach((location, lootTable) -> LootTables.validate(validationcontext, location, lootTable));
+        map.forEach((location, lootTable) -> {
+            lootTable.validate(validationcontext.setParams(lootTable.getParamSet())
+                    .enterElement("{" + lootTable + "}", new LootDataId<>(LootDataType.TABLE, location)));
+        });
     }
 }

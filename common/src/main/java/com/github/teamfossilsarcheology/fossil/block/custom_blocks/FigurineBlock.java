@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,7 +21,7 @@ public abstract class FigurineBlock extends HorizontalDirectionalBlock {
     protected final FigurineVariant variant;
 
     protected FigurineBlock(FigurineVariant variant) {
-        super(Properties.of(Material.DECORATION).sound(SoundType.STONE));
+        super(Properties.of().pushReaction(PushReaction.DESTROY).sound(SoundType.STONE));
         registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH));
         this.variant = variant;
     }

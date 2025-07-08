@@ -26,7 +26,7 @@ public class MeganeuraFlyingMoveControl extends MoveControl {
             double yDist = wantedY - mob.getY();
             double zDist = wantedZ - mob.getZ();
             double targetDistance = Mth.sqrt((float) (xDist * xDist + zDist * zDist + yDist * yDist));
-            if (targetDistance < 2.500000277905201E-7 || (targetDistance <= mob.getBbWidth() / 2 && mob.level.isEmptyBlock(BlockPos.containing(wantedX, wantedY, wantedZ)))) {
+            if (targetDistance < 2.500000277905201E-7 || (targetDistance <= mob.getBbWidth() / 2 && mob.level().isEmptyBlock(BlockPos.containing(wantedX, wantedY, wantedZ)))) {
                 operation = Operation.WAIT;
                 mob.setDeltaMovement(mob.getDeltaMovement().scale(0.5));
                 return;

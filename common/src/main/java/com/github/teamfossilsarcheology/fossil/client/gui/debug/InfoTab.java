@@ -6,7 +6,7 @@ import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.C2STameMessage;
 import com.github.teamfossilsarcheology.fossil.network.debug.SyncDebugInfoMessage;
 import com.github.teamfossilsarcheology.fossil.util.Gender;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.components.Tooltip;
@@ -57,16 +57,16 @@ public class InfoTab extends DebugTab<Prehistoric> {
             }
 
             @Override
-            public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-                super.render(poseStack, mouseX, mouseY, partialTick);
+            public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+                super.render(guiGraphics, mouseX, mouseY, partialTick);
                 int j = active ? 16777215 : 10526880;
                 EntityDataLoader.Data data = entity.data();
                 DecimalFormat format = new DecimalFormat("0.00");
                 float step = (data.maxScale() - data.minScale()) / ((data.adultAgeInTicks()) + 1);
                 String min = format.format(data.minScale() + step * minValue);
                 String max = format.format(data.minScale() + step * maxValue);
-                drawString(poseStack, minecraft.font, min, getX(), getY() - 8, j | Mth.ceil(alpha * 255.0F) << 24);
-                drawString(poseStack, minecraft.font, max, getX() + width - minecraft.font.width(max), getY() - 8, j | Mth.ceil(alpha * 255.0F) << 24);
+                guiGraphics.drawString(minecraft.font, min, getX(), getY() - 8, j | Mth.ceil(alpha * 255.0F) << 24);
+                guiGraphics.drawString(minecraft.font, max, getX() + width - minecraft.font.width(max), getY() - 8, j | Mth.ceil(alpha * 255.0F) << 24);
             }
         };
         addWidget(Button.builder(Component.literal("Scale 1"), button -> {
@@ -85,16 +85,16 @@ public class InfoTab extends DebugTab<Prehistoric> {
             }
 
             @Override
-            public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-                super.render(poseStack, mouseX, mouseY, partialTick);
+            public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+                super.render(guiGraphics, mouseX, mouseY, partialTick);
                 int j = active ? 16777215 : 10526880;
                 EntityDataLoader.Data data = entity.data();
                 String min = String.valueOf(0);
                 int minX = (int) (((data.minScale() - minValue) / (maxValue - minValue)) * width);
                 String max = String.valueOf(entity.data().adultAgeDays());
                 int maxX = (int) (((data.maxScale() - minValue) / (maxValue - minValue)) * (width - minecraft.font.width(max)));
-                drawString(poseStack, minecraft.font, min, getX() + minX, getY() - 8, j | Mth.ceil(alpha * 255.0F) << 24);
-                drawString(poseStack, minecraft.font, max, getX() + maxX, getY() - 8, j | Mth.ceil(alpha * 255.0F) << 24);
+                guiGraphics.drawString(minecraft.font, min, getX() + minX, getY() - 8, j | Mth.ceil(alpha * 255.0F) << 24);
+                guiGraphics.drawString(minecraft.font, max, getX() + maxX, getY() - 8, j | Mth.ceil(alpha * 255.0F) << 24);
             }
         };
         matingSlider = new DebugSlider(20, yPos += 30, 150, 20, Component.literal("Seconds till mating: "), Component.literal(""), 0, 900, matingCooldown / 20f, 1, 0, true) {
@@ -149,16 +149,16 @@ public class InfoTab extends DebugTab<Prehistoric> {
     }
 
     @Override
-    protected void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        super.render(poseStack, mouseX, mouseY, partialTick);
+    protected void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
         int yPos = 5;
-        drawString(poseStack, minecraft.font, Component.literal("Age: " + entity.getAge()), 175, yPos += 30, 16777215);
-        drawString(poseStack, minecraft.font, Component.literal("Scale: " + entity.getScale()), 175, yPos += 30, 16777215);
-        drawString(poseStack, minecraft.font, Component.literal("Mate: " + (entity.getMatingCooldown() / 20)), 175, yPos += 30, 16777215);
-        drawString(poseStack, minecraft.font, Component.literal("Play: " + (entity.moodSystem.getPlayingCooldown() / 20)), 175, yPos += 30, 16777215);
-        drawString(poseStack, minecraft.font, Component.literal("Climb: " + (entity.getClimbingCooldown() / 20)), 175, yPos += 30, 16777215);
-        drawString(poseStack, minecraft.font, Component.literal("Hunger: " + entity.getHunger()), 175, yPos += 30, 16777215);
-        drawString(poseStack, minecraft.font, Component.literal("Mood: " + entity.moodSystem.getMood()), 175, yPos += 30, 16777215);
-        drawString(poseStack, minecraft.font, Component.literal("Gender: " + entity.getGender().name()), 175, yPos += 30, 16777215);
+        guiGraphics.drawString(minecraft.font, Component.literal("Age: " + entity.getAge()), 175, yPos += 30, 16777215);
+        guiGraphics.drawString(minecraft.font, Component.literal("Scale: " + entity.getScale()), 175, yPos += 30, 16777215);
+        guiGraphics.drawString(minecraft.font, Component.literal("Mate: " + (entity.getMatingCooldown() / 20)), 175, yPos += 30, 16777215);
+        guiGraphics.drawString(minecraft.font, Component.literal("Play: " + (entity.moodSystem.getPlayingCooldown() / 20)), 175, yPos += 30, 16777215);
+        guiGraphics.drawString(minecraft.font, Component.literal("Climb: " + (entity.getClimbingCooldown() / 20)), 175, yPos += 30, 16777215);
+        guiGraphics.drawString(minecraft.font, Component.literal("Hunger: " + entity.getHunger()), 175, yPos += 30, 16777215);
+        guiGraphics.drawString(minecraft.font, Component.literal("Mood: " + entity.moodSystem.getMood()), 175, yPos += 30, 16777215);
+        guiGraphics.drawString(minecraft.font, Component.literal("Gender: " + entity.getGender().name()), 175, yPos += 30, 16777215);
     }
 }

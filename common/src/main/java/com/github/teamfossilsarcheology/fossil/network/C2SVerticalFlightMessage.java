@@ -47,7 +47,7 @@ public class C2SVerticalFlightMessage {
         if (contextSupplier.get().getEnvironment() == Env.CLIENT) return;
         contextSupplier.get().queue(() -> {
             Player player = contextSupplier.get().getPlayer();
-            Entity entity = player.level.getEntity(entityId);
+            Entity entity = player.level().getEntity(entityId);
             if (entity instanceof PrehistoricFlying mob) {
                 Entity rider = entity.getControllingPassenger();
                 if (rider != null && rider.getId() == player.getId()) {

@@ -31,7 +31,7 @@ public class C2SDisableAIMessage {
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> {
-            Entity entity = contextSupplier.get().getPlayer().level.getEntity(id);
+            Entity entity = contextSupplier.get().getPlayer().level().getEntity(id);
             if (entity instanceof PrehistoricDebug prehistoric && Version.debugEnabled()) {
                 prehistoric.disableCustomAI(type, disableAI);
             }

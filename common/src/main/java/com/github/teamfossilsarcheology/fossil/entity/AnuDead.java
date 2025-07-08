@@ -47,7 +47,7 @@ public class AnuDead extends LivingEntity {
 
             if (player.portalTime > 0) {
                 player.portalTime = 10;
-            } else if (!player.level.dimension().equals(ModDimensions.TREASURE_ROOM)) {
+            } else if (!player.level().dimension().equals(ModDimensions.TREASURE_ROOM)) {
                 player.portalTime = 10;
                 ServerLevel treasureLevel = serverPlayer.server.getLevel(ModDimensions.TREASURE_ROOM);
                 serverPlayer.teleportTo(treasureLevel, 6.5, 72.5, 6.5, 0, 0);
@@ -69,14 +69,14 @@ public class AnuDead extends LivingEntity {
             playSound(ModSounds.ANU_DEATH.get(), 1, 1);
         }
         for (int i = 0; i < 2; ++i) {
-            level.addParticle(ParticleTypes.SMOKE, getX(), getY(), getZ(), 0, 0.1, 0);
+            level().addParticle(ParticleTypes.SMOKE, getX(), getY(), getZ(), 0, 0.1, 0);
         }
         super.tick();
     }
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source == level.damageSources().outOfWorld()) {
+        if (source == damageSources().fellOutOfWorld()) {
             discard();
             return true;
         }

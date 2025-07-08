@@ -84,7 +84,7 @@ public class Failuresaurus extends Monster implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             setClimbing(horizontalCollision);
         }
     }
@@ -98,8 +98,8 @@ public class Failuresaurus extends Monster implements GeoEntity {
             int z = Mth.floor(position().z + ((i >> 1) * 2 - 1) * 0.25);
             BlockPos blockPos = new BlockPos(x, y, z);
             BlockState slime = ModBlocks.SLIME_TRAIL.get().defaultBlockState();
-            if (level.getBlockState(blockPos).isAir() && slime.canSurvive(level, blockPos)) {
-                level.setBlockAndUpdate(blockPos, slime);
+            if (level().getBlockState(blockPos).isAir() && slime.canSurvive(level(), blockPos)) {
+                level().setBlockAndUpdate(blockPos, slime);
             }
         }
     }

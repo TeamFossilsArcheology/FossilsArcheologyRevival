@@ -105,9 +105,9 @@ public class PlayerPathNavigation {
             }
             pos = blockPos;
         }
-        if (level.getBlockState(pos).getMaterial().isSolid()) {
+        if (level.getBlockState(pos).isSolid()) {
             blockPos = pos.above();
-            while (blockPos.getY() < level.getMaxBuildHeight() && level.getBlockState(blockPos).getMaterial().isSolid()) {
+            while (blockPos.getY() < level.getMaxBuildHeight() && level.getBlockState(blockPos).isSolid()) {
                 blockPos = blockPos.above();
             }
             return createPath(ImmutableSet.of(pos), 8, false, accuracy);
@@ -204,7 +204,7 @@ public class PlayerPathNavigation {
         } else if (path != null && !path.isDone()) {
             vec3 = getTempMobPos();
             Vec3 vec32 = path.getNextEntityPos(player);
-            if (vec3.y > vec32.y && !player.isOnGround() && Mth.floor(vec3.x) == Mth.floor(vec32.x) && Mth.floor(vec3.z) == Mth.floor(vec32.z)) {
+            if (vec3.y > vec32.y && !player.onGround() && Mth.floor(vec3.x) == Mth.floor(vec32.x) && Mth.floor(vec3.z) == Mth.floor(vec32.z)) {
                 path.advance();
             }
         }
@@ -217,17 +217,21 @@ public class PlayerPathNavigation {
         setSweepWantedPosition(vec3.x, getGroundY(vec3), vec3.z);
         moveControl.tick();
     }
+
     public Vec3 wantedPos;
     public Vec3 sweepStartPos;
     public Vec3 sweepWantedPos;
     public DebugMoveControl moveControl;
+
     public void setNextWantedPosition(double x, double y, double z) {
         wantedPos = new Vec3(x, y, z);
         moveControl.setWantedPosition(x, y, z, speedModifier);
     }
+
     public void setSweepWantedPosition(double x, double y, double z) {
         sweepWantedPos = new Vec3(x, y, z);
     }
+
     public void setSweepStartPos(Vec3 vec) {
         sweepStartPos = vec;
     }
@@ -351,7 +355,7 @@ public class PlayerPathNavigation {
      * If on ground or swimming and can swim
      */
     protected boolean canUpdatePath() {
-        return player.isOnGround() || player.getAbilities().flying || isInLiquid() || player.isPassenger();
+        return player.onGround() || player.getAbilities().flying || isInLiquid() || player.isPassenger();
     }
 
     /**

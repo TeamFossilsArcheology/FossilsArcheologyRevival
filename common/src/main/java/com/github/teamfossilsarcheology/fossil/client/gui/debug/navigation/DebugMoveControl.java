@@ -51,15 +51,15 @@ public class DebugMoveControl {
             speed = ((float)(speedModifier * player.getAttributeValue(Attributes.MOVEMENT_SPEED)));
             zza = speed;
             BlockPos blockPos = player.blockPosition();
-            BlockState blockState = player.level.getBlockState(blockPos);
-            VoxelShape voxelShape = blockState.getCollisionShape(player.level, blockPos);
+            BlockState blockState = player.level().getBlockState(blockPos);
+            VoxelShape voxelShape = blockState.getCollisionShape(player.level(), blockPos);
             if (y > player.maxUpStep() && x * x + z * z < Math.max(1, Mth.square(PathingRenderer.getBbWidth())) || !voxelShape.isEmpty() && player.getY() < voxelShape.max(Direction.Axis.Y) + blockPos.getY() && !blockState.is(BlockTags.DOORS) && !blockState.is(BlockTags.FENCES)) {
                 operation = Operation.JUMPING;
             }
         } else if (operation == Operation.JUMPING) {
             speed = ((float)(speedModifier * player.getAttributeValue(Attributes.MOVEMENT_SPEED)));
             zza = speed;
-            if (player.isOnGround()) {
+            if (player.onGround()) {
                 operation = Operation.WAIT;
             }
         } else {

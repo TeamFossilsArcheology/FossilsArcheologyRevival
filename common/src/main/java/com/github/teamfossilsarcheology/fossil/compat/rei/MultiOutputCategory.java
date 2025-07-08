@@ -2,7 +2,10 @@ package com.github.teamfossilsarcheology.fossil.compat.rei;
 
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import me.shedaniel.clothconfig2.ClothConfigInitializer;
 import me.shedaniel.clothconfig2.api.scroll.ScrollingContainer;
@@ -14,6 +17,7 @@ import me.shedaniel.rei.api.client.gui.widgets.*;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -57,6 +61,7 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
         private final List<Slot> widgets;
         private final ScrollingContainer scrolling = new ScrollingContainer() {
             private boolean draggingScrollBar;
+
             @Override
             public Rectangle getBounds() {
                 Rectangle bounds = MultiOutputCategory.ScrollableSlotsWidget.this.getBounds();
@@ -77,9 +82,9 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
                     int actualHeight = bounds.height;
                     if (mouseY >= bounds.y && mouseY <= bounds.getMaxY()) {
                         double maxScroll = Math.max(1, getMaxScroll());
-                        double int3 = Mth.clamp((double)(actualHeight * actualHeight) / (double)height, 32.0, (actualHeight - 8));
+                        double int3 = Mth.clamp((double) (actualHeight * actualHeight) / (double) height, 32.0, (actualHeight - 8));
                         double double6 = Math.max(1.0, maxScroll / (actualHeight - int3));
-                        float to = Mth.clamp((float)(scrollAmount() + dy * double6), 0.0F, getMaxScroll());
+                        float to = Mth.clamp((float) (scrollAmount() + dy * double6), 0.0F, getMaxScroll());
                         if (snapToRows) {
                             double nearestRow = Math.round(to / rowSize) * rowSize;
                             scrollTo(nearestRow, false);
@@ -164,10 +169,10 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
         }
 
         @Override
-        public void render(PoseStack poseStack, int mouseX, int mouseY, float delta) {
+        public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
             scrolling.updatePosition(delta);
             Rectangle innerBounds = scrolling.getScissorBounds();
-            try (CloseableScissors ignored = scissor(poseStack, innerBounds)) {
+            try (CloseableScissors ignored = scissor(guiGraphics, innerBounds)) {
                 double numPerRow = Math.floor(innerBounds.width / DEFAULT_SPACE);
                 double actualSpace = calcActualSpace(innerBounds, numPerRow);
                 double xOffset = (actualSpace - 18f) / 2;
@@ -178,12 +183,12 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
                             break;
                         Slot widget = widgets.get(index);
                         widget.getBounds().setLocation(boundsRect.x + xOffset + x * actualSpace, boundsRect.y + 1 + y * DEFAULT_SPACE - scrolling.scrollAmountInt());
-                        widget.render(poseStack, mouseX, mouseY, delta);
-                        renderProbability(poseStack, Minecraft.getInstance().font, probabilities.get(widget), widget.getBounds().x, widget.getBounds().y);
+                        widget.render(guiGraphics, mouseX, mouseY, delta);
+                        renderProbability(guiGraphics, Minecraft.getInstance().font, probabilities.get(widget), widget.getBounds().x, widget.getBounds().y);
                     }
                 }
             }
-            try (CloseableScissors ignored = scissor(poseStack, scrolling.getBounds())) {
+            try (CloseableScissors ignored = scissor(guiGraphics, scrolling.getBounds())) {
                 renderFixedScrollbar(0xff000000, 1, REIRuntime.getInstance().isDarkThemeEnabled() ? 0.8f : 1f);
             }
         }
@@ -191,16 +196,16 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
         /**
          * Renders the stack size and/or damage bar for the given ItemStack.
          */
-        private void renderProbability(PoseStack poseStack, Font fr, double stack, int xPosition, int yPosition) {
-            poseStack.pushPose();
-            poseStack.translate(0.0, 0.0, 100 + 200.0F);
+        private void renderProbability(GuiGraphics guiGraphics, Font fr, double stack, int xPosition, int yPosition) {
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(0.0, 0.0, 100 + 200.0F);
             String string = FORMAT.format(stack);
             MultiBufferSource.BufferSource bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
             float xOffset = Math.min(11, fr.width(string) / 2f);
             fr.drawInBatch(string, (xPosition + 8 - xOffset), (yPosition + 16 + 1), 16777215, true,
-                    poseStack.last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
+                    guiGraphics.pose().last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
             bufferSource.endBatch();
-            poseStack.popPose();
+            guiGraphics.pose().popPose();
         }
 
         /**

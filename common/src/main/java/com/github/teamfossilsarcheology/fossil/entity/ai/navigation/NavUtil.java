@@ -90,8 +90,8 @@ public class NavUtil {
             //This should help when the column is partially outside the water
             boolean anyWater = false;
             for (int y = minY; y != maxY; y += stepY) {
-                BlockState block = mob.level.getBlockState(pos.set(x, y, z));
-                if (block.isPathfindable(mob.level, pos, type)) {
+                BlockState block = mob.level().getBlockState(pos.set(x, y, z));
+                if (block.isPathfindable(mob.level(), pos, type)) {
                     anyWater = true;
                     break;
                 }
@@ -100,27 +100,27 @@ public class NavUtil {
                 return true;
             }
             for (int y = minY; y != maxY; y += stepY) {
-                BlockState block = mob.level.getBlockState(pos.set(x, y, z));
-                if (!block.isPathfindable(mob.level, pos, PathComputationType.WATER) && !block.isPathfindable(mob.level, pos, PathComputationType.LAND)) {
+                BlockState block = mob.level().getBlockState(pos.set(x, y, z));
+                if (!block.isPathfindable(mob.level(), pos, PathComputationType.WATER) && !block.isPathfindable(mob.level(), pos, PathComputationType.LAND)) {
                     return true;
                 }
             }
         } else {
             for (int y = minY; y != maxY; y += stepY) {
-                BlockState block = mob.level.getBlockState(pos.set(x, y, z));
-                if (!block.isPathfindable(mob.level, pos, type)) {
+                BlockState block = mob.level().getBlockState(pos.set(x, y, z));
+                if (!block.isPathfindable(mob.level(), pos, type)) {
                     return true;
                 }
             }
         }
 
-        BlockPathTypes in = nodeEvaluator.getBlockPathType(mob.level, x, minY, z);
+        BlockPathTypes in = nodeEvaluator.getBlockPathType(mob.level(), x, minY, z);
         float malus = mob.getPathfindingMalus(in);
         if (malus < 0.0F || malus >= 8.0F) {
             return true;
         }
         if (type == PathComputationType.LAND) {
-            BlockPathTypes below = nodeEvaluator.getBlockPathType(mob.level, x, minY - 1, z);
+            BlockPathTypes below = nodeEvaluator.getBlockPathType(mob.level(), x, minY - 1, z);
             if (below == BlockPathTypes.WATER || below == BlockPathTypes.LAVA || below == BlockPathTypes.OPEN) {
                 return true;
             }

@@ -72,7 +72,7 @@ public class Anubite extends PathfinderMob {
     }
 
     private boolean teleportRandomly() {
-        if (level.isClientSide() || !isAlive()) {
+        if (level().isClientSide() || !isAlive()) {
             return false;
         }
         double x = getX() + (random.nextDouble() - 0.5) * 64.0;
@@ -93,7 +93,7 @@ public class Anubite extends PathfinderMob {
     private boolean teleport(double x, double y, double z) {
         boolean canTeleport = randomTeleport(x, y, z, true);
         if (canTeleport && !isSilent()) {
-            level.playSound(null, xo, yo, zo, SoundEvents.ENDERMAN_TELEPORT, getSoundSource(), 1, 1);
+            level().playSound(null, xo, yo, zo, SoundEvents.ENDERMAN_TELEPORT, getSoundSource(), 1, 1);
             playSound(SoundEvents.ENDERMAN_TELEPORT, 1, 1);
         }
         return canTeleport;

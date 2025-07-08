@@ -58,7 +58,7 @@ public class Pteranodon extends PrehistoricFlying {
 
     @Override
     public void onReachAirTarget(BlockPos target) {
-        /*if (level.getFluidState(target.below()).is(FluidTags.WATER) && isHungry()) {
+        /*if (level().getFluidState(target.below()).is(FluidTags.WATER) && isHungry()) {
             ItemStack stack;
             if (random.nextInt(2) == 0) {
                 stack = new ItemStack(Items.COD, 1);
@@ -68,7 +68,7 @@ public class Pteranodon extends PrehistoricFlying {
             spawnAtLocation(stack, 1);
             playSound(SoundEvents.GENERIC_SWIM, 0.7f, 1 + random.nextFloat() * 0.4f);
             playSound(SoundEvents.GENERIC_SWIM, 0.4f, 1 + random.nextFloat() * 0.4f);
-            if (level.isClientSide) {
+            if (level().isClientSide) {
                 for (int i = 0; i < 20; ++i) {
                     double motionX = getRandom().nextGaussian() * 0.02D;
                     double motionY = getRandom().nextGaussian() * 0.02D;

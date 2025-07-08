@@ -64,11 +64,11 @@ public class AncientLightningBolt extends LightningBolt {
         List<Entity> nearbyEntities;
         baseTick();
         if (life == START_LIFE) {
-            if (level.isClientSide()) {
-                level.playLocalSound(getX(), getY(), getZ(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.WEATHER, 10000, 0.8f + random.nextFloat() * 0.2f, false);
-                level.playLocalSound(getX(), getY(), getZ(), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.WEATHER, 2, 0.5f + random.nextFloat() * 0.2f, false);
+            if (level().isClientSide()) {
+                level().playLocalSound(getX(), getY(), getZ(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.WEATHER, 10000, 0.8f + random.nextFloat() * 0.2f, false);
+                level().playLocalSound(getX(), getY(), getZ(), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.WEATHER, 2, 0.5f + random.nextFloat() * 0.2f, false);
             } else {
-                Difficulty difficulty = level.getDifficulty();
+                Difficulty difficulty = level().getDifficulty();
                 if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
                     spawnFire(4);
                 }
@@ -86,10 +86,10 @@ public class AncientLightningBolt extends LightningBolt {
             }
         }
         if (life >= 0) {
-            if (level.isClientSide) {
-                level.setSkyFlashTime(2);
+            if (level().isClientSide) {
+                level().setSkyFlashTime(2);
             } else if (!visualOnly) {
-                nearbyEntities = level.getEntities(this, new AABB(getX() - 3, getY() - 3, getZ() - 3, getX() + 3, getY() + 6 + 3, getZ() + 3), Entity::isAlive);
+                nearbyEntities = level().getEntities(this, new AABB(getX() - 3, getY() - 3, getZ() - 3, getX() + 3, getY() + 6 + 3, getZ() + 3), Entity::isAlive);
                 for (Entity entity : nearbyEntities) {
                     boolean canHit = true;
                     if (cause == null && entity instanceof AnuBoss) {
@@ -102,7 +102,7 @@ public class AncientLightningBolt extends LightningBolt {
                         canHit = false;
                     }
                     if (canHit) {
-                        entity.thunderHit((ServerLevel) level, this);
+                        entity.thunderHit((ServerLevel) level(), this);
                         hitEntities.add(entity);
                     }
                 }
@@ -114,23 +114,23 @@ public class AncientLightningBolt extends LightningBolt {
     }
 
     private void spawnFire(int extraIgnitions) {
-        if (visualOnly || level.isClientSide || !level.getGameRules().getBoolean(GameRules.RULE_DOFIRETICK)) {
+        if (visualOnly || level().isClientSide || !level().getGameRules().getBoolean(GameRules.RULE_DOFIRETICK)) {
             return;
         }
         if (cause != null && !cause.hasEffect(MobEffects.FIRE_RESISTANCE)) {
             return;
         }
         BlockPos blockPos = blockPosition();
-        BlockState blockState = BaseFireBlock.getState(level, blockPos);
-        if (level.getBlockState(blockPos).isAir() && blockState.canSurvive(level, blockPos)) {
-            level.setBlockAndUpdate(blockPos, blockState);
+        BlockState blockState = BaseFireBlock.getState(level(), blockPos);
+        if (level().getBlockState(blockPos).isAir() && blockState.canSurvive(level(), blockPos)) {
+            level().setBlockAndUpdate(blockPos, blockState);
             ++blocksSetOnFire;
         }
         for (int i = 0; i < extraIgnitions; ++i) {
             BlockPos blockPos2 = blockPos.offset(random.nextInt(3) - 1, random.nextInt(3) - 1, random.nextInt(3) - 1);
-            blockState = BaseFireBlock.getState(level, blockPos2);
-            if (!level.getBlockState(blockPos2).isAir() || !blockState.canSurvive(level, blockPos2)) continue;
-            level.setBlockAndUpdate(blockPos2, blockState);
+            blockState = BaseFireBlock.getState(level(), blockPos2);
+            if (!level().getBlockState(blockPos2).isAir() || !blockState.canSurvive(level(), blockPos2)) continue;
+            level().setBlockAndUpdate(blockPos2, blockState);
             ++blocksSetOnFire;
         }
     }

@@ -91,13 +91,13 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
     }
 
     public static boolean isOverWater(LivingEntity entity) {
-        if (entity.level.getFluidState(entity.blockPosition().below()).is(FluidTags.WATER)) {
+        if (entity.level().getFluidState(entity.blockPosition().below()).is(FluidTags.WATER)) {
             return true;
         }
-        if (entity.level.getFluidState(entity.blockPosition().below(2)).is(FluidTags.WATER)) {
+        if (entity.level().getFluidState(entity.blockPosition().below(2)).is(FluidTags.WATER)) {
             return true;
         }
-        return entity.level.getFluidState(entity.blockPosition().below(3)).is(FluidTags.WATER);
+        return entity.level().getFluidState(entity.blockPosition().below(3)).is(FluidTags.WATER);
     }
 
     @Override
@@ -190,12 +190,12 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
         super.aiStep();
         boolean wasBeached = beached;
         boolean inWater = isInWater();
-        beached = !isAmphibious() && !inWater && isOnGround();
-        if (!level.isClientSide) {
+        beached = !isAmphibious() && !inWater && onGround();
+        if (!level().isClientSide) {
             if (isAmphibious()) {
                 if (isLandNavigator && inWater) {
                     switchNavigator(false);
-                } else if (!isLandNavigator && !inWater && isOnGround()) {
+                } else if (!isLandNavigator && !inWater && onGround()) {
                     switchNavigator(true);
                 }
             } else if (isLandNavigator) {
@@ -205,10 +205,10 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
                 timeInWater++;
                 timeOnLand = 0;
                 setNoGravity(true);
-                if (isSleeping() && level.getBlockState(blockPosition().offset(0, (int) (getBbHeight() + 1), 0)).isAir()) {
+                if (isSleeping() && level().getBlockState(blockPosition().offset(0, (int) (getBbHeight() + 1), 0)).isAir()) {
                     setNoGravity(false);
                 }
-            } else if (onGround) {
+            } else if (onGround()) {
                 timeInWater = 0;
                 timeOnLand++;
             } else {
@@ -251,7 +251,7 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
             setAirSupply(airSupply - 1);
             if (getAirSupply() == -40) {
                 setAirSupply(0);
-                hurt(level.damageSources().source(ModDamageTypes.SUFFOCATE_KEY), 2);
+                hurt(damageSources().source(ModDamageTypes.SUFFOCATE_KEY), 2);
             }
         } else {
             setAirSupply(500);
@@ -259,11 +259,11 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
     }
 
     @Override
-    public void positionRider(Entity passenger) {
+    public void positionRider(Entity passenger, MoveFunction callback) {
         super.positionRider(passenger);
         if (passenger != getRidingPlayer() && isDoingGrabAttack()) {
             getEntityHitboxData().getAnchorData().getAnchorPos("grab_pos").ifPresentOrElse(pos -> {
-                passenger.setPos(pos.x, pos.y + passenger.getMyRidingOffset(), pos.z);
+                callback.accept(passenger, pos.x, pos.y + passenger.getMyRidingOffset(), pos.z);
             }, () -> {
                 float t = 5 * Mth.sin(Mth.PI + tickCount * 0.275f);
                 float radius = 0.35f * 0.7f * getScale() * -3;
@@ -271,7 +271,7 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
                 double extraX = radius * Mth.sin(Mth.PI + angle);
                 double extraY = 0.065 * getScale();
                 double extraZ = radius * Mth.cos(angle);
-                passenger.setPos(getX() + extraX, getY() + extraY, getZ() + extraZ);
+                callback.accept(passenger, getX() + extraX, getY() + extraY, getZ() + extraZ);
             });
         }
     }
@@ -319,7 +319,7 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
                 moveRelative(getSpeed(), travelVector);
                 move(MoverType.SELF, getDeltaMovement());
                 setDeltaMovement(getDeltaMovement().scale(0.9));
-                if (!isNoGravity() && level.getFluidState(blockPosition().below()).is(FluidTags.WATER)) {
+                if (!isNoGravity() && level().getFluidState(blockPosition().below()).is(FluidTags.WATER)) {
                     setDeltaMovement(getDeltaMovement().add(0.0, -0.005, 0.0));
                 }
             } else {
@@ -361,9 +361,9 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
     }
 
     public void destroyBoat(Entity targetSailor) {
-        if (targetSailor.getVehicle() instanceof Boat boat && !level.isClientSide) {
+        if (targetSailor.getVehicle() instanceof Boat boat && !level().isClientSide) {
             boat.kill();
-            if (level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+            if (level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                 int i;
                 for (i = 0; i < 3; i++) {
                     spawnAtLocation(boat.getVariant().getPlanks());

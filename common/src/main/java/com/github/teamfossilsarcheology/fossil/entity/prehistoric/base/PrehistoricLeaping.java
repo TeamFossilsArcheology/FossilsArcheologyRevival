@@ -66,7 +66,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         if (LEAP_RIDING.equals(key)) {
             if (entityData.get(LEAP_RIDING) && entityData.get(LEAP_TARGET_ID) >= 0) {
-                startRiding(Objects.requireNonNull(level.getEntity(entityData.get(LEAP_TARGET_ID))), true);
+                startRiding(Objects.requireNonNull(level().getEntity(entityData.get(LEAP_TARGET_ID))), true);
             } else {
                 stopRiding();
             }
@@ -139,11 +139,11 @@ public abstract class PrehistoricLeaping extends Prehistoric {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         var controller = new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::leapingPredicate);
         registerEatingListeners(controller, effect -> {
-            if ("land".equals(effect) && isOnGround()) {
-                BlockState below = level.getBlockState(BlockPos.containing(getX(), getY() - 0.2, getZ()));
+            if ("land".equals(effect) && onGround()) {
+                BlockState below = level().getBlockState(BlockPos.containing(getX(), getY() - 0.2, getZ()));
                 if (below.getRenderShape() != RenderShape.INVISIBLE) {
                     Vec3 vec3 = getDeltaMovement();
-                    level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, below),
+                    level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, below),
                             getX() + (random.nextDouble() - 0.5) * (double) getBbWidth() / 2,
                             getY(),
                             getZ() + (random.nextDouble() - 0.5) * (double) getBbWidth() / 2,

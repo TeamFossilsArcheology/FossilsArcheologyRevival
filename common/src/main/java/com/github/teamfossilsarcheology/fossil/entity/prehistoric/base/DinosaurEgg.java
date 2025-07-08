@@ -123,24 +123,24 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
         } else {
             setHatchingTime(currentHatchingTime + 1);
         }
-        if (getHatchingTime() >= getTotalHatchingTime() && !level.isClientSide) {
-            Player player = level.getNearestPlayer(this, 16);
-            hatchEgg(level, getX(), getY(), getZ(), (ServerPlayer) player, prehistoricEntityInfo, true);
+        if (getHatchingTime() >= getTotalHatchingTime() && !level().isClientSide) {
+            Player player = level().getNearestPlayer(this, 16);
+            hatchEgg(level(), getX(), getY(), getZ(), (ServerPlayer) player, prehistoricEntityInfo, true);
             for (int i = 0; i < 4; i++) {
                 double x = getX() + (random.nextFloat() - 0.5) * getBbWidth();
                 double y = getBoundingBox().minY + 0.1;
                 double z = getZ() + (random.nextFloat() - 0.5) * getBbWidth();
                 double motionX = random.nextFloat() - 0.5;
                 double motionZ = random.nextFloat() - 0.5;
-                level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(prehistoricEntityInfo.eggItem)), x, y, z, motionX, 0.5, motionZ);
+                level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(prehistoricEntityInfo.eggItem)), x, y, z, motionX, 0.5, motionZ);
             }
             discard();
         }
     }
 
     public boolean isTooCold() {
-        Holder<Biome> biome = level.getBiome(blockPosition());
-        level.updateSkyBrightness();
+        Holder<Biome> biome = level().getBiome(blockPosition());
+        level().updateSkyBrightness();
         if (biome.value().warmEnoughToRain(blockPosition())) {
             return getLightLevelDependentMagicValue() < 0.5f;
         } else {
@@ -155,11 +155,11 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (!level.isClientSide && amount > 0 && isAlive()) {
-            ItemEntity itemEntity = new ItemEntity(level, getX() + 0.5, getY() + 1, getZ() + 0.5,
+        if (!level().isClientSide && amount > 0 && isAlive()) {
+            ItemEntity itemEntity = new ItemEntity(level(), getX() + 0.5, getY() + 1, getZ() + 0.5,
                     new ItemStack(getPrehistoricEntityInfo().eggItem), 0, 0.1, 0);
-            level.addFreshEntity(itemEntity);
-            level.playSound(null, blockPosition(), SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL, 0.2f,
+            level().addFreshEntity(itemEntity);
+            level().playSound(null, blockPosition(), SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL, 0.2f,
                     ((random.nextFloat() - random.nextFloat()) * 0.7f + 1) * 2);
             kill();
         }
@@ -170,7 +170,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     public @NotNull InteractionResult interact(Player player, InteractionHand hand) {
         if (player.getInventory().getSelected().isEmpty()) {
             if (!player.getAbilities().instabuild && player.getInventory().add(new ItemStack(getPrehistoricEntityInfo().eggItem))) {
-                level.playSound(null, blockPosition(), SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL, 0.2f,
+                level().playSound(null, blockPosition(), SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL, 0.2f,
                         ((random.nextFloat() - random.nextFloat()) * 0.7f + 1) * 2);
                 kill();
                 return InteractionResult.SUCCESS;

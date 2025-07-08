@@ -13,7 +13,8 @@ import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -23,7 +24,7 @@ public class TallFlowerBlock extends DoublePlantBlock implements BonemealableBlo
     private final VoxelShape shape;
 
     public TallFlowerBlock(VoxelShape shape) {
-        super(Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS));
+        super(Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().noOcclusion().sound(SoundType.GRASS));
         this.shape = shape;
     }
 

@@ -35,7 +35,7 @@ public class CultureVatMenu extends AbstractContainerMenu {
         super(ModMenus.CULTURE_VAT.get(), id);
         this.container = container;
         this.containerData = containerData;
-        this.level = playerInventory.player.level;
+        this.level = playerInventory.player.level();
         addSlot(new Slot(container, INPUT_SLOT_ID, 45, 21) {
             @Override
             public boolean mayPlace(ItemStack stack) {
@@ -97,7 +97,7 @@ public class CultureVatMenu extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
                 }
             } else {
-                if (ModRecipes.getCultureVatRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(true, itemStack), player.level) != null) {
+                if (ModRecipes.getCultureVatRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(true, itemStack), player.level()) != null) {
                     if (!moveItemStackTo(current, INPUT_SLOT_ID, INPUT_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }

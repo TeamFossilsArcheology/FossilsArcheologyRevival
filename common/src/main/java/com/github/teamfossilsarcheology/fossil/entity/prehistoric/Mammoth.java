@@ -54,7 +54,7 @@ public class Mammoth extends PrehistoricFlocking implements PrehistoricShearable
 
     @Override
     public void refreshTexturePath() {
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             return;
         }
         StringBuilder builder = new StringBuilder();
@@ -113,7 +113,7 @@ public class Mammoth extends PrehistoricFlocking implements PrehistoricShearable
 
     @Override
     public void aiStep() {
-        boolean tooWarm = level.getBiome(blockPosition()).is(BiomeTags.SNOW_GOLEM_MELTS);
+        boolean tooWarm = level().getBiome(blockPosition()).is(BiomeTags.SNOW_GOLEM_MELTS);
         if (tooWarm && getEffect(MobEffects.WEAKNESS) != null && !isSheared()) {
             addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 60, 1));
         }
@@ -149,17 +149,17 @@ public class Mammoth extends PrehistoricFlocking implements PrehistoricShearable
         if (itemStack.is(Items.SHEARS) && readyForShearing()) {
             shear(SoundSource.PLAYERS);
             gameEvent(GameEvent.SHEAR, player);
-            if (!level.isClientSide) {
+            if (!level().isClientSide) {
                 itemStack.hurtAndBreak(1, player, player2 -> player2.broadcastBreakEvent(hand));
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level().isClientSide);
         }
         return super.mobInteract(player, hand);
     }
 
     @Override
     public void shear(SoundSource source) {
-        level.playSound(null, this, SoundEvents.SHEEP_SHEAR, source, 1, 1);
+        level().playSound(null, this, SoundEvents.SHEEP_SHEAR, source, 1, 1);
         setSheared(true);
         int maxWool = 1 + random.nextInt(20);
         for (int i = 0; i < maxWool; i++) {

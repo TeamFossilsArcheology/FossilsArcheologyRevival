@@ -87,7 +87,7 @@ public class Arthropleura extends Prehistoric {
             oldLookControl = lookControl;
             moveControl = new FlyingMoveControl(this, 20, true);
             lookControl = new LookControl(this);
-            FlyingPathNavigation flyingPathNavigation = new FlyingPathNavigation(this, level) {
+            FlyingPathNavigation flyingPathNavigation = new FlyingPathNavigation(this, level()) {
 
                 @Override
                 public boolean isStableDestination(BlockPos pos) {
@@ -106,7 +106,7 @@ public class Arthropleura extends Prehistoric {
             entityData.set(IS_BEE, false);
             moveControl = oldMoveControl;
             lookControl = oldLookControl;
-            navigation = createNavigation(level);
+            navigation = createNavigation(level());
             goalSelector.removeGoal(temptGoal);
             goalSelector.removeGoal(wanderGoal);
         }
@@ -133,7 +133,7 @@ public class Arthropleura extends Prehistoric {
 
     @Override
     public void refreshTexturePath() {
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             return;
         }
         StringBuilder builder = new StringBuilder();

@@ -19,7 +19,7 @@ public class AnuMeleePhase extends AbstractAnuPhaseInstance {
     public void doClientTick() {
         if (anu.isWeak()) {
             for (int i = 0; i < 2; ++i) {
-                anu.level.addParticle(ParticleTypes.ELECTRIC_SPARK, anu.getRandomX(0.5), anu.getRandomY(), anu.getRandomZ(0.5), 0, 0, 0);
+                anu.level().addParticle(ParticleTypes.ELECTRIC_SPARK, anu.getRandomX(0.5), anu.getRandomY(), anu.getRandomZ(0.5), 0, 0, 0);
             }
         }
     }
@@ -41,7 +41,7 @@ public class AnuMeleePhase extends AbstractAnuPhaseInstance {
     @Override
     protected void switchPhaseByHealth() {
         AnuPhase newPhase = AnuPhase.byFraction(anu.getHealth() / anu.getMaxHealth());
-        if (newPhase == AnuPhase.DEFENSE || anu.level.getGameTime() > endTime) {
+        if (newPhase == AnuPhase.DEFENSE || anu.level().getGameTime() > endTime) {
             anu.phaseSystem.setPhase(newPhase, TIMEOUT);
         }
     }

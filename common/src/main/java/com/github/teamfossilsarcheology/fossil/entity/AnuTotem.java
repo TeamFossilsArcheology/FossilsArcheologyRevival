@@ -19,7 +19,7 @@ public class AnuTotem extends Mob {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source == level.damageSources().outOfWorld()) {
+        if (source == damageSources().fellOutOfWorld()) {
             return super.hurt(source, amount);
         }
         return false;
@@ -30,16 +30,16 @@ public class AnuTotem extends Mob {
         super.tick();
         setDeltaMovement(getDeltaMovement().add(0, 0.095f, 0).multiply(1, 0.6f, 1));
         if (tickCount > 200) {
-            level.explode(this, position().x, position().y, position().z, 5f, false, Level.ExplosionInteraction.MOB);
+            level().explode(this, position().x, position().y, position().z, 5f, false, Level.ExplosionInteraction.MOB);
             createPortal();
         }
     }
 
     private void createPortal() {
-        level.setBlock(blockPosition().below(), Blocks.OBSIDIAN.defaultBlockState(), 3);
-        level.setBlock(blockPosition(), ModBlocks.ANU_PORTAL.get().defaultBlockState(), 18);
-        level.setBlock(blockPosition().above(), ModBlocks.ANU_PORTAL.get().defaultBlockState(), 18);
-        level.setBlock(blockPosition().above(2), Blocks.OBSIDIAN.defaultBlockState(), 3);
+        level().setBlock(blockPosition().below(), Blocks.OBSIDIAN.defaultBlockState(), 3);
+        level().setBlock(blockPosition(), ModBlocks.ANU_PORTAL.get().defaultBlockState(), 18);
+        level().setBlock(blockPosition().above(), ModBlocks.ANU_PORTAL.get().defaultBlockState(), 18);
+        level().setBlock(blockPosition().above(2), Blocks.OBSIDIAN.defaultBlockState(), 3);
         remove(RemovalReason.DISCARDED);
     }
 }

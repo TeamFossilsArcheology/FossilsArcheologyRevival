@@ -7,7 +7,6 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.pathfinder.Path;
@@ -33,7 +32,7 @@ public class PlayGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        long l = dino.level.getGameTime();
+        long l = dino.level().getGameTime();
         if (l - lastCanUseCheck < COOLDOWN_BETWEEN_CAN_USE_CHECKS) {
             return false;
         }
@@ -57,7 +56,7 @@ public class PlayGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        if (dino.level.getGameTime() < attackEndTick) {
+        if (dino.level().getGameTime() < attackEndTick) {
             //Prevent the goal from ending before the animation is over
             return true;
         }
@@ -105,7 +104,7 @@ public class PlayGoal extends Goal {
     }
 
     protected void checkAndPerformAttack(ToyBase target) {
-        long currentTime = dino.level.getGameTime();
+        long currentTime = dino.level().getGameTime();
         if (Util.canReachPrey(dino, target)) {
             if (currentTime > attackEndTick + 20) {
                 ServerAnimationInfo animation = dino.startAttack();
@@ -115,7 +114,7 @@ public class PlayGoal extends Goal {
                 dino.getNavigation().stop();
             }
             if (attackDamageTick > 0 && currentTime == attackDamageTick) {
-                target.hurt(dino.level.damageSources().mobAttack(dino), 0);
+                target.hurt(dino.damageSources().mobAttack(dino), 0);
                 attackDamageTick = -1;
             }
         }

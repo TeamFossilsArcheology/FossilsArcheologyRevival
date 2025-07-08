@@ -22,9 +22,8 @@ public class IncubateEggTrigger extends SimpleCriterionTrigger<IncubateEggTrigge
     }
 
     @Override
-    protected @NotNull TriggerInstance createInstance(JsonObject json, EntityPredicate.Composite player, DeserializationContext context) {
-        EntityPredicate.Composite composite = EntityPredicate.Composite.fromJson(json, "entity", context);
-        return new TriggerInstance(ID, player, composite);
+    protected @NotNull TriggerInstance createInstance(JsonObject json, ContextAwarePredicate predicate, DeserializationContext context) {
+        return new TriggerInstance(ID, predicate, EntityPredicate.fromJson(json, "entity", context));
     }
 
     @Override
@@ -33,16 +32,16 @@ public class IncubateEggTrigger extends SimpleCriterionTrigger<IncubateEggTrigge
     }
 
     public static class TriggerInstance extends AbstractCriterionTriggerInstance {
-        private final EntityPredicate.Composite entity;
+        private final ContextAwarePredicate entity;
 
-        public TriggerInstance(ResourceLocation resourceLocation, EntityPredicate.Composite composite, EntityPredicate.Composite entity) {
+        public TriggerInstance(ResourceLocation resourceLocation, ContextAwarePredicate composite, ContextAwarePredicate entity) {
             super(resourceLocation, composite);
             this.entity = entity;
         }
 
         public static TriggerInstance incubateEgg(EntityType<?> entityType) {
-            return new TriggerInstance(ID, EntityPredicate.Composite.ANY,
-                    EntityPredicate.Composite.wrap(EntityPredicate.Builder.entity().of(entityType).build()));
+            return new TriggerInstance(ID, ContextAwarePredicate.ANY,
+                    EntityPredicate.wrap(EntityPredicate.Builder.entity().of(entityType).build()));
         }
 
         public boolean matches(LootContext context) {

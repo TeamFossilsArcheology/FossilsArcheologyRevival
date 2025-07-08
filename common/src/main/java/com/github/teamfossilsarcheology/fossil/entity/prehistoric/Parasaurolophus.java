@@ -55,7 +55,7 @@ public class Parasaurolophus extends Prehistoric {
 
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             if (SLEEPING.equals(key) || SITTING.equals(key)) {
                 //Fallback
                 setStanding(false);

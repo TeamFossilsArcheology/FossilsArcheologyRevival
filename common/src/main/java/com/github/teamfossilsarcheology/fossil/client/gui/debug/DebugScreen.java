@@ -8,8 +8,8 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricDebug;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.*;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.components.Tooltip;
@@ -72,13 +72,13 @@ public class DebugScreen extends Screen {
         if (showPaths) {
             for (int i = 0; i < targets.size(); i++) {
                 if (below) {
-                    pathTargets.add(new PathInfo(targets.get(i), player.level.getBlockState(targets.get(i).below()), true));
+                    pathTargets.add(new PathInfo(targets.get(i), player.level().getBlockState(targets.get(i).below()), true));
                     //Minecraft.getInstance().debugRenderer.gameTestDebugRenderer.addMarker(targets.get(i).below(), -2147418368, "", 2000);
-                    player.level.setBlock(targets.get(i).below(), blocks.get(i), 3);
+                    player.level().setBlock(targets.get(i).below(), blocks.get(i), 3);
                 } else {
-                    pathTargets.add(new PathInfo(targets.get(i), player.level.getBlockState(targets.get(i)), false));
+                    pathTargets.add(new PathInfo(targets.get(i), player.level().getBlockState(targets.get(i)), false));
                     //Minecraft.getInstance().debugRenderer.gameTestDebugRenderer.addMarker(targets.get(i), -2147418368, "", 2000);
-                    player.level.setBlock(targets.get(i), blocks.get(i), 3);
+                    player.level().setBlock(targets.get(i), blocks.get(i), 3);
                 }
             }
         }
@@ -86,10 +86,10 @@ public class DebugScreen extends Screen {
 
     public static void showVision(Player player, BlockPos target, BlockState block) {
         if (currentVision != null) {
-            player.level.setBlock(currentVision.targetPos, currentVision.blockState, 3);
+            player.level().setBlock(currentVision.targetPos, currentVision.blockState, 3);
         }
-        currentVision = new PathInfo(target, player.level.getBlockState(target), false);
-        player.level.setBlock(target, block, 3);
+        currentVision = new PathInfo(target, player.level().getBlockState(target), false);
+        player.level().setBlock(target, block, 3);
     }
 
     public static void clearPaths() {
@@ -231,14 +231,14 @@ public class DebugScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        super.render(poseStack, mouseX, mouseY, partialTick);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
         if (currentTab != null) {
-            currentTab.render(poseStack, mouseX, mouseY, partialTick);
+            currentTab.render(guiGraphics, mouseX, mouseY, partialTick);
         }
         if (entity instanceof Sheep sheep) {
-            drawString(poseStack, minecraft.font, Component.literal("yRot: " + sheep.getYRot()), 275, 15, 16777215);
-            drawString(poseStack, minecraft.font, Component.literal("yRotHead: " + sheep.getYHeadRot()), 275, 35, 16777215);
+            guiGraphics.drawString(minecraft.font, Component.literal("yRot: " + sheep.getYRot()), 275, 15, 16777215);
+            guiGraphics.drawString(minecraft.font, Component.literal("yRotHead: " + sheep.getYHeadRot()), 275, 35, 16777215);
         }
         /*Player player = Minecraft.getInstance().player;
         float x = 1;

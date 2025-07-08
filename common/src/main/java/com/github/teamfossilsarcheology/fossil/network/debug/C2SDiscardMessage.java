@@ -27,7 +27,7 @@ public class C2SDiscardMessage {
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> {
             Player player = contextSupplier.get().getPlayer();
-            if (player.level instanceof ServerLevel serverLevel) {
+            if (player.level() instanceof ServerLevel serverLevel) {
                 if (entityId == -1) {
                     var list = StreamSupport.stream(serverLevel.getAllEntities().spliterator(), false)
                             .filter(entity -> !(entity instanceof Player)).toList();

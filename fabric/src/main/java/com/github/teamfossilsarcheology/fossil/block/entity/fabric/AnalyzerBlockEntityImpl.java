@@ -141,7 +141,7 @@ public class AnalyzerBlockEntityImpl extends FabricEnergyContainerBlockEntity im
             if (!output.isEmpty()) {
                 for (int slot = 9; slot < 13; slot++) {
                     ItemStack itemStack = items.get(slot);
-                    if (itemStack.sameItem(output) && itemStack.getCount() + output.getCount() < 64) {
+                    if (ItemStack.isSameItem(itemStack, output) && itemStack.getCount() + output.getCount() < 64) {
                         itemStack.setCount(itemStack.getCount() + output.getCount());
                         input.shrink(1);
                         return;

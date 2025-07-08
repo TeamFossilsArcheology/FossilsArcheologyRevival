@@ -278,7 +278,7 @@ public class ClientInit {
     private static void registerEventHandlers() {
         InteractionEvent.INTERACT_ENTITY.register((player, entity, hand) -> {
             if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get())) {
-                if (player.level.isClientSide) {
+                if (player.level().isClientSide) {
                     if (entity instanceof LivingEntity livingEntity) {
                         if (entity instanceof Animal animal && PrehistoricEntityInfo.isMammal(animal) && ModCapabilities.hasEmbryo(animal)) {
                             Minecraft.getInstance().setScreen(new DinopediaScreen(animal));

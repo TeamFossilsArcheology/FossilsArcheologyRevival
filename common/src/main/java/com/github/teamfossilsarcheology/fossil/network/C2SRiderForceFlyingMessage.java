@@ -34,7 +34,7 @@ public class C2SRiderForceFlyingMessage {
         if (contextSupplier.get().getEnvironment() == Env.CLIENT) return;
         contextSupplier.get().queue(() -> {
             Player player = contextSupplier.get().getPlayer();
-            Entity entity = player.level.getEntity(entityId);
+            Entity entity = player.level().getEntity(entityId);
             if (player.getServer() != null && !player.getServer().isFlightAllowed()) {
                 player.displayClientMessage(FLYING_DISABLED, false);
             } else if (entity instanceof PrehistoricFlying mob) {

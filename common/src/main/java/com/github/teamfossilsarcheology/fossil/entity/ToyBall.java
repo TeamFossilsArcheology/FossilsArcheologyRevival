@@ -74,9 +74,9 @@ public class ToyBall extends ToyBase {
     }
 
     protected void pushEntities() {
-        List<Entity> list = level.getEntities(this, getBoundingBox(), EntitySelector.pushableBy(this));
+        List<Entity> list = level().getEntities(this, getBoundingBox(), EntitySelector.pushableBy(this));
         if (!list.isEmpty()) {
-            int i = level.getGameRules().getInt(GameRules.RULE_MAX_ENTITY_CRAMMING);
+            int i = level().getGameRules().getInt(GameRules.RULE_MAX_ENTITY_CRAMMING);
             int j;
             if (i > 0 && list.size() > i - 1 && random.nextInt(4) == 0) {
                 j = 0;
@@ -88,7 +88,7 @@ public class ToyBall extends ToyBase {
                 }
 
                 if (j > i - 1) {
-                    hurt(level.damageSources().cramming(), 6.0F);
+                    hurt(damageSources().cramming(), 6.0F);
                 }
             }
 
@@ -127,7 +127,7 @@ public class ToyBall extends ToyBase {
             --lerpSteps;
             setPos(d, e, f);
             setRot(getYRot(), getXRot());
-        } else if (level.isClientSide) {
+        } else if (level().isClientSide) {
             setDeltaMovement(getDeltaMovement().scale(0.98));
         }
 
@@ -159,7 +159,7 @@ public class ToyBall extends ToyBase {
     }
 
     private void travel() {
-        if (!level.isClientSide || isControlledByLocalInstance()) {
+        if (!level().isClientSide || isControlledByLocalInstance()) {
             double gravity = 0.08;
             boolean isFalling = getDeltaMovement().y <= 0.0;
 
@@ -186,14 +186,14 @@ public class ToyBall extends ToyBase {
                 }
             } else {
                 BlockPos blockPos = getBlockPosBelowThatAffectsMyMovement();
-                float blockFriction = level.getBlockState(blockPos).getBlock().getFriction();
-                float friction = onGround ? blockFriction * 0.91f : 0.91f;
+                float blockFriction = level().getBlockState(blockPos).getBlock().getFriction();
+                float friction = onGround() ? blockFriction * 0.91f : 0.91f;
                 moveRelative(0, Vec3.ZERO);
                 move(MoverType.SELF, getDeltaMovement());
                 Vec3 vec36 = getDeltaMovement();
                 double q = vec36.y;
-                if (level.isClientSide && !level.hasChunkAt(blockPos)) {
-                    if (getY() > (double) level.getMinBuildHeight()) {
+                if (level().isClientSide && !level().hasChunkAt(blockPos)) {
+                    if (getY() > (double) level().getMinBuildHeight()) {
                         q = -0.1;
                     } else {
                         q = 0;

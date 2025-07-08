@@ -3,7 +3,6 @@ package com.github.teamfossilsarcheology.fossil.block.custom_blocks;
 import com.github.teamfossilsarcheology.fossil.entity.AnuTotem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.BlockGetter;
@@ -46,7 +45,7 @@ public class ObsidianSpikesBlock extends Block {
 
     @Override
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        return state.getMaterial().isSolid();
+        return state.isSolid();
     }
 
     @Override

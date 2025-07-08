@@ -2,14 +2,18 @@ package com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction;
 
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.InstructionTab;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.AbstractContainerEventHandler;
 import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -73,13 +77,11 @@ public class InstructionsList extends AbstractContainerEventHandler implements R
             }
         }) {
             @Override
-            public void renderWidget(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-                super.renderWidget(poseStack, mouseX, mouseY, partialTick);
-                RenderSystem.setShaderTexture(0, ICON_OVERLAY_LOCATION);
+            public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+                super.renderWidget(guiGraphics, mouseX, mouseY, partialTick);
                 int left = getX() + width / 2;
                 int top = getY() + (height - 8) / 2;
-                GuiComponent.blit(poseStack, left - 8, top - 5, 111, 0, 32, 32, 256, 256);
-                RenderSystem.setShader(GameRenderer::getPositionTexShader);
+                guiGraphics.blit(ICON_OVERLAY_LOCATION, left - 8, top - 5, 111, 0, 32, 32, 256, 256);
             }
         };
         downButton = new MoveButton(X_0 + 80, Y_1 + 5, 20, 20, Component.literal(""), button -> {
@@ -90,13 +92,11 @@ public class InstructionsList extends AbstractContainerEventHandler implements R
             }
         }) {
             @Override
-            public void renderWidget(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-                super.renderWidget(poseStack, mouseX, mouseY, partialTick);
-                RenderSystem.setShaderTexture(0, ICON_OVERLAY_LOCATION);
+            public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+                super.renderWidget(guiGraphics, mouseX, mouseY, partialTick);
                 int left = getX() + width / 2;
                 int top = getY() + (height - 8) / 2;
-                GuiComponent.blit(poseStack, left - 23, top - 4, 64, 16, 32, 32, 256, 256);
-                RenderSystem.setShader(GameRenderer::getPositionTexShader);
+                guiGraphics.blit(ICON_OVERLAY_LOCATION, left - 23, top - 4, 64, 16, 32, 32, 256, 256);
             }
         };
     }
@@ -219,13 +219,13 @@ public class InstructionsList extends AbstractContainerEventHandler implements R
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferBuilder = tesselator.getBuilder();
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
         hovered = isMouseOver(mouseX, mouseY) ? getEntryAtPosition(mouseX, mouseY) : null;
         //if (renderBackground) {
-        RenderSystem.setShaderTexture(0, GuiComponent.BACKGROUND_LOCATION);
+        RenderSystem.setShaderTexture(0, Screen.BACKGROUND_LOCATION);
         RenderSystem.setShaderColor(1, 1, 1, 1);
         bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
         bufferBuilder.vertex(X_0, Y_1, 0).uv(X_0 / 32f, Y_1 / 32f).color(32, 32, 32, 255).endVertex();
@@ -236,15 +236,15 @@ public class InstructionsList extends AbstractContainerEventHandler implements R
         //}
 
         int rowLeft = X_0 + WIDTH / 2 - ROW_WIDTH / 2 + 2;
-        renderList(poseStack, rowLeft, Y_0 + 4, mouseX, mouseY, partialTick);
-        removeButton.render(poseStack, mouseX, mouseY, partialTick);
-        upButton.render(poseStack, mouseX, mouseY, partialTick);
-        downButton.render(poseStack, mouseX, mouseY, partialTick);
+        renderList(guiGraphics, rowLeft, Y_0 + 4, mouseX, mouseY, partialTick);
+        removeButton.render(guiGraphics, mouseX, mouseY, partialTick);
+        upButton.render(guiGraphics, mouseX, mouseY, partialTick);
+        downButton.render(guiGraphics, mouseX, mouseY, partialTick);
 
         RenderSystem.disableBlend();
     }
 
-    protected void renderList(PoseStack poseStack, int x, int y, int mouseX, int mouseY, float partialTick) {
+    protected void renderList(GuiGraphics guiGraphics, int x, int y, int mouseX, int mouseY, float partialTick) {
         int itemCount = children.size();
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferBuilder = tesselator.getBuilder();
@@ -260,14 +260,14 @@ public class InstructionsList extends AbstractContainerEventHandler implements R
                 if (Objects.equals(selected, entry)) {
                     renderEntry(tesselator, bufferBuilder, rowLeft, rowRight, rowTop, rowHeight);
                 }
-                entry.render(poseStack, rowTop, rowLeft, Objects.equals(hovered, entry) && dragging == null);
+                entry.render(guiGraphics, rowTop, rowLeft, Objects.equals(hovered, entry) && dragging == null);
 
                 if (Objects.equals(dragging, entry)) {
                     int dragLeft = (int) ((dragStartX + dragMoveX) + WIDTH / 2d - ROW_WIDTH / 2d);
                     int dragRight = (int) ((dragStartX + dragMoveX) + WIDTH / 2d + ROW_WIDTH / 2d);
                     int dragTop = (int) (rowTop + ((dragStartY + dragMoveY) - Y_0));
                     renderEntry(tesselator, bufferBuilder, dragLeft, dragRight, dragTop, rowHeight);
-                    entry.render(poseStack, dragTop, dragLeft, true);
+                    entry.render(guiGraphics, dragTop, dragLeft, true);
                 }
             }
         }
@@ -323,11 +323,11 @@ public class InstructionsList extends AbstractContainerEventHandler implements R
             this.minecraft = minecraft;
         }
 
-        public void render(PoseStack poseStack, int top, int left, boolean isMouseOver) {
+        public void render(GuiGraphics guiGraphics, int top, int left, boolean isMouseOver) {
             if (isMouseOver) {
-                drawString(poseStack, minecraft.font, Component.literal(instruction.toString()), left + 4, top + 4, Integer.parseUnsignedInt("a8a2a2", 16));
+                guiGraphics.drawString(minecraft.font, Component.literal(instruction.toString()), left + 4, top + 4, Integer.parseUnsignedInt("a8a2a2", 16));
             } else {
-                drawString(poseStack, minecraft.font, Component.literal(instruction.toString()), left + 4, top + 4, Integer.parseUnsignedInt("ffffff", 16));
+                guiGraphics.drawString(minecraft.font, Component.literal(instruction.toString()), left + 4, top + 4, Integer.parseUnsignedInt("ffffff", 16));
             }
         }
 

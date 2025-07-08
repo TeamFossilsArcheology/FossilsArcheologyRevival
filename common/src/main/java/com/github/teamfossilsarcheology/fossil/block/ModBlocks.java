@@ -10,11 +10,11 @@ import com.github.teamfossilsarcheology.fossil.util.Version;
 import com.github.teamfossilsarcheology.fossil.world.feature.tree.*;
 import com.mojang.datafixers.util.Pair;
 import dev.architectury.core.block.ArchitecturyLiquidBlock;
+import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
@@ -23,8 +23,8 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.ArrayList;
@@ -34,34 +34,36 @@ import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 
 import static net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import static net.minecraft.world.level.block.state.properties.NoteBlockInstrument.*;
 
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(FossilMod.MOD_ID, Registries.BLOCK);
 
     public static final RegistrySupplier<BubbleBlowerBlock> BUBBLE_BLOWER = registerBlock("bubble_blower",
-            () -> new BubbleBlowerBlock(Properties.of(Material.METAL).strength(3).sound(SoundType.METAL).requiresCorrectToolForDrops())
+            () -> new BubbleBlowerBlock(Properties.of().mapColor(MapColor.METAL).strength(3).sound(SoundType.METAL).requiresCorrectToolForDrops())
     );
     public static final RegistrySupplier<Block> ANALYZER = registerBlock("analyzer",
-            () -> new AnalyzerBlock(Properties.of(Material.METAL, MaterialColor.METAL).strength(3f).requiresCorrectToolForDrops()
-                    .lightLevel(activeBlockEmission(14))));
+            () -> new AnalyzerBlock(Properties.copy(BUBBLE_BLOWER.get()).lightLevel(activeBlockEmission(14))));
     public static final RegistrySupplier<SifterBlock> SIFTER = registerBlock("sifter",
-            () -> new SifterBlock(Properties.of(Material.WOOD).strength(2.5f).sound(SoundType.WOOD)));
+            () -> new SifterBlock(Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(BASS)
+                    .strength(2.5f).sound(SoundType.WOOD)));
     public static final RegistrySupplier<CultureVatBlock> CULTURE_VAT = registerBlock("culture_vat", () -> new CultureVatBlock(
-            Properties.of(Material.GLASS, MaterialColor.COLOR_CYAN).strength(2f).requiresCorrectToolForDrops()
+            Properties.of().mapColor(MapColor.COLOR_CYAN).instrument(HAT).strength(2f).requiresCorrectToolForDrops()
                     .lightLevel(activeBlockEmission(14)).noOcclusion()));
     public static final RegistrySupplier<Block> WORKTABLE = registerBlock("worktable", () -> new WorktableBlock(
-            Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN).strength(1f).sound(SoundType.WOOD)));
+            Properties.of().mapColor(MapColor.COLOR_BROWN).ignitedByLava().instrument(BASS)
+                    .strength(1f).sound(SoundType.WOOD)));
     public static final RegistrySupplier<FeederBlock> FEEDER = registerBlock("feeder",
-            () -> new FeederBlock(Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
+            () -> new FeederBlock(Properties.copy(BUBBLE_BLOWER.get())));
 
     public static final RegistrySupplier<ArchitecturyLiquidBlock> TAR = blockWithoutBlockItem("tar",
-            () -> TarBlock.get(ModFluids.TAR, Properties.copy(Blocks.WATER).isViewBlocking(ModBlocks::always)));
+            () -> TarBlock.get(ModFluids.TAR, Properties.copy(Blocks.WATER).isSuffocating(ModBlocks::always).isViewBlocking(ModBlocks::always)));
 
     public static final RegistrySupplier<AnuStatueBlock> ANU_STATUE = blockWithCustomBlockItem("anu_statue",
-            () -> new AnuStatueBlock(Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)),
+            () -> new AnuStatueBlock(Properties.of().noOcclusion().strength(-1, 60000000)),
             block -> AnuStatueBlockItem.get(block, new Item.Properties().arch$tab(ModTabs.FA_BLOCK_TAB)));
     public static final RegistrySupplier<AnubiteStatueBlock> ANUBITE_STATUE = blockWithCustomBlockItem("anubite_statue",
-            () -> new AnubiteStatueBlock(Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)),
+            () -> new AnubiteStatueBlock(Properties.of().noOcclusion().strength(-1, 60000000)),
             block -> AnubiteStatueBlockItem.get(block, new Item.Properties().arch$tab(ModTabs.FA_BLOCK_TAB)));
     public static final RegistrySupplier<AnuBarrierOriginBlock> ANU_BARRIER_ORIGIN = blockWithDebugItem("anu_barrier_origin",
             () -> new AnuBarrierOriginBlock(Properties.copy(Blocks.BARRIER)));
@@ -72,55 +74,56 @@ public class ModBlocks {
     public static final RegistrySupplier<HomePortal> HOME_PORTAL = blockWithDebugItem("home_portal",
             () -> new HomePortal(Properties.copy(Blocks.NETHER_PORTAL)));
     public static final RegistrySupplier<AncientChestBlock> ANCIENT_CHEST = blockWithCustomBlockItem("ancient_chest",
-            () -> new AncientChestBlock(Properties.of(Material.WOOD).noOcclusion().strength(-1, 3600000)),
+            () -> new AncientChestBlock(Properties.of().mapColor(MapColor.WOOD).instrument(BASS)
+                    .noOcclusion().strength(-1, 3600000)),
             block -> AncientChestBlockItem.get(block, new Item.Properties().arch$tab(ModTabs.FA_BLOCK_TAB)));
     public static final RegistrySupplier<Block> SARCOPHAGUS = blockWithCustomBlockItem("sarcophagus",
-            () -> new SarcophagusBlock(Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)
+            () -> new SarcophagusBlock(Properties.of().noOcclusion().strength(-1, 60000000)
                     .lightLevel(state -> state.getValue(SarcophagusBlock.LIT) ? 7 : 0)), block -> SarcophagusBlockItem.get(block, new Item.Properties().arch$tab(ModTabs.FA_BLOCK_TAB)));
     public static final RegistrySupplier<Block> FAKE_OBSIDIAN = blockWithDebugItem("fake_obsidian",
             () -> new FakeObsidian(Properties.copy(Blocks.OBSIDIAN)));
     public static final RegistrySupplier<Block> OBSIDIAN_SPIKES = registerBlock("obsidian_spikes",
-            () -> new ObsidianSpikesBlock(Properties.of(Material.STONE).strength(50, 2000).sound(SoundType.STONE)
+            () -> new ObsidianSpikesBlock(Properties.of().mapColor(MapColor.COLOR_BLACK).strength(50, 2000).sound(SoundType.STONE)
                     .requiresCorrectToolForDrops().noOcclusion()));
     public static final RegistrySupplier<VolcanoAshVent> ASH_VENT = blockWithDebugItem("ash_vent",
             VolcanoAshVent::new);
 
     public static final RegistrySupplier<DrumBlock> DRUM = registerBlock("drum",
-            () -> new DrumBlock(Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5f)));
+            () -> new DrumBlock(Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(BASS)
+                    .sound(SoundType.WOOD)));
     public static final RegistrySupplier<BedBlock> COMFY_BED = registerBlock("comfy_bed", () -> new ComfyBedBlock(
-            Properties.of(Material.WOOL).sound(SoundType.WOOD).strength(0.2f).noOcclusion()));
+            Properties.of().mapColor(MapColor.WOOL).ignitedByLava().sound(SoundType.WOOD).strength(0.2f).noOcclusion()));
 
     public static final RegistrySupplier<Block> SHELL = registerBlock("shell",
-            () -> new ShellBlock(Properties.of(Material.STONE).strength(1).requiresCorrectToolForDrops().noOcclusion()));
+            () -> new ShellBlock(Properties.of().mapColor(MapColor.STONE).instrument(BASEDRUM).strength(1).requiresCorrectToolForDrops().noOcclusion()));
     public static final RegistrySupplier<DropExperienceBlock> AMBER_ORE = registerBlock("amber_ore",
-            () -> new DropExperienceBlock(Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()));
+            () -> new DropExperienceBlock(Properties.of().mapColor(MapColor.STONE).instrument(BASEDRUM).strength(3f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> AMBER_BLOCK = registerBlock("amber_block",
-            () -> new Block(Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops().noOcclusion()
+            () -> new Block(Properties.of().mapColor(MapColor.COLOR_YELLOW).instrument(BASEDRUM).strength(3f).requiresCorrectToolForDrops().noOcclusion()
                     .isViewBlocking(ModBlocks::never)));
     public static final RegistrySupplier<Block> AMBER_CHUNK = registerBlock("amber_chunk",
-            () -> new AmberChunkBlock(Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()
-                    .noOcclusion().isViewBlocking(ModBlocks::never)));
+            () -> new AmberChunkBlock(Properties.copy(AMBER_BLOCK.get()).noOcclusion()));
     public static final RegistrySupplier<Block> AMBER_CHUNK_DOMINICAN = registerBlock("amber_chunk_dominican",
-            () -> new AmberChunkBlock(Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()
-                    .noOcclusion().isViewBlocking(ModBlocks::never)));
+            () -> new AmberChunkBlock(Properties.copy(AMBER_BLOCK.get()).noOcclusion()));
     public static final RegistrySupplier<Block> AMBER_CHUNK_MOSQUITO = registerBlock("amber_chunk_mosquito",
-            () -> new AmberChunkBlock(Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()
-                    .noOcclusion().isViewBlocking(ModBlocks::never)));
+            () -> new AmberChunkBlock(Properties.copy(AMBER_BLOCK.get()).noOcclusion()));
+
     public static final RegistrySupplier<IcedDirtBlock> ICED_DIRT = registerBlock("iced_dirt",
-            () -> new IcedDirtBlock(Properties.of(Material.DIRT).strength(1, 4).sound(SoundType.MOSS).randomTicks()));
+            () -> new IcedDirtBlock(Properties.of().mapColor(MapColor.DIRT).strength(1, 4).sound(SoundType.MOSS).randomTicks()));
     public static final RegistrySupplier<SandBlock> DENSE_SAND = registerBlock("dense_sand",
-            () -> new SandBlock(0x8C765C, Properties.of(Material.SAND).strength(3f, 15f).sound(SoundType.SAND)));
+            () -> new SandBlock(0x8C765C, Properties.of().mapColor(MapColor.SAND).instrument(SNARE)
+                    .strength(3f, 15f).sound(SoundType.SAND)));
     public static final RegistrySupplier<SkullBlock> SKULL_BLOCK = registerBlock("skull",
-            () -> new SkullBlock(Properties.of(Material.STONE).strength(2, 15f)
+            () -> new SkullBlock(Properties.of().mapColor(MapColor.SAND).instrument(XYLOPHONE).strength(2, 15f)
                     .requiresCorrectToolForDrops().sound(SoundType.BONE_BLOCK)));
     public static final RegistrySupplier<SkullBlock> SKULL_LANTERN = registerBlock("skull_lantern",
-            () -> new SkullBlock(Properties.of(Material.STONE).lightLevel(value -> 14).strength(2, 15f)
+            () -> new SkullBlock(Properties.of().mapColor(MapColor.SAND).instrument(XYLOPHONE).lightLevel(value -> 14).strength(2, 15f)
                     .requiresCorrectToolForDrops().sound(SoundType.BONE_BLOCK)));
     public static final RegistrySupplier<Block> SLIME_TRAIL = registerBlock("slime_trail",
             () -> new RailBlock(Properties.copy(Blocks.SLIME_BLOCK)));
 
     public static final RegistrySupplier<Block> ANCIENT_STONE = registerBlock("ancient_stone",
-            () -> new Block(Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops()));
+            () -> new Block(Properties.of().mapColor(MapColor.STONE).instrument(BASEDRUM).strength(1.5f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> ANCIENT_STONE_BRICKS = registerBlock("ancient_stone_bricks",
             () -> new Block(Properties.copy(ANCIENT_STONE.get())));
     public static final RegistrySupplier<SlabBlock> ANCIENT_STONE_SLAB = registerBlock("ancient_stone_slab",
@@ -130,7 +133,8 @@ public class ModBlocks {
     public static final RegistrySupplier<WallBlock> ANCIENT_STONE_WALL = registerBlock("ancient_stone_wall",
             () -> new WallBlock(Properties.copy(ANCIENT_STONE.get())));
     public static final RegistrySupplier<Block> ANCIENT_WOOD_PLANKS = registerBlock("ancient_wood_planks",
-            () -> new Block(Properties.of(Material.WOOD).strength(2f, 3f).sound(SoundType.WOOD)));
+            () -> new Block(Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(BASS)
+                    .strength(2f, 3f).sound(SoundType.WOOD)));
     public static final RegistrySupplier<SlabBlock> ANCIENT_WOOD_SLAB = registerBlock("ancient_wood_slab",
             () -> new SlabBlock(Properties.copy(ANCIENT_WOOD_PLANKS.get())));
     public static final RegistrySupplier<RotatedPillarBlock> ANCIENT_WOOD_LOG = registerBlock("ancient_wood_log",
@@ -161,13 +165,13 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> TARRED_DIRT = registerBlock("tarred_dirt",
             () -> new Block(Properties.copy(Blocks.DIRT)));
     public static final RegistrySupplier<Block> PERMAFROST_BLOCK = registerBlock("permafrost_block",
-            () -> new PermafrostBlock(Properties.of(Material.STONE, MaterialColor.COLOR_BLUE).strength(2f).requiresCorrectToolForDrops()));
+            () -> new PermafrostBlock(Properties.of().mapColor(MapColor.COLOR_BLUE).instrument(BASEDRUM).strength(2f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> VOLCANIC_ASH = registerBlock("volcanic_ash",
-            () -> new Block(Properties.of(Material.DIRT, MaterialColor.COLOR_BLACK).strength(0.2f).requiresCorrectToolForDrops().sound(SoundType.GRAVEL)));
+            () -> new Block(Properties.of().mapColor(MapColor.COLOR_BLACK).strength(0.2f).requiresCorrectToolForDrops().sound(SoundType.GRAVEL)));
     public static final RegistrySupplier<Block> VOLCANIC_ROCK = registerBlock("volcanic_rock",
-            () -> new Block(Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(1f).requiresCorrectToolForDrops()));
+            () -> new Block(Properties.of().mapColor(MapColor.COLOR_BLACK).instrument(BASEDRUM).strength(1f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> VOLCANIC_BRICKS = registerBlock("volcanic_bricks",
-            () -> new Block(Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(1.5f).requiresCorrectToolForDrops()));
+            () -> new Block(Properties.of().mapColor(MapColor.COLOR_BLACK).instrument(BASEDRUM).strength(1.5f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<SlabBlock> VOLCANIC_BRICK_SLAB = registerBlock("volcanic_brick_slab",
             () -> new SlabBlock(Properties.copy(VOLCANIC_BRICKS.get())));
     public static final RegistrySupplier<StairBlock> VOLCANIC_BRICK_STAIRS = registerBlock("volcanic_brick_stairs",
@@ -232,9 +236,12 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> MUTANT_TREE_SAPLING = registerBlock("mutant_tree_sapling",
             () -> new SaplingBlock(new MutantTreeGrower(), Properties.copy(Blocks.OAK_SAPLING)));
     public static final RegistrySupplier<Block> MUTANT_TREE_TUMOR = blockWithDebugItem("mutant_tree_tumor",
-            () -> new MutantTreeTumor(Properties.of(Material.LEAVES).noOcclusion().dynamicShape().sound(SoundType.GRASS)));
+            () -> new MutantTreeTumor(Properties.of().ignitedByLava().pushReaction(PushReaction.DESTROY)
+                    .noOcclusion().dynamicShape().sound(SoundType.GRASS)));
     public static final RegistrySupplier<Block> MUTANT_TREE_VINE = registerBlock("mutant_tree_vine",
-            () -> new VineBlock(Properties.of(Material.REPLACEABLE_PLANT).noCollission().lightLevel(value -> 10).randomTicks().strength(0.2f).sound(SoundType.VINE)));
+            () -> new VineBlock(Properties.of().mapColor(MapColor.PLANT).replaceable().ignitedByLava().pushReaction(PushReaction.DESTROY)
+                    .forceSolidOff().noCollission().lightLevel(value -> 10).randomTicks().strength(0.2f).sound(SoundType.VINE)));
+    //TODO: forceSolidOff()
 
     public static final RegistrySupplier<Block> PALM_PLANKS = planks(ModWoodTypes.PALM);
     public static final RegistrySupplier<StairBlock> PALM_STAIRS = stairs("palm", PALM_PLANKS);
@@ -287,18 +294,18 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> TEMPSKYA_SAPLING = registerBlock("tempskya_sapling",
             () -> new SaplingBlock(new TempskyaTreeGrower(), Properties.copy(Blocks.OAK_SAPLING)));
     public static final RegistrySupplier<Block> TEMPSKYA_TOP = registerBlock("tempskya_top",
-            () -> new TempskyaTopBlock(Properties.of(Material.PLANT).noOcclusion().sound(SoundType.GRASS)));
+            () -> new TempskyaTopBlock(Properties.of().mapColor(MapColor.PLANT).ignitedByLava().pushReaction(PushReaction.DESTROY).noOcclusion().sound(SoundType.GRASS)));
     public static final RegistrySupplier<Block> TEMPSKYA_LEAF = registerBlock("tempskya_leaf",
-            () -> new TempskyaLeafBlock(Properties.of(Material.LEAVES).noCollission().noOcclusion().sound(SoundType.GRASS)));
+            () -> new TempskyaLeafBlock(Properties.of().mapColor(MapColor.PLANT).ignitedByLava().pushReaction(PushReaction.DESTROY).noCollission().noOcclusion().sound(SoundType.GRASS)));
 
     public static final List<RegistrySupplier<VaseBlock>> VASES = new ArrayList<>();
     public static final List<Pair<DyeColor, RegistrySupplier<VaseBlock>>> VASES_WITH_COLOR = new ArrayList<>();
-    public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_DAMAGED = registerVolute(VaseBlock.VaseVariant.DAMAGED);
-    public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_RESTORED = registerVolute(VaseBlock.VaseVariant.RESTORED);
-    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_DAMAGED = registerKylix(VaseBlock.VaseVariant.DAMAGED);
-    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_RESTORED = registerKylix(VaseBlock.VaseVariant.RESTORED);
-    public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_DAMAGED = registerAmphora(VaseBlock.VaseVariant.DAMAGED);
-    public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_RESTORED = registerAmphora(VaseBlock.VaseVariant.RESTORED);
+    public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_DAMAGED = volute(VaseBlock.VaseVariant.DAMAGED);
+    public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_RESTORED = volute(VaseBlock.VaseVariant.RESTORED);
+    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_DAMAGED = kylix(VaseBlock.VaseVariant.DAMAGED);
+    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_RESTORED = kylix(VaseBlock.VaseVariant.RESTORED);
+    public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_DAMAGED = amphora(VaseBlock.VaseVariant.DAMAGED);
+    public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_RESTORED = amphora(VaseBlock.VaseVariant.RESTORED);
     public static final List<RegistrySupplier<FigurineBlock>> FIGURINES = new ArrayList<>();
     public static final RegistrySupplier<FigurineBlock> ANU_FIGURINE_DESTROYED = registerAnu(FigurineBlock.FigurineVariant.DESTROYED);
     public static final RegistrySupplier<FigurineBlock> ANU_FIGURINE_RESTORED = registerAnu(FigurineBlock.FigurineVariant.RESTORED);
@@ -322,9 +329,9 @@ public class ModBlocks {
 
     static {
         for (DyeColor color : DyeColor.values()) {
-            VASES_WITH_COLOR.add(new Pair<>(color, registerVase("amphora", color.getSerializedName(), AmphoraVaseBlock::new)));
-            VASES_WITH_COLOR.add(new Pair<>(color, registerVase("kylix", color.getSerializedName(), KylixVaseBlock::new)));
-            VASES_WITH_COLOR.add(new Pair<>(color, registerVase("volute", color.getSerializedName(), VoluteVaseBlock::new)));
+            VASES_WITH_COLOR.add(new Pair<>(color, vase("amphora", color.getSerializedName(), AmphoraVaseBlock::new)));
+            VASES_WITH_COLOR.add(new Pair<>(color, vase("kylix", color.getSerializedName(), KylixVaseBlock::new)));
+            VASES_WITH_COLOR.add(new Pair<>(color, vase("volute", color.getSerializedName(), VoluteVaseBlock::new)));
         }
     }
 
@@ -333,7 +340,7 @@ public class ModBlocks {
     }
 
     private static BlockBehaviour.Properties woodProp(ModWoodTypes.WoodInfo woodInfo) {
-        return Properties.of(Material.WOOD, woodInfo.materialColor()).strength(2, 3).sound(woodInfo.woodType().soundType());
+        return Properties.of().mapColor(woodInfo.mapColor()).ignitedByLava().instrument(BASS).strength(2, 3).sound(woodInfo.woodType().soundType());
     }
 
     private static RegistrySupplier<Block> planks(ModWoodTypes.WoodInfo woodInfo) {
@@ -366,12 +373,12 @@ public class ModBlocks {
     }
 
     private static RegistrySupplier<ButtonBlock> woodenButton(ModWoodTypes.WoodInfo woodInfo) {
-        return registerBlock(woodInfo.name() + "_button", () -> new ButtonBlock(Properties.of(Material.DECORATION)
+        return registerBlock(woodInfo.name() + "_button", () -> new ButtonBlock(Properties.of().pushReaction(PushReaction.DESTROY)
                 .strength(0.5f).noCollission(), woodInfo.setType(), 30, true));
     }
 
     private static RegistrySupplier<ButtonBlock> stoneButton(ModWoodTypes.WoodInfo woodInfo) {
-        return registerBlock(woodInfo.name() + "_button", () -> new ButtonBlock(Properties.of(Material.DECORATION)
+        return registerBlock(woodInfo.name() + "_button", () -> new ButtonBlock(Properties.of().pushReaction(PushReaction.DESTROY)
                 .strength(0.5f).noCollission(), woodInfo.setType(), 30, true));
     }
 
@@ -381,7 +388,7 @@ public class ModBlocks {
     }
 
     private static RegistrySupplier<RotatedPillarBlock> log(ModWoodTypes.WoodInfo woodInfo, boolean stripped) {
-        return rotatedPillar((stripped ? "stripped_" : "") + woodInfo.name() + "_log", BlockBehaviour.Properties.of(Material.WOOD, woodInfo.materialColor()));
+        return rotatedPillar((stripped ? "stripped_" : "") + woodInfo.name() + "_log", BlockBehaviour.Properties.of().mapColor(woodInfo.mapColor()).ignitedByLava().instrument(BASS));
     }
 
     private static RegistrySupplier<RotatedPillarBlock> wood(ModWoodTypes.WoodInfo woodInfo, boolean stripped) {
@@ -404,49 +411,49 @@ public class ModBlocks {
         return true;
     }
 
-    private static RegistrySupplier<VaseBlock> registerVolute(VaseBlock.VaseVariant variant) {
-        return registerVase("volute", variant.getSerializedName(), VoluteVaseBlock::new);
+    private static RegistrySupplier<VaseBlock> volute(VaseBlock.VaseVariant variant) {
+        return vase("volute", variant.getSerializedName(), VoluteVaseBlock::new);
     }
 
-    private static RegistrySupplier<VaseBlock> registerKylix(VaseBlock.VaseVariant variant) {
-        return registerVase("kylix", variant.getSerializedName(), KylixVaseBlock::new);
+    private static RegistrySupplier<VaseBlock> kylix(VaseBlock.VaseVariant variant) {
+        return vase("kylix", variant.getSerializedName(), KylixVaseBlock::new);
     }
 
-    private static RegistrySupplier<VaseBlock> registerAmphora(VaseBlock.VaseVariant variant) {
-        return registerVase("amphora", variant.getSerializedName(), AmphoraVaseBlock::new);
+    private static RegistrySupplier<VaseBlock> amphora(VaseBlock.VaseVariant variant) {
+        return vase("amphora", variant.getSerializedName(), AmphoraVaseBlock::new);
     }
 
-    private static RegistrySupplier<VaseBlock> registerVase(String name, String variant, Supplier<VaseBlock> supplier) {
+    private static RegistrySupplier<VaseBlock> vase(String name, String variant, Supplier<VaseBlock> supplier) {
         var toReturn = registerBlock("vase_" + name + "_" + variant, supplier);
         VASES.add(toReturn);
         return toReturn;
     }
 
     private static RegistrySupplier<FigurineBlock> registerAnu(FigurineBlock.FigurineVariant variant) {
-        return registerFigurine("anu", variant, () -> new FigurineAnuBlock(variant));
+        return figurine("anu", variant, () -> new FigurineAnuBlock(variant));
     }
 
     private static RegistrySupplier<FigurineBlock> registerEnderman(FigurineBlock.FigurineVariant variant) {
-        return registerFigurine("enderman", variant, () -> new FigurineEndermanBlock(variant));
+        return figurine("enderman", variant, () -> new FigurineEndermanBlock(variant));
     }
 
     private static RegistrySupplier<FigurineBlock> registerPiglin(FigurineBlock.FigurineVariant variant) {
-        return registerFigurine("piglin", variant, () -> new FigurinePiglinBlock(variant));
+        return figurine("piglin", variant, () -> new FigurinePiglinBlock(variant));
     }
 
     private static RegistrySupplier<FigurineBlock> registerSkeleton(FigurineBlock.FigurineVariant variant) {
-        return registerFigurine("skeleton", variant, () -> new FigurineSkeletonBlock(variant));
+        return figurine("skeleton", variant, () -> new FigurineSkeletonBlock(variant));
     }
 
     private static RegistrySupplier<FigurineBlock> registerSteve(FigurineBlock.FigurineVariant variant) {
-        return registerFigurine("steve", variant, () -> new FigurineSteveBlock(variant));
+        return figurine("steve", variant, () -> new FigurineSteveBlock(variant));
     }
 
     private static RegistrySupplier<FigurineBlock> registerZombie(FigurineBlock.FigurineVariant variant) {
-        return registerFigurine("zombie", variant, () -> new FigurineZombieBlock(variant));
+        return figurine("zombie", variant, () -> new FigurineZombieBlock(variant));
     }
 
-    private static RegistrySupplier<FigurineBlock> registerFigurine(String name, FigurineBlock.FigurineVariant variant, Supplier<FigurineBlock> supplier) {
+    private static RegistrySupplier<FigurineBlock> figurine(String name, FigurineBlock.FigurineVariant variant, Supplier<FigurineBlock> supplier) {
         var toReturn = registerBlock("figurine_" + name + "_" + variant.getSerializedName(), supplier);
         FIGURINES.add(toReturn);
         return toReturn;
@@ -483,7 +490,13 @@ public class ModBlocks {
     public static <T extends Block> RegistrySupplier<T> blockWithDebugItem(String name, Supplier<T> block) {
         RegistrySupplier<T> toReturn = BLOCKS.register(name, block);
         if (Version.debugEnabled()) {
-            registerBlockItem(name, toReturn);
+            RegistrySupplier<Item> item = registerBlockItem(name, toReturn);
+            //TODO: See if this works
+            CreativeTabRegistry.modify(ModTabs.FA_BLOCK_TAB, (featureFlagSet, creativeTabOutput, canUseGameMasterBlocks) -> {
+                if (canUseGameMasterBlocks) {
+                    creativeTabOutput.accept(item.get());
+                }
+            });
         }
         return toReturn;
     }

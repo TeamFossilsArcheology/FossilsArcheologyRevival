@@ -27,7 +27,7 @@ public class AnuFlightPhase extends AbstractAnuPhaseInstance {
     @Override
     public void doClientTick() {
         for (int i = 0; i < 2; ++i) {
-            anu.level.addParticle(ParticleTypes.SMOKE, anu.getRandomX(0.5), anu.getRandomY(), anu.getRandomZ(0.5), 0, 0, 0);
+            anu.level().addParticle(ParticleTypes.SMOKE, anu.getRandomX(0.5), anu.getRandomY(), anu.getRandomZ(0.5), 0, 0, 0);
         }
     }
 
@@ -40,7 +40,7 @@ public class AnuFlightPhase extends AbstractAnuPhaseInstance {
         if (anu.tickCount % 20 == 0) {
             anu.heal(2);
         }
-        if (!anu.isOnGround() && anu.getDeltaMovement().y < 0) {
+        if (!anu.onGround() && anu.getDeltaMovement().y < 0) {
             anu.setDeltaMovement(anu.getDeltaMovement().multiply(1, 0.6, 1));
         }
         //Flight
@@ -64,7 +64,7 @@ public class AnuFlightPhase extends AbstractAnuPhaseInstance {
     @Override
     protected void switchPhaseByHealth() {
         AnuPhase newPhase = AnuPhase.byFraction(anu.getHealth() / anu.getMaxHealth());
-        if (newPhase == AnuPhase.DEFENSE || anu.level.getGameTime() > endTime) {
+        if (newPhase == AnuPhase.DEFENSE || anu.level().getGameTime() > endTime) {
             anu.phaseSystem.setPhase(newPhase, TIMEOUT);
         }
     }
@@ -92,8 +92,8 @@ public class AnuFlightPhase extends AbstractAnuPhaseInstance {
     }
 
     private Player getPlayer() {
-        if (Version.debugEnabled() && anu.level.getNearestPlayer(anu, 200) != null) {
-            return anu.level.getNearestPlayer(anu, 200);
+        if (Version.debugEnabled() && anu.level().getNearestPlayer(anu, 200) != null) {
+            return anu.level().getNearestPlayer(anu, 200);
         }
         if (anu.getTarget() instanceof Player player) {
             return player;
@@ -108,7 +108,7 @@ public class AnuFlightPhase extends AbstractAnuPhaseInstance {
             float t = anu.getRandom().nextFloat() * 2 * Mth.PI;
             float targetY = Mth.randomBetween(anu.getRandom(), -0, 4);
             targetLocation = anu.getSpawnPos().add(r * Mth.cos(t), targetY, r * Mth.sin(t));
-            if (anu.level.isEmptyBlock(BlockPos.containing(targetLocation))) {
+            if (anu.level().isEmptyBlock(BlockPos.containing(targetLocation))) {
                 if (player != null) {
                     return targetLocation.subtract(player.position()).horizontalDistance() > 5;
                 }

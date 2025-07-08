@@ -30,7 +30,7 @@ public class DinoHurtByTargetGoal extends HurtByTargetGoal {
         if (mob instanceof PrehistoricFlocking flocking) {
             double d = this.getFollowDistance();
             AABB aABB = AABB.unitCubeFromLowerCorner(mob.position()).inflate(d, 10.0, d);
-            List<? extends PrehistoricFlocking> list = mob.level.getEntitiesOfClass(flocking.getClass(), aABB, EntitySelector.NO_SPECTATORS);
+            List<? extends PrehistoricFlocking> list = mob.level().getEntitiesOfClass(flocking.getClass(), aABB, EntitySelector.NO_SPECTATORS);
             for (PrehistoricFlocking other : list) {
                 if (mob == other || other.getTarget() != null || other.isAlliedTo(mob.getLastHurtByMob())) {
                     continue;

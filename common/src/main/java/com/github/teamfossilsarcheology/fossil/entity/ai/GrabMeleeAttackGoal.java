@@ -4,7 +4,6 @@ import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationI
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.OrderType;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -30,7 +29,7 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal<PrehistoricSwimming> 
             return false;
         }
         if (attackType == GRAB && (!mob.isDoingGrabAttack() || !mob.hasPassenger(attackTarget))) {
-            attackEndTick = mob.level.getGameTime() + 20;
+            attackEndTick = mob.level().getGameTime() + 20;
             return false;
         }
         return CAN_ATTACK_TARGET.test(attackTarget);
@@ -57,12 +56,12 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal<PrehistoricSwimming> 
 
     @Override
     protected void checkAndPerformAttack(LivingEntity enemy, boolean inRange) {
-        long currentTime = mob.level.getGameTime();
+        long currentTime = mob.level().getGameTime();
         if (attackType == GRAB) {
             for (Entity passenger : mob.getPassengers()) {
                 if (passenger instanceof LivingEntity && passenger != mob.getRidingPlayer()) {
                     if (mob.tickCount % 20 == 0) {
-                        boolean hurt = passenger.hurt(mob.level.damageSources().mobAttack(mob), (float) mob.getAttributeValue(Attributes.ATTACK_DAMAGE));
+                        boolean hurt = passenger.hurt(mob.damageSources().mobAttack(mob), (float) mob.getAttributeValue(Attributes.ATTACK_DAMAGE));
                         if (!hurt || (currentTime >= grabStartTick + GRAB_DURATION && mob.getRandom().nextInt(5) == 0)) {
                             attackEndTick = currentTime + 20;
                             mob.stopGrabAttack(passenger);

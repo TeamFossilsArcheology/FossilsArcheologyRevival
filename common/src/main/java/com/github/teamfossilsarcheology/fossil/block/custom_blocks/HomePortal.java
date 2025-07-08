@@ -33,10 +33,10 @@ public class HomePortal extends HalfTransparentBlock {
                 entity.setPortalCooldown();
                 return;
             }
-            if (!entity.level.isClientSide && !pos.equals(entity.portalEntrancePos)) {
+            if (!entity.level().isClientSide && !pos.equals(entity.portalEntrancePos)) {
                 entity.portalEntrancePos = pos.immutable();
             }
-            Level entityLevel = entity.level;
+            Level entityLevel = entity.level();
             MinecraftServer server = entityLevel.getServer();
             if (server != null) {
                 ServerLevel overworld = server.getLevel(Level.OVERWORLD);
@@ -55,22 +55,22 @@ public class HomePortal extends HalfTransparentBlock {
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (random.nextInt(100) == 0) {
-            level.playLocalSound((double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS, 0.5f, random.nextFloat() * 0.4f + 0.8f, false);
+            level.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS, 0.5f, random.nextFloat() * 0.4f + 0.8f, false);
         }
         for (int i = 0; i < 4; ++i) {
-            double d = (double) pos.getX() + random.nextDouble();
-            double e = (double) pos.getY() + random.nextDouble();
-            double f = (double) pos.getZ() + random.nextDouble();
-            double g = ((double) random.nextFloat() - 0.5) * 0.5;
-            double h = ((double) random.nextFloat() - 0.5) * 0.5;
-            double j = ((double) random.nextFloat() - 0.5) * 0.5;
+            double d = pos.getX() + random.nextDouble();
+            double e = pos.getY() + random.nextDouble();
+            double f = pos.getZ() + random.nextDouble();
+            double g = (random.nextFloat() - 0.5) * 0.5;
+            double h = (random.nextFloat() - 0.5) * 0.5;
+            double j = (random.nextFloat() - 0.5) * 0.5;
             int k = random.nextInt(2) * 2 - 1;
             if (level.getBlockState(pos.west()).is(this) || level.getBlockState(pos.east()).is(this)) {
-                f = (double) pos.getZ() + 0.5 + 0.25 * (double) k;
-                j = random.nextFloat() * 2.0f * (float) k;
+                f = pos.getZ() + 0.5 + 0.25 * k;
+                j = random.nextFloat() * 2.0f * k;
             } else {
-                d = (double) pos.getX() + 0.5 + 0.25 * (double) k;
-                g = random.nextFloat() * 2.0f * (float) k;
+                d = pos.getX() + 0.5 + 0.25 * k;
+                g = random.nextFloat() * 2.0f * k;
             }
             level.addParticle(ParticleTypes.PORTAL, d, e, f, g, h, j);
         }

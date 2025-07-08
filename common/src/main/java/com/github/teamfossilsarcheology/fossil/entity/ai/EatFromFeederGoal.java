@@ -41,17 +41,17 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
             //Only start if entity has stopped because eating and moving animations cant stack
             Vec3 velocity = entity.getDeltaMovement();
             float avgVelocity = (float)(Math.abs(velocity.x) + Math.abs(velocity.z) / 2f);
-            if (entity.level.getBlockEntity(targetPos) instanceof FeederBlockEntity feeder && avgVelocity < Util.SWING_ANIM_THRESHOLD) {
+            if (entity.level().getBlockEntity(targetPos) instanceof FeederBlockEntity feeder && avgVelocity < Util.SWING_ANIM_THRESHOLD) {
                 feedingTicks++;
                 if (entity.getHunger() < entity.getMaxHunger()) {
                     //Prevent overfeeding when goal is not done due to the running animation
                     feeder.feedDinosaur(entity);
                 }
                 entity.heal(0.1f);
-                if (entity.level.getGameTime() > animEndTick) {
+                if (entity.level().getGameTime() > animEndTick) {
                     AnimationInfo animationInfo = entity.nextEatingAnimation();
                     entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, animationInfo, AnimationCategory.EAT);
-                    animEndTick = (long) (entity.level.getGameTime() + animationInfo.animation.length());
+                    animEndTick = (long) (entity.level().getGameTime() + animationInfo.animation.length());
                 }
             }
         }
@@ -77,7 +77,7 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
         BlockPos mobPos = entity.blockPosition();
         //chunkRadius of 2 is 25 chunks. Should not be too slow
         Optional<BlockPos> target = ChunkPos.rangeClosed(new ChunkPos(mobPos), chunkRadius)
-                .flatMap(chunkPos -> entity.level.getChunk(chunkPos.x, chunkPos.z).getBlockEntities().entrySet().stream())
+                .flatMap(chunkPos -> entity.level().getChunk(chunkPos.x, chunkPos.z).getBlockEntities().entrySet().stream())
                 .filter(entry -> isValidTarget(entry.getKey(), entry.getValue()))
                 .map(Map.Entry::getKey)
                 .min(Comparator.comparingInt(pos -> pos.distManhattan(mobPos)));

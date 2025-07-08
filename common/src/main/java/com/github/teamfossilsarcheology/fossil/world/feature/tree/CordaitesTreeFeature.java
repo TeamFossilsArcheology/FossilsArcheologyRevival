@@ -5,11 +5,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.material.Material;
 
 public class CordaitesTreeFeature extends CustomTreeFeature {
     @Override
@@ -46,7 +46,7 @@ public class CordaitesTreeFeature extends CustomTreeFeature {
     }
 
     private static boolean canPlaceBranch(WorldGenLevel level, BlockPos pos) {
-        return level.isEmptyBlock(pos) || level.getBlockState(pos).getMaterial().isReplaceable() || level.getBlockState(pos).getMaterial() == Material.LEAVES;
+        return level.isEmptyBlock(pos) || level.getBlockState(pos).canBeReplaced() || level.getBlockState(pos).getBlock() instanceof LeavesBlock;
     }
 
     private void placeBranch(WorldGenLevel level, RandomSource random, BlockPos pos, Direction direction, int length) {

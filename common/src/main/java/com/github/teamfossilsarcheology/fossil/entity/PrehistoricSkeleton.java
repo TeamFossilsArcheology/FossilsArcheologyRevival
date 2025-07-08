@@ -110,14 +110,14 @@ public class PrehistoricSkeleton extends Entity implements GeoEntity {
                 double d2 = player.getZ() - this.getZ();
                 setYRot(Util.yawToYRot(Mth.atan2(d2, d0) * Mth.RAD_TO_DEG));
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level().isClientSide);
         } else if (stack.is(Items.BONE) && !isAdult()) {
-            if (!level.isClientSide) {
+            if (!level().isClientSide) {
                 playSound(SoundEvents.SKELETON_AMBIENT, 0.8f, 1);
                 setAge(getAge() + 1);
                 stack.shrink(1);
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level().isClientSide);
         }
         return super.interact(player, hand);
     }
@@ -125,8 +125,8 @@ public class PrehistoricSkeleton extends Entity implements GeoEntity {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (amount > 0) {
-            level.playSound(null, blockPosition(), SoundEvents.SKELETON_HURT, SoundSource.NEUTRAL, 1, (random.nextFloat() - random.nextFloat()) * 0.2f + 1.5f);
-            if (!level.isClientSide) {
+            level().playSound(null, blockPosition(), SoundEvents.SKELETON_HURT, SoundSource.NEUTRAL, 1, (random.nextFloat() - random.nextFloat()) * 0.2f + 1.5f);
+            if (!level().isClientSide) {
                 if (!droppedBiofossil) {
                     if (info().timePeriod == TimePeriod.CENOZOIC) {
                         spawnAtLocation(ModItems.TAR_FOSSIL.get(), 1);
@@ -152,7 +152,7 @@ public class PrehistoricSkeleton extends Entity implements GeoEntity {
             refreshDimensions();
             refreshTexturePath();
         }
-        if (TYPE.equals(key) && level.isClientSide) {
+        if (TYPE.equals(key) && level().isClientSide) {
             List<HitboxData> hitboxesData = HitboxDataLoader.HITBOX_DATA.getHitboxes(FossilMod.location(info().resourceName));
             if (hitboxesData != null) {
                 float maxFrustumWidthRadius = 0;
@@ -178,7 +178,7 @@ public class PrehistoricSkeleton extends Entity implements GeoEntity {
     }
 
     public void refreshTexturePath() {
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             return;
         }
         String name = info().resourceName;

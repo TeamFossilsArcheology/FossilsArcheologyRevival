@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.client.gui.debug;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.AbstractContainerEventHandler;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -33,9 +33,9 @@ public abstract class DebugTab<E extends Entity> extends AbstractContainerEventH
         this.height = height;
     }
 
-    protected void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+    protected void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         for (Renderable renderable : renderables) {
-            renderable.render(poseStack, mouseX, mouseY, partialTick);
+            renderable.render(guiGraphics, mouseX, mouseY, partialTick);
         }
     }
 

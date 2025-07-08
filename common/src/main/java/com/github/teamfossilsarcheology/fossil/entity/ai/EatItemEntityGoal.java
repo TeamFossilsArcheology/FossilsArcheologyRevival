@@ -61,10 +61,10 @@ public class EatItemEntityGoal extends MoveToFoodGoal {
                 targetItem.getItem().shrink(1);
             }
             recentlyAte = true;
-            if (entity.level.getGameTime() > animEndTick) {
+            if (entity.level().getGameTime() > animEndTick) {
                 AnimationInfo animationInfo = entity.nextEatingAnimation();
                 entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, animationInfo, AnimationCategory.EAT);
-                animEndTick = (long) (entity.level.getGameTime() + animationInfo.animation.length());
+                animEndTick = (long) (entity.level().getGameTime() + animationInfo.animation.length());
             }
         }
     }
@@ -83,7 +83,7 @@ public class EatItemEntityGoal extends MoveToFoodGoal {
      */
     @Override
     protected boolean findNearestBlock() {
-        List<ItemEntity> nearbyItems = entity.level.getEntities(EntityTypeTest.forClass(ItemEntity.class),
+        List<ItemEntity> nearbyItems = entity.level().getEntities(EntityTypeTest.forClass(ItemEntity.class),
                 entity.getBoundingBox().inflate(searchRange),
                 itemEntity -> FoodMappings.getFoodAmount(itemEntity.getItem().getItem(), entity.data().diet()) > 0
                         && !avoidCache.contains(itemEntity.blockPosition().asLong()));

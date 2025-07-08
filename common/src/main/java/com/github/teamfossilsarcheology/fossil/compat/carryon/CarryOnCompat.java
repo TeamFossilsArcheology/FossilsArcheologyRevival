@@ -11,7 +11,7 @@ public class CarryOnCompat {
 
     public static void overridePickUp(LocalRef<UUID> owner, Entity entity, ServerPlayer player) {
         if (entity instanceof Prehistoric) {
-            boolean isOperator = player.getLevel().getServer().getProfilePermissions(player.getGameProfile()) == player.getLevel().getServer().getOperatorUserPermissionLevel();
+            boolean isOperator = player.level().getServer().getProfilePermissions(player.getGameProfile()) == player.level().getServer().getOperatorUserPermissionLevel();
             if (player.isCreative() || isOperator) {
                 owner.set(null);
             }

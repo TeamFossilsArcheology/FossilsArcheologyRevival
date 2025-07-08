@@ -2,8 +2,8 @@ package com.github.teamfossilsarcheology.fossil.client.gui.debug;
 
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -72,11 +72,11 @@ public class AbstractAnimationList extends DebugSelectionList<AbstractAnimationL
         }
 
         @Override
-        public void render(PoseStack poseStack, int index, int top, int left, int width, int height, int mouseX, int mouseY, boolean isMouseOver,
+        public void render(GuiGraphics guiGraphics, int index, int top, int left, int width, int height, int mouseX, int mouseY, boolean isMouseOver,
                            float partialTick) {
             changeButton.setX(getEntryLeftPos());
             changeButton.setY(top);
-            changeButton.render(poseStack, mouseX, mouseY, partialTick);
+            changeButton.render(guiGraphics, mouseX, mouseY, partialTick);
         }
 
         @Override

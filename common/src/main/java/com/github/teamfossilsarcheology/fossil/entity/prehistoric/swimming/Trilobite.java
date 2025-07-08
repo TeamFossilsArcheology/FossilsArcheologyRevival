@@ -59,7 +59,7 @@ public abstract class Trilobite extends PrehistoricSwimmingBucketable {
 
     @Override
     public boolean onClimbable() {
-        return horizontalCollision && level.getFluidState(blockPosition().above()).is(FluidTags.WATER);
+        return horizontalCollision && level().getFluidState(blockPosition().above()).is(FluidTags.WATER);
     }
 
     @Override
@@ -67,7 +67,7 @@ public abstract class Trilobite extends PrehistoricSwimmingBucketable {
         super.travel(travelVector);
         if (onClimbable()) {
             setDeltaMovement(getDeltaMovement().add(0.0, 0.005, 0.0));
-        } else if (level.getFluidState(blockPosition()).is(FluidTags.WATER)) {
+        } else if (level().getFluidState(blockPosition()).is(FluidTags.WATER)) {
             setDeltaMovement(getDeltaMovement().add(0.0, -0.005, 0.0));
         }
     }

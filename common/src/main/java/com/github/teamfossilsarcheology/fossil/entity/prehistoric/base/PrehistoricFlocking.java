@@ -88,8 +88,8 @@ public abstract class PrehistoricFlocking extends Prehistoric {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (isGroupLeader() && level.random.nextInt(200) == 1) {
-            if (level.getEntitiesOfClass(getClass(), getBoundingBox().inflate(getFlockDistance())).size() <= 1) {
+        if (isGroupLeader() && level().random.nextInt(200) == 1) {
+            if (level().getEntitiesOfClass(getClass(), getBoundingBox().inflate(getFlockDistance())).size() <= 1) {
                 groupSize = 1;
             }
         }

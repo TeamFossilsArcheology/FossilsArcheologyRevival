@@ -1,10 +1,10 @@
 package com.github.teamfossilsarcheology.fossil.entity.ai.anu;
 
+import com.eliotlash.mclib.utils.MathHelper;
 import com.github.teamfossilsarcheology.fossil.entity.monster.AnuBoss;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.phys.Vec3;
-import software.bernie.shadowed.eliotlash.mclib.utils.MathHelper;
 
 public class AnuMoveControl extends MoveControl {
     private final AnuBoss anu;

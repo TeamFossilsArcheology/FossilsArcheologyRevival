@@ -34,7 +34,7 @@ public class DinoRandomSwimGoal<T extends Prehistoric & SwimmingAnimal> extends 
     @Override
     public Vec3 getPosition() {
         Vec3 targetPos = BehaviorUtils.getRandomSwimmablePos(dino, 10, 7);
-        if (targetPos != null && dino.level.getFluidState(BlockPos.containing(targetPos)).is(FluidTags.WATER)) {
+        if (targetPos != null && dino.level().getFluidState(BlockPos.containing(targetPos)).is(FluidTags.WATER)) {
             return targetPos;
         }
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
@@ -42,7 +42,7 @@ public class DinoRandomSwimGoal<T extends Prehistoric & SwimmingAnimal> extends 
         if (dino.getTarget() == null || dino.getTarget().isDeadOrDying()) {
             for (int i = 0; i < 20; i++) {
                 mutableBlockPos.setWithOffset(dino.blockPosition(), random.nextInt(16) - 7, random.nextInt(8) - 4, random.nextInt(16) - 7);
-                if (dino.level.getFluidState(mutableBlockPos).is(FluidTags.WATER)) {
+                if (dino.level().getFluidState(mutableBlockPos).is(FluidTags.WATER)) {
                     targetPos = Vec3.atCenterOf(mutableBlockPos);
                     return targetPos;
                 }

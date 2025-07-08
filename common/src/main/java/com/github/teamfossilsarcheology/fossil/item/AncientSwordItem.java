@@ -22,7 +22,7 @@ public class AncientSwordItem extends SwordItem {
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker instanceof ServerPlayer player) {
-            Level level = player.level;
+            Level level = player.level();
             if (player.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.ANCIENT_HELMET.get())) {
                 if (target instanceof Pig || target instanceof AbstractPiglin || target instanceof ZombifiedPiglin) {
                     FriendlyPiglin piglin = ModEntities.FRIENDLY_PIGLIN.get().create(level);

@@ -55,7 +55,7 @@ public class TarSlime extends Slime {
     @Override
     public void tick() {
         super.tick();
-        if (level.getBlockState(blockPosition()).is(ModBlocks.TAR.get())) {
+        if (level().getBlockState(blockPosition()).is(ModBlocks.TAR.get())) {
             setDeltaMovement(getDeltaMovement().multiply(1, 1.3, 1));
         }
         if (isOnFire()) {
@@ -66,7 +66,7 @@ public class TarSlime extends Slime {
     @Override
     public void remove(RemovalReason reason) {
         int i = getSize();
-        if (!level.isClientSide && i > 1 && isDeadOrDying()) {
+        if (!level().isClientSide && i > 1 && isDeadOrDying()) {
             Component component = getCustomName();
             boolean bl = isNoAi();
             float f = i / 4.0f;
@@ -75,7 +75,7 @@ public class TarSlime extends Slime {
             for (int l = 0; l < k; ++l) {
                 float g = ((l % 2) - 0.5f) * f;
                 float h = (l / 2f - 0.5f) * f;
-                TarSlime slime = ModEntities.TAR_SLIME.get().create(level);
+                TarSlime slime = ModEntities.TAR_SLIME.get().create(level());
                 if (getSharedFlag(0)) {
                     slime.setSecondsOnFire(15);
                 }
@@ -87,7 +87,7 @@ public class TarSlime extends Slime {
                 slime.setInvulnerable(isInvulnerable());
                 slime.setSize(j, true);
                 slime.moveTo(getX() + g, getY() + 0.5, getZ() + h, random.nextFloat() * 360.0f, 0.0f);
-                level.addFreshEntity(slime);
+                level().addFreshEntity(slime);
             }
         }
         setRemoved(reason);
@@ -107,12 +107,12 @@ public class TarSlime extends Slime {
         Entity vehicle = getVehicle();
         if (vehicle != null) {
             if (vehicle instanceof LivingEntity livingEntity) {
-                if (!level.isClientSide && !livingEntity.hasEffect(MobEffects.BLINDNESS)) {
+                if (!level().isClientSide && !livingEntity.hasEffect(MobEffects.BLINDNESS)) {
                     livingEntity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100), this);
                 }
                 if (tickCount % 20 == 0) {
-                    if (!level.isClientSide) {
-                        vehicle.hurt(level.damageSources().mobAttack(this), getSize());
+                    if (!level().isClientSide) {
+                        vehicle.hurt(damageSources().mobAttack(this), getSize());
                         playSound(getJumpSound(), getSoundVolume(), getVoicePitch());
                     }
                     targetSquish = 0.7f;
@@ -146,12 +146,12 @@ public class TarSlime extends Slime {
         float f = getBbWidth() * 0.8f;
         AABB aABB = AABB.ofSize(getEyePosition(), f, 1.0E-6, f);
         return BlockPos.betweenClosedStream(aABB).anyMatch(blockPos -> {
-            BlockState state = level.getBlockState(blockPos);
+            BlockState state = level().getBlockState(blockPos);
             if (state.is(ModBlocks.TAR.get())) {
                 return false;
             }
-            return !state.isAir() && state.isSuffocating(level, blockPos) && Shapes.joinIsNotEmpty(
-                    state.getCollisionShape(level, blockPos).move(blockPos.getX(), blockPos.getY(), blockPos.getZ()),
+            return !state.isAir() && state.isSuffocating(level(), blockPos) && Shapes.joinIsNotEmpty(
+                    state.getCollisionShape(level(), blockPos).move(blockPos.getX(), blockPos.getY(), blockPos.getZ()),
                     Shapes.create(aABB), BooleanOp.AND);
         });
     }

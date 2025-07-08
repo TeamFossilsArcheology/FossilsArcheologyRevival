@@ -26,7 +26,7 @@ public class C2SSlowMessage {
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> {
             Player player = contextSupplier.get().getPlayer();
-            if (!player.level.isClientSide) {
+            if (!player.level().isClientSide) {
                 var instance = player.getAttribute(Attributes.MOVEMENT_SPEED);
                 instance.removeModifiers();
 

@@ -1,7 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.item;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;

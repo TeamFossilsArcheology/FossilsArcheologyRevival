@@ -87,7 +87,7 @@ public class InstructionSystem extends AISystem {
                 return flying.isFlying();
             }
         } else if (current instanceof Instruction.TeleportTo teleportTo) {
-            if (endTick < mob.level.getGameTime()) {
+            if (endTick < mob.level().getGameTime()) {
                 return false;
             }
             mob.moveTo(teleportTo.target, teleportTo.rotation, mob.getXRot());
@@ -99,9 +99,9 @@ public class InstructionSystem extends AISystem {
                     return true;
                 } else if (!attached) {
                     attached = true;
-                    endTick = mob.level.getGameTime() + 100;
+                    endTick = mob.level().getGameTime() + 100;
                 }
-                if (endTick < mob.level.getGameTime()) {
+                if (endTick < mob.level().getGameTime()) {
                     meganeura.getAttachSystem().stopAttaching();
                     return false;
                 }
@@ -112,25 +112,25 @@ public class InstructionSystem extends AISystem {
             PrehistoricLeaping leaping = (PrehistoricLeaping) mob;
             if (leaping.getLeapSystem().isLeaping()) {
                 if (leaping.getLeapSystem().isLanding()) {
-                    delayTick = mob.level.getGameTime() + 25;
+                    delayTick = mob.level().getGameTime() + 25;
                 }
-            } else if ( mob.isOnGround() && delayTick > 0 && delayTick >= mob.level.getGameTime()) {
+            } else if ( mob.onGround() && delayTick > 0 && delayTick >= mob.level().getGameTime()) {
                 return false;
             } else if (leaping.distanceToSqr(leapLand.location) < LeapSystem.JUMP_DISTANCE && delayTick == 0) {
                 leaping.getLeapSystem().setBlockLeapTarget(leapLand.location);
             }
             return true;
         } else if (current instanceof Instruction.LeapAttack leapAttack) {
-            Entity target = mob.level.getEntity(leapAttack.targetId);
+            Entity target = mob.level().getEntity(leapAttack.targetId);
             if (target instanceof LivingEntity livingEntity) {
                 livingEntity.setHealth(livingEntity.getMaxHealth());
                 PrehistoricLeaping leaping = (PrehistoricLeaping) mob;
                 double jumpDistance = 30;
                 if (leaping.getLeapSystem().isLeaping()) {
                     if (leaping.getLeapSystem().isLanding()) {
-                        delayTick = mob.level.getGameTime() + 25;
+                        delayTick = mob.level().getGameTime() + 25;
                     }
-                } else if ( mob.isOnGround() && delayTick > 0 && delayTick >= mob.level.getGameTime()) {
+                } else if ( mob.onGround() && delayTick > 0 && delayTick >= mob.level().getGameTime()) {
                     return false;
                 } else if (leaping.distanceToSqr(target) < jumpDistance && delayTick == 0) {
                     leaping.getLeapSystem().setLeapTarget(livingEntity);
@@ -141,9 +141,9 @@ public class InstructionSystem extends AISystem {
                 return true;
             }
         } else if (current instanceof Instruction.Idle idle) {
-            return endTick >= mob.level.getGameTime();
+            return endTick >= mob.level().getGameTime();
         } else if (current instanceof Instruction.Sleep sleep) {
-            if (endTick < mob.level.getGameTime()) {
+            if (endTick < mob.level().getGameTime()) {
                 mob.sleepSystem.setSleeping(false);
                 mob.sleepSystem.setSleepForced(false);
                 return false;
@@ -151,7 +151,7 @@ public class InstructionSystem extends AISystem {
             return true;
         } else if (current instanceof Instruction.PlayAnim playAnim) {
             if (playAnim.timeBased) {
-                if (animCount < mob.level.getGameTime()) {
+                if (animCount < mob.level().getGameTime()) {
                     mob.getAnimationLogic().cancelAnimation(playAnim.controller);
                     return false;
                 }
@@ -176,7 +176,7 @@ public class InstructionSystem extends AISystem {
             tries = 0;
             return false;
         }
-        if (navigation instanceof GroundPathNavigation && !mob.isOnGround() && !mob.isInWaterOrBubble()) {
+        if (navigation instanceof GroundPathNavigation && !mob.onGround() && !mob.isInWaterOrBubble()) {
             return true;
         }
         if (navigation instanceof WaterBoundPathNavigation && !mob.isInWaterOrBubble() && !(navigation instanceof AmphibiousPathNavigation<?>)) {
@@ -238,7 +238,7 @@ public class InstructionSystem extends AISystem {
             mob.getNavigation().stop();
             mob.moveTo(teleportTo.target, teleportTo.rotation, mob.getXRot());
             mob.setYHeadRot(teleportTo.rotation);
-            endTick = mob.level.getGameTime() + 5;
+            endTick = mob.level().getGameTime() + 5;
         } else if (current instanceof Instruction.AttachTo attachTo) {
             attached = false;
             mob.getNavigation().moveTo(attachTo.target.getX(), attachTo.target.getY(), attachTo.target.getZ(), 1);
@@ -251,7 +251,7 @@ public class InstructionSystem extends AISystem {
         } else if (current instanceof Instruction.LeapLand leapLand) {
             mob.getNavigation().moveTo(leapLand.location.x, leapLand.location.y, leapLand.location.z, 1);
         } else if (current instanceof Instruction.LeapAttack leapAttack) {
-            Entity target = mob.level.getEntity(leapAttack.targetId);
+            Entity target = mob.level().getEntity(leapAttack.targetId);
             if (target instanceof LivingEntity && mob instanceof PrehistoricLeaping leaping) {
                 mob.getNavigation().moveTo(target, 1);
                 mob.lookAt(target, 120, 10);
@@ -260,17 +260,17 @@ public class InstructionSystem extends AISystem {
                // leaping.getLeapSystem().setLeapTarget(target);
             }
         } else if (current instanceof Instruction.Idle idle) {
-            endTick = mob.level.getGameTime() + idle.duration;
+            endTick = mob.level().getGameTime() + idle.duration;
         } else if (current instanceof Instruction.PlayAnim playAnim) {
             if (playAnim.timeBased) {
-                animCount = mob.level.getGameTime() + playAnim.count * 20L;
+                animCount = mob.level().getGameTime() + playAnim.count * 20L;
                 activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationCategory.IDLE, 1, 5,true);
             } else {
                 animCount = playAnim.count;
                 activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationCategory.IDLE, 1,5,false);
             }
         } else if (current instanceof Instruction.Sleep sleep) {
-            endTick = mob.level.getGameTime() + sleep.duration;
+            endTick = mob.level().getGameTime() + sleep.duration;
             mob.sleepSystem.setDisabled(false);
             mob.sleepSystem.setSleeping(true);
             mob.sleepSystem.setSleepForced(true);
@@ -318,13 +318,13 @@ public class InstructionSystem extends AISystem {
     }
 
     public void syncWithClients() {
-        MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) mob.level).getPlayers(serverPlayer -> serverPlayer.distanceTo(mob) < 32),
+        MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) mob.level()).getPlayers(serverPlayer -> serverPlayer.distanceTo(mob) < 32),
                 new InstructionMessage(mob.getId(), shouldLoop, instructions));
     }
 
     @Override
     public void saveAdditional(CompoundTag tag) {
-        if (Version.debugEnabled() && !mob.level.isClientSide) {
+        if (Version.debugEnabled() && !mob.level().isClientSide) {
             ListTag saved = new ListTag();
             for (int i = 0; i < instructions.size(); i++) {
                 saved.addTag(i, instructions.get(i).encodeTag());

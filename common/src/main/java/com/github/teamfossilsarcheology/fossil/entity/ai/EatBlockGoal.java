@@ -39,13 +39,13 @@ public class EatBlockGoal extends MoveToFoodGoal {
     public void tick() {
         super.tick();
         if (isReachedTarget() && !done) {
-            int foodAmount = FoodMappings.getFoodAmount(entity.level.getBlockState(targetPos).getBlock(), entity.data().diet());
+            int foodAmount = FoodMappings.getFoodAmount(entity.level().getBlockState(targetPos).getBlock(), entity.data().diet());
             entity.feed(foodAmount);
             entity.heal(foodAmount / 10f);
-            entity.level.destroyBlock(targetPos, false);
+            entity.level().destroyBlock(targetPos, false);
             AnimationInfo animationInfo = entity.nextEatingAnimation();
             entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, animationInfo, AnimationCategory.EAT);
-            animEndTick = (long) (entity.level.getGameTime() + animationInfo.animation.length());
+            animEndTick = (long) (entity.level().getGameTime() + animationInfo.animation.length());
             done = true;
         }
     }

@@ -5,7 +5,6 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -33,7 +32,7 @@ public class LeapSystem extends AISystem {
 
     @Override
     public void serverTick() {
-        long currentTick = mob.level.getGameTime();
+        long currentTick = mob.level().getGameTime();
         if (!isLeaping() && target != null && target.isAlive()) {
             mob.lookAt(target, 100, 10);
             if (mob.distanceToSqr(target) < JUMP_DISTANCE) {
@@ -91,7 +90,7 @@ public class LeapSystem extends AISystem {
                 landingDelayTick = jumpDelayTick + 5;
                 jumpDelayTick = -1;
             }
-            if (mob.isOnGround() && landingDelayTick != -1 && landingDelayTick <= currentTick) {
+            if (mob.onGround() && landingDelayTick != -1 && landingDelayTick <= currentTick) {
                 if (mob.hasLeapAnimation()) {
                     ServerAnimationInfo animation = (ServerAnimationInfo) mob.getLandAnimation();
                     landingEndTick = (long) (currentTick + animation.animation.length());
@@ -111,7 +110,7 @@ public class LeapSystem extends AISystem {
             }
             if (isAttackRiding() && target != null) {
                 if (mob.tickCount % 20 == 0) {
-                    target.hurt(mob.level.damageSources().mobAttack(mob), (float) mob.getAttributeValue(Attributes.ATTACK_DAMAGE));
+                    target.hurt(mob.damageSources().mobAttack(mob), (float) mob.getAttributeValue(Attributes.ATTACK_DAMAGE));
                 }
                 if (target.isDeadOrDying()) {
                     stopAttackRiding();
@@ -157,7 +156,7 @@ public class LeapSystem extends AISystem {
             setLeapFlying(false);
             setAttackRiding(true);
         } else {
-            target.hurt(mob.level.damageSources().mobAttack(mob), (float) mob.getAttributeValue(Attributes.ATTACK_DAMAGE));
+            target.hurt(mob.damageSources().mobAttack(mob), (float) mob.getAttributeValue(Attributes.ATTACK_DAMAGE));
         }
     }
 
@@ -210,7 +209,7 @@ public class LeapSystem extends AISystem {
 
     public void setAttackRiding(boolean attackRiding) {
         if (entityData.get(LEAP_RIDING) && !attackRiding) {
-            lastLeapEndTick = mob.level.getGameTime();
+            lastLeapEndTick = mob.level().getGameTime();
         }
         entityData.set(LEAP_RIDING, attackRiding);
     }

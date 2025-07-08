@@ -6,9 +6,9 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.C2SForceAnimationMessage;
 import com.github.teamfossilsarcheology.fossil.network.debug.C2SRotationMessage;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.OptionInstance;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.CycleButton;
@@ -80,11 +80,11 @@ public class AnimationTab<T extends Mob & PrehistoricAnimatable<?>> extends Debu
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        super.render(poseStack, mouseX, mouseY, partialTick);
-        drawString(poseStack, minecraft.font, Component.literal("Rotation: " + entity.getYRot()), 20, 160, 16777215);
-        drawString(poseStack, minecraft.font, Component.literal("Rotation Body: " + entity.yBodyRot), 20, 180, 16777215);
-        drawString(poseStack, minecraft.font, Component.literal("Rotation Head: " + entity.getYHeadRot()), 20, 200, 16777215);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
+        guiGraphics.drawString(minecraft.font, Component.literal("Rotation: " + entity.getYRot()), 20, 160, 16777215);
+        guiGraphics.drawString(minecraft.font, Component.literal("Rotation Body: " + entity.yBodyRot), 20, 180, 16777215);
+        guiGraphics.drawString(minecraft.font, Component.literal("Rotation Head: " + entity.getYHeadRot()), 20, 200, 16777215);
     }
 
     private static class AnimationList extends AbstractAnimationList {

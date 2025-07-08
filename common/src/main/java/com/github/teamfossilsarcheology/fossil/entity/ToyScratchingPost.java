@@ -32,8 +32,8 @@ public class ToyScratchingPost extends ToyBase {
         super.tick();
         setDeltaMovement(Vec3.ZERO);
         if (!isOnBlock()) {
-            if (!level.isClientSide) {
-                Block.popResource(level, blockPosition(), getPickResult());
+            if (!level().isClientSide) {
+                Block.popResource(level(), blockPosition(), getPickResult());
             }
             discard();
             playSound(attackNoise, 1, getVoicePitch());
@@ -41,7 +41,7 @@ public class ToyScratchingPost extends ToyBase {
     }
 
     private boolean isOnBlock() {
-        return !level.isEmptyBlock(BlockPos.containing(position().add(0, -1, 0)));
+        return !level().isEmptyBlock(BlockPos.containing(position().add(0, -1, 0)));
     }
 
     @Nullable

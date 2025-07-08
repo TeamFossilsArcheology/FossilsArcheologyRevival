@@ -39,7 +39,7 @@ public abstract class MoveToFoodGoal extends CacheMoveToBlockGoal {
 
     @Override
     public boolean canContinueToUse() {
-        if (animEndTick != 0 && entity.level.getGameTime() < animEndTick) {
+        if (animEndTick != 0 && entity.level().getGameTime() < animEndTick) {
             return true;
         }
         if (entity.getHunger() >= entity.getMaxHunger()) {

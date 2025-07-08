@@ -88,7 +88,7 @@ public class ForgeModEvents {
                 return;
             }
             if (currentProgress >= FossilConfig.getInt(FossilConfig.PREGNANCY_DURATION)) {
-                if (!animal.level.isClientSide) {
+                if (!animal.level().isClientSide) {
                     ModEvents.growEntity(ModCapabilities.getEmbryo(animal), animal);
                     ModCapabilities.stopPregnancy(animal);
                 }
@@ -133,21 +133,21 @@ public class ForgeModEvents {
 
     @SubscribeEvent
     public static void allowDaySleep(PlayerSleepInBedEvent event) {
-        if (ComfyBedEffect.canApply(event.getOptionalPos(), event.getEntity().getLevel())) {
+        if (ComfyBedEffect.canApply(event.getOptionalPos(), event.getEntity().level())) {
             event.setResult(Event.Result.ALLOW);
         }
     }
 
     @SubscribeEvent
     public static void allowDaySleep(SleepingTimeCheckEvent event) {
-        if (ComfyBedEffect.canApply(event.getSleepingLocation(), event.getEntity().getLevel())) {
+        if (ComfyBedEffect.canApply(event.getSleepingLocation(), event.getEntity().level())) {
             event.setResult(Event.Result.ALLOW);
         }
     }
 
     @SubscribeEvent
     public static void addComfyBedEffect(PlayerWakeUpEvent event) {
-        if (ComfyBedEffect.canApply(event.getEntity().getSleepingPos(), event.getEntity().getLevel())) {
+        if (ComfyBedEffect.canApply(event.getEntity().getSleepingPos(), event.getEntity().level())) {
             event.getEntity().addEffect(new MobEffectInstance(ModEffects.COMFY_BED.get(), 24000, 0));
         }
     }

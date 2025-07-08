@@ -45,7 +45,7 @@ public class AnuDefensePhase extends AbstractAnuPhaseInstance {
     public void doClientTick() {
         if (anu.deathTime <= 0) {
             for (int i = 0; i < 2; ++i) {
-                anu.level.addParticle(ParticleTypes.DRIPPING_LAVA, anu.getRandomX(0.5), anu.getRandomY(), anu.getRandomZ(0.5), 0, 0, 0);
+                anu.level().addParticle(ParticleTypes.DRIPPING_LAVA, anu.getRandomX(0.5), anu.getRandomY(), anu.getRandomZ(0.5), 0, 0, 0);
             }
         }
     }
@@ -55,7 +55,7 @@ public class AnuDefensePhase extends AbstractAnuPhaseInstance {
         if (anu.tickCount % 20 == 0) {
             anu.heal(2);
         }
-        Player player = anu.level.getNearestPlayer(anu.getX(), anu.getY(), anu.getZ(), AnuBoss.ARENA_RADIUS * 2,
+        Player player = anu.level().getNearestPlayer(anu.getX(), anu.getY(), anu.getZ(), AnuBoss.ARENA_RADIUS * 2,
                 player1 -> arenaBounds.contains(player1.getX(), player1.getY(), player1.getZ()));
         if (player != null) {
             moveAwayFromPlayer(player);
@@ -72,7 +72,7 @@ public class AnuDefensePhase extends AbstractAnuPhaseInstance {
                     float r = (float) (AnuBoss.ARENA_RADIUS * Math.sqrt(anu.getRandom().nextFloat()));
                     float t = anu.getRandom().nextFloat() * 2 * Mth.PI;
                     away = new Vec3(anu.getSpawnPos().x + r * Mth.cos(t), anu.getY(), anu.getSpawnPos().z + r * Mth.sin(t));
-                    if (anu.level.isEmptyBlock(BlockPos.containing(away)) && away.subtract(player.position()).horizontalDistance() > 5) {
+                    if (anu.level().isEmptyBlock(BlockPos.containing(away)) && away.subtract(player.position()).horizontalDistance() > 5) {
                         break;
                     }
                 }
@@ -87,7 +87,7 @@ public class AnuDefensePhase extends AbstractAnuPhaseInstance {
     }
 
     private void spawnStructures() {
-        Level level = anu.level;
+        Level level = anu.level();
         RandomSource random = anu.getRandom();
         List<Player> players = level.getNearbyPlayers(TargetingConditions.DEFAULT, anu, arenaBounds);
         boolean summonSpikes = random.nextInt(250) == 0;

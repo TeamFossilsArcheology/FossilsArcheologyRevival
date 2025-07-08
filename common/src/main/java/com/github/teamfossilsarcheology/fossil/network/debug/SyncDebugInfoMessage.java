@@ -56,7 +56,7 @@ public class SyncDebugInfoMessage {
         contextSupplier.get().queue(() -> {
             Player player = contextSupplier.get().getPlayer();
             if (Version.debugEnabled() && player != null) {
-                if (player.level.isClientSide) {
+                if (player.level().isClientSide) {
                     if (Minecraft.getInstance().screen instanceof DebugScreen) {
                         if (DebugScreen.entity == null || DebugScreen.entity.getId() != entityId) {
                             return;
@@ -65,8 +65,8 @@ public class SyncDebugInfoMessage {
                         return;
                     }
                 }
-                if (player.level.getEntity(entityId) instanceof Prehistoric prehistoric) {
-                    if (!player.level.isClientSide) {
+                if (player.level().getEntity(entityId) instanceof Prehistoric prehistoric) {
+                    if (!player.level().isClientSide) {
                         prehistoric.setAgeInTicks(age);
                         prehistoric.setHunger(hunger);
                         prehistoric.moodSystem.setMood(mood);
@@ -78,12 +78,12 @@ public class SyncDebugInfoMessage {
                     prehistoric.refreshTexturePath();
                     prehistoric.refreshDimensions();
                     prehistoric.updateAbilities();
-                } else if (player.level.getEntity(entityId) instanceof PrehistoricSkeleton fossil) {
+                } else if (player.level().getEntity(entityId) instanceof PrehistoricSkeleton fossil) {
                     fossil.setType(PrehistoricEntityInfo.valueOf(enumString));
                     fossil.setAge(age);
-                } else if (player.level.getEntity(entityId) instanceof DinosaurEgg egg) {
+                } else if (player.level().getEntity(entityId) instanceof DinosaurEgg egg) {
                     egg.setHatchingTime(age);
-                } else if (player.level.getEntity(entityId) instanceof Animal animal && ModCapabilities.hasEmbryo(animal)) {
+                } else if (player.level().getEntity(entityId) instanceof Animal animal && ModCapabilities.hasEmbryo(animal)) {
                     ModCapabilities.setEmbryoProgress(animal, age);
                     ModCapabilities.syncMammalWithClient(animal, age, ModCapabilities.getEmbryo(animal));
                 }

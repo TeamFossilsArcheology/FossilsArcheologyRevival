@@ -23,7 +23,7 @@ import java.util.function.Predicate;
  * the damage by {@link ServerAnimationInfo#actionDelay} ticks or defer the hit logic to the targets client
  */
 public class DelayedAttackGoal<T extends Prehistoric> extends Goal {
-    protected static final Predicate<Entity> CAN_ATTACK_TARGET = target -> !(target instanceof Player player) || (!player.isSpectator() && !player.isCreative() && target.level.getDifficulty() != Difficulty.PEACEFUL);
+    protected static final Predicate<Entity> CAN_ATTACK_TARGET = target -> !(target instanceof Player player) || (!player.isSpectator() && !player.isCreative() && target.level().getDifficulty() != Difficulty.PEACEFUL);
     protected static final long COOLDOWN_BETWEEN_CAN_USE_CHECKS = 20L;
     protected final T mob;
     private final double speedModifier;
@@ -49,7 +49,7 @@ public class DelayedAttackGoal<T extends Prehistoric> extends Goal {
 
     @Override
     public boolean canUse() {
-        long l = mob.level.getGameTime();
+        long l = mob.level().getGameTime();
         if (l - lastCanUseCheck < COOLDOWN_BETWEEN_CAN_USE_CHECKS) {
             return false;
         }
@@ -61,7 +61,7 @@ public class DelayedAttackGoal<T extends Prehistoric> extends Goal {
         if (target == null || !target.isAlive()) {
             return false;
         }
-        if (mob.level.getDifficulty() == Difficulty.PEACEFUL && target instanceof Player) {
+        if (mob.level().getDifficulty() == Difficulty.PEACEFUL && target instanceof Player) {
             return false;
         }
         path = mob.getNavigation().createPath(target, 0);
@@ -73,7 +73,7 @@ public class DelayedAttackGoal<T extends Prehistoric> extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        if (mob.level.getGameTime() < attackEndTick) {
+        if (mob.level().getGameTime() < attackEndTick) {
             //Prevent the goal from ending before the animation is over
             return true;
         }
@@ -152,7 +152,7 @@ public class DelayedAttackGoal<T extends Prehistoric> extends Goal {
     }
 
     protected boolean canUpdateMovement() {
-        return !doingHeavyAttack || mob.level.getGameTime() > attackEndTick;
+        return !doingHeavyAttack || mob.level().getGameTime() > attackEndTick;
     }
 
     protected boolean isInRange(Entity attackTarget) {
@@ -160,7 +160,7 @@ public class DelayedAttackGoal<T extends Prehistoric> extends Goal {
     }
 
     protected void checkAndPerformAttack(LivingEntity enemy, boolean inRange) {
-        long currentTime = mob.level.getGameTime();
+        long currentTime = mob.level().getGameTime();
         if (inRange) {
             if (currentTime > attackEndTick + 20) {
                 ServerAnimationInfo animationInfo = mob.startAttack();

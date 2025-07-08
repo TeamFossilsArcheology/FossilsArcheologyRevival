@@ -12,7 +12,6 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumSet;
 
@@ -43,12 +42,12 @@ public class CenteredNodeEvaluator extends WalkNodeEvaluator {
                 blockState = this.level.getBlockState(mutableBlockPos.set(this.mob.getX(), ++i, this.mob.getZ()));
             }
             --i;
-        } else if (this.mob.isOnGround()) {
+        } else if (this.mob.onGround()) {
             i = Mth.floor(this.mob.getY() + 0.5);
         } else {
             blockPos = this.mob.blockPosition();
             while ((this.level.getBlockState(blockPos).isAir() || this.level.getBlockState(blockPos).isPathfindable(this.level, blockPos,
-                    PathComputationType.LAND)) && blockPos.getY() > this.mob.level.getMinBuildHeight()) {
+                    PathComputationType.LAND)) && blockPos.getY() > this.mob.level().getMinBuildHeight()) {
                 blockPos = blockPos.below();
             }
             i = blockPos.above().getY();

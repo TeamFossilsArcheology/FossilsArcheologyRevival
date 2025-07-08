@@ -18,13 +18,13 @@ public class AnuLandingPhase extends AbstractAnuPhaseInstance {
     @Override
     public void doClientTick() {
         for (int i = 0; i < 2; ++i) {
-            anu.level.addParticle(ParticleTypes.SMOKE, anu.getRandomX(0.5), anu.getRandomY(), anu.getRandomZ(0.5), 0, 0, 0);
+            anu.level().addParticle(ParticleTypes.SMOKE, anu.getRandomX(0.5), anu.getRandomY(), anu.getRandomZ(0.5), 0, 0, 0);
         }
     }
 
     @Override
     public void doServerTick() {
-        if (anu.isOnGround()) {
+        if (anu.onGround()) {
             anu.phaseSystem.setPhase(AnuPhase.MELEE, 15 * 20);
             return;
         }

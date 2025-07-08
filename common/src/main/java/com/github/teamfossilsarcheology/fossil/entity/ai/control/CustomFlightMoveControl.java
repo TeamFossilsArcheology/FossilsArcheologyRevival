@@ -36,7 +36,7 @@ public class CustomFlightMoveControl extends SmoothTurningMoveControl {
             targets[0] = Mth.floor(x);
             targets[1] = Mth.floor(y);
             targets[2] = Mth.floor(z);
-            MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) mob.level).getPlayers(serverPlayer -> true),
+            MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) mob.level()).getPlayers(serverPlayer -> true),
                     new S2CMarkMessage(targets, blocks, false));
         }
     }
@@ -103,7 +103,7 @@ public class CustomFlightMoveControl extends SmoothTurningMoveControl {
                     mob.switchNavigator(false);
                 }
                 if (shouldLandAtTarget) {
-                    if (!mob.level.isEmptyBlock(mob.blockPosition().below())) {
+                    if (!mob.level().isEmptyBlock(mob.blockPosition().below())) {
                         mob.onReachAirTarget(BlockPos.containing(flyingWanted));//TODO: Maybe onReachGroundTarget?
                         mob.setFlying(false);
                         operation = Operation.WAIT;

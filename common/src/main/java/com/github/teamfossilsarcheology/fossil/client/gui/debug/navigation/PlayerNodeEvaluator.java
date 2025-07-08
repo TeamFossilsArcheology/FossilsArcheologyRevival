@@ -17,7 +17,6 @@ import net.minecraft.world.level.PathNavigationRegion;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.PathComputationType;
@@ -260,7 +259,7 @@ public class PlayerNodeEvaluator {
             if (getCachedBlockType(player, x, y - 1, z) != BlockPathTypes.WATER) {
                 return node;
             }
-            while (y > player.level.getMinBuildHeight()) {
+            while (y > player.level().getMinBuildHeight()) {
                 if ((blockPathTypes2 = getCachedBlockType(player, x, --y, z)) == BlockPathTypes.WATER) {
                     node = getNode(x, y, z);
                     node.type = blockPathTypes2;
@@ -274,7 +273,7 @@ public class PlayerNodeEvaluator {
             int k = 0;
             int l = y;
             while (blockPathTypes2 == BlockPathTypes.OPEN) {
-                if (--y < player.level.getMinBuildHeight()) {
+                if (--y < player.level().getMinBuildHeight()) {
                     Node node2 = getNode(x, l, z);
                     node2.type = BlockPathTypes.BLOCKED;
                     node2.costMalus = -1;
@@ -432,7 +431,7 @@ public class PlayerNodeEvaluator {
                     if (l == 0 && n == 0) continue;
                     centerPos.set(i + l, j + m, k + n);
                     BlockState blockState = level.getBlockState(centerPos);
-                    if (blockState.is(Blocks.SWEET_BERRY_BUSH)) {
+                    if (blockState.is(Blocks.CACTUS) || blockState.is(Blocks.SWEET_BERRY_BUSH)) {
                         return BlockPathTypes.DANGER_OTHER;
                     }
                     if (isBurningBlock(blockState)) {
@@ -449,7 +448,6 @@ public class PlayerNodeEvaluator {
     protected static BlockPathTypes getBlockPathTypeRaw(BlockGetter level, BlockPos pos) {
         BlockState blockState = level.getBlockState(pos);
         Block block = blockState.getBlock();
-        Material material = blockState.getMaterial();
         if (blockState.isAir()) {
             return BlockPathTypes.OPEN;
         }
@@ -459,7 +457,7 @@ public class PlayerNodeEvaluator {
         if (blockState.is(Blocks.POWDER_SNOW)) {
             return BlockPathTypes.POWDER_SNOW;
         }
-        if (blockState.is(Blocks.SWEET_BERRY_BUSH)) {
+        if (blockState.is(Blocks.CACTUS) || blockState.is(Blocks.SWEET_BERRY_BUSH)) {
             return BlockPathTypes.DAMAGE_OTHER;
         }
         if (blockState.is(Blocks.HONEY_BLOCK)) {
@@ -475,14 +473,15 @@ public class PlayerNodeEvaluator {
         if (isBurningBlock(blockState)) {
             return BlockPathTypes.DAMAGE_FIRE;
         }
-        if (DoorBlock.isWoodenDoor(blockState) && !blockState.getValue(DoorBlock.OPEN).booleanValue()) {
+        if (DoorBlock.isWoodenDoor(blockState) && Boolean.FALSE.equals(blockState.getValue(DoorBlock.OPEN))) {
             return BlockPathTypes.DOOR_WOOD_CLOSED;
         }
-        if (block instanceof DoorBlock && material == Material.METAL && !blockState.getValue(DoorBlock.OPEN).booleanValue()) {
-            return BlockPathTypes.DOOR_IRON_CLOSED;
-        }
-        if (block instanceof DoorBlock && blockState.getValue(DoorBlock.OPEN).booleanValue()) {
-            return BlockPathTypes.DOOR_OPEN;
+        if (block instanceof DoorBlock doorBlock) {
+            if (Boolean.TRUE.equals(blockState.getValue(DoorBlock.OPEN))) {
+                return BlockPathTypes.DOOR_OPEN;
+            } else {
+                return doorBlock.type().canOpenByHand() ? BlockPathTypes.DOOR_WOOD_CLOSED : BlockPathTypes.DOOR_IRON_CLOSED;
+            }
         }
         if (block instanceof BaseRailBlock) {
             return BlockPathTypes.RAIL;

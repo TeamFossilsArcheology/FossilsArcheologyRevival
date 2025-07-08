@@ -5,16 +5,13 @@ import com.github.teamfossilsarcheology.fossil.block.entity.FeederBlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.IServerDataProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
 
-public enum FeederStatusProvider implements IBlockComponentProvider, IServerDataProvider<BlockEntity> {
+public enum FeederStatusProvider implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
     INSTANCE;
     private static final ResourceLocation ID = FossilMod.location("feeder_status");
 
@@ -29,8 +26,8 @@ public enum FeederStatusProvider implements IBlockComponentProvider, IServerData
     }
 
     @Override
-    public void appendServerData(CompoundTag data, ServerPlayer serverPlayer, Level level, BlockEntity blockEntity, boolean b) {
-        FeederBlockEntity feeder = (FeederBlockEntity) blockEntity;
+    public void appendServerData(CompoundTag data, BlockAccessor accessor) {
+        FeederBlockEntity feeder = (FeederBlockEntity) accessor.getBlockEntity();
         data.putInt(FeederBlockEntity.MEAT, feeder.getMeat());
         data.putInt(FeederBlockEntity.PLANT, feeder.getPlant());
     }

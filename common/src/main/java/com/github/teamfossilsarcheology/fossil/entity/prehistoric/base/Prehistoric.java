@@ -267,7 +267,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-        if (level.isClientSide) {
+        if (level().isClientSide) {
             if (DATA_VARIANT.equals(key) || SLEEPING.equals(key) || AGE_TICK.equals(key) || GENDER.equals(key)) {
                 refreshTexturePath();
             } else if (CLIMBING_DIR.equals(key)) {
@@ -411,13 +411,13 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         dimensions = newDimensions;
         eyeHeight = getEyeHeight(pose, newDimensions);
         reapplyPosition();
-        if (!level.isClientSide && !firstTick && !noPhysics && (newDimensions.width > oldDimensions.width || newDimensions.height > oldDimensions.height)) {
+        if (!level().isClientSide && !firstTick && !noPhysics && (newDimensions.width > oldDimensions.width || newDimensions.height > oldDimensions.height)) {
             Vec3 vec3 = position().add(0.0, oldDimensions.height / 2.0, 0.0);
             double wDiff = Math.max(0.0, newDimensions.width - oldDimensions.width) + 1.0E-6;
             double hDiff = Math.max(0.0, newDimensions.height - oldDimensions.height) + 1.0E-6;
             VoxelShape voxelShape = Shapes.create(AABB.ofSize(vec3, wDiff, hDiff, wDiff));
             //Quite slow for very large mobs and borderline unusable if wDiff and hDiff are also very large (0 -> max)
-            var opt = level.findFreePosition(this, voxelShape, vec3, newDimensions.width, newDimensions.height, newDimensions.width);
+            var opt = level().findFreePosition(this, voxelShape, vec3, newDimensions.width, newDimensions.height, newDimensions.width);
             if (opt.isPresent()) {
                 setPos(opt.get().add(0.0, (-newDimensions.height) / 2.0, 0.0));
             } else {
@@ -551,19 +551,19 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
-    public void positionRider(Entity passenger) {
-        super.positionRider(passenger);
+    public void positionRider(Entity passenger, MoveFunction callback) {
+        super.positionRider(passenger, callback);
         if (canBeControlledByRider() && passenger instanceof LivingEntity livingEntity) {
             yBodyRot = livingEntity.yHeadRot;
         }
         getEntityHitboxData().getAnchorData().getAnchorPos("rider_pos").ifPresentOrElse(pos -> {
             if (passenger instanceof Player) {
-                passenger.setPos(pos.x, pos.y + passenger.getMyRidingOffset() - 0.2, pos.z);
+                callback.accept(passenger, pos.x, pos.y + passenger.getMyRidingOffset() - 0.2, pos.z);
             } else {
-                passenger.setPos(pos.x, pos.y + passenger.getMyRidingOffset(), pos.z);
+                callback.accept(passenger, pos.x, pos.y + passenger.getMyRidingOffset(), pos.z);
             }
         }, () -> {
-            passenger.setPos(getX(), getY() + getPassengersRidingOffset() + passenger.getMyRidingOffset(), getZ());
+            callback.accept(passenger, getX(), getY() + getPassengersRidingOffset() + passenger.getMyRidingOffset(), getZ());
         });
     }
 
@@ -634,7 +634,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 } else {
                     doJump(newYMovement / 2, newForwardMovement / 2);
                 }
-            } else if (isOnGround()) {
+            } else if (onGround()) {
                 doJump(newYMovement, newForwardMovement);
             }
             playerJumpPendingScale = 0;
@@ -652,7 +652,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             setDeltaMovement(Vec3.ZERO);
             calculateEntityAnimation(this instanceof FlyingAnimal);
         }
-        if (isOnGround()) {
+        if (onGround()) {
             playerJumpPendingScale = 0;
         }
     }
@@ -718,7 +718,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             setMaxUpStep(0.6f);
         }
 
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             setSprinting(getDeltaMovement().horizontalDistance() > 0.1 && getMoveControl().getSpeedModifier() >= attributes().sprintMod());
             if (getHunger() > getMaxHunger()) {
                 setHunger(getMaxHunger());
@@ -731,7 +731,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             }
 
             if (Version.debugEnabled()) {
-                MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.distanceTo(this) < 16),
+                MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level()).getPlayers(serverPlayer -> serverPlayer.distanceTo(this) < 16),
                         new SyncDebugInfoMessage(getId(), getGender().name(), getAge(), matingCooldown, moodSystem.getPlayingCooldown(), climbingCooldown, getHunger(), moodSystem.getMood()));
             }
             aiSystems.forEach(AISystem::serverTick);
@@ -753,7 +753,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     @Override
     public void tick() {
         super.tick();
-        if (level.isClientSide) {
+        if (level().isClientSide) {
             //Used for smooth rotation
             prevClimbTick = climbTick;
             if (isClimbing()) {
@@ -774,13 +774,13 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 }
             }
             if (tickCount % 40 == 0 && getHunger() == 0 && getHealth() > (FossilConfig.isEnabled(FossilConfig.ENABLE_STARVATION) ? 0 : getMaxHealth() / 2)) {
-                hurt(level.damageSources().starve(), 1);
+                hurt(damageSources().starve(), 1);
             }
 
             if (aiClimbType() == Climbing.ARTHROPOD) {
                 if (isClimbing()) {
                     ticksClimbing++;
-                    boolean onCooldown = ticksClimbing >= 100 || level.getBlockState(blockPosition().above()).getMaterial().isSolid();
+                    boolean onCooldown = ticksClimbing >= 100 || level().getBlockState(blockPosition().above()).isSolid();
                     if (!horizontalCollision || onCooldown) {
                         stopClimbing();
                         ticksClimbing = 0;
@@ -861,7 +861,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     public void breakBlock(float maxHardness) {
-        if (!FossilConfig.isEnabled(FossilConfig.DINOS_BREAK_BLOCKS) || !level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+        if (!FossilConfig.isEnabled(FossilConfig.DINOS_BREAK_BLOCKS) || !level().getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
             return;
         }
         if (!isAdult() || !isHungry()) {
@@ -871,11 +871,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         boolean waterMob = this instanceof PrehistoricSwimming;
         int lowest = Mth.floor(aabb.minY) + (waterMob ? 0 : 1);
         for (BlockPos targetPos : BlockPos.betweenClosed(Mth.floor(aabb.minX), lowest, Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.ceil(aabb.maxY), Mth.floor(aabb.maxZ))) {
-            if (Util.canBreak(level, targetPos, maxHardness)) {
+            if (Util.canBreak(level(), targetPos, maxHardness)) {
                 setDeltaMovement(getDeltaMovement().multiply(0.6, 1, 0.6));
-                level.destroyBlock(targetPos, random.nextInt(10) == 0, this);
+                level().destroyBlock(targetPos, random.nextInt(10) == 0, this);
                 if (waterMob && targetPos.getY() == lowest && isInWater()) {
-                    level.setBlock(targetPos, Blocks.WATER.defaultBlockState(), 3);
+                    level().setBlock(targetPos, Blocks.WATER.defaultBlockState(), 3);
                 }
             }
         }
@@ -956,7 +956,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public int getAge() {
-        return level.isClientSide ? entityData.get(AGE_TICK) : age;
+        return level().isClientSide ? entityData.get(AGE_TICK) : age;
     }
 
     @Override
@@ -981,7 +981,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         }
         setAgeInDays(getAgeInDays() + ageInDays);
         updateAbilities();
-        level.broadcastEntityEvent(this, GROW_UP_PARTICLES);
+        level().broadcastEntityEvent(this, GROW_UP_PARTICLES);
     }
 
     public boolean isAgingDisabled() {
@@ -1008,9 +1008,9 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     @Override
     public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob otherParent) {
         if (otherParent instanceof Prehistoric) {
-            Entity baby = info().entityType().create(level);
+            Entity baby = info().entityType().create(level());
             if (baby instanceof Prehistoric prehistoricBaby) {
-                prehistoricBaby.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(blockPosition()),
+                prehistoricBaby.finalizeSpawn((ServerLevelAccessor) level(), level().getCurrentDifficultyAt(blockPosition()),
                         MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);
                 prehistoricBaby.grow(0);
                 return prehistoricBaby;
@@ -1029,20 +1029,20 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         if (random.nextInt(100) == 0 || calendar.get(Calendar.MONTH) + 1 == 4 && calendar.get(Calendar.DATE) == 1) {
             playSound(ModSounds.MUSIC_MATING.get(), 1, 1);
         }
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             Entity hatchling;
             if (info().mobType == PrehistoricMobType.MAMMAL) {
-                hatchling = getType().create(level);
+                hatchling = getType().create(level());
             } else if (info().birdEggItem != null) {
-                hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(info().birdEggItem));
+                hatchling = new ItemEntity(level(), getX(), getY(), getZ(), new ItemStack(info().birdEggItem));
             } else if (FossilConfig.isEnabled(FossilConfig.EGGS_LIKE_CHICKENS) || info().isViviparousAquatic()) {
-                hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(info().eggItem));
+                hatchling = new ItemEntity(level(), getX(), getY(), getZ(), new ItemStack(info().eggItem));
             } else {
-                hatchling = ModEntities.DINOSAUR_EGG.get().create(level);
+                hatchling = ModEntities.DINOSAUR_EGG.get().create(level());
                 ((DinosaurEgg) hatchling).setPrehistoricEntityInfo(info());
 
                 if (getOwner() instanceof ServerPlayer player) {
-                    Advancement adv = ((ServerLevel) level).getServer().getAdvancements().getAdvancement(DinosaurEgg.GOLDEN_EGG_ADV);
+                    Advancement adv = ((ServerLevel) level()).getServer().getAdvancements().getAdvancement(DinosaurEgg.GOLDEN_EGG_ADV);
                     if (adv != null && player.getAdvancements().getOrStartProgress(adv).isDone()) {
                         ((DinosaurEgg) hatchling).setGoldenEgg(random.nextFloat() < 0.05);
                     }
@@ -1051,11 +1051,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             setTarget(null);
             hatchling.moveTo(getX(), getY(), getZ(), yBodyRot, 0);
             if (hatchling instanceof Prehistoric prehistoricHatchling) {
-                prehistoricHatchling.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(blockPosition()),
+                prehistoricHatchling.finalizeSpawn((ServerLevelAccessor) level(), level().getCurrentDifficultyAt(blockPosition()),
                         MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);
                 prehistoricHatchling.grow(0);
             }
-            level.addFreshEntity(hatchling);
+            level().addFreshEntity(hatchling);
         }
     }
 
@@ -1145,8 +1145,8 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
-    public boolean wasKilled(ServerLevel level, LivingEntity killedEntity) {
-        if (super.wasKilled(level, killedEntity)) {
+    public boolean killedEntity(ServerLevel level, LivingEntity killedEntity) {
+        if (super.killedEntity(level, killedEntity)) {
             if (data().diet() != Diet.HERBIVORE) {
                 feed(FoodMappings.getMobFoodPoints(killedEntity, data().diet()));
                 heal(FoodMappings.getMobFoodPoints(killedEntity, data().diet()) / 10f);
@@ -1159,7 +1159,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source == level.damageSources().inWall()) {
+        if (source == damageSources().inWall()) {
             return false;
         }
         boolean hurt = super.hurt(source, amount);
@@ -1196,7 +1196,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         }
         if (isWeak() && (aiTameType() == Taming.GEM && stack.is(ModItems.SCARAB_GEM.get()) || aiTameType() == Taming.AQUATIC_GEM && stack.is(ModItems.AQUATIC_SCARAB_GEM.get()))) {
             //Tame with gem
-            if (!level.isClientSide) {
+            if (!level().isClientSide) {
                 ModTriggers.SCARAB_TAME_TRIGGER.trigger((ServerPlayer) player);
                 heal(200);
                 moodSystem.setMood(100);
@@ -1205,13 +1205,13 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 setTarget(null);
                 setLastHurtByMob(null);
                 tame(player);
-                level.broadcastEntityEvent(this, TOTEM_PARTICLES);
+                level().broadcastEntityEvent(this, TOTEM_PARTICLES);
                 stack.shrink(1);
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level().isClientSide);
         } else if (stack.is(ModItems.CHICKEN_ESSENCE.get()) && aiTameType() != Taming.GEM && aiTameType() != Taming.AQUATIC_GEM) {
             //Grow up with chicken essence
-            if (!level.isClientSide) {
+            if (!level().isClientSide) {
                 if (isAdult()) {
                     player.displayClientMessage(Component.translatable("prehistoric.essence_fail_adult"), true);
                     return InteractionResult.PASS;
@@ -1227,10 +1227,10 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 grow(1);
                 setHunger(1 + random.nextInt(getHunger()));
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level().isClientSide);
         } else if (stack.is(ModItems.STUNTED_ESSENCE.get()) && !isAgingDisabled()) {
             //Stunt growth with stunted essence
-            if (!level.isClientSide) {
+            if (!level().isClientSide) {
                 setHunger(getHunger() + 20);
                 heal(getMaxHealth());
                 setAgingDisabled(true);
@@ -1238,17 +1238,17 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 playSound(SoundEvents.ZOMBIE_VILLAGER_CURE, getSoundVolume(), getVoicePitch());
             } else {
                 AABB aabb = eatPos == null ? getBoundingBoxForCulling() : new AABB(eatPos, eatPos);
-                Util.spawnItemParticles(level, stack.getItem(), 15, aabb);
-                Util.spawnItemParticles(level, stack.getItem(), 15, aabb);
-                Util.spawnItemParticles(level, Items.POISONOUS_POTATO, 15, aabb);
-                Util.spawnItemParticles(level, Items.POISONOUS_POTATO, 15, aabb);
-                Util.spawnItemParticles(level, Items.EGG, 15, aabb);
+                Util.spawnItemParticles(level(), stack.getItem(), 15, aabb);
+                Util.spawnItemParticles(level(), stack.getItem(), 15, aabb);
+                Util.spawnItemParticles(level(), Items.POISONOUS_POTATO, 15, aabb);
+                Util.spawnItemParticles(level(), Items.POISONOUS_POTATO, 15, aabb);
+                Util.spawnItemParticles(level(), Items.EGG, 15, aabb);
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level().isClientSide);
         } else if (FoodMappings.getFoodAmount(stack.getItem(), data().diet()) > 0) {
             //Feed dino
             if (getHunger() < getMaxHunger() || getHealth() < getMaxHealth() && FossilConfig.isEnabled(FossilConfig.HEALING_DINOS) || !isTame() && aiTameType() == Taming.FEEDING) {
-                if (!level.isClientSide) {
+                if (!level().isClientSide) {
                     eatItem(stack);
                     if (FossilConfig.isEnabled(FossilConfig.HEALING_DINOS)) {
                         heal(3);
@@ -1258,14 +1258,14 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                     }
                     if (aiTameType() == Taming.FEEDING && !isTame() && random.nextInt(10) == 1) {
                         tame(player);
-                        level.broadcastEntityEvent(this, TOTEM_PARTICLES);
+                        level().broadcastEntityEvent(this, TOTEM_PARTICLES);
                     }
                 }
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return InteractionResult.sidedSuccess(level().isClientSide);
             }
         } else if (stack.is(ModItems.WHIP.get()) && aiTameType() != Taming.NONE && isAdult()) {
             if (isOwnedBy(player) && data().canBeRidden()) {
-                if (!level.isClientSide && getRidingPlayer() == null) {
+                if (!level().isClientSide && getRidingPlayer() == null) {
                     player.yBodyRot = this.yBodyRot;
                     player.setXRot(getXRot());
                     player.startRiding(this);
@@ -1277,7 +1277,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                     moodSystem.increaseMood(-5);
                 }
             } else if (FossilConfig.isEnabled(FossilConfig.WHIP_TO_TAME_DINO) && !isTame() && aiTameType() != Taming.AQUATIC_GEM && aiTameType() != Taming.GEM) {
-                if (!level.isClientSide) {
+                if (!level().isClientSide) {
                     moodSystem.increaseMood(-5);
                     if (random.nextInt(5) == 0) {
                         player.displayClientMessage(Component.translatable("entity.fossil.prehistoric.tamed", info().displayName.get()), true);
@@ -1286,15 +1286,15 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                     }
                 }
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level().isClientSide);
         } else if (stack.is(getOrderItem()) && isOwnedBy(player) && !player.isPassenger()) {
-            if (!level.isClientSide) {
+            if (!level().isClientSide) {
                 jumping = false;
                 getNavigation().stop();
                 setCurrentOrder(OrderType.values()[(currentOrder.ordinal() + 1) % 3]);
                 sendOrderMessage(currentOrder);
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level().isClientSide);
         }
         return InteractionResult.PASS;
     }
@@ -1310,7 +1310,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     public void refreshTexturePath() {
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             return;
         }
         String name = getType().arch$registryName().getPath();
@@ -1343,7 +1343,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         if (isOwnedBy(target) && moodSystem.getMoodFace() != PrehistoricMoodType.ANGRY) {
             return false;
         }
-        if (target instanceof Player && level.getDifficulty() == Difficulty.PEACEFUL) {
+        if (target instanceof Player && level().getDifficulty() == Difficulty.PEACEFUL) {
             return false;
         }
         if (isTame() && target instanceof TamableAnimal tamableAnimal && tamableAnimal.getOwner() == getOwner()) {
@@ -1383,12 +1383,12 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     public List<? extends Prehistoric> getNearbySpeciesMembers(int range) {
-        return level.getEntitiesOfClass(getClass(), getBoundingBox().inflate(range, 4.0D, range), prehistoric -> prehistoric != this);
+        return level().getEntitiesOfClass(getClass(), getBoundingBox().inflate(range, 4.0D, range), prehistoric -> prehistoric != this);
     }
 
     @Override
     public void playAmbientSound() {
-        if (isSleeping() || level.isClientSide) {
+        if (isSleeping() || level().isClientSide) {
             return;
         }
         if (isUnderWater()) {
@@ -1397,9 +1397,9 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             if (soundEvent != null) {
                 float volume = getSoundVolume();
                 double radius = volume > 1 ? (double) (16 * volume) : 16;
-                var packet = new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(soundEvent), getSoundSource(), getX(), getY(), getZ(), volume, getVoicePitch(), level.threadSafeRandom.nextLong());
-                for (ServerPlayer player : ((ServerLevel) level).getServer().getPlayerList().getPlayers()) {
-                    if (player.isUnderWater() && player.level.dimension() == level.dimension()) {
+                var packet = new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(soundEvent), getSoundSource(), getX(), getY(), getZ(), volume, getVoicePitch(), level().threadSafeRandom.nextLong());
+                for (ServerPlayer player : ((ServerLevel) level()).getServer().getPlayerList().getPlayers()) {
+                    if (player.isUnderWater() && player.level().dimension() == level().dimension()) {
                         double d = getX() - player.getX();
                         double e = getY() - player.getY();
                         double f = getZ() - player.getZ();
@@ -1481,7 +1481,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     private void makeEatingSounds() {
-        level.playLocalSound(getX(), getY(), getZ(), SoundEvents.GENERIC_EAT, getSoundSource(), getSoundVolume(), getVoicePitch(), false);
+        level().playLocalSound(getX(), getY(), getZ(), SoundEvents.GENERIC_EAT, getSoundSource(), getSoundVolume(), getVoicePitch(), false);
     }
 
     public float getMaxTurnDistancePerTick() {
@@ -1550,7 +1550,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public Map<AnimationCategory, AnimationHolder> getAnimations() {
-        if (level.isClientSide) {
+        if (level().isClientSide) {
             return AnimationCategoryLoader.CLIENT.getAnimations(animationLocation);
         }
         return AnimationCategoryLoader.SERVER.getAnimations(animationLocation);
@@ -1558,7 +1558,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public Map<String, ? extends AnimationInfo> getAllAnimations() {
-        if (level.isClientSide) {
+        if (level().isClientSide) {
             return ClientAnimationInfoLoader.INSTANCE.getAnimations(animationLocation).animations();
         }
         return getServerAnimationInfos();
@@ -1603,11 +1603,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 //TODO: Could use event.script + getScale to increase the aabb size
                 AABB aabb = eatPos == null ? getBoundingBoxForCulling() : new AABB(eatPos, eatPos);
                 switch (data().diet()) {
-                    case HERBIVORE -> Util.spawnItemParticles(level, Items.WHEAT_SEEDS, 4, aabb);
-                    case OMNIVORE -> Util.spawnItemParticles(level, Items.SWEET_BERRIES, 4, aabb);
-                    case PISCIVORE -> Util.spawnItemParticles(level, Items.COD, 4, aabb);
-                    case PASSIVE -> Util.spawnItemParticles(level, Items.GUNPOWDER, 4, aabb);
-                    default -> Util.spawnItemParticles(level, Items.BEEF, 4, aabb);
+                    case HERBIVORE -> Util.spawnItemParticles(level(), Items.WHEAT_SEEDS, 4, aabb);
+                    case OMNIVORE -> Util.spawnItemParticles(level(), Items.SWEET_BERRIES, 4, aabb);
+                    case PISCIVORE -> Util.spawnItemParticles(level(), Items.COD, 4, aabb);
+                    case PASSIVE -> Util.spawnItemParticles(level(), Items.GUNPOWDER, 4, aabb);
+                    default -> Util.spawnItemParticles(level(), Items.BEEF, 4, aabb);
                 }
             }
             additional.accept(event.getKeyframeData().getEffect());
@@ -1656,7 +1656,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             case 3 -> tag.putBoolean("disableLookAI", disableAI);
         }
         entityData.set(DEBUG, tag);
-        if (level instanceof ServerLevel serverLevel && tickCount > 5) {
+        if (level() instanceof ServerLevel serverLevel && tickCount > 5) {
             MessageHandler.DEBUG_CHANNEL.sendToPlayers(serverLevel.getPlayers(serverPlayer -> serverPlayer.distanceTo(this) < 32),
                     new C2SDisableAIMessage(getId(), disableAI, type));
         }

@@ -19,7 +19,7 @@ public abstract class AbstractAnuPhaseInstance implements AnuPhaseInstance {
     }
 
     protected void switchPhaseByHealth() {
-        if (anu.level.getGameTime() > endTime) {
+        if (anu.level().getGameTime() > endTime) {
             AnuPhase newPhase = AnuPhase.byFraction(anu.getHealth() / anu.getMaxHealth());
             anu.phaseSystem.setPhase(newPhase, 5 * 20);
         }
@@ -42,7 +42,7 @@ public abstract class AbstractAnuPhaseInstance implements AnuPhaseInstance {
 
     @Override
     public void begin(int duration) {
-        endTime = anu.level.getGameTime() + duration;
+        endTime = anu.level().getGameTime() + duration;
     }
 
     @Override

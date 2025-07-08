@@ -178,9 +178,9 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     public void switchNavigator(boolean fly) {
         usingStuckNavigation = fly;
         if (fly) {
-            navigation = new FlightPathNavigation(this, level);//TODO: Maybe use custom class that works better with our larger mobs
+            navigation = new FlightPathNavigation(this, level());//TODO: Maybe use custom class that works better with our larger mobs
         } else {
-            navigation = createNavigation(level);
+            navigation = createNavigation(level());
         }
     }
 
@@ -230,7 +230,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     @Override
     public void tick() {
         super.tick();
-        if (level.isClientSide) {
+        if (level().isClientSide) {
             Entity rider = getControllingPassenger();
             if (rider != null) {
                 if (isFlyingUp()) {
@@ -258,10 +258,10 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     @Override
     public void aiStep() {
         super.aiStep();
-        if (!isOnGround() && getDeltaMovement().y < 0 && !isFlying()) {
+        if (!onGround() && getDeltaMovement().y < 0 && !isFlying()) {
             setDeltaMovement(getDeltaMovement().multiply(1, 0.6, 1));
         }
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             if (isTakingOff() && isTakeOffAnimationDone()) {
                 finishTakeOff();
             }
@@ -276,7 +276,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
                 groundTicks = 0;
                 flyingTicks = 0;
             }
-            if (flyingTicks > 80 && isOnGround()) {
+            if (flyingTicks > 80 && onGround()) {
                 groundTicks++;
                 if (groundTicks > 80) {
                     setFlying(false);
@@ -302,16 +302,16 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         if (vec3 == null) {
             int x = blockPosition().getX() - 8 + random.nextInt(16);
             int z = blockPosition().getZ() - 8 + random.nextInt(16);
-            int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z);
+            int y = level().getHeight(Heightmap.Types.MOTION_BLOCKING, x, z);
             pos = new BlockPos.MutableBlockPos(x, y - 1, z);
         } else {
             pos = BlockPos.containing(vec3).mutable().move(Direction.DOWN);
         }
         if (force || GoalUtils.isSolid(this, pos)) {
-            BlockHitResult result = level.clip(new ClipContext(position(), Vec3.atCenterOf(pos), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+            BlockHitResult result = level().clip(new ClipContext(position(), Vec3.atCenterOf(pos), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
             if (result.getType() != HitResult.Type.MISS) {
                 pos = result.getBlockPos().relative(result.getDirection()).mutable();
-                while (level.isEmptyBlock(pos) && pos.getY() > level.getMinBuildHeight()) {
+                while (level().isEmptyBlock(pos) && pos.getY() > level().getMinBuildHeight()) {
                     pos.move(0, -1, 0);
                 }
             }
@@ -357,7 +357,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
 
     public void startTakeOff() {
         entityData.set(TAKING_OFF, true);
-        takeOffStartTick = level.getGameTime();
+        takeOffStartTick = level().getGameTime();
         getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, nextTakeOffAnimation(), AnimationCategory.NONE);
     }
 
@@ -383,7 +383,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
 
     public boolean isTakeOffAnimationDone() {
         double flyDelay = getAnimationLogic().getActionDelay(AnimationLogic.IDLE_CTRL);
-        return level.getGameTime() > flyDelay + takeOffStartTick;
+        return level().getGameTime() > flyDelay + takeOffStartTick;
     }
 
     public void onReachAirTarget(BlockPos target) {
@@ -397,7 +397,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         double extraX = radius * Mth.sin((float) (Math.PI + angle));
         double extraZ = radius * Mth.cos(angle);
         BlockPos radialPos = BlockPos.containing(getX() + extraX, 0, getZ() + extraZ);
-        BlockPos ground = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, radialPos);
+        BlockPos ground = level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, radialPos);
         int distFromGround = (int) getY() - ground.getY();
         BlockPos newPos = radialPos.above(distFromGround > 16 ? (int) Math.min(FossilConfig.getInt(FossilConfig.FLYING_TARGET_MAX_HEIGHT), getY() + random.nextInt(16) - 8) : (int) getY() + random.nextInt(16) + 1);
         if (!isTargetBlocked(Vec3.atCenterOf(newPos)) && distanceToSqr(Vec3.atCenterOf(newPos)) > 6) {
@@ -408,7 +408,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
 
     public boolean isTargetBlocked(Vec3 target) {
         if (target != null) {
-            BlockHitResult hitResult = level.clip(new ClipContext(position(), target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+            BlockHitResult hitResult = level().clip(new ClipContext(position(), target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
             return hitResult.getType() == HitResult.Type.BLOCK;
         }
         return false;
@@ -417,15 +417,15 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     public @Nullable Vec3 generateAirTarget() {
         BlockHitResult[] results = new BlockHitResult[10];
         for (int i = 0; i < 10; i++) {
-            float heightMod = (float) (getY() + 1) / (float) (level.getHeight(Heightmap.Types.MOTION_BLOCKING, (int) getX(), (int) getZ()) + 10);
+            float heightMod = (float) (getY() + 1) / (float) (level().getHeight(Heightmap.Types.MOTION_BLOCKING, (int) getX(), (int) getZ()) + 10);
             double targetX = getX() + (double) ((random.nextFloat() * 2 - 1) * 16);
             double targetY = getY() + (double) ((random.nextFloat() * 2 - heightMod) * 16);
             double targetZ = getZ() + (double) ((random.nextFloat() * 2 - 1) * 16);
             Vec3 pos = new Vec3(targetX, targetY, targetZ);
-            BlockHitResult result = level.clip(new ClipContext(position(), pos, ClipContext.Block.COLLIDER, isInWater() ? ClipContext.Fluid.NONE : ClipContext.Fluid.ANY, this));
+            BlockHitResult result = level().clip(new ClipContext(position(), pos, ClipContext.Block.COLLIDER, isInWater() ? ClipContext.Fluid.NONE : ClipContext.Fluid.ANY, this));
             results[i] = result;
             BlockPos.MutableBlockPos mutable = result.getBlockPos().mutable();
-            while (!level.getFluidState(mutable).isEmpty()) {
+            while (!level().getFluidState(mutable).isEmpty()) {
                 mutable.move(0, 1, 0);
             }
             results[i] = new BlockHitResult(result.getLocation(), result.getDirection(), mutable.immutable(), result.isInside());

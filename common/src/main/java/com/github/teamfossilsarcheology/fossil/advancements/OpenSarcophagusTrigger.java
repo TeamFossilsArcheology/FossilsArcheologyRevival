@@ -3,8 +3,8 @@ package com.github.teamfossilsarcheology.fossil.advancements;
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -21,8 +21,8 @@ public class OpenSarcophagusTrigger extends SimpleCriterionTrigger<OpenSarcophag
     }
 
     @Override
-    protected @NotNull TriggerInstance createInstance(JsonObject json, EntityPredicate.Composite player, DeserializationContext context) {
-        return new TriggerInstance(ID, player);
+    protected @NotNull TriggerInstance createInstance(JsonObject json, ContextAwarePredicate predicate, DeserializationContext context) {
+        return new TriggerInstance(ID, predicate);
     }
 
     @Override
@@ -32,12 +32,12 @@ public class OpenSarcophagusTrigger extends SimpleCriterionTrigger<OpenSarcophag
 
     public static class TriggerInstance extends AbstractCriterionTriggerInstance {
 
-        public TriggerInstance(ResourceLocation resourceLocation, EntityPredicate.Composite composite) {
+        public TriggerInstance(ResourceLocation resourceLocation, ContextAwarePredicate composite) {
             super(resourceLocation, composite);
         }
 
         public static TriggerInstance useScarab() {
-            return new TriggerInstance(ID, EntityPredicate.Composite.ANY);
+            return new TriggerInstance(ID, ContextAwarePredicate.ANY);
         }
     }
 }

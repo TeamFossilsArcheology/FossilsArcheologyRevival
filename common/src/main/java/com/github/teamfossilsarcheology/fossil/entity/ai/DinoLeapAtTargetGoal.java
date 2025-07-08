@@ -22,7 +22,7 @@ public class DinoLeapAtTargetGoal extends DelayedAttackGoal<PrehistoricLeaping> 
 
     @Override
     public boolean canUse() {
-        if (!mob.isOnGround()) {
+        if (!mob.onGround()) {
             return false;
         }
         return super.canUse();
@@ -47,7 +47,7 @@ public class DinoLeapAtTargetGoal extends DelayedAttackGoal<PrehistoricLeaping> 
     }
 
     protected void checkAndPerformAttack(LivingEntity enemy, boolean inRange) {
-        long currentTime = mob.level.getGameTime();
+        long currentTime = mob.level().getGameTime();
         if (attackType == ATTACK) {
             if (inRange && attackDamageTick > 0 && currentTime >= attackDamageTick) {
                 mob.attackTarget(enemy);

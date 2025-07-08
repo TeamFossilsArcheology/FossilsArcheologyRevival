@@ -8,7 +8,6 @@ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
@@ -56,7 +55,7 @@ public abstract class ToyBase extends Entity {
                 if (!player.getAbilities().mayBuild) {
                     return false;
                 }
-                Block.popResource(level, blockPosition(), getPickResult());
+                Block.popResource(level(), blockPosition(), getPickResult());
                 discard();
                 playSound(attackNoise, 1, getVoicePitch());
                 return true;
@@ -64,12 +63,12 @@ public abstract class ToyBase extends Entity {
                 prehistoric.moodSystem.useToy(moodBonus);
                 playSound(attackNoise, 1, getVoicePitch());
                 return false;
-            } else if (source == level.damageSources().cramming() || source.is(DamageTypeTags.IS_FIRE)) {
-                Block.popResource(level, blockPosition(), getPickResult());
+            } else if (source == damageSources().cramming() || source.is(DamageTypeTags.IS_FIRE)) {
+                Block.popResource(level(), blockPosition(), getPickResult());
                 discard();
             }
         }
-        return source != level.damageSources().outOfWorld();
+        return source != damageSources().fellOutOfWorld();
     }
 
     @Override

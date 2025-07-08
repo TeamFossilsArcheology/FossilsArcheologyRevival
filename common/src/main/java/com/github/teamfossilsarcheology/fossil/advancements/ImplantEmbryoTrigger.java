@@ -21,10 +21,10 @@ public class ImplantEmbryoTrigger extends SimpleCriterionTrigger<ImplantEmbryoTr
     }
 
     @Override
-    protected @NotNull TriggerInstance createInstance(JsonObject json, EntityPredicate.Composite player, DeserializationContext context) {
+    protected @NotNull TriggerInstance createInstance(JsonObject json, ContextAwarePredicate predicate, DeserializationContext context) {
         JsonObject jsonObject = GsonHelper.getAsJsonObject(json, "item", json);
         ItemPredicate itemPredicate = ItemPredicate.fromJson(jsonObject);
-        return new TriggerInstance(ID, player, itemPredicate);
+        return new TriggerInstance(ID, predicate, itemPredicate);
     }
 
     @Override
@@ -35,13 +35,13 @@ public class ImplantEmbryoTrigger extends SimpleCriterionTrigger<ImplantEmbryoTr
     public static class TriggerInstance extends AbstractCriterionTriggerInstance {
         private final ItemPredicate embryoItem;
 
-        public TriggerInstance(ResourceLocation resourceLocation, EntityPredicate.Composite composite, ItemPredicate embryoItem) {
+        public TriggerInstance(ResourceLocation resourceLocation, ContextAwarePredicate composite, ItemPredicate embryoItem) {
             super(resourceLocation, composite);
             this.embryoItem = embryoItem;
         }
 
         public static TriggerInstance implantEmbryo(Item embryoItem) {
-            return new TriggerInstance(ID, EntityPredicate.Composite.ANY,
+            return new TriggerInstance(ID, ContextAwarePredicate.ANY,
                     ItemPredicate.Builder.item().of(embryoItem).build());
         }
 

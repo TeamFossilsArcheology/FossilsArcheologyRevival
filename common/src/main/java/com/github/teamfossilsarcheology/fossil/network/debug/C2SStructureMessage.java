@@ -36,7 +36,7 @@ public class C2SStructureMessage {
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> {
-            if (Version.debugEnabled() && contextSupplier.get().getPlayer().level instanceof ServerLevel serverLevel) {
+            if (Version.debugEnabled() && contextSupplier.get().getPlayer().level() instanceof ServerLevel serverLevel) {
                 spawnTestStructure(serverLevel, onlyStructure);
             }
         });

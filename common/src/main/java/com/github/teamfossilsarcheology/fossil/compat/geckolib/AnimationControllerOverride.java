@@ -1,12 +1,12 @@
 package com.github.teamfossilsarcheology.fossil.compat.geckolib;
 
+import com.eliotlash.mclib.math.Constant;
+import com.eliotlash.mclib.math.IValue;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.AnimationProcessor;
 import software.bernie.geckolib.core.keyframe.*;
 import software.bernie.geckolib.core.state.BoneSnapshot;
-import software.bernie.shadowed.eliotlash.mclib.math.Constant;
-import software.bernie.shadowed.eliotlash.mclib.math.IValue;
 
 import java.util.Arrays;
 import java.util.HashSet;

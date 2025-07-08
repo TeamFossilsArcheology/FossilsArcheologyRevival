@@ -5,6 +5,7 @@ import com.github.teamfossilsarcheology.fossil.client.gui.debug.PathingScreen;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.InstructionRenderUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -214,29 +215,27 @@ public class PathingRenderer {
         }
     }
 
-    public static void renderOverlay(PoseStack poseStack) {
+    public static void renderOverlay(GuiGraphics guiGraphics) {
         Minecraft mc = Minecraft.getInstance();
-        poseStack.pushPose();
-        float yPosition = (float) (0.2 * mc.getWindow().getGuiScaledHeight());
+        int yPosition = (int) (0.2 * mc.getWindow().getGuiScaledHeight());
         /*if (PathingDebug.pathNavigation1 != null) {
-            mc.font.drawShadow(poseStack, Component.literal("zza: " + PathingDebug.pathNavigation1.moveControl.zza), 2, yPosition, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, Component.literal("yRot: " + PathingDebug.pathNavigation1.moveControl.yRot), 2, yPosition + 20, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, Component.literal("jump: " + PathingDebug.pathNavigation1.moveControl.jump), 2, yPosition + 40, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, Component.literal("speed: " + PathingDebug.pathNavigation1.moveControl.speed), 2, yPosition + 60, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, Component.literal("op: " + PathingDebug.pathNavigation1.moveControl.operation.name()), 2, yPosition + 80, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, Component.literal("move: " + PathingDebug.pathNavigation1.moveControl.move.toString()), 2, yPosition + 100, 0xEEEBF0);
+            guiGraphics.drawString(mc.font, Component.literal("zza: " + PathingDebug.pathNavigation1.moveControl.zza), 2, yPosition, 0xEEEBF0);
+            guiGraphics.drawString(mc.font, Component.literal("yRot: " + PathingDebug.pathNavigation1.moveControl.yRot), 2, yPosition + 20, 0xEEEBF0);
+            guiGraphics.drawString(mc.font, Component.literal("jump: " + PathingDebug.pathNavigation1.moveControl.jump), 2, yPosition + 40, 0xEEEBF0);
+            guiGraphics.drawString(mc.font, Component.literal("speed: " + PathingDebug.pathNavigation1.moveControl.speed), 2, yPosition + 60, 0xEEEBF0);
+            guiGraphics.drawString(mc.font, Component.literal("op: " + PathingDebug.pathNavigation1.moveControl.operation.name()), 2, yPosition + 80, 0xEEEBF0);
+            guiGraphics.drawString(mc.font, Component.literal("move: " + PathingDebug.pathNavigation1.moveControl.move.toString()), 2, yPosition + 100, 0xEEEBF0);
         }*/
         if (showHelpMenu) {
-            float xPos = (float) (0.7 * mc.getWindow().getGuiScaledWidth());
-            mc.font.drawShadow(poseStack, Component.translatable("Open Screen: %s", ClientInit.pathingScreenKey.getTranslatedKeyMessage()), xPos, yPosition + 120, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, Component.literal("Set pos 1: Left click"), xPos, yPosition + 140, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, Component.literal("Set pos 2: Right click"), xPos, yPosition + 160, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, Component.literal("Set sweep pos: Middle mouse"), xPos, yPosition + 180, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, Component.translatable("Repath: %s", ClientInit.debugRepathKey.getTranslatedKeyMessage()), xPos, yPosition + 200, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, Component.translatable("Advance: %s", ClientInit.debugAdvanceKey.getTranslatedKeyMessage()), xPos, yPosition + 220, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, Component.translatable("Reverse: %s", ClientInit.debugReverseKey.getTranslatedKeyMessage()), xPos, yPosition + 240, 0xEEEBF0);
+            int xPos = (int) (0.7 * mc.getWindow().getGuiScaledWidth());
+            guiGraphics.drawString(mc.font, Component.translatable("Open Screen: %s", ClientInit.pathingScreenKey.getTranslatedKeyMessage()), xPos, yPosition + 120, 0xEEEBF0);
+            guiGraphics.drawString(mc.font, Component.literal("Set pos 1: Left click"), xPos, yPosition + 140, 0xEEEBF0);
+            guiGraphics.drawString(mc.font, Component.literal("Set pos 2: Right click"), xPos, yPosition + 160, 0xEEEBF0);
+            guiGraphics.drawString(mc.font, Component.literal("Set sweep pos: Middle mouse"), xPos, yPosition + 180, 0xEEEBF0);
+            guiGraphics.drawString(mc.font, Component.translatable("Repath: %s", ClientInit.debugRepathKey.getTranslatedKeyMessage()), xPos, yPosition + 200, 0xEEEBF0);
+            guiGraphics.drawString(mc.font, Component.translatable("Advance: %s", ClientInit.debugAdvanceKey.getTranslatedKeyMessage()), xPos, yPosition + 220, 0xEEEBF0);
+            guiGraphics.drawString(mc.font, Component.translatable("Reverse: %s", ClientInit.debugReverseKey.getTranslatedKeyMessage()), xPos, yPosition + 240, 0xEEEBF0);
         }
-        poseStack.popPose();
     }
 
     public static AABB getBigHitbox() {

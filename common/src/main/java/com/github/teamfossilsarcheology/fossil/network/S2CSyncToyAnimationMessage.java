@@ -34,7 +34,7 @@ public class S2CSyncToyAnimationMessage {
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         if (contextSupplier.get().getEnvironment() == Env.SERVER) return;
         contextSupplier.get().queue(() -> {
-            Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
+            Entity entity = contextSupplier.get().getPlayer().level().getEntity(entityId);
             if (entity instanceof ToyTetheredLog toy) {
                 toy.startAnimation(animationX, animationZ);
             }

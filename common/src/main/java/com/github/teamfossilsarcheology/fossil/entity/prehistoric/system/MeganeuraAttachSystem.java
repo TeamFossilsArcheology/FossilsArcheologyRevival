@@ -70,7 +70,7 @@ public class MeganeuraAttachSystem extends AISystem {
             mob.setXRot(0);
             mob.yBodyRot = 0;
             mob.yHeadRot = 0;
-            if (!mob.level.getBlockState(targetBlockPos).isFaceSturdy(mob.level, targetBlockPos, getAttachmentFace())) {
+            if (!mob.level().getBlockState(targetBlockPos).isFaceSturdy(mob.level(), targetBlockPos, getAttachmentFace())) {
                 stopAttaching();
             }
             if (isAttached()) {

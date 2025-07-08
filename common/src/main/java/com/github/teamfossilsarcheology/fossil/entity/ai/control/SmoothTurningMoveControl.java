@@ -46,8 +46,8 @@ public class SmoothTurningMoveControl extends MoveControl {
                 mob.setSpeed(mob.getSpeed() * 2);
             }
             BlockPos blockPos = mob.blockPosition();
-            BlockState blockState = mob.level.getBlockState(blockPos);
-            VoxelShape voxelShape = blockState.getCollisionShape(mob.level, blockPos);
+            BlockState blockState = mob.level().getBlockState(blockPos);
+            VoxelShape voxelShape = blockState.getCollisionShape(mob.level(), blockPos);
             boolean jump = false;
             if (y > mob.maxUpStep() && y <= 1.5) {
                 if (mob.horizontalCollision) {
@@ -55,7 +55,7 @@ public class SmoothTurningMoveControl extends MoveControl {
                 } else {
                     //jumpDistance: horizontal speed * time until jump done
                     double jumpDistance = Math.max(0.5, Util.attributeToSpeed(mob.getSpeed()) * 0.4);
-                    if (!mob.level.isEmptyBlock(BlockPos.containing(wantedX, wantedY - 1, wantedZ))) {//TODO: More tests
+                    if (!mob.level().isEmptyBlock(BlockPos.containing(wantedX, wantedY - 1, wantedZ))) {//TODO: More tests
                         jumpDistance += 1.3;
                     }
                     if (horizontalDist < jumpDistance) {
@@ -72,7 +72,7 @@ public class SmoothTurningMoveControl extends MoveControl {
             }
         } else if (operation == Operation.JUMPING) {
             mob.setSpeed((float) (speedModifier * mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
-            if (mob.isOnGround()) {
+            if (mob.onGround()) {
                 operation = Operation.WAIT;
             }
         } else {

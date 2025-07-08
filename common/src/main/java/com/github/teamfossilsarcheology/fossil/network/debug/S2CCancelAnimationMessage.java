@@ -28,7 +28,7 @@ public class S2CCancelAnimationMessage {
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> {
-            Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
+            Entity entity = contextSupplier.get().getPlayer().level().getEntity(entityId);
             if (entity instanceof PrehistoricAnimatable<?> prehistoric && Version.debugEnabled()) {
                 prehistoric.getAnimationLogic().cancelAnimation(controller);
             }

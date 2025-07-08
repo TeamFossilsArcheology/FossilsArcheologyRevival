@@ -67,9 +67,9 @@ public class SleepSystem extends AISystem {
         if ((mob.aiMovingType() == PrehistoricEntityInfoAI.Moving.AQUATIC)) {
             return mob.isInWater();
         } else if (mob.aiMovingType() == PrehistoricEntityInfoAI.Moving.SEMI_AQUATIC) {
-            return mob.isInWater() || mob.isOnGround();
+            return mob.isInWater() || mob.onGround();
         } else {
-            return mob.isOnGround() && !mob.isInWater();
+            return mob.onGround() && !mob.isInWater();
         }
     }
 
@@ -80,15 +80,15 @@ public class SleepSystem extends AISystem {
      */
     public boolean wantsToSleep() {
         if (mob.aiActivityType() == PrehistoricEntityInfoAI.Activity.DIURNAL) {
-            return !mob.level.isDay();
+            return !mob.level().isDay();
         } else if (mob.aiActivityType() == PrehistoricEntityInfoAI.Activity.NOCTURNAL) {
-            if (!mob.level.isDay()) {
+            if (!mob.level().isDay()) {
                 return false;
             }
             if (mob.aiMovingType() == PrehistoricEntityInfoAI.Moving.AQUATIC || mob.aiMovingType() == PrehistoricEntityInfoAI.Moving.SEMI_AQUATIC) {
-                return mob.isInWater() || !mob.level.canSeeSky(mob.blockPosition().above());
+                return mob.isInWater() || !mob.level().canSeeSky(mob.blockPosition().above());
             }
-            return !mob.level.canSeeSky(mob.blockPosition().above());
+            return !mob.level().canSeeSky(mob.blockPosition().above());
         }
         return mob.aiActivityType() == PrehistoricEntityInfoAI.Activity.BOTH && ticksSlept <= 4000 && cathermalSleepCooldown == 0;
     }

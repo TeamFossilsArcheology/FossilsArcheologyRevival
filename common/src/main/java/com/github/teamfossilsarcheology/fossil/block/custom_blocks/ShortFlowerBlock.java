@@ -12,7 +12,8 @@ import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -22,7 +23,7 @@ public class ShortFlowerBlock extends BushBlock implements BonemealableBlock {
     private final VoxelShape shape;
 
     public ShortFlowerBlock(VoxelShape shape) {
-        super(Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS).offsetType(OffsetType.XZ));
+        super(Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().noOcclusion().sound(SoundType.GRASS).offsetType(OffsetType.XZ));
         this.shape = shape;
     }
 

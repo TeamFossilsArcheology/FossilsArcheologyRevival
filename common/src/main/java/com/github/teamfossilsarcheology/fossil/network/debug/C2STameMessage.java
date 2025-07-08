@@ -27,7 +27,7 @@ public class C2STameMessage {
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> {
             if (Version.debugEnabled()) {
-                Entity entity = contextSupplier.get().getPlayer().level.getEntity(id);
+                Entity entity = contextSupplier.get().getPlayer().level().getEntity(id);
                 if (entity instanceof TamableAnimal animal) {
                     animal.tame(contextSupplier.get().getPlayer());
                 } else if (entity instanceof AbstractHorse horse) {

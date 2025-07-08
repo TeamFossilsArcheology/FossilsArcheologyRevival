@@ -43,9 +43,9 @@ public class CreativeTabFilters {
         blocks.add(new Filter(FILTER_BUILDING_BLOCKS, new ItemStack(ModBlocks.ANCIENT_STONE_BRICKS.get())));
         blocks.add(new Filter(FILTER_PARK, new ItemStack(ModItems.TOY_BALLS.get(DyeColor.RED).get())));
 
-        ClientGuiEvent.RENDER_CONTAINER_BACKGROUND.register((screen, matrices, mouseX, mouseY, delta) -> {
+        ClientGuiEvent.RENDER_CONTAINER_BACKGROUND.register((screen, guiGraphics, mouseX, mouseY, delta) -> {
             if (screen instanceof CreativeModeInventoryScreen && tabs.containsKey(CreativeModeInventoryScreen.selectedTab)) {
-                tabs.get(CreativeModeInventoryScreen.selectedTab).renderButtons(matrices, mouseX, mouseY, delta);
+                tabs.get(CreativeModeInventoryScreen.selectedTab).renderButtons(guiGraphics, mouseX, mouseY, delta);
             }
         });
         ClientGuiEvent.RENDER_PRE.register((screen, matrices, mouseX, mouseY, delta) -> {

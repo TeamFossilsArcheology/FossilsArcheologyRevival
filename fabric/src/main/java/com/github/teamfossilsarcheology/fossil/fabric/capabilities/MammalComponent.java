@@ -26,7 +26,7 @@ public class MammalComponent implements IMammalComponent, CommonTickingComponent
             return;
         }
         if (embryoProgress >= FossilConfig.getInt(FossilConfig.PREGNANCY_DURATION)) {
-            if (!animal.level.isClientSide) {
+            if (!animal.level().isClientSide) {
                 ModEvents.growEntity(embryo, animal);
                 ModCapabilities.stopPregnancy(animal);
             }

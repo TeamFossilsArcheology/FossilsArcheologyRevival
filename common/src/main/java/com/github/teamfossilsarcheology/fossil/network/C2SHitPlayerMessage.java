@@ -35,7 +35,7 @@ public class C2SHitPlayerMessage {
         if (contextSupplier.get().getEnvironment() == Env.CLIENT) return;
         contextSupplier.get().queue(() -> {
             Player player = contextSupplier.get().getPlayer();
-            Entity entity = player.level.getEntity(entityId);
+            Entity entity = player.level().getEntity(entityId);
             if (entity instanceof Prehistoric prehistoric && player.getId() == targetId) {
                 prehistoric.attackTarget(player);
             }

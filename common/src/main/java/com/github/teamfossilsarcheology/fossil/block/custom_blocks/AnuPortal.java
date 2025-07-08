@@ -27,10 +27,10 @@ public class AnuPortal extends Block {
                 entity.setPortalCooldown();
                 return;
             }
-            if (!entity.level.isClientSide && !pos.equals(entity.portalEntrancePos)) {
+            if (!entity.level().isClientSide && !pos.equals(entity.portalEntrancePos)) {
                 entity.portalEntrancePos = pos.immutable();
             }
-            Level entityLevel = entity.level;
+            Level entityLevel = entity.level();
             MinecraftServer server = entityLevel.getServer();
             if (server != null) {
                 entity.setPortalCooldown();

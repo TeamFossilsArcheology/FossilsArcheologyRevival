@@ -10,7 +10,6 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming.Meganeura;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.InstructionMessage;
-import com.mojang.blaze3d.vertex.PoseStack;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
@@ -96,7 +95,7 @@ public class InstructionTab extends DebugTab<Prehistoric> {
                 debugScreen.onClose();
             }).bounds(220, 55, 100, 20).build());
         }
-        var list = entity.level.getNearbyEntities(LivingEntity.class, TargetingConditions.forNonCombat().range(30).ignoreLineOfSight(), entity, entity.getBoundingBox().inflate(30));
+        var list = entity.level().getNearbyEntities(LivingEntity.class, TargetingConditions.forNonCombat().range(30).ignoreLineOfSight(), entity, entity.getBoundingBox().inflate(30));
         leapEntities = new EntityList(width - 315, 200, 300, list, minecraft, entity1 -> {
             Instruction instruction = new Instruction.LeapAttack(entity1.getId());
             instructions.addInstruction(instruction);
@@ -197,11 +196,6 @@ public class InstructionTab extends DebugTab<Prehistoric> {
 
     public static boolean positionActive() {
         return positionMode != Instruction.Type.IDLE;
-    }
-
-    @Override
-    protected void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        super.render(poseStack, mouseX, mouseY, partialTick);
     }
 
     public record Pair(int id, List<Instruction> instructions) {

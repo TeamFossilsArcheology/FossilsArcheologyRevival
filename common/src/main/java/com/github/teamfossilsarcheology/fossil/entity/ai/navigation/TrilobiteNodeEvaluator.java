@@ -199,7 +199,7 @@ public class TrilobiteNodeEvaluator extends NodeEvaluator {
                         return node;
                     }
 
-                    while (y > this.mob.level.getMinBuildHeight()) {
+                    while (y > this.mob.level().getMinBuildHeight()) {
                         type = this.getCachedBlockType(this.mob, x, --y, z);
                         if (type != BlockPathTypes.WATER) {
                             return node;
@@ -216,7 +216,7 @@ public class TrilobiteNodeEvaluator extends NodeEvaluator {
                     int l = y;
 
                     while (type == BlockPathTypes.OPEN) {
-                        if (--y < this.mob.level.getMinBuildHeight()) {
+                        if (--y < this.mob.level().getMinBuildHeight()) {
                             Node node2 = this.getNode(x, l, z);
                             node2.type = BlockPathTypes.BLOCKED;
                             node2.costMalus = -1.0F;

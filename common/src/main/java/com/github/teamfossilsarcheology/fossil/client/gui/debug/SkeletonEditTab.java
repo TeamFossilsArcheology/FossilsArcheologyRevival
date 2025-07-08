@@ -7,7 +7,7 @@ import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.SyncDebugInfoMessage;
 import com.github.teamfossilsarcheology.fossil.util.TimePeriod;
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -52,10 +52,10 @@ public class SkeletonEditTab extends DebugTab<PrehistoricSkeleton> {
     }
 
     @Override
-    protected void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        super.render(poseStack, mouseX, mouseY, partialTick);
-        drawString(poseStack, minecraft.font, Component.literal("Age: " + entity.getAge()), 175, 35, 16777215);
-        drawString(poseStack, minecraft.font, Component.literal("Type: " + entity.info().name()), 175, 185, 16777215);
+    protected void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
+        guiGraphics.drawString(minecraft.font, Component.literal("Age: " + entity.getAge()), 175, 35, 16777215);
+        guiGraphics.drawString(minecraft.font, Component.literal("Type: " + entity.info().name()), 175, 185, 16777215);
     }
 
     private class ModelsList extends ContainerObjectSelectionList<ModelsList.ModelEntry> {
@@ -92,11 +92,11 @@ public class SkeletonEditTab extends DebugTab<PrehistoricSkeleton> {
             }
 
             @Override
-            public void render(PoseStack poseStack, int index, int top, int left, int width, int height, int mouseX, int mouseY, boolean isMouseOver,
+            public void render(GuiGraphics guiGraphics, int index, int top, int left, int width, int height, int mouseX, int mouseY, boolean isMouseOver,
                                float partialTick) {
                 changeButton.setX(left);
                 changeButton.setY(top);
-                changeButton.render(poseStack, mouseX, mouseY, partialTick);
+                changeButton.render(guiGraphics, mouseX, mouseY, partialTick);
             }
 
             @Override

@@ -162,7 +162,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     @Override
     public void tick() {
         super.tick();
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             if (absoluteEggCooldown > 0) {
                 absoluteEggCooldown--;
             }
@@ -171,14 +171,14 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
                 if (closestMate != null) {
                     absoluteEggCooldown = 48000 + random.nextInt(48000);
                     closestMate.absoluteEggCooldown = 48000 + random.nextInt(48000);
-                    level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(info().eggItem)));
+                    level().addFreshEntity(new ItemEntity(level(), getX(), getY(), getZ(), new ItemStack(info().eggItem)));
                 }
             }
         }
     }
 
     private @Nullable PrehistoricFish getClosestMate() {
-        List<? extends PrehistoricFish> sameTypes = level.getEntitiesOfClass(getClass(), getBoundingBox().inflate(2, 2, 2), fish -> fish != this && fish.getAge() >= 0);
+        List<? extends PrehistoricFish> sameTypes = level().getEntitiesOfClass(getClass(), getBoundingBox().inflate(2, 2, 2), fish -> fish != this && fish.getAge() >= 0);
         double shortestDistance = Double.MAX_VALUE;
         PrehistoricFish other = null;
         for (PrehistoricFish sameType : sameTypes) {
@@ -209,7 +209,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
 
     @Override
     public Map<AnimationCategory, AnimationHolder> getAnimations() {
-        if (level.isClientSide) {
+        if (level().isClientSide) {
             return AnimationCategoryLoader.CLIENT.getAnimations(animationLocation);
         }
         return AnimationCategoryLoader.SERVER.getAnimations(animationLocation);
@@ -217,7 +217,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
 
     @Override
     public Map<String, ? extends AnimationInfo> getAllAnimations() {
-        if (level.isClientSide) {
+        if (level().isClientSide) {
             return ClientAnimationInfoLoader.INSTANCE.getAnimations(animationLocation).animations();
         }
         return getServerAnimationInfos();

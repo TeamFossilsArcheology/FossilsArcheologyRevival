@@ -84,15 +84,14 @@ public class StoneTablet extends HangingEntity implements EntitySpawnExtension {
 
     @Override
     public void dropItem(@Nullable Entity brokenEntity) {
-        if (!level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+        if (!level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
             return;
         }
         playSound(SoundEvents.STONE_BREAK, 1.0f, 1.0f);
-        if (brokenEntity instanceof Player player) {
-            if (player.getAbilities().instabuild) {
-                return;
-            }
+        if (brokenEntity instanceof Player player && player.getAbilities().instabuild) {
+            return;
         }
+
         spawnAtLocation(ModItems.STONE_TABLET.get());
     }
 

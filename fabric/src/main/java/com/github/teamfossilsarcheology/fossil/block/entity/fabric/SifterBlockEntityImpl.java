@@ -109,7 +109,7 @@ public class SifterBlockEntityImpl extends FabricContainerBlockEntity implements
                     .assemble(this, level.registryAccess()).copy();
             for (int slot = 1; slot <= 5; slot++) {
                 ItemStack stackInSlot = items.get(slot);
-                if (stackInSlot.sameItem(result) && stackInSlot.getCount() + result.getCount() < 64) {
+                if (ItemStack.isSameItem(stackInSlot, result) && stackInSlot.getCount() + result.getCount() < 64) {
                     stackInSlot.grow(result.getCount());
                     if (items.get(0).getCount() > 1) {
                         items.get(0).shrink(1);

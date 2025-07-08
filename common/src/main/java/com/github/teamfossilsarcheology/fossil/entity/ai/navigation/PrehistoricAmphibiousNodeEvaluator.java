@@ -26,13 +26,13 @@ public class PrehistoricAmphibiousNodeEvaluator extends WalkNodeEvaluator {
         int i = mob.getBlockY();
         BlockState blockState = level.getBlockState(mutableBlockPos.set(mob.getX(), i, mob.getZ()));
         if (!mob.canStandOnFluid(blockState.getFluidState())) {
-            if (this.mob.isOnGround()) {
+            if (this.mob.onGround()) {
                 i = Mth.floor(mob.getY() + 0.5);
             } else {
                 BlockPos blockPos = mob.blockPosition();
 
                 while ((level.getBlockState(blockPos).isAir() || level.getBlockState(blockPos).isPathfindable(level, blockPos, PathComputationType.LAND))
-                        && blockPos.getY() > mob.level.getMinBuildHeight()) {
+                        && blockPos.getY() > mob.level().getMinBuildHeight()) {
                     blockPos = blockPos.below();
                 }
 

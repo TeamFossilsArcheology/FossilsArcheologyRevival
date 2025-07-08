@@ -87,8 +87,8 @@ public abstract class JigsawPlacementMixin {
             block0:
             for (StructureTemplate.StructureBlockInfo baseStructureJigSaw : structurePoolElement.getShuffledJigsawBlocks(structureTemplateManager, baseStructurePosition, baseStructureRotation, random)) {
                 MutableObject<VoxelShape> mutableObject3;
-                Direction baseJigsawDirection = JigsawBlock.getFrontFacing(baseStructureJigSaw.state);
-                BlockPos baseJigsawPosition = baseStructureJigSaw.pos;
+                Direction baseJigsawDirection = JigsawBlock.getFrontFacing(baseStructureJigSaw.state());
+                BlockPos baseJigsawPosition = baseStructureJigSaw.pos();
                 BlockPos expectedJigsawPosition = baseJigsawPosition.relative(baseJigsawDirection);
                 int k = baseJigsawPosition.getY() - baseMinY;
                 int l = -1;
@@ -127,7 +127,7 @@ public abstract class JigsawPlacementMixin {
                         List<StructureTemplate.StructureBlockInfo> allTargetJigsaws = targetElement.getShuffledJigsawBlocks(structureTemplateManager, BlockPos.ZERO, targetElementRotation, this.random);
                         BoundingBox boundingBox2 = targetElement.getBoundingBox(structureTemplateManager, BlockPos.ZERO, targetElementRotation);
                         int m = !bl || boundingBox2.getYSpan() > 16 ? 0 : allTargetJigsaws.stream().mapToInt(structureBlockInfo -> {
-                            if (!boundingBox2.isInside(structureBlockInfo.pos.relative(JigsawBlock.getFrontFacing(structureBlockInfo.state)))) {
+                            if (!boundingBox2.isInside(structureBlockInfo.pos().relative(JigsawBlock.getFrontFacing(structureBlockInfo.state())))) {
                                 return 0;
                             }
                             ResourceKey<StructureTemplatePool> resourceKey = readPoolName(structureBlockInfo);
@@ -142,14 +142,14 @@ public abstract class JigsawPlacementMixin {
                             int s;
                             int q;
                             if (!JigsawBlock.canAttach(baseStructureJigSaw, targetJigsaw)) continue;
-                            BlockPos targetJigsawPosition = targetJigsaw.pos;
+                            BlockPos targetJigsawPosition = targetJigsaw.pos();
                             BlockPos vecToTargetJigsaw = expectedJigsawPosition.subtract(targetJigsawPosition);
                             BoundingBox boundingBox3 = targetElement.getBoundingBox(structureTemplateManager, vecToTargetJigsaw, targetElementRotation);
                             int n = boundingBox3.minY();
                             StructureTemplatePool.Projection targetProjection = targetElement.getProjection();
                             boolean targetIsRigid = targetProjection == StructureTemplatePool.Projection.RIGID;
                             int targetJigsawY = targetJigsawPosition.getY();
-                            int p = k - targetJigsawY + JigsawBlock.getFrontFacing(baseStructureJigSaw.state).getStepY();
+                            int p = k - targetJigsawY + JigsawBlock.getFrontFacing(baseStructureJigSaw.state()).getStepY();
                             if (baseIsRigid && targetIsRigid) {
                                 q = baseMinY + p;
                             } else {

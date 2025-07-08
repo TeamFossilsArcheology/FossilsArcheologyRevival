@@ -127,7 +127,7 @@ public class DinoFollowOwnerGoal extends Goal {
     }
 
     private boolean canTeleportTo(BlockPos teleportPos) {
-        Level level = dino.getLevel();
+        Level level = dino.level();
         NodeEvaluator nodeEvaluator = dino.getNavigation().getNodeEvaluator();
         BlockPathTypes type = nodeEvaluator.getBlockPathType(level, teleportPos.getX(), teleportPos.getY(), teleportPos.getZ());
         if (type == BlockPathTypes.WATER && dino.getPathfindingMalus(type) == 0) {

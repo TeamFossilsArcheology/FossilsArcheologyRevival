@@ -6,7 +6,6 @@ import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationI
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.SwimmingAnimal;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 
 import static com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI.Attacking;
@@ -61,7 +60,7 @@ public class WaterPlayGoal<T extends Prehistoric & SwimmingAnimal> extends PlayG
 
     @Override
     protected void checkAndPerformAttack(ToyBase target) {
-        long currentTime = dino.level.getGameTime();
+        long currentTime = dino.level().getGameTime();
         if (attackType == GRAB) {
             for (Entity passenger : swimming.getPassengers()) {
                 if (passenger instanceof ToyBase toy && currentTime == grabStartTick + GRAB_DURATION) {
@@ -72,7 +71,7 @@ public class WaterPlayGoal<T extends Prehistoric & SwimmingAnimal> extends PlayG
             }
         } else if (attackType == ATTACK) {
             if (attackDamageTick > 0 && currentTime >= attackDamageTick) {
-                target.hurt(dino.level.damageSources().mobAttack(dino), 0);
+                target.hurt(dino.damageSources().mobAttack(dino), 0);
                 attackDamageTick = -1;
                 attackType = -1;
             }

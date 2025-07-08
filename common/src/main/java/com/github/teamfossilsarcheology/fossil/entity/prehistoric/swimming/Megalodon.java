@@ -36,7 +36,7 @@ public class Megalodon extends PrehistoricSwimming {
             setAirSupply(airSupply - 1);
             if (getAirSupply() == -20) {
                 setAirSupply(0);
-                hurt(level.damageSources().source(ModDamageTypes.SUFFOCATE_KEY), 2.0f);
+                hurt(damageSources().source(ModDamageTypes.SUFFOCATE_KEY), 2.0f);
             }
         } else {
             setAirSupply(1000);

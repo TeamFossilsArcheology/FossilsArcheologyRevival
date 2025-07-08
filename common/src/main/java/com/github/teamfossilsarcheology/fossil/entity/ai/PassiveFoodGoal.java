@@ -20,8 +20,8 @@ public class PassiveFoodGoal extends MoveToFoodGoal {
 
     @Override
     public boolean canUse() {
-        if (entity.isOnGround() && entity.data().diet() == Diet.PASSIVE && entity.getHunger() < entity.getMaxHunger()) {
-            BlockState state = entity.level.getBlockState(entity.blockPosition().below());
+        if (entity.onGround() && entity.data().diet() == Diet.PASSIVE && entity.getHunger() < entity.getMaxHunger()) {
+            BlockState state = entity.level().getBlockState(entity.blockPosition().below());
             return state.is(BlockTags.SAND) || state.is(BlockTags.DIRT);
         }
         return false;
@@ -35,10 +35,10 @@ public class PassiveFoodGoal extends MoveToFoodGoal {
             entity.feed(5);
         }
         entity.heal(0.1f);
-        if (entity.level.getGameTime() > animEndTick) {
+        if (entity.level().getGameTime() > animEndTick) {
             AnimationInfo animationInfo = entity.nextEatingAnimation();
             entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, animationInfo, AnimationCategory.EAT);
-            animEndTick = (long) (entity.level.getGameTime() + animationInfo.animation.length());
+            animEndTick = (long) (entity.level().getGameTime() + animationInfo.animation.length());
         }
     }
 

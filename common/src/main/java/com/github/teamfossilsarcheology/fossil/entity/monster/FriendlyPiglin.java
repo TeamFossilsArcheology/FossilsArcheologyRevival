@@ -84,8 +84,8 @@ public class FriendlyPiglin extends TamableAnimal {
     }
 
     @Override
-    public boolean wasKilled(ServerLevel level, LivingEntity killedEntity) {
-        boolean bl = super.wasKilled(level, killedEntity);
+    public boolean killedEntity(ServerLevel level, LivingEntity killedEntity) {
+        boolean bl = super.killedEntity(level, killedEntity);
         if (bl) {
             sendMessageToOwner(KILLED);
         }
@@ -104,7 +104,7 @@ public class FriendlyPiglin extends TamableAnimal {
             return false;
         }
         Entity trueSource = source.getEntity();
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             setOrderedToSit(false);
         }
         if (trueSource != null && !(trueSource instanceof Player) && !(trueSource instanceof AbstractArrow)) {
@@ -117,7 +117,7 @@ public class FriendlyPiglin extends TamableAnimal {
     public boolean doHurtTarget(Entity target) {
         boolean hurtTarget = super.doHurtTarget(target);
         if (hurtTarget) {
-            float f = level.getCurrentDifficultyAt(blockPosition()).getEffectiveDifficulty();
+            float f = level().getCurrentDifficultyAt(blockPosition()).getEffectiveDifficulty();
             if (getItemInHand(isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND).isEmpty() && isOnFire() && random.nextFloat() < f * 0.3f) {
                 target.setSecondsOnFire(2 * (int) f);
             }
@@ -171,7 +171,7 @@ public class FriendlyPiglin extends TamableAnimal {
 
     @Override
     public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (level.isClientSide) {
+        if (level().isClientSide) {
             return (isOwnedBy(player) || isTame()) ? InteractionResult.CONSUME : InteractionResult.PASS;
         }
         if (isTame()) {

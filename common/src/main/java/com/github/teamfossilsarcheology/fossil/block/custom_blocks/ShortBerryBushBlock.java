@@ -19,7 +19,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -29,8 +30,8 @@ public abstract class ShortBerryBushBlock extends BushBlock implements Bonemeala
     private final VoxelShape shape;
     private final PrehistoricPlantInfo info;
 
-    public ShortBerryBushBlock(VoxelShape shape, PrehistoricPlantInfo info) {
-        super(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().sound(SoundType.SWEET_BERRY_BUSH));
+    protected ShortBerryBushBlock(VoxelShape shape, PrehistoricPlantInfo info) {
+        super(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().randomTicks().sound(SoundType.SWEET_BERRY_BUSH));
         this.shape = shape;
         this.info = info;
     }

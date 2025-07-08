@@ -94,7 +94,7 @@ public class HuntingTargetGoal extends TargetGoal {
         }
         if (target.isInWater() && dino.aiMovingType() != PrehistoricEntityInfoAI.Moving.AQUATIC && dino.aiMovingType() != PrehistoricEntityInfoAI.Moving.SEMI_AQUATIC) {
             BlockPos pos = BlockPos.containing(target.getX(), target.getBoundingBox().maxY, target.getZ());
-            if (!dino.level.getFluidState(pos).isEmpty() && !dino.level.getFluidState(pos.above()).isEmpty()) {
+            if (!dino.level().getFluidState(pos).isEmpty() && !dino.level().getFluidState(pos.above()).isEmpty()) {
                 //TODO: The idea is that mobs that can only float dont try to attack underwater mobs but needs improvement
                 canTarget = false;
             }
@@ -112,7 +112,7 @@ public class HuntingTargetGoal extends TargetGoal {
      * {@code getClass() != getClass() && target.size < acceptedSize}
      */
     private LivingEntity findHuntingTarget() {
-        return mob.level.getNearestEntity(LivingEntity.class, huntTargetConditions, mob, mob.getX(), mob.getEyeY(), mob.getZ(),
+        return mob.level().getNearestEntity(LivingEntity.class, huntTargetConditions, mob, mob.getX(), mob.getEyeY(), mob.getZ(),
                 getTargetSearchArea(getFollowDistance()));
     }
 

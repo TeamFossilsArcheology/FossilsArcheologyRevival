@@ -103,7 +103,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
      */
     @Override
     public boolean canContinueToUse() {
-        return tryTicks >= -STAY_TICKS && tryTicks < GIVE_UP_TICKS && isValidTarget(entity.level, targetPos);
+        return tryTicks >= -STAY_TICKS && tryTicks < GIVE_UP_TICKS && isValidTarget(entity.level(), targetPos);
     }
 
     @Override
@@ -229,7 +229,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
         //Maybe somewhat inefficient but I'm too lazy to write a proper 3d spiral algorithm
         var target = BlockPos.betweenClosedStream(searchArea)
                 .map(BlockPos::immutable)
-                .filter(pos1 -> isValidTarget(entity.level, pos1))
+                .filter(pos1 -> isValidTarget(entity.level(), pos1))
                 .min(Comparator.comparingInt(value -> value.distManhattan(pos)));
         if (target.isPresent()) {
             targetPos = target.get();
