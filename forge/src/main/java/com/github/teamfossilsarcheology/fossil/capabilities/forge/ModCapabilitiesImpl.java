@@ -62,7 +62,7 @@ public class ModCapabilitiesImpl {
     }
 
     public static void syncMammalWithClient(Animal animal, int embryoProgress, EntityInfo embryo) {
-        MessageHandler.CAP_CHANNEL.sendToPlayers(((ServerLevel) animal.level).getPlayers(serverPlayer -> true),
+        MessageHandler.CAP_CHANNEL.sendToPlayers(((ServerLevel) animal.level()).getPlayers(serverPlayer -> true),
                 new S2CMammalCapMessage(animal, embryoProgress, embryo));
     }
 

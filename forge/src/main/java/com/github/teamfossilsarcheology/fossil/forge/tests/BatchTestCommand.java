@@ -83,7 +83,7 @@ public class BatchTestCommand {
     }
 
     private static void say(CommandSourceStack source, String message) {
-        source.sendSuccess(Component.literal(message), false);
+        source.sendSuccess(() -> Component.literal(message), false);
     }
 
     private static void say(ServerLevel serverLevel, String message, ChatFormatting formatting) {

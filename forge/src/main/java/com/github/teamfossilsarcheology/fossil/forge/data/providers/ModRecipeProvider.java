@@ -471,7 +471,7 @@ public class ModRecipeProvider extends RecipeProvider {
             }
         }
         if (ModList.get().isLoaded(ModConstants.CREATE)) {
-            //FossilCreateRecipeProvider.buildCraftingRecipes(consumer);
+            FossilCreateRecipeProvider.buildCraftingRecipes(consumer);
         }
     }
 

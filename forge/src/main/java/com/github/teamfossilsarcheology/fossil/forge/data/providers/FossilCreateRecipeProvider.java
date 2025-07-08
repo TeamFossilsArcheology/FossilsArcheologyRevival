@@ -3,9 +3,11 @@ package com.github.teamfossilsarcheology.fossil.forge.data.providers;
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.Create;
+import com.simibubi.create.api.data.recipe.BaseRecipeProvider;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
@@ -16,14 +18,21 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
+
+import static com.github.teamfossilsarcheology.fossil.block.ModBlocks.DEEPSLATE_FOSSIL;
+import static com.github.teamfossilsarcheology.fossil.block.ModBlocks.TUFF_FOSSIL;
 
 public class FossilCreateRecipeProvider {
     public static void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
@@ -58,15 +67,15 @@ public class FossilCreateRecipeProvider {
                 .whenModLoaded(Create.ID)).register(consumer);
     }
 
-    private static <T extends ProcessingRecipe<?>> CreateRecipeProvider.GeneratedRecipe create(IRecipeTypeInfo recipeType,
-                                                                                               Supplier<ItemLike> singleIngredient,
-                                                                                               UnaryOperator<ProcessingRecipeBuilder<T>> transform) {
+    private static <T extends ProcessingRecipe<?>> BaseRecipeProvider.GeneratedRecipe create(IRecipeTypeInfo recipeType,
+                                                                                             Supplier<ItemLike> singleIngredient,
+                                                                                             UnaryOperator<ProcessingRecipeBuilder<T>> transform) {
         ProcessingRecipeSerializer<T> serializer = recipeType.getSerializer();
         return c -> {
             ItemLike itemLike = singleIngredient.get();
             transform
                     .apply(new CustomProcessingRecipeBuilder<>(serializer.getFactory(),
-                            new ResourceLocation(FossilMod.MOD_ID, RegisteredObjects.getKeyOrThrow(itemLike.asItem())
+                            new ResourceLocation(FossilMod.MOD_ID, ForgeRegistries.ITEMS.getKey(itemLike.asItem())
                                     .getPath())).withItemIngredients(Ingredient.of(itemLike)))
                     .build(c);
         };

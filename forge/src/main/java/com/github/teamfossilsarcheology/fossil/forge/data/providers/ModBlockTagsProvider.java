@@ -80,7 +80,6 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         addTag(BlockTags.NEEDS_DIAMOND_TOOL, FAKE_OBSIDIAN, OBSIDIAN_SPIKES);//Time Machine
         addTag(BlockTags.NEEDS_IRON_TOOL, CALCITE_FOSSIL, DEEPSLATE_FOSSIL, DRIPSTONE_FOSSIL, RED_SANDSTONE_FOSSIL, SANDSTONE_FOSSIL, STONE_FOSSIL, TUFF_FOSSIL, PERMAFROST_BLOCK, AMBER_ORE);
         addTag(BlockTags.NEEDS_STONE_TOOL, ANCIENT_GLASS, REINFORCED_GLASS, ICED_DIRT, PERMAFROST_BLOCK);
-        addTag(BlockTags.REPLACEABLE_PLANTS, MUTANT_TREE_VINE);
         var plants = addTag(ModBlockTags.PLANTS, MUTANT_TREE_VINE);
         for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
             plants.add(info.getPlantBlock());
