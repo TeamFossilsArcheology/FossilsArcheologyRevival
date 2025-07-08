@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:calamites_button"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

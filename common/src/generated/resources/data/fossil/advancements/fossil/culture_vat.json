@@ -33,5 +33,6 @@
     [
       "culture_vat"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

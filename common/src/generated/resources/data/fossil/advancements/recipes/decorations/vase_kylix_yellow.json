@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:vase_kylix_yellow"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

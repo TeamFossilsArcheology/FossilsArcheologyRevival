@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:cooked_stegosaurus_from_smoking"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

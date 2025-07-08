@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:cooked_quagga"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

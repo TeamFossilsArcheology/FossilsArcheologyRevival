@@ -28,5 +28,6 @@
     "recipes": [
       "fossil:mutant_tree_planks"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

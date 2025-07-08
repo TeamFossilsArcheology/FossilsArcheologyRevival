@@ -33,5 +33,6 @@
     [
       "frozen_meat"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

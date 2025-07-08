@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:cooked_nautilus"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -28,5 +28,6 @@
     "recipes": [
       "fossil:palm_planks"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

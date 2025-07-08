@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:cooked_therizinosaurus"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

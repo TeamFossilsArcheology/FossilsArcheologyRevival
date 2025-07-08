@@ -1,4 +1,4 @@
-// 1.19.4	2025-07-07T01:21:07.6163095	Fossil Block Tags
+// 1.20.1	2025-07-08T17:48:26.0280484	Fossil Block Tags
 748289a71b4a14833170e105ad945e76cf90203b data/fossil/tags/blocks/ancient_wood_logs.json
 24bcf1f9f4f02ad0bd3cd4561158d1ff2e9abbc6 data/fossil/tags/blocks/calamites_logs.json
 b057417db4a2d14befd1fd92bdee83e44deabd4c data/fossil/tags/blocks/cordaites_logs.json
@@ -27,7 +27,6 @@ e3a95e018a127a883661cbdd0ab979bf44ca0d8b data/minecraft/tags/blocks/needs_stone_
 84cd76fb442225ad890c86ddb9bd8763fa606ae7 data/minecraft/tags/blocks/planks.json
 03b22887217e64c1b29180790e565d629b797281 data/minecraft/tags/blocks/portals.json
 276cfa5ab9dd6ab8715610a455bbf0ee05493592 data/minecraft/tags/blocks/rails.json
-b073ead4e2979920491052056fbe5dcd66df529f data/minecraft/tags/blocks/replaceable_plants.json
 09c44c6b8767019dca31e2357c986e13c6e50dc0 data/minecraft/tags/blocks/saplings.json
 db57b916d6559534878a611a37df9c6ba4bc4e05 data/minecraft/tags/blocks/slabs.json
 97565e4d15d94e765e0a088c769229abef0a4534 data/minecraft/tags/blocks/soul_speed_blocks.json

@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:sigillaria_pressure_plate"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

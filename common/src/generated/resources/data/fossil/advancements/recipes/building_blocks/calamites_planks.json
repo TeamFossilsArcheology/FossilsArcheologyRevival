@@ -28,5 +28,6 @@
     "recipes": [
       "fossil:calamites_planks"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

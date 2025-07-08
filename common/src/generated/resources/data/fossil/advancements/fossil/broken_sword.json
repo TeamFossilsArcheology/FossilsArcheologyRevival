@@ -46,5 +46,6 @@
       "broken_sword",
       "broken_helmet"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

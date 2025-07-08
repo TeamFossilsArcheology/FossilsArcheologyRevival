@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:toy_scratching_post_jungle"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

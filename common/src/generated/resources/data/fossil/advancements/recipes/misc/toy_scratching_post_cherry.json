@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:toy_scratching_post_cherry"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

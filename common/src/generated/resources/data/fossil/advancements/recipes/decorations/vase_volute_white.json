@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:vase_volute_white"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

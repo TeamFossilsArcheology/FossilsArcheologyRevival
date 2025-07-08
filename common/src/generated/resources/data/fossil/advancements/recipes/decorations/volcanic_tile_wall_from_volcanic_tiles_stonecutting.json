@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:volcanic_tile_wall_from_volcanic_tiles_stonecutting"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

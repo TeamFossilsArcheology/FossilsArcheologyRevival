@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:ancient_stone_stairs_from_ancient_stone_stonecutting"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -28,5 +28,6 @@
     "recipes": [
       "fossil:cordaites_planks"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

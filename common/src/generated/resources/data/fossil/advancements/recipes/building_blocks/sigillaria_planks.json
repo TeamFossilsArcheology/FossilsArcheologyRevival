@@ -28,5 +28,6 @@
     "recipes": [
       "fossil:sigillaria_planks"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

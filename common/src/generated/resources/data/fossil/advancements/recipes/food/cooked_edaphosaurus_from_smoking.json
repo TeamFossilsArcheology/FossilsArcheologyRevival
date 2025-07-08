@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:cooked_edaphosaurus_from_smoking"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

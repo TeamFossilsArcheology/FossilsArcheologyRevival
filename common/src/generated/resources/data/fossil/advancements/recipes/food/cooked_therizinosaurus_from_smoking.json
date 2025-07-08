@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:cooked_therizinosaurus_from_smoking"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

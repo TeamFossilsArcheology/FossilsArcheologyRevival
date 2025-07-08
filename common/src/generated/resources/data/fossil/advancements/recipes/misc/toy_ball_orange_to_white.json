@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:toy_ball_orange_to_white"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

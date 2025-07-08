@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:cooked_gallimimus"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

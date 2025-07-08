@@ -66,5 +66,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "fossil:blocks/permafrost_block"
 }

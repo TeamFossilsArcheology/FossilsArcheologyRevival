@@ -85,5 +85,6 @@
       "fossil_shale",
       "skull"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

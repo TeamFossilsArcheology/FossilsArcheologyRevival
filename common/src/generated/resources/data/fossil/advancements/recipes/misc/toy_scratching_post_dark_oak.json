@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:toy_scratching_post_dark_oak"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:sigillaria_stairs"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

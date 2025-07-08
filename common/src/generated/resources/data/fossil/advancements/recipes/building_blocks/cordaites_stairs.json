@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:cordaites_stairs"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

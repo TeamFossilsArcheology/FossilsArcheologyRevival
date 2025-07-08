@@ -28,5 +28,6 @@
     "recipes": [
       "fossil:bone_leggings"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

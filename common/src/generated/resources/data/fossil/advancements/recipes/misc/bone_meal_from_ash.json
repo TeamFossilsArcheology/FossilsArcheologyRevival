@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:bone_meal_from_ash"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

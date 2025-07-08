@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:essence_stunted"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

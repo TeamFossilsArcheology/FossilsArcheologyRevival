@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:sigillaria_fence"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

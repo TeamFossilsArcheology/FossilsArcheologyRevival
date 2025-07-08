@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:palm_slab"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

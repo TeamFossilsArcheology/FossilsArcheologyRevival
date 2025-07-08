@@ -28,5 +28,6 @@
     "recipes": [
       "fossil:sifter"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

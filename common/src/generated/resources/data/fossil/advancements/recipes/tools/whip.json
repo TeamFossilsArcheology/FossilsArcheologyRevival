@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:whip"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

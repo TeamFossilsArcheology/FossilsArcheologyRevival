@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:toy_tethered_log_mangrove"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

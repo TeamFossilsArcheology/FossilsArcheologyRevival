@@ -33,5 +33,6 @@
     [
       "analyzer"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

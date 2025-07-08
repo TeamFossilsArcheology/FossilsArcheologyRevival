@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:ancient_wood_slab"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -33,5 +33,6 @@
     [
       "tar_drop"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

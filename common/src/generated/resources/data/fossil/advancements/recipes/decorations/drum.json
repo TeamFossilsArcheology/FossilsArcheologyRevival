@@ -30,5 +30,6 @@
     "recipes": [
       "fossil:drum"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

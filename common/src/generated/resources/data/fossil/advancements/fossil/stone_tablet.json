@@ -33,5 +33,6 @@
     [
       "stone_tablet"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

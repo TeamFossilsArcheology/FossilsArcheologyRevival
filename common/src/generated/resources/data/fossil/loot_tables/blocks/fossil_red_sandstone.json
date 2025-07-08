@@ -153,5 +153,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "fossil:blocks/fossil_red_sandstone"
 }

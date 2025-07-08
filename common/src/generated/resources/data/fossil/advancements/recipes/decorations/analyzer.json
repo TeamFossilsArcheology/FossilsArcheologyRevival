@@ -28,5 +28,6 @@
     "recipes": [
       "fossil:analyzer"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }
