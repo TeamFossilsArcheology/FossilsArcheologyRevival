@@ -1,10 +1,11 @@
-package com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon;
+package com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon;
 
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
+import org.hiedacamellia.seeddelight.registry.BlockRegistry;
 import org.hiedacamellia.seeddelight.registry.ItemRegistry;
 import vectorwing.farmersdelight.common.block.PieBlock;
 
-import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.FarmersDelightCompat.getPieValue;
+import static com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.FarmersDelightCompat.getPieValue;
 
 public class SeedDelightCompat {
     public static void registerFoodMappings() {
@@ -36,7 +37,7 @@ public class SeedDelightCompat {
         FoodMappings.addPlant(ItemRegistry.RosehipCake.get());
         FoodMappings.addMeat(ItemRegistry.CherryPork.get());
         FoodMappings.addPlant(ItemRegistry.MilkCherryMouss.get());
-        FoodMappings.addPlant(ItemRegistry.RosehipPie.get(), getPieValue((PieBlock) org.hiedacamellia.seeddelight.registry.BlockRegistry.RosehipPie.get()));
+        FoodMappings.addPlant(ItemRegistry.RosehipPie.get(), getPieValue((PieBlock) BlockRegistry.RosehipPie.get()));
         FoodMappings.addPlant(ItemRegistry.RosehipPieSlice.get());
         //30/30 added
     }

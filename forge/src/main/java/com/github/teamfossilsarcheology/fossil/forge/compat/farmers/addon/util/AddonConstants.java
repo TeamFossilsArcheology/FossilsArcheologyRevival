@@ -25,7 +25,6 @@ public class AddonConstants {
         register("ends_delight", EndDelightCompat::registerFoodMappings);
         register("farmersrespite", FarmerRespiteCompat::registerFoodMappings);
         register("festive_delight", FestiveDelightCompat::registerFoodMappings);
-        register("italian_delight", ItalianDelightCompat::registerFoodMappings);
         register("miners_delight", MinerDelightCompat::registerFoodMappings);
         register("nethersdelight", NetherDelightCompat::registerFoodMappings);
         register("oceansdelight", OceanDelightCompat::registerFoodMappings);

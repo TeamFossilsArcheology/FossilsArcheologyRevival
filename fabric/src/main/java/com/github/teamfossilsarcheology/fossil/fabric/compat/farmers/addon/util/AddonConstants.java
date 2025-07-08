@@ -13,7 +13,7 @@ public class AddonConstants {
         register("brewinandchewin", BrewinAndChewinCompat::registerFoodMappings);
         register("casualness_delight", CasualnessDelightCompat::registerFoodMappings);
         register("culturaldelights", CulturalDelightCompat::registerFoodMappings);
-        register("coffee_delight", CoffeeDelightCompat::registerFoodMappings);
+        register("endersdelight", EnderDelightCompat::registerFoodMappings);
         register("ends_delight", EndDelightCompat::registerFoodMappings);
         register("expandeddelight", ExpandedDelightCompat::registerFoodMappings);
         register("farmersrespite", FarmerRespiteCompat::registerFoodMappings);
@@ -21,6 +21,7 @@ public class AddonConstants {
         register("nethersdelight", NetherDelightCompat::registerFoodMappings);
         register("oceansdelight", OceanDelightCompat::registerFoodMappings);
         register("pineapple_delight", PineappleDelightCompat::registerFoodMappings);
+        register("seeddelight", SeedDelightCompat::registerFoodMappings);
     }
 
     public static void registerAddonFoodMappings() {
