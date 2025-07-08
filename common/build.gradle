@@ -21,6 +21,7 @@ dependencies {
     modCompileOnly "software.bernie.geckolib:geckolib-forge-$minecraft_version:$gecko_lib_version"
     compileOnly "com.eliotlash.mclib:mclib:20"
     modCompileOnly "com.github.darkpred.morehitboxes:morehitboxes-common-$minecraft_version:$more_hitboxes_version"
+    modCompileOnly "com.github.glitchfiend:TerraBlender-common:$minecraft_version-$terra_blender_version"
 
     //Optional
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:$rei_version"

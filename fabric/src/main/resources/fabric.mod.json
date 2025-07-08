@@ -43,15 +43,15 @@
     "fabric": "*",
     "minecraft": "~${minecraft_version_range_lower}",
     "java": ">=${java_version}",
-    "architectury": ">=8.1.73",
-    "geckolib": ">=4.1.0",
-    "terrablender": ">=2.2",
-    "cardinal-components-base": ">=5.1",
+    "architectury": ">=9.0.8",
+    "geckolib": ">=4.4.7",
+    "terrablender": ">=3",
+    "cardinal-components-base": ">=5.2.3",
     "morehitboxes": ">=1.9.1"
   },
   "suggests": {
     "cloth_config": ">=10",
-    "roughlyenoughitems": ">=11"
+    "roughlyenoughitems": ">=12"
   },
   "custom": {
     "cardinal-components": [
