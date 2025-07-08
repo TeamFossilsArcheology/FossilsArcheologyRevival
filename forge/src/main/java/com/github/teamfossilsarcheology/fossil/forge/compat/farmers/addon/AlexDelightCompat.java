@@ -4,7 +4,7 @@ import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 import com.ncpbails.alexsmobs.item.ModItems;
 
 public class AlexDelightCompat {
-    public static void registerAlexDelightFoodMappings() {
+    public static void registerFoodMappings() {
         FoodMappings.addMeat(ModItems.RAW_BISON.get());
         FoodMappings.addMeat(ModItems.COOKED_BISON.get());
         FoodMappings.addMeat(ModItems.RAW_BUNFUNGUS.get());

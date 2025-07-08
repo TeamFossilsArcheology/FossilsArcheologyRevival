@@ -5,7 +5,7 @@ import com.ianm1647.expandeddelight.block.BlockList;
 import com.ianm1647.expandeddelight.item.ItemList;
 
 public class ExpandedDelightCompat {
-    public static void registerExpandedDelightFoodMappings() {
+    public static void registerFoodMappings() {
         FoodMappings.addPlant(ItemList.RAW_CINNAMON, 5);
         FoodMappings.addPlant(ItemList.GROUND_CINNAMON, 15);
         FoodMappings.addPlant(ItemList.ASPARAGUS_SEEDS, 5);

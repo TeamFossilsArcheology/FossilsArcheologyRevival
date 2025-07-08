@@ -4,7 +4,7 @@ import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 import com.va11halla.casualness_delight.registry.ItemRegistry;
 
 public class CasualnessDelightCompat {
-    public static void registerCasualnessDelightFoodMappings() {
+    public static void registerFoodMappings() {
         FoodMappings.addFish(ItemRegistry.FishAndChips.get());
         FoodMappings.addPlant(ItemRegistry.YorkshirePudding.get());
         FoodMappings.addMeat(ItemRegistry.BeefNoodles.get());

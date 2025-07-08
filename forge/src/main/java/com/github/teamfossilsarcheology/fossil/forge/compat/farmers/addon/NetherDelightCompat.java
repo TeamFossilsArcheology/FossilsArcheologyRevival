@@ -5,7 +5,7 @@ import com.nethersdelight.core.registry.NDBlocks;
 import com.nethersdelight.core.registry.NDItems;
 
 public class NetherDelightCompat {
-    public static void registerNetherDelightFoodMappings() {
+    public static void registerFoodMappings() {
         FoodMappings.addMeat(NDItems.GRILLED_STRIDER.get());
         FoodMappings.addMeat(NDItems.GROUND_STRIDER.get());
         FoodMappings.addMeat(NDItems.HOGLIN_EAR.get());

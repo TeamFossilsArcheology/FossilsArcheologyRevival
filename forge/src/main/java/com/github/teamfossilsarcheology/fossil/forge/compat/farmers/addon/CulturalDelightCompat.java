@@ -7,7 +7,7 @@ import com.ncpbails.culturaldelights.item.ModItems;
 import java.util.Objects;
 
 public class CulturalDelightCompat {
-    public static void registerCulturalDelightFoodMappings() {
+    public static void registerFoodMappings() {
         FoodMappings.addPlant(ModItems.CUCUMBER_SEEDS.get(), 5);
         FoodMappings.addPlant(ModItems.CORN_KERNELS.get(), 5);
         FoodMappings.addPlant(ModItems.EGGPLANT_SEEDS.get(), 5);

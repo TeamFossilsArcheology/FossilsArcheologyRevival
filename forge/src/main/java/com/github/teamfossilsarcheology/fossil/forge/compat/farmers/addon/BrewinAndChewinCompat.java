@@ -4,7 +4,7 @@ import com.brewinandchewin.core.registry.BCItems;
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 
 public class BrewinAndChewinCompat {
-    public static void registerBrewinAndChewinFoodMappings() {
+    public static void registerFoodMappings() {
         FoodMappings.addPlant(BCItems.KIMCHI.get());
         FoodMappings.addMeat(BCItems.JERKY.get());
         FoodMappings.addPlant(BCItems.PICKLED_PICKLES.get());

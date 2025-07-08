@@ -5,7 +5,7 @@ import net.mcreator.festivedelight.init.FestiveDelightModBlocks;
 import net.mcreator.festivedelight.init.FestiveDelightModItems;
 
 public class FestiveDelightCompat {
-    public static void registerFestiveDelightFoodMappings() {
+    public static void registerFoodMappings() {
         FoodMappings.addMeat(FestiveDelightModItems.FESTIVE_CHIKEN.get());
         FoodMappings.addPlant(FestiveDelightModItems.CINNAMON_POWDER.get(), 10);
         FoodMappings.addPlant(FestiveDelightModItems.GINGERBREAD_DOUGH.get(), 10);

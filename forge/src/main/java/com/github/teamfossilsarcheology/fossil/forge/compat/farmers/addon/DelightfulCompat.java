@@ -3,14 +3,13 @@ package com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon;
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 import net.brdle.delightful.common.block.DelightfulBlocks;
 import net.brdle.delightful.common.item.DelightfulItems;
+import net.minecraftforge.fml.ModList;
 import vectorwing.farmersdelight.common.block.PieBlock;
 
 import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.FarmersDelightCompat.getPieValue;
-import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.ArsNouveauAndDelightfulCompat.registerArsNouveauDelightfulFoodMappings;
-import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.BYGAndDelightfuLCompat.registerBYGDelightfulFoodMappings;
 
 public class DelightfulCompat {
-    public static void registerDelightfulFoodMappings(boolean isBygInstalled, boolean isArsNouveauInstalled) {
+    public static void registerFoodMappings() {
         FoodMappings.addPlant(DelightfulItems.ACORN.get());
         FoodMappings.addMeat(DelightfulItems.ANIMAL_FAT.get());
         FoodMappings.addPlant(DelightfulItems.CACTUS_FLESH.get());
@@ -45,11 +44,11 @@ public class DelightfulCompat {
         FoodMappings.addPlant(DelightfulItems.SALMONBERRY_PIE.get(), getPieValue((PieBlock) DelightfulBlocks.SALMONBERRY_PIE.get()));
         FoodMappings.addPlant(DelightfulItems.PUMPKIN_PIE_SLICE.get());
         //24/33 added, 9 excluded
-        if (isBygInstalled) {
-            registerBYGDelightfulFoodMappings();
+        if (ModList.get().isLoaded("byg")) {//Biomes you'll go
+            BYGAndDelightfuLCompat.registerFoodMappings();
         }
-        if (isArsNouveauInstalled) {
-            registerArsNouveauDelightfulFoodMappings();
+        if (ModList.get().isLoaded("ars_nouveau")) {
+            ArsNouveauAndDelightfulCompat.registerFoodMappings();
         }
     }
 }

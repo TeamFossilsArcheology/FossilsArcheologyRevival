@@ -1,29 +1,51 @@
 package com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.util;
 
+import com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.*;
+import net.minecraftforge.fml.ModList;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class AddonConstants {
-    public static final String[] SUPPORTED_ADDONS = {
-            "oceansdelight", //Ocean's Delight
-            "nethersdelight", //Nether's Delight
-            "delightful", //Delightful
-            "endersdelight", //Ender's Delight
-            "ends_delight", //End's Delight(not it isn't the same mod as the above one)
-            "crabbersdelight", //Crabber's Delight
-            "miners_delight", //Miner's Delight +
-            "corn_delight", //Corn Delight
-            "culturaldelights", //Cultural Delights
-            "pineapple_delight", //Pineapple Delight
-            "largemeals", //Large Meals
-            "festive_delight", //Festive Delight
-            "butchersdelight", //Butcher's Delight
-            "butchersdelightfoods", //Butcher's Delight Foods
-            "coffee_delight", //Coffee Delight
-            "casualness_delight", //Casualness Delight
-            "italian_delight", //Italian's Delight
-            "seeddelight", //Seed Delight
-            "argentinas_delight", //Argentina's Delight
-            "honeyexpansion", //Honey Expansion
-            "brewinandchewin", //Brewin and Chewin
-            "alexsdelight", //Alex's delight
-            "farmersrespite" //Farmer's Respite
-    };
+    private static final Map<String, Runnable> SUPPORTED_ADDONS = new HashMap<>();
+
+    static {
+        register("alexsdelight", AlexDelightCompat::registerFoodMappings);
+        register("argentinas_delight", ArgentinaDelightCompat::registerFoodMappings);
+        register("brewinandchewin", BrewinAndChewinCompat::registerFoodMappings);
+        register("butchersdelight", ButcherDelightFoodCompat::registerFoodMappings);
+        register("butchersdelightfoods", ButcherDelightFoodCompat::registerFoodMappings);
+        register("casualness_delight", CasualnessDelightCompat::registerFoodMappings);
+        register("coffee_delight", CoffeeDelightCompat::registerFoodMappings);
+        register("corn_delight", CornDelightCompat::registerFoodMappings);
+        register("culturaldelights", CulturalDelightCompat::registerFoodMappings);
+        register("crabbersdelight", CrabberDelightCompat::registerFoodMappings);
+        register("delightful", DelightfulCompat::registerFoodMappings);
+        register("endersdelight", EnderDelightCompat::registerFoodMappings);
+        register("ends_delight", EndDelightCompat::registerFoodMappings);
+        register("farmersrespite", FarmerRespiteCompat::registerFoodMappings);
+        register("festive_delight", FestiveDelightCompat::registerFoodMappings);
+        register("honeyexpansion", HoneyExpansionCompat::registerFoodMappings);
+        register("italian_delight", ItalianDelightCompat::registerFoodMappings);
+        register("largemeals", LargeMealsCompat::registerFoodMappings);
+        register("miners_delight", MinerDelightCompat::registerFoodMappings);
+        register("nethersdelight", NetherDelightCompat::registerFoodMappings);
+        register("oceansdelight", OceanDelightCompat::registerFoodMappings);
+        register("pineapple_delight", PineappleDelightCompat::registerFoodMappings);
+        register("seeddelight", SeedDelightCompat::registerFoodMappings);
+    }
+
+    public static void registerAddonFoodMappings() {
+        //We cycle through each addon and check if it is loaded
+        for (Map.Entry<String, Runnable> entry : AddonConstants.SUPPORTED_ADDONS.entrySet()) {
+            if (!ModList.get().isLoaded(entry.getKey())) {
+                continue;
+            }
+            entry.getValue().run();
+        }
+    }
+
+    private static void register(String modId, Runnable function) {
+        SUPPORTED_ADDONS.put(modId, function);
+    }
 }

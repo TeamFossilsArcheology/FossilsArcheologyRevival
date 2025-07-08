@@ -9,7 +9,7 @@ import vectorwing.farmersdelight.common.block.PieBlock;
 import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.FarmersDelightCompat.getPieValue;
 
 public class BYGAndDelightfuLCompat {
-    public static void registerBYGDelightfulFoodMappings() {
+    public static void registerFoodMappings() {
         FoodMappings.addPlant(BYGItems.BLUEBERRY_PIE.get(), getPieValue((PieBlock) DelightfulBlocks.BLUEBERRY_PIE.get()));
         FoodMappings.addPlant(DelightfulItems.BLUEBERRY_PIE_SLICE.get());
         FoodMappings.addPlant(BYGItems.CRIMSON_BERRY_PIE.get(), getPieValue((PieBlock) DelightfulBlocks.CRIMSON_BERRY_PIE.get()));

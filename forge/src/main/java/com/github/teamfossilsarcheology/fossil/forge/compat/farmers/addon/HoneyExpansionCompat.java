@@ -5,7 +5,7 @@ import com.spiteful_raccoon.honeyexpansion.init.BlockInit;
 import com.spiteful_raccoon.honeyexpansion.init.ItemInit;
 
 public class HoneyExpansionCompat {
-    public static void registerHoneyExpansionFoodMappings() {
+    public static void registerFoodMappings() {
         FoodMappings.addPlant(ItemInit.HONEY_BERRIES.get());
         FoodMappings.addPlant(ItemInit.SLICE_OF_HONEY_CAKE.get());
         FoodMappings.addPlant(ItemInit.HONEY_COOKIE_SAUSAGE.get());

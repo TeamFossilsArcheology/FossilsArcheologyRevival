@@ -4,7 +4,7 @@ import club.someoneice.cofe_delight.init.ItemInit;
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 
 public class CoffeeDelightCompat {
-    public static void registerCoffeeDelightFoodMappings() {
+    public static void registerFoodMappings() {
         FoodMappings.addPlant(ItemInit.COFFEE_BERRIES, 5);
         FoodMappings.addPlant(ItemInit.COFFEE_FLOUR, 15);
         FoodMappings.addPlant(ItemInit.COFFEE_BEANS);

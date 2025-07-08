@@ -6,7 +6,7 @@ import dev.sterner.culturaldelights.common.registry.CDObjects;
 import java.util.Objects;
 
 public class CulturalDelightCompat {
-    public static void registerCulturalDelightFoodMappings() {
+    public static void registerFoodMappings() {
         FoodMappings.addPlant(CDObjects.CUCUMBER_SEEDS, 5);
         FoodMappings.addPlant(CDObjects.CORN_KERNELS, 5);
         FoodMappings.addPlant(CDObjects.EGGPLANT_SEEDS, 5);

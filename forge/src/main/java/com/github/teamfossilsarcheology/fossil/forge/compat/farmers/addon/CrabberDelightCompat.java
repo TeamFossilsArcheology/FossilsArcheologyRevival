@@ -4,7 +4,7 @@ import alabaster.crabbersdelight.common.registry.ModItems;
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 
 public class CrabberDelightCompat {
-    public static void registerCrabberDelightFoodMappings() {
+    public static void registerFoodMappings() {
         FoodMappings.addFish(ModItems.BISQUE.get()); //Dish made of fish+plants, so I considered it a fish
         FoodMappings.addFish(ModItems.CLAM_BAKE.get()); //Dish made of fish+plants, so I considered it a fish
         FoodMappings.addMeat(ModItems.CLAM_CHOWDER.get()); //Dish made of clam meat+plants, so I considered it a meat

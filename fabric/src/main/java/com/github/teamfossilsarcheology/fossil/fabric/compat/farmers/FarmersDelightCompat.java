@@ -5,17 +5,6 @@ import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 import com.nhoryzon.mc.farmersdelight.block.PieBlock;
 import com.nhoryzon.mc.farmersdelight.registry.BlocksRegistry;
 import com.nhoryzon.mc.farmersdelight.registry.ItemsRegistry;
-import net.fabricmc.loader.api.FabricLoader;
-
-import static com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon.CasualnessDelightCompat.registerCasualnessDelightFoodMappings;
-import static com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon.CoffeeDelightCompat.registerCoffeeDelightFoodMappings;
-import static com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon.CulturalDelightCompat.registerCulturalDelightFoodMappings;
-import static com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon.EndDelightCompat.registerEndDelightFoodMappings;
-import static com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon.ExpandedDelightCompat.registerExpandedDelightFoodMappings;
-import static com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon.FarmerRespiteCompat.registerFarmerRespiteFoodMappings;
-import static com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon.NetherDelightCompat.registerNetherDelightFoodMappings;
-import static com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon.OceanDelightCompat.registerOceanDelightFoodMappings;
-import static com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon.PineappleDelightCompat.registerPineappleDelightFoodMappings;
 
 public class FarmersDelightCompat {
     public static void registerFoodMappings() {
@@ -102,49 +91,7 @@ public class FarmersDelightCompat {
         FoodMappings.addFish(ItemsRegistry.COD_ROLL.get());
         FoodMappings.addFish(ItemsRegistry.COD_ROLL.get());
 
-        registerAddonFoodMappings();
-    }
-
-    public static void registerAddonFoodMappings() {
-        //We cycle through each addon and check if it is loaded
-        for (String addonId : AddonConstants.SUPPORTED_ADDONS) {
-            if (!FabricLoader.getInstance().isModLoaded(addonId)) {
-                continue;
-            }
-            registerFoodMappingsByAddonId(addonId);
-        }
-    }
-
-    public static void registerFoodMappingsByAddonId(String addonId) {
-        switch (addonId) {
-            case "oceansdelight" -> {
-                registerOceanDelightFoodMappings();
-            }
-            case "ends_delight" -> {
-                registerEndDelightFoodMappings();
-            }
-            case "farmersrespite" -> {
-                registerFarmerRespiteFoodMappings();
-            }
-            case "pineapple_delight" -> {
-                registerPineappleDelightFoodMappings();
-            }
-            case "culturaldelights" -> {
-                registerCulturalDelightFoodMappings();
-            }
-            case "coffee_delight" -> {
-                registerCoffeeDelightFoodMappings();
-            }
-            case "nethersdelight" -> {
-                registerNetherDelightFoodMappings();
-            }
-            case "casualness_delight" -> {
-                registerCasualnessDelightFoodMappings();
-            }
-            case "expandeddelight" -> {
-                registerExpandedDelightFoodMappings();
-            }
-        }
+        AddonConstants.registerAddonFoodMappings();
     }
 
     public static int getPieValue(PieBlock block) {

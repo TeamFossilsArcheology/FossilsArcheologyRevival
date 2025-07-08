@@ -8,7 +8,7 @@ import com.nhoryzon.mc.farmersdelight.block.PieBlock;
 import static com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.FarmersDelightCompat.getPieValue;
 
 public class FarmerRespiteCompat {
-    public static void registerFarmerRespiteFoodMappings() {
+    public static void registerFoodMappings() {
         FoodMappings.addPlant(FRBlocks.WILD_TEA_BUSH, 20);
         FoodMappings.addPlant(FRItems.TEA_SEEDS, 5);
         FoodMappings.addPlant(FRItems.GREEN_TEA_LEAVES, 5);

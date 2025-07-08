@@ -8,7 +8,7 @@ import com.nhoryzon.mc.farmersdelight.block.PieBlock;
 import static com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.FarmersDelightCompat.getPieValue;
 
 public class EndDelightCompat {
-    public static void registerEndDelightFoodMappings() {
+    public static void registerFoodMappings() {
         FoodMappings.addPlant(ModItem.AssortedSalad.get());
         FoodMappings.addPlant(ModItem.ChorusCookie.get());
         FoodMappings.addPlant(ModItem.ChorusFruitPie.get(), getPieValue((PieBlock) ModBlock.ChorusFruitPie));

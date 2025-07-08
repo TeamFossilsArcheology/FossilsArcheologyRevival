@@ -1,15 +1,37 @@
 package com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon.util;
 
+import com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon.*;
+import net.fabricmc.loader.api.FabricLoader;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class AddonConstants {
-    public static final String[] SUPPORTED_ADDONS = {
-            "oceansdelight", //Ocean's Delight
-            "ends_delight", //End's Delight
-            "farmersrespite", //Farmer's Respite
-            "pineapple_delight", //Pineapple Delight
-            "culturaldelights", //Cultural Delights
-            "coffee_delight", //Coffee Delight
-            "nethersdelight", //Nether's Delight
-            "casualness_delight", //Casualness Delight
-            "expandeddelight" //Expanded Delight
-    };
+    private static final Map<String, Runnable> SUPPORTED_ADDONS = new HashMap<>();
+
+    static {
+        register("casualness_delight", CasualnessDelightCompat::registerFoodMappings);
+        register("culturaldelights", CulturalDelightCompat::registerFoodMappings);
+        register("coffee_delight", CoffeeDelightCompat::registerFoodMappings);
+        register("ends_delight", EndDelightCompat::registerFoodMappings);
+        register("expandeddelight", ExpandedDelightCompat::registerFoodMappings);
+        register("farmersrespite", FarmerRespiteCompat::registerFoodMappings);
+        register("nethersdelight", NetherDelightCompat::registerFoodMappings);
+        register("oceansdelight", OceanDelightCompat::registerFoodMappings);
+        register("pineapple_delight", PineappleDelightCompat::registerFoodMappings);
+    }
+
+    public static void registerAddonFoodMappings() {
+        //We cycle through each addon and check if it is loaded
+        for (Map.Entry<String, Runnable> entry : SUPPORTED_ADDONS.entrySet()) {
+            if (!FabricLoader.getInstance().isModLoaded(entry.getKey())) {
+                continue;
+            }
+            entry.getValue().run();
+        }
+    }
+
+    private static void register(String modId, Runnable function) {
+        SUPPORTED_ADDONS.put(modId, function);
+    }
 }

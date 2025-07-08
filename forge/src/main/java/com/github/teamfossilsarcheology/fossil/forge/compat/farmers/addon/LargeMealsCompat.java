@@ -8,7 +8,7 @@ import vectorwing.farmersdelight.common.block.PieBlock;
 import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.FarmersDelightCompat.getPieValue;
 
 public class LargeMealsCompat {
-    public static void registerLargeMealsFoodMappings() {
+    public static void registerFoodMappings() {
         FoodMappings.addFish(ModItems.PUFFERFISH_BROTH.get());
         FoodMappings.addPlant(ModItems.RED_SOUP.get());
         FoodMappings.addPlant(ModItems.POTATO_SOUP.get());

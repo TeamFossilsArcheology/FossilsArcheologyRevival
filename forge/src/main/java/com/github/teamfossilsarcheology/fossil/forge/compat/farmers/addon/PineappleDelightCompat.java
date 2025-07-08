@@ -8,7 +8,7 @@ import vectorwing.farmersdelight.common.block.PieBlock;
 import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.FarmersDelightCompat.getPieValue;
 
 public class PineappleDelightCompat {
-    public static void registerPineappleDelightFoodMappings() {
+    public static void registerFoodMappings() {
         FoodMappings.addPlant(ItemList.PINEAPPLE.get());
         FoodMappings.addPlant(ItemList.PINEAPPLE_FRIED_RICE.get());
         FoodMappings.addPlant(ItemList.PINEAPPLE_PIE_SIDE.get());

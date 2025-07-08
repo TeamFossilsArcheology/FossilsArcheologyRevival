@@ -4,7 +4,7 @@ import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 import net.mcreator.italiandelight.init.ItalianDelightModItems;
 
 public class ItalianDelightCompat {
-    public static void registerItalianDelightFoodMappings() {
+    public static void registerFoodMappings() {
         FoodMappings.addPlant(ItalianDelightModItems.PIZZA_MARGHERITA_SLICE.get()); //Normally I wouldn't count pizzas as they contain cheese, but this mod is basically mostly pizzas, so I will make an exception
         FoodMappings.addPlant(ItalianDelightModItems.PIZZA_DIAVOLA_SLICE.get());
         FoodMappings.addPlant(ItalianDelightModItems.GRAPE_SEEDS.get(), 5);

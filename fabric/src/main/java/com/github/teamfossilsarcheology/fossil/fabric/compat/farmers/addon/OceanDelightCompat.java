@@ -4,7 +4,7 @@ import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 import com.scouter.oceansdelight.items.ODItems;
 
 public class OceanDelightCompat {
-    public static void registerOceanDelightFoodMappings() {
+    public static void registerFoodMappings() {
         FoodMappings.addFish(ODItems.TENTACLES);
         FoodMappings.addFish(ODItems.CUT_TENTACLES);
         FoodMappings.addFish(ODItems.SQUID_RINGS);
