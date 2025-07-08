@@ -245,7 +245,7 @@ public abstract class FoodMappings {
     }
 
     public static void addPlant(Item item) {
-        int food = item.getFoodProperties() != null ? item.getFoodProperties().getNutrition() * 7 : 20;
+        int food = item.getFoodProperties() != null ? item.getFoodProperties().getNutrition() * 5 : 17;
         addToMappings(item, food, Diet.HERBIVORE);
         addToMappings(item, food, Diet.OMNIVORE);
     }

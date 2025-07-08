@@ -95,6 +95,6 @@ public class FarmersDelightCompat {
     }
 
     public static int getPieValue(PieBlock block) {
-        return block.pieSlice.getFoodProperties().getNutrition() * PieBlock.MAX_BITES;
+        return block.pieSlice.getFoodProperties().getNutrition() * PieBlock.MAX_BITES * 5;
     }
 }
