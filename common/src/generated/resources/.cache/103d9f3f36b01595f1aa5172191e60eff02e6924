@@ -1,4 +1,4 @@
-// 1.19.3	2025-06-22T00:46:24.6574309	Registries
+// 1.19.3	2025-07-20T20:55:01.0009687	Registries
 0a18cb6c39dcc0e3f588b34606cabd656e0c267f data/fossil/dimension_type/anu_lair.json
 0a18cb6c39dcc0e3f588b34606cabd656e0c267f data/fossil/dimension_type/treasure_room.json
 8defbd79b2fd744928d2da7756c7ee3cb334f678 data/fossil/forge/biome_modifier/add_alligator_gar.json
@@ -26,7 +26,7 @@ e1fa5a26e45c184a1d04d18a574e5740a6f4a4ee data/fossil/worldgen/configured_feature
 70e0a95185ef5bd26f1cb6bb7dd0f71696ef65e3 data/fossil/worldgen/configured_feature/tempskya_tree.json
 b1392ac5350b24c15b6b858453be684994643da6 data/fossil/worldgen/configured_feature/volcano_cone.json
 6a28f32ef14eefc56504e4f7ded1a286f2c77c4c data/fossil/worldgen/configured_feature/volcano_vent.json
-775656a6d623c5583af4c1e17649d2a5ab8a2192 data/fossil/worldgen/placed_feature/moai_statue.json
+8815ce45a5b920fe0ce10db04f7f55e4bc499015 data/fossil/worldgen/placed_feature/moai_statue.json
 e1d46fe3247fdbdddb26546f3a5d09ea55315544 data/fossil/worldgen/placed_feature/ore_amber.json
 10bca55cd6292f0562fe53d77c84ab7e8fd01612 data/fossil/worldgen/placed_feature/ore_amber_buried.json
 af3ab9f7019b5e1f446faa788b93c1901db98719 data/fossil/worldgen/placed_feature/ore_fossil_block_deep.json
@@ -62,7 +62,7 @@ e391afb4ede6ffbc58dc942bb9dc04814f2fbf0b data/fossil/worldgen/structure_set/azte
 e0fa0904643a54efb463088bb8922490cb602ff7 data/fossil/worldgen/structure_set/egyptian_academy.json
 dc7aab603c68dc3d5451e674bf4e6f275cc62826 data/fossil/worldgen/structure_set/fossil_site.json
 72a2789afd24b663bfdcf9ae5a91c53abcb45662 data/fossil/worldgen/structure_set/hell_boat.json
-5ae8c5d50d8af5bb9ef9ae4e902754d7a8b3aeae data/fossil/worldgen/structure_set/tar_site.json
+f194cd96d67c922bd18011b84356fb1c93af2a47 data/fossil/worldgen/structure_set/tar_site.json
 60e8a8048eb3503dd2befb75d0a1561989292702 data/fossil/worldgen/structure_set/treasure_room.json
 15c29ca8c08580844710ccd871f6c2a735c20260 data/fossil/worldgen/template_pool/anu_castle/north_east_pool.json
 bc2deb701422799b9ad33258b26c33c54e745c89 data/fossil/worldgen/template_pool/anu_castle/south_east_pool.json

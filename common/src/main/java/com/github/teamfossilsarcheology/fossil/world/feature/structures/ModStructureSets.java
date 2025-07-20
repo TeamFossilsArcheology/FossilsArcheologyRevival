@@ -58,6 +58,8 @@ public class ModStructureSets {
                 new RandomSpreadStructurePlacement(32, 8, RandomSpreadType.LINEAR, 1637066178)));
 
         context.register(TAR_SITE_KEY, new StructureSet(List.of(
+                StructureSet.entry(structures.getOrThrow(ModStructures.TAR_SITE_TENT_KEY), 3),
+                StructureSet.entry(structures.getOrThrow(ModStructures.TAR_SITE_TENT_SNOWY_KEY), 3),
                 StructureSet.entry(structures.getOrThrow(ModStructures.TAR_SITE_SMALL_KEY), 3),
                 StructureSet.entry(structures.getOrThrow(ModStructures.TAR_SITE_SMALL_SNOWY_KEY), 3),
                 StructureSet.entry(structures.getOrThrow(ModStructures.TAR_SITE_LARGE_KEY)),
