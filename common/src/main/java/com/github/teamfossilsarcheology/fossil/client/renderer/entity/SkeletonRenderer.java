@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.client.model.SkeletonModel;
 import com.github.teamfossilsarcheology.fossil.entity.PrehistoricSkeleton;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -69,6 +70,7 @@ public class SkeletonRenderer extends EntityRenderer<PrehistoricSkeleton> implem
         poseStack.pushPose();
         modelRenderTranslations = new Matrix4f(poseStack.last().pose());
         if (!animatable.isInvisibleTo(Minecraft.getInstance().player)) {
+            poseStack.mulPose(Axis.YP.rotationDegrees(180f - animatable.getYRot()));
             GeoRenderer.super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
         }
         poseStack.popPose();
