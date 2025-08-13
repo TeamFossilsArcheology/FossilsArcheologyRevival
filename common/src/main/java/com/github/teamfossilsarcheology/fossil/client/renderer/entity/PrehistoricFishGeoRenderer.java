@@ -26,7 +26,7 @@ public class PrehistoricFishGeoRenderer<T extends PrehistoricFish> extends Fixed
     protected void applyRotations(T animatable, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick) {
         super.applyRotations(animatable, poseStack, ageInTicks, rotationYaw, partialTick);
         if (animatable instanceof Nautilus) {
-            poseStack.mulPose(Vector3f.YP.rotation(180));
+            poseStack.mulPose(Vector3f.YP.rotationDegrees(180));
         }
     }
 
