@@ -24,7 +24,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
@@ -32,17 +31,13 @@ import software.bernie.geckolib.core.object.PlayState;
 import java.util.List;
 
 public class Nautilus extends PrehistoricFish {
-    public static final String ANIMATIONS = "nautilus.animation.json";
-    public static final String IDLE = "animation.nautilus.idle";
-    public static final String SWIM_BACKWARDS = "animation.nautilus.swim_backwards";
-    public static final String SWIM_FORWARDS = "animation.nautilus.swim_forwards";
-    public static final String SHELL_RETRACT = "animation.nautilus.shell_retract";
-    public static final String SHELL_HOLD = "animation.nautilus.shell_hold";
-    public static final String SHELL_EMERGE = "animation.nautilus.shell_emerge";
-    public static final String BEACHED = "animation.nautilus.land";
+    private static final String SWIM_BACKWARDS = "animation.nautilus.swim_backwards";
+    private static final String SWIM_FORWARDS = "animation.nautilus.swim_forwards";
+    private static final String SHELL_RETRACT = "animation.nautilus.shell_retract";
+    private static final String SHELL_EMERGE = "animation.nautilus.shell_emerge";
 
-    public static final RawAnimation SHELL_CLOSE = RawAnimation.begin().thenPlay(SHELL_RETRACT).thenPlay(SHELL_HOLD);
-    public static final RawAnimation SHELL_OPEN = RawAnimation.begin().thenPlay(SHELL_EMERGE);
+    private static final RawAnimation SHELL_CLOSE = RawAnimation.begin().thenPlay(SHELL_RETRACT);
+    private static final RawAnimation SHELL_OPEN = RawAnimation.begin().thenPlay(SHELL_EMERGE);
 
     private static final EntityDataAccessor<Boolean> IS_IN_SHELL = SynchedEntityData.defineId(Nautilus.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDimensions SHELL_DIMENSIONS = EntityDimensions.fixed(1, 0.5f);
@@ -228,16 +223,10 @@ public class Nautilus extends PrehistoricFish {
     }
 
     private PlayState shellPredicate(AnimationState<Nautilus> state) {
-        var ctrl = state.getController();
-        var anim = ctrl.getCurrentAnimation();
         if (state.getAnimatable().isInShell()) {
-            if (anim == null || state.isCurrentAnimation(SHELL_OPEN) && ctrl.getAnimationState() == AnimationController.State.STOPPED) {
-                state.setAnimation(SHELL_CLOSE);
-            }
-        } else {
-            if (anim != null && anim.animation().name().equals(SHELL_HOLD)) {
-                state.setAnimation(SHELL_OPEN);
-            }
+            state.setAnimation(SHELL_CLOSE);
+        } else if (state.isCurrentAnimation(SHELL_CLOSE)) {
+            state.setAnimation(SHELL_OPEN);
         }
         return PlayState.CONTINUE;
     }

@@ -37,7 +37,7 @@ public class PrehistoricGeoModel<T extends Prehistoric> extends DefaultedEntityG
                 CoreGeoBone root = getAnimationProcessor().getBone("pitch_root");
                 if (root != null) {
                     float pitch = Mth.lerp(animationState.getPartialTick(), animatable.xRotO, animatable.getXRot());
-                    root.setRotX(-pitch * Mth.DEG_TO_RAD + root.getRotX());
+                    root.setRotX(-pitch * Mth.DEG_TO_RAD);
                 }
             } else if (animatable instanceof PrehistoricFlying flying) {
                 CoreGeoBone root = getAnimationProcessor().getBone("pitch_root");
@@ -47,9 +47,9 @@ public class PrehistoricGeoModel<T extends Prehistoric> extends DefaultedEntityG
                     //GeckoLibCache.getInstance().parser.setValue("rider_rot_z", () -> Mth.lerp(animationEvent.getPartialTick(), flying.prevYaw, flying.currentYaw));
 
                     float pitch = Mth.lerp(animationState.getPartialTick(), flying.prevPitch, flying.currentPitch);
-                    root.setRotX(-pitch * Mth.DEG_TO_RAD + root.getRotX());
+                    root.setRotX(-pitch * Mth.DEG_TO_RAD);
                     float yaw = Mth.lerp(animationState.getPartialTick(), flying.prevYaw, flying.currentYaw);
-                    root.setRotZ(yaw * Mth.DEG_TO_RAD + root.getRotZ());
+                    root.setRotZ(yaw * Mth.DEG_TO_RAD);
                 }
             }
         }

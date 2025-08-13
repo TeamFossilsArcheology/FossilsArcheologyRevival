@@ -241,7 +241,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         setAnimationSpeed(controller, animationSpeed, state.getAnimationTick());
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
         if (newAnimation.isPresent()) {
-            state.setAnimation(RawAnimation.begin().then(newAnimation.get().animationName, PLAY_ONCE));
+            state.setAnimation(RawAnimation.begin().then(newAnimation.get().animationName, newAnimation.get().loop ? LOOP : PLAY_ONCE));
         }
         return PlayState.CONTINUE;
     }
