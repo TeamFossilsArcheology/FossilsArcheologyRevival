@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.forge;
 
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import net.minecraftforge.fml.loading.FMLLoader;
 import org.objectweb.asm.tree.ClassNode;
@@ -22,7 +23,7 @@ public class ForgeFossilMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (mixinClassName.contains("Debug") && !Version.debugEnabled()) {
+        if (FMLLoader.getLoadingModList().getModFileById(FossilMod.MOD_ID) == null || mixinClassName.contains("Debug") && !Version.debugEnabled()) {
             return false;
         }
         if (mixinClassName.contains("WalkNodeEvaluatorMixinOpt") && FMLLoader.getLoadingModList().getModFileById("radium") != null) {
