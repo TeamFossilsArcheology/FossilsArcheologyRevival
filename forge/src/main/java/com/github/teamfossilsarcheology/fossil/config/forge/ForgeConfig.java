@@ -67,6 +67,8 @@ public class ForgeConfig {
     public static final ForgeConfigSpec.IntValue MACHINE_TRANSFER_RATE;
     public static final ForgeConfigSpec.IntValue MACHINE_ENERGY_USAGE;
     public static final ForgeConfigSpec.IntValue FERN_TICK_RATE;
+    public static final ForgeConfigSpec.IntValue VERSION;
+
     private static final Builder CLIENT = new Builder();
     public static final ForgeConfigSpec CLIENT_SPEC;
     public static final Map<String, ForgeConfigSpec.BooleanValue> MAPPED_BOOLS = new Object2ObjectOpenHashMap<>();
@@ -85,7 +87,7 @@ public class ForgeConfig {
         GENERATE_MOAI = COMMON.boolEntry("True if Moai Statues are to generate naturally", FossilConfig.GENERATE_MOAI, true);
         GENERATE_VOLCANO_BIOME = COMMON.boolEntry("True if Volcano Biomes are to generate naturally", FossilConfig.GENERATE_VOLCANO_BIOME, true);
         FOSSIL_ORE_RARITY = COMMON.intEntry("Rarity of Fossil ore. Higher number = more tries per chunk", FossilConfig.FOSSIL_ORE_RARITY, 13, 1, 500);
-        PERMAFROST_RARITY = COMMON.intEntry("Rarity of Permafrost. Higher number = more tries per chunk", FossilConfig.PERMAFROST_RARITY, 7, 1, 500);
+        PERMAFROST_RARITY = COMMON.intEntry("Rarity of Permafrost. Higher number = more tries per chunk", FossilConfig.PERMAFROST_RARITY, 12, 1, 500);
         HELL_SHIP_SPACING = COMMON.intEntry("Maximum number of chunks between Ship Structures", FossilConfig.HELL_SHIP_SPACING, 24, 1, 100000000);
         HELL_SHIP_SEPARATION = COMMON.intEntry("Minimum number of chunks between Ship Structures", FossilConfig.HELL_SHIP_SEPARATION, 5, 1, 100000000);
         MOAI_RARITY = COMMON.intEntry("Rarity of Moai Statues. Higher number = more rare", FossilConfig.MOAI_RARITY, 400, 1, 100000000);
@@ -132,6 +134,7 @@ public class ForgeConfig {
         MACHINE_ENERGY_USAGE = COMMON.intEntry("How much Energy machines consume per tick", FossilConfig.MACHINE_ENERGY_USAGE, 1, 1, 1000000);
         COMMON.builder.pop();
         FERN_TICK_RATE = COMMON.intEntry("How often ferns try to grow. Higher number = less growth", FossilConfig.FERN_TICK_RATE, 2, 1, 1000000);
+        VERSION = COMMON.intEntry("Automated config version value. If value is < max some config values might get replaced", FossilConfig.VERSION, 0, 1, FossilConfig.VERSION_VALUE);
         COMMON_SPEC = COMMON.builder.build();
 
         CUSTOM_MAIN_MENU = CLIENT.boolEntry("True if the Custom Main Menu should be enabled", FossilConfig.CUSTOM_MAIN_MENU, true);

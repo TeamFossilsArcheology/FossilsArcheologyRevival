@@ -5,6 +5,7 @@ import com.github.teamfossilsarcheology.fossil.advancements.ModTriggers;
 import com.github.teamfossilsarcheology.fossil.client.ClientInit;
 import com.github.teamfossilsarcheology.fossil.client.model.block.PlantBlockModel;
 import com.github.teamfossilsarcheology.fossil.config.forge.ForgeConfig;
+import com.github.teamfossilsarcheology.fossil.config.forge.ForgeConfigFix;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.fish.Coelacanth;
@@ -63,6 +64,7 @@ public class ForgeFossilMod {
         modEventBus.addListener(this::onCommon);
         modEventBus.addListener(this::registerCaps);
         modEventBus.addListener(this::onModelRegistryEvent);
+        modEventBus.addListener(ForgeConfigFix::fixConfig);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ForgeConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ForgeConfig.CLIENT_SPEC);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ClientInit::immediate);

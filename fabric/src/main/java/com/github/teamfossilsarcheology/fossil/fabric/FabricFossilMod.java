@@ -52,7 +52,6 @@ public class FabricFossilMod implements ModInitializer, TerraBlenderApi, EntityC
         }
         initialized = true;
         MidnightConfig.init(FossilMod.MOD_ID, FossilConfigImpl.class);
-        FossilConfigImpl.initFabricConfig();
         FossilMod.init();
         SpawnRestrictionAccessor.callRegister(ModEntities.ALLIGATOR_GAR.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PrehistoricFish::canSpawn);
         SpawnRestrictionAccessor.callRegister(ModEntities.COELACANTH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Coelacanth::canCoelacanthSpawn);

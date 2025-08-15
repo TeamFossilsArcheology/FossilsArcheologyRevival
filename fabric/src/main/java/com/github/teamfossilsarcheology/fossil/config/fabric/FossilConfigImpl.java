@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.config.fabric;
 
+import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import eu.midnightdust.lib.config.MidnightConfig;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
@@ -38,7 +39,7 @@ public class FossilConfigImpl extends MidnightConfig {
     @MidnightConfig.Entry
     public static boolean generatePermafrost = true;
     @MidnightConfig.Entry(min = 1, max = 500)
-    public static int permafrostRarity = 7;
+    public static int permafrostRarity = 12;
     @MidnightConfig.Entry
     public static boolean generateVolcanicRock = true;
     @MidnightConfig.Entry
@@ -127,16 +128,9 @@ public class FossilConfigImpl extends MidnightConfig {
     public static boolean helmetOverlays = true;
     @MidnightConfig.Entry(min = 1, max = 1000000)
     public static int fernTickRate = 2;
-    private static final Map<String, Field> MAPPED_ENTRIES = new Object2ObjectOpenHashMap<>();
-
-    public static void initFabricConfig() {
-        Field[] allFields = FossilConfigImpl.class.getDeclaredFields();
-        for (Field field : allFields) {
-            if (field.getAnnotation(Entry.class) != null) {
-                MAPPED_ENTRIES.put(field.getName(), field);
-            }
-        }
-    }
+    @MidnightConfig.Entry(min = 1, max = FossilConfig.VERSION_VALUE)
+    public static int version = 0;
+    public static final Map<String, Field> MAPPED_ENTRIES = new Object2ObjectOpenHashMap<>();
 
     public static boolean isEnabled(String field) {
         try {

@@ -59,6 +59,8 @@ public class FossilConfig {
     public static final String MACHINE_TRANSFER_RATE = "machineTransferRate";
     public static final String MACHINE_ENERGY_USAGE = "machineEnergyUsage";
     public static final String FERN_TICK_RATE = "fernTickRate";
+    public static final String VERSION = "version";
+    public static final int VERSION_VALUE = 1;
 
     /**
      * Maps hardcoded structure locations to a config option

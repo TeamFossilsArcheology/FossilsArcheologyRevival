@@ -71,7 +71,7 @@ public class ModPlacedFeatures {
 
         var permafrostBlockPlaced = PlacementUtils.register("permafrost_block_placed", ModOreFeatures.PERMAFROST_BLOCK,
                 commonOrePlacement(FossilConfig.PERMAFROST_RARITY, // VeinsPerChunk
-                        HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(100), VerticalAnchor.aboveBottom(256))));
+                        HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(100), VerticalAnchor.aboveBottom(256))));
         var oreAmber = PlacementUtils.register("amber_ore_placed", ModOreFeatures.ORE_AMBER,
                 commonOrePlacement(2, HeightRangePlacement.triangle(VerticalAnchor.absolute(-10), VerticalAnchor.absolute(80))));
         var oreAmberBuried = PlacementUtils.register("ore_amber_buried", ModOreFeatures.ORE_AMBER_BURIED,
