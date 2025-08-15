@@ -106,7 +106,7 @@ dependencies {
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinalComponentsVersion}")
     modImplementation("maven.modrinth:midnightlib:${midnightConfigVersion}")
     include("maven.modrinth:midnightlib:${midnightConfigVersion}")
-    modImplementation("com.github.darkpred.morehitboxes:morehitboxes-fabric-${minecraftVersion}:${moreHitboxesVersion}")
+    modImplementation("com.github.darkpred.morehitboxes:morehitboxes-fabric-${minecraftVersion}:1.9.1")
 
     //Optional
     modCompileOnly("maven.modrinth:jade:MSJGBHIo")
