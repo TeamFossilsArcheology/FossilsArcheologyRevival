@@ -696,6 +696,7 @@
   "filter.fossil.filter_unbreakable": "Unbreakable",
   "filter.fossil.filter_vases": "Vases",
   "filter.fossil.filter_park": "Park",
+  "chat.fossil.alpha": "You are playing an alpha version of F&A. This release is not stable and you may encounter issues. You can find information on where to report problems on our modrinth or CurseForge pages.",
   "subtitle.fossil.anu_cough": "Anu coughs",
   "subtitle.fossil.anu_death": "Anu dies",
   "subtitle.fossil.anu_laugh": "Anu laughs",

@@ -3,29 +3,40 @@ package com.github.teamfossilsarcheology.fossil.util;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import org.apache.commons.lang3.NotImplementedException;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Version {
-    public static final ReleaseType RELEASE_TYPE = ReleaseType.parseVersion(getVersion());
+    private static final Set<ReleaseType> RELEASE_TYPES = ReleaseType.parseVersion(getVersion());
 
     @ExpectPlatform
     public static String getVersion() {
         throw new NotImplementedException();
     }
 
+    public static boolean isAlpha() {
+        return RELEASE_TYPES.contains(ReleaseType.ALPHA);
+    }
+
     public static boolean debugEnabled() {
-        return RELEASE_TYPE == ReleaseType.DEVELOP;
+        return RELEASE_TYPES.contains(ReleaseType.DEVELOP);
     }
 
     public enum ReleaseType {
-        DEVELOP, RELEASE_CANDIDATE, RELEASE;
+        ALPHA, DEVELOP, RELEASE_CANDIDATE;
 
-        public static ReleaseType parseVersion(String version) {
+        public static Set<ReleaseType> parseVersion(String version) {
+            Set<ReleaseType> set = new HashSet<>();
             if (version.contains("-develop")) {
-                return DEVELOP;
-            } else if (version.contains("-rc")) {
-                return RELEASE_CANDIDATE;
-            } else {
-                return RELEASE;
+                set.add(DEVELOP);
             }
+            if (version.contains("-rc")) {
+                set.add(RELEASE_CANDIDATE);
+            }
+            if (version.contains("-alpha")) {
+                set.add(ALPHA);
+            }
+            return set;
         }
     }
 }
