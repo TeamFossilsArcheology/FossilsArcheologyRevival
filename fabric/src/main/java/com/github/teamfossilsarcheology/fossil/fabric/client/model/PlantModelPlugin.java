@@ -49,7 +49,7 @@ public class PlantModelPlugin implements PreparableModelLoadingPlugin<Map<Resour
                                 try (InputStream inputStream = resource.open()) {
                                     JsonObject jsonObject = GsonHelper.fromJson(GSON, IOUtils.toString(inputStream, Charset.defaultCharset()), JsonElement.class).getAsJsonObject();
                                     if (jsonObject.has("loader") && jsonObject.get("loader").getAsString().equals(PlantBlockModel.LOADER.toString())) {
-                                        map.put(location, new FabricPlantUnbakedModel(GSON.getAdapter(PlantBlockModel.class).fromJsonTree(jsonObject)));
+                                        map.put(fixLocation(location), new FabricPlantUnbakedModel(GSON.getAdapter(PlantBlockModel.class).fromJsonTree(jsonObject)));
                                     }
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
@@ -61,6 +61,10 @@ public class PlantModelPlugin implements PreparableModelLoadingPlugin<Map<Resour
                         return map;
                     }
             );
+        }
+
+        private static ResourceLocation fixLocation(ResourceLocation location) {
+            return new ResourceLocation(location.getNamespace(), location.getPath().replaceFirst("models/", "").replaceFirst(".json", ""));
         }
     }
 }

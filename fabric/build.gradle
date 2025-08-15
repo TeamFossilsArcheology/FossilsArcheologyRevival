@@ -76,22 +76,21 @@ dependencies {
 
     //Dev only
     /*
-    modRuntimeOnly("maven.modrinth:auth-me:4.2.0")
+    modRuntimeOnly "maven.modrinth:auth-me:6.1.1+1.19.4"
     modRuntimeOnly "maven.modrinth:huge-structure-blocks:1.0.6"
     //modRuntimeOnly "curse.maven:worldedit-225608:3697298"
-    modRuntimeOnly "curse.maven:cyanide-543444:4481357"
-    modRuntimeOnly "maven.modrinth:smoothboot-fabric:1.19-1.7.1"
-    modRuntimeOnly "curse.maven:commandstructures-565119:4050783"
-    modRuntimeOnly "maven.modrinth:betterf3:4.0.1"
+    //modRuntimeOnly "curse.maven:cyanide-543444:4481357"
+    modRuntimeOnly "curse.maven:commandstructures-565119:4438098"
+    modRuntimeOnly "maven.modrinth:betterf3:6.0.3"
     modRuntimeOnly "maven.modrinth:lazydfu:0.1.3"
-    //modRuntimeOnly "maven.modrinth:sodium:mc1.19.2-0.4.4"
-    //modRuntimeOnly "maven.modrinth:indium:1.0.9+mc1.19.2
+    //modRuntimeOnly "maven.modrinth:sodium:mc1.19.4-0.4.10"
+    //modRuntimeOnly "maven.modrinth:indium:1.0.19+mc1.19.4"
     //runtimeOnly "org.joml:joml:1.10.4"
-    modRuntimeOnly "maven.modrinth:modmenu:4.2.0-beta.2"
-    modRuntimeOnly "maven.modrinth:camera-utils:fabric-1.19.2-1.0.14"
-    //modRuntimeOnly "maven.modrinth:replaymod:1.19.2-2.6.20"
-    //modRuntimeOnly "maven.modrinth:energized-power:1.19.2-2.12.4-fabric")/Energized Power
-    //modRuntimeOnly "maven.modrinth:debugutils:1.19.4-1.0.3"
+    modRuntimeOnly "maven.modrinth:modmenu:6.3.1"
+    modRuntimeOnly "maven.modrinth:camera-utils:fabric-1.19.4-1.0.9"
+    //modRuntimeOnly "maven.modrinth:replaymod:1.19.4-2.6.20"
+    //modRuntimeOnly "maven.modrinth:energized-power:1.19.4-2.6.9-fabric")
+    modRuntimeOnly "maven.modrinth:debugutils:1.19.4-1.0.3"
     //modRuntimeOnly "com.github.darkpred.extended_structure_blocks:extended-structure-blocks-fabric:${minecraftVersion}-0.4.0"
     */
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
