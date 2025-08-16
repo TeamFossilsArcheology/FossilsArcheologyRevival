@@ -48,7 +48,6 @@ public class InstructionRenderUtil {
             poseStack.popPose();
         }
         bufferSource.endBatch();
-        RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.enableDepthTest();
         poseStack.popPose();
     }
@@ -66,7 +65,6 @@ public class InstructionRenderUtil {
         int color = -1;
         minecraft.font.drawInBatch(text, g, 0, color, false, poseStack.last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
         bufferSource.endBatch();
-        RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.enableDepthTest();
         poseStack.popPose();
     }
