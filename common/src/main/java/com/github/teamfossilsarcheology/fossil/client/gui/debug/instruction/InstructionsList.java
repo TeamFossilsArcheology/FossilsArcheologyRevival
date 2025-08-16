@@ -64,8 +64,8 @@ public class InstructionsList extends AbstractContainerEventHandler implements R
                     selected = children.get(0);
                 }
             }
-        }).bounds(X_0, X_1 + 5, 70, 20).build();
-        upButton = new MoveButton(X_0 + 110, X_1 + 5, 20, 20, Component.literal(""), button -> {
+        }).bounds(X_0, Y_1 + 5, 70, 20).build();
+        upButton = new MoveButton(X_0 + 110, Y_1 + 5, 20, 20, Component.literal(""), button -> {
             int i = children.indexOf(selected);
             if (i != 0) {
                 Collections.swap(children, i, i - 1);
@@ -82,7 +82,7 @@ public class InstructionsList extends AbstractContainerEventHandler implements R
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
             }
         };
-        downButton = new MoveButton(X_0 + 80, X_1 + 5, 20, 20, Component.literal(""), button -> {
+        downButton = new MoveButton(X_0 + 80, Y_1 + 5, 20, 20, Component.literal(""), button -> {
             int i = children.indexOf(selected);
             if (i != children.size() - 1) {
                 Collections.swap(children, i, i + 1);
