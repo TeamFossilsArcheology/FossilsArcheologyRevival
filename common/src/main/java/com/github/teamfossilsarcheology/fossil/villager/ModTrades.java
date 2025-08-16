@@ -28,31 +28,36 @@ public class ModTrades {
         switch (level) {
             case 1 -> {
                 list.add(new ItemsForEmeralds(ModItems.RELIC_SCRAP.get(), 3, 1, 8, 2));
-                list.add(new EmeraldForItems(ModItems.POTTERY_SHARD.get(), 2, 12, 6));
-                list.add(new ItemsForEmeralds(ModBlocks.WORKTABLE.get(), 2, 1, 12, 1));
+                list.add(new EmeraldForItems(ModItems.POTTERY_SHARD.get(), 3, 8, 6));
+                list.add(new ItemsForEmeralds(ModBlocks.WORKTABLE.get(), 1, 1, 4, 1));
             }
             case 2 -> {
-                list.add(new ItemsForEmeralds(ModItems.STONE_TABLET.get(), 4, 1, 6, 2));
-                list.add(new ItemsForEmeralds(Items.BOOK, 4, 1, 6));
-                list.add(new ItemsForEmeralds(ModItems.WOODEN_JAVELIN.get(), 4, 1, 1));
+                list.add(new ItemsForEmeralds(ModItems.STONE_TABLET.get(), 4, 1, 6, 4));
+                list.add(new ItemsForEmeralds(Items.BOOK, 1, 1, 4));
+                list.add(new ItemsForEmeralds(ModItems.WOODEN_JAVELIN.get(), 1, 1, 1));
             }
             case 3 -> {
-                list.add(new ItemsForEmeralds(ModItems.STONE_JAVELIN.get(), 4, 1, 1));
-                list.add(new ItemsForEmeralds(ModItems.BROKEN_SWORD.get(), 4, 1, 2, 4));
-                list.add(new ItemsForEmeralds(ModItems.BROKEN_HELMET.get(), 4, 1, 2, 4));
-                list.add(new ItemsForEmeralds(ModBlocks.AMPHORA_VASE_DAMAGED.get(), 3, 1, 3, 2));
-                list.add(new ItemsForEmeralds(ModBlocks.VOLUTE_VASE_DAMAGED.get(), 3, 1, 3, 2));
+                list.add(new ItemsForEmeralds(ModItems.STONE_JAVELIN.get(), 2, 1, 2));
+                list.add(new ItemsForEmeralds(ModItems.BROKEN_SWORD.get(), 6, 1, 2, 12));
+                list.add(new ItemsForEmeralds(ModItems.BROKEN_HELMET.get(), 6, 1, 2, 12));
+                list.add(new ItemsForEmeralds(ModBlocks.AMPHORA_VASE_DAMAGED.get(), 3, 1, 3, 4));
+                list.add(new ItemsForEmeralds(ModBlocks.VOLUTE_VASE_DAMAGED.get(), 3, 1, 3, 4));
             }
             case 4 -> {
-                list.add(new ItemsForEmeralds(ModBlocks.KYLIX_VASE_DAMAGED.get(), 3, 1, 3, 2));
-                list.add(new ItemsForEmeralds(ModBlocks.ANCIENT_GLASS.get(), 4, 1, 12, 2));
-                list.add(new ItemsForEmeralds(ModBlocks.ANCIENT_WOOD_PLANKS.get(), 10, 4, 6, 3));
+                list.add(new ItemsForEmeralds(ModBlocks.KYLIX_VASE_DAMAGED.get(), 3, 1, 3, 6));
+                list.add(new ItemsForEmeralds(ModBlocks.ANCIENT_GLASS.get(), 4, 4, 6, 12));
+                list.add(new ItemsForEmeralds(ModBlocks.ANCIENT_WOOD_PLANKS.get(), 2, 4, 6, 6));
+                list.add(new EmeraldForItems(ModBlocks.SKELETON_FIGURINE_DESTROYED.get(), 2, 1, 2, 8));
+                list.add(new EmeraldForItems(ModBlocks.ZOMBIE_FIGURINE_DESTROYED.get(), 2, 1, 2, 8));
+                list.add(new EmeraldForItems(ModBlocks.ENDERMAN_FIGURINE_DESTROYED.get(), 2, 1, 2, 8));
+                list.add(new EmeraldForItems(ModBlocks.STEVE_FIGURINE_DESTROYED.get(), 2, 1, 2, 8));
+                list.add(new EmeraldForItems(ModBlocks.PIGLIN_FIGURINE_DESTROYED.get(), 2, 1, 2, 8));
             }
             case 5 -> {
                 list.add(new EnchantBookForEmeralds(ModEnchantments.ARCHEOLOGY.get(), 10));
                 list.add(new ItemsAndEmeraldsToItems(ModItems.BROKEN_HELMET.get(), 1, ModItems.ANCIENT_HELMET.get(), 1, 2, 10));
                 list.add(new ItemsAndEmeraldsToItems(ModItems.BROKEN_SWORD.get(), 1, ModItems.ANCIENT_SWORD.get(), 1, 2, 10));
-                list.add(new ItemsForEmeralds(ModBlocks.ANCIENT_STONE.get(), 10, 4, 6, 3));
+                list.add(new ItemsForEmeralds(ModBlocks.ANCIENT_STONE.get(), 4, 4, 6, 12));
             }
         }
         return list;
@@ -69,16 +74,20 @@ public class ModTrades {
             case 2 -> {
                 list.add(new ItemsForEmeralds(ModItems.TAR_DROP.get(), 2, 1, 2));
                 list.add(new ItemsForEmeralds(ModItems.PlANT_FOSSIL.get(), 2, 1, 2));
+                list.add(new EmeraldForItems(ModItems.BIO_GOO.get(), 3, 6, 6));
             }
             case 3 -> {
                 list.add(new ItemsForEmeralds(ModItems.FROZEN_MEAT.get(), 3, 1, 2));
                 list.add(new ItemsForEmeralds(ModItems.TAR_FOSSIL.get(), 3, 1, 3));
             }
             case 4 -> {
-                list.add(new ItemsForEmeralds(ModItems.CHICKEN_ESSENCE.get(), 3, 1, 3));
-                list.add(new ItemsForEmeralds(ModItems.FAILURESAURUS_FLESH.get(), 5, 1, 3));
-                list.add(new ItemsForEmeralds(ModBlocks.PERMAFROST_BLOCK.get(), 2, 1, 6, 1));
-                list.add(new ItemsForEmeralds(ModItems.SHALE_FOSSIL.get(), 3, 1, 3));
+                list.add(new ItemsForEmeralds(ModItems.CHICKEN_ESSENCE.get(), 3, 1, 6));
+                list.add(new ItemsForEmeralds(ModItems.FAILURESAURUS_FLESH.get(), 5, 2, 12));
+                list.add(new ItemsForEmeralds(ModBlocks.PERMAFROST_BLOCK.get(), 2, 4, 6, 4));
+                list.add(new ItemsForEmeralds(ModItems.SHALE_FOSSIL.get(), 3, 1, 6));
+                list.add(new EmeraldForItems(ModItems.ELASMOTHERIUM_FUR.get(), 6, 6, 6));
+                list.add(new EmeraldForItems(ModItems.MAMMOTH_FUR.get(), 6, 6, 6));
+                list.add(new EmeraldForItems(ModItems.MAGIC_CONCH.get(), 2, 2, 8));
             }
             case 5 -> {
                 list.add(new EnchantBookForEmeralds(ModEnchantments.PALEONTOLOGY.get(), 10));
@@ -94,12 +103,18 @@ public class ModTrades {
     static class EmeraldForItems implements VillagerTrades.ItemListing {
         private final Item item;
         private final int cost;
+        private final int emeraldCount;
         private final int maxUses;
         private final int villagerXp;
         private final float priceMultiplier;
 
         public EmeraldForItems(ItemLike itemLike, int cost, int maxUses, int villagerXp) {
+            this(itemLike, 1, cost, maxUses, villagerXp);
+        }
+
+        public EmeraldForItems(ItemLike itemLike, int emeraldCount, int cost, int maxUses, int villagerXp) {
             this.item = itemLike.asItem();
+            this.emeraldCount = emeraldCount;
             this.cost = cost;
             this.maxUses = maxUses;
             this.villagerXp = villagerXp;
@@ -109,7 +124,7 @@ public class ModTrades {
         @Override
         public MerchantOffer getOffer(Entity trader, Random random) {
             ItemStack itemStack = new ItemStack(this.item, this.cost);
-            return new MerchantOffer(itemStack, new ItemStack(Items.EMERALD), this.maxUses, this.villagerXp, this.priceMultiplier);
+            return new MerchantOffer(itemStack, new ItemStack(Items.EMERALD, emeraldCount), this.maxUses, this.villagerXp, this.priceMultiplier);
         }
     }
 
@@ -163,7 +178,7 @@ public class ModTrades {
         private final float priceMultiplier;
 
         public ItemsAndEmeraldsToItems(ItemLike fromItem, int fromCount, Item toItem, int toCount, int maxUses, int villagerXp) {
-            this(fromItem, fromCount, 1, toItem, toCount, maxUses, villagerXp);
+            this(fromItem, fromCount, 12, toItem, toCount, maxUses, villagerXp);
         }
 
         public ItemsAndEmeraldsToItems(ItemLike fromItem, int fromCount, int emeraldCost, Item toItem, int toCount, int maxUses, int villagerXp) {
