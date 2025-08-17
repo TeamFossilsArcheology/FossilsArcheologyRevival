@@ -19,15 +19,12 @@ import com.github.teamfossilsarcheology.fossil.recipe.ModRecipes;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import com.github.teamfossilsarcheology.fossil.tags.ModEntityTypeTags;
 import com.github.teamfossilsarcheology.fossil.util.FossilFoodMappings;
-import com.github.teamfossilsarcheology.fossil.util.Version;
 import com.github.teamfossilsarcheology.fossil.world.dimension.ModDimensions;
 import dev.architectury.event.EventResult;
-import dev.architectury.event.events.client.ClientPlayerEvent;
 import dev.architectury.event.events.common.BlockEvent;
 import dev.architectury.event.events.common.EntityEvent;
 import dev.architectury.event.events.common.InteractionEvent;
 import dev.architectury.event.events.common.LifecycleEvent;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
@@ -143,11 +140,6 @@ public class ModEvents {
             }
             return EventResult.pass();
         });
-        if (Version.isAlpha()) {
-            ClientPlayerEvent.CLIENT_PLAYER_JOIN.register(localPlayer -> {
-                localPlayer.sendSystemMessage(Component.translatable("chat.fossil.alpha").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
-            });
-        }
     }
 
     private static boolean isBreakableInAnuLair(BlockState state) {

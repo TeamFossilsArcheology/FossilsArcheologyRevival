@@ -159,6 +159,11 @@ public class ClientInit {
             });
             ClientGuiEvent.RENDER_HUD.register((poseStack, v) -> PathingRenderer.renderOverlay(poseStack));
         }
+        if (Version.isAlpha()) {
+            ClientPlayerEvent.CLIENT_PLAYER_JOIN.register(localPlayer -> {
+                localPlayer.sendSystemMessage(Component.translatable("chat.fossil.alpha").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
+            });
+        }
         registerBlockRenderers();
         registerEventHandlers();
         MenuScreens.register(ModMenus.FEEDER.get(), FeederScreen::new);
