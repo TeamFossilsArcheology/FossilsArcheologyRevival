@@ -24,6 +24,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 public class WorktableBlockEntityImpl extends FabricContainerBlockEntity implements WorktableBlockEntity {
 
     private static final int[] SLOTS_FOR_UP = new int[]{WorktableMenu.INPUT_SLOT_ID}; //Input
@@ -95,8 +97,8 @@ public class WorktableBlockEntityImpl extends FabricContainerBlockEntity impleme
             if (litTime > 0) {
                 dirty = true;
                 fuelStack.shrink(1);
-                if (fuelStack.isEmpty()) {
-                    items.set(WorktableMenu.FUEL_SLOT_ID, new ItemStack(fuelStack.getItem().getCraftingRemainingItem()));
+                if (fuelStack.isEmpty() && fuelStack.getItem().hasCraftingRemainingItem()) {
+                    items.set(WorktableMenu.FUEL_SLOT_ID, new ItemStack(Objects.requireNonNull(fuelStack.getItem().getCraftingRemainingItem())));
                 }
             }
         }

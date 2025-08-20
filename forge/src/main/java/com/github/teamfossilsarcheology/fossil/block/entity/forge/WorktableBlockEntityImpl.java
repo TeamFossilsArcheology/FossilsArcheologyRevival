@@ -24,6 +24,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implements WorktableBlockEntity {
     private static final int[] SLOTS_FOR_UP = new int[]{WorktableMenu.INPUT_SLOT_ID}; //Input
     private static final int[] SLOTS_FOR_SIDES = new int[]{WorktableMenu.INPUT_SLOT_ID, WorktableMenu.FUEL_SLOT_ID}; //Input, Fuel
@@ -99,8 +101,8 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
             if (litTime > 0) {
                 dirty = true;
                 fuelStack.shrink(1);
-                if (fuelStack.isEmpty()) {
-                    items.set(WorktableMenu.FUEL_SLOT_ID, new ItemStack(fuelStack.getItem().getCraftingRemainingItem()));
+                if (fuelStack.isEmpty() && fuelStack.getItem().hasCraftingRemainingItem()) {
+                    items.set(WorktableMenu.FUEL_SLOT_ID, new ItemStack(Objects.requireNonNull(fuelStack.getItem().getCraftingRemainingItem())));
                 }
             }
         }
