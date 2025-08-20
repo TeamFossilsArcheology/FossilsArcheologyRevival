@@ -44,10 +44,4 @@ public class WorktableScreen extends AbstractContainerScreen<WorktableMenu> {
         int progress = menu.getBurnProgress();
         guiGraphics.blit(TEXTURE, x + 76, y + 20, 176, FUEL_HEIGHT + 2, progress, PROGRESS_HEIGHT);
     }
-
-    @Override
-    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        guiGraphics.drawString(font, title, titleLabelX, titleLabelY, 0x404040);
-        guiGraphics.drawString(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, 0x404040);
-    }
 }

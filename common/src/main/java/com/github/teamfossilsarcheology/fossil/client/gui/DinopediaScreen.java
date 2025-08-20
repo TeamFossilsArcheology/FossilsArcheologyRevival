@@ -241,12 +241,12 @@ public class DinopediaScreen extends Screen {
             if (embryoProgress > 0) {
                 float quot = roundToHalf(embryoProgress / (FossilConfig.getInt(FossilConfig.PREGNANCY_DURATION) + 1) * 100);
                 var progress = Component.translatable("pedia.fossil.pregnantTime", quot);
-                guiGraphics.drawString(font, progress, getScaledX(true, font.width(progress), 1), topPos + 135, col);
+                guiGraphics.drawString(font, progress, getScaledX(true, font.width(progress), 1), topPos + 135, col, false);
                 guiGraphics.pose().pushPose();
                 float scale = 1.5f;
                 guiGraphics.pose().scale(scale, scale, scale);
                 MutableComponent name = Component.translatable("pedia.fossil.pregnant", entity.getType().getDescription());
-                guiGraphics.drawString(font, name, getScaledX(true, font.width(name), scale), (int) ((topPos + 85) / scale), (66 << 16) | (48 << 8) | 36);
+                guiGraphics.drawString(font, name, getScaledX(true, font.width(name), scale), (int) ((topPos + 85) / scale), (66 << 16) | (48 << 8) | 36, false);
                 guiGraphics.pose().popPose();
             }
         }
@@ -256,46 +256,46 @@ public class DinopediaScreen extends Screen {
             float scale = 1.5f;
             guiGraphics.pose().scale(scale, scale, scale);
             Component name = entity.getType().getDescription();
-            guiGraphics.drawString(font, name, getScaledX(true, font.width(name), scale), (int) ((topPos + 85) / scale), (66 << 16) | (48 << 8) | 36);
+            guiGraphics.drawString(font, name, getScaledX(true, font.width(name), scale), (int) ((topPos + 85) / scale), (66 << 16) | (48 << 8) | 36, false);
             guiGraphics.pose().popPose();
             int x = leftPos + 30;
             int y = topPos + 85;
-            guiGraphics.drawString(font, Component.translatable("pedia.fossil.age", dino.getAgeInDays()), x, y + 20, col);
-            guiGraphics.drawString(font, Component.translatable("pedia.fossil.health", entity.getHealth() + "/" + entity.getMaxHealth()), x, y + 30, col);
-            guiGraphics.drawString(font, Component.translatable("pedia.fossil.hunger", dino.getHunger() + "/" + dino.getMaxHunger()), x, y + 40, col);
+            guiGraphics.drawString(font, Component.translatable("pedia.fossil.age", dino.getAgeInDays()), x, y + 20, col, false);
+            guiGraphics.drawString(font, Component.translatable("pedia.fossil.health", entity.getHealth() + "/" + entity.getMaxHealth()), x, y + 30, col, false);
+            guiGraphics.drawString(font, Component.translatable("pedia.fossil.hunger", dino.getHunger() + "/" + dino.getMaxHunger()), x, y + 40, col, false);
             var dietText = dino.data().diet().getName();
             renderHoverInfo(guiGraphics, x, y + 50, mouseX, mouseY, dietText, dino.data().diet().getDescription());
             var tempText = dino.aiResponseType().getName();
             renderHoverInfo(guiGraphics, x, y + 60, mouseX, mouseY, tempText, dino.aiResponseType().getDescription());
-            guiGraphics.drawString(font, dino.getGender().getName(), x, y + 70, col);
+            guiGraphics.drawString(font, dino.getGender().getName(), x, y + 70, col, false);
             if (dino.getOwner() == null) {
-                guiGraphics.drawString(font, Component.translatable("pedia.fossil.untamed"), x, y + 80, col);
+                guiGraphics.drawString(font, Component.translatable("pedia.fossil.untamed"), x, y + 80, col, false);
             } else {
                 try {
-                    guiGraphics.drawString(font, Component.translatable("pedia.fossil.owner", USERNAMES.get(dino.getOwnerUUID())), x, y + 80, col);
+                    guiGraphics.drawString(font, Component.translatable("pedia.fossil.owner", USERNAMES.get(dino.getOwnerUUID())), x, y + 80, col, false);
                 } catch (ExecutionException e) {
-                    guiGraphics.drawString(font, Component.translatable("pedia.fossil.owner", "Invalid User"), x, y + 80, col);
+                    guiGraphics.drawString(font, Component.translatable("pedia.fossil.owner", "Invalid User"), x, y + 80, col, false);
                 }
             }
             var order = dino.getCurrentOrder();
             renderHoverInfo(guiGraphics, x, y + 90, mouseX, mouseY, order.getName(), order.getDescription());
 
-            guiGraphics.drawString(font, Component.translatable("pedia.fossil.order.item", Component.translatable(dino.getOrderItem().getDescriptionId())), x, y + 100, col);
+            guiGraphics.drawString(font, Component.translatable("pedia.fossil.order.item", Component.translatable(dino.getOrderItem().getDescriptionId())), x, y + 100, col, false);
 
             var activity = dino.aiActivityType();
             renderHoverInfo(guiGraphics, x, y + 110, mouseX, mouseY, activity.getName(), activity.getDescription());
 
-            guiGraphics.drawString(font, Component.translatable("pedia.fossil.population", dino.data().maxPopulation()), x, y + 120, col);
+            guiGraphics.drawString(font, Component.translatable("pedia.fossil.population", dino.data().maxPopulation()), x, y + 120, col, false);
         } else if (entity instanceof DinosaurEgg egg) {
             guiGraphics.pose().pushPose();
             float scale = 1.5f;
             guiGraphics.pose().scale(scale, scale, scale);
             var name = Component.translatable("pedia.fossil.egg", egg.getPrehistoricEntityInfo().displayName.get());
-            guiGraphics.drawString(font, name, getScaledX(true, font.width(name), scale), (int) ((topPos + 85) / scale), (66 << 16) | (48 << 8) | 36);
+            guiGraphics.drawString(font, name, getScaledX(true, font.width(name), scale), (int) ((topPos + 85) / scale), (66 << 16) | (48 << 8) | 36, false);
             guiGraphics.pose().popPose();
             int time = Mth.floor((float) egg.getHatchingTime() / egg.getTotalHatchingTime() * 100);
             var progress = Component.translatable("pedia.fossil.egg.time", Math.max(time, 0));
-            guiGraphics.drawString(font, progress, getScaledX(true, font.width(progress), 1), topPos + 120, (157 << 16) | (126 << 8) | 103);
+            guiGraphics.drawString(font, progress, getScaledX(true, font.width(progress), 1), topPos + 120, (157 << 16) | (126 << 8) | 103, false);
 
             Component status;
             if (egg.isInWater()) {
@@ -308,13 +308,13 @@ public class DinopediaScreen extends Screen {
                 }
             }
             status = Component.translatable("pedia.fossil.egg.status", status);
-            guiGraphics.drawString(font, status, getScaledX(true, font.width(status), 1), topPos + 140, (157 << 16) | (126 << 8) | 103);
+            guiGraphics.drawString(font, status, getScaledX(true, font.width(status), 1), topPos + 140, (157 << 16) | (126 << 8) | 103, false);
         } else if (entity instanceof PrehistoricFish || entity instanceof Quagga) {
             guiGraphics.pose().pushPose();
             float scale = 1.5f;
             guiGraphics.pose().scale(scale, scale, scale);
             Component name = entity.getType().getDescription();
-            guiGraphics.drawString(font, name, getScaledX(true, font.width(name), scale), (int) ((topPos + 85) / scale), (66 << 16) | (48 << 8) | 36);
+            guiGraphics.drawString(font, name, getScaledX(true, font.width(name), scale), (int) ((topPos + 85) / scale), (66 << 16) | (48 << 8) | 36, false);
             guiGraphics.pose().popPose();
         }
     }
@@ -323,7 +323,7 @@ public class DinopediaScreen extends Screen {
      * Used to render dino info and potentially render its tooltip
      */
     private void renderHoverInfo(GuiGraphics guiGraphics, int x, int y, int mouseX, int mouseY, Component text, Component hoverText) {
-        guiGraphics.drawString(font, text, x, y, (157 << 16) | (126 << 8) | 103);
+        guiGraphics.drawString(font, text, x, y, (157 << 16) | (126 << 8) | 103, false);
         if (mouseX >= x && mouseY >= y && mouseX < x + font.width(text) && mouseY < y + font.lineHeight) {
             toolTipList.add(hoverText);
         }
@@ -455,9 +455,9 @@ public class DinopediaScreen extends Screen {
 
         for (int i = 0; i < currentLines.size(); i++) {
             if (i <= 20) {//1344, 32 per line
-                guiGraphics.drawString(font, currentLines.get(i), getScaledX(true, xSize / 2, scale), (int) ((topPos + 10 + font.lineHeight * ++left) / scale), 0x9D7E67);
+                guiGraphics.drawString(font, currentLines.get(i), getScaledX(true, xSize / 2, scale), (int) ((topPos + 10 + font.lineHeight * ++left) / scale), 0x9D7E67, false);
             } else {
-                guiGraphics.drawString(font, currentLines.get(i), getScaledX(false, xSize / 2, scale), (int) ((topPos + 10 + font.lineHeight * ++right) / scale), 0x9D7E67);
+                guiGraphics.drawString(font, currentLines.get(i), getScaledX(false, xSize / 2, scale), (int) ((topPos + 10 + font.lineHeight * ++right) / scale), 0x9D7E67, false);
             }
         }
         guiGraphics.pose().popPose();

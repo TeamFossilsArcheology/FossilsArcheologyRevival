@@ -26,13 +26,13 @@ public class SifterScreen extends AbstractContainerScreen<SifterMenu> {
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
-        guiGraphics.blit(TEXTURE,x, y, 0, 0, imageWidth, imageHeight);
+        guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
         int var7 = menu.getSiftProgress() * 26 / SifterMenu.SIFTER_DURATION;
-        guiGraphics.blit(TEXTURE,x + 75, y + 33, 176, 0, 31, var7 + 1);
+        guiGraphics.blit(TEXTURE, x + 75, y + 33, 176, 0, 31, var7 + 1);
     }
 
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        guiGraphics.drawString(font,title, titleLabelX, titleLabelY, 0x404040);
+        guiGraphics.drawString(font, title, titleLabelX, titleLabelY, 0x404040, false);
     }
 }
