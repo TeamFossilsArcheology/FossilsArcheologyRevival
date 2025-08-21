@@ -612,7 +612,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             super.travel(Vec3.ZERO);
             return;
         }
-        LivingEntity rider = (LivingEntity) getControllingPassenger();
+        LivingEntity rider = getControllingPassenger();
         if (rider == null || !canBeControlledByRider() || !steering.trySteering(rider)) {
             super.travel(travelVector);
             return;

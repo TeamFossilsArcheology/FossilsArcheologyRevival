@@ -313,7 +313,7 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
             super.travel(Vec3.ZERO);
             return;
         }
-        LivingEntity rider = (LivingEntity) getControllingPassenger();
+        LivingEntity rider = getControllingPassenger();
         if (rider == null || !canBeControlledByRider() || (isControlledByLocalInstance() && !steering.trySteering(rider))) {
             if (isEffectiveAi() && isInWater()) {
                 moveRelative(getSpeed(), travelVector);

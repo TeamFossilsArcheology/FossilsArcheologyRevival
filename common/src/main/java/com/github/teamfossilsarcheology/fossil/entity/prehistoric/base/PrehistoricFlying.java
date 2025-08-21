@@ -195,11 +195,11 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
 
     @Override
     public void travel(Vec3 travelVector) {
-        if (!canBeControlledByRider()) {
+        LivingEntity rider = getControllingPassenger();
+        if (rider == null || !canBeControlledByRider()) {
             super.travel(travelVector);
             return;
         }
-        LivingEntity rider = (LivingEntity) getControllingPassenger();
         setYRot(rider.getYRot());
         setXRot(rider.getXRot() * 0.5f);
         setRot(getYRot(), getXRot());
