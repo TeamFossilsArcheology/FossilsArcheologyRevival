@@ -10,22 +10,20 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 
 public class ModTabs {
     public static final DeferredRegister<CreativeModeTab> TABS =
             DeferredRegister.create(FossilMod.MOD_ID, Registries.CREATIVE_MODE_TAB);
 
-    public static final RegistrySupplier<CreativeModeTab> FA_BLOCK_TAB = TABS.register("fa_block_tab",
-            () -> CreativeTabRegistry.create(Component.translatable("category.fa_block_tab"),
-            () -> new ItemStack(ModBlocks.WORKTABLE.get())));
+    public static final RegistrySupplier<CreativeModeTab> FA_BLOCK_TAB = register("fa_block_tab", ModBlocks.WORKTABLE.get());
+    public static final RegistrySupplier<CreativeModeTab> FA_MOB_ITEM_TAB = register("fa_mob_item_tab", PrehistoricEntityInfo.PROTOCERATOPS.dnaItem);
+    public static final RegistrySupplier<CreativeModeTab> FA_OTHER_ITEM_TAB = register("fa_other_item_tab", ModItems.BIO_FOSSIL.get());
 
-    public static final RegistrySupplier<CreativeModeTab> FA_MOB_ITEM_TAB = TABS.register("fa_mob_item_tab",
-            () -> CreativeTabRegistry.create(Component.translatable("category.fa_mob_item_tab"),
-                    () -> new ItemStack(PrehistoricEntityInfo.PROTOCERATOPS.dnaItem)));
-
-    public static final RegistrySupplier<CreativeModeTab> FA_OTHER_ITEM_TAB = TABS.register("fa_other_item_tab",
-            () -> CreativeTabRegistry.create(Component.translatable("category.fa_other_item_tab"),
-                    () -> new ItemStack(ModItems.BIO_FOSSIL.get())));
+    private static RegistrySupplier<CreativeModeTab> register(String id, ItemLike itemLike) {
+        return TABS.register(id, () -> CreativeTabRegistry.create(Component.translatable("itemGroup." + FossilMod.MOD_ID + "." + id),
+                () -> new ItemStack(itemLike)));
+    }
 
     public static void register() {
         TABS.register();
