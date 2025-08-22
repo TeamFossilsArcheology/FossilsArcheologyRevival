@@ -50,12 +50,13 @@ public class FossilItem extends Item {
             return InteractionResult.FAIL;
         }
         if (level instanceof ServerLevel serverLevel) {
-            PrehistoricSkeleton fossil = ModEntities.SKELETON.get().spawn(serverLevel, blockPos, MobSpawnType.SPAWN_EGG);
+            PrehistoricSkeleton fossil = ModEntities.SKELETON.get().create(serverLevel, null, null, blockPos, MobSpawnType.SPAWN_EGG, false, false);
             if (fossil == null) {
                 return InteractionResult.FAIL;
             }
             fossil.moveTo(fossil.getX(), fossil.getY(), fossil.getZ(), -context.getPlayer().yHeadRot, 0);
             fossil.setType(info);
+            serverLevel.addFreshEntityWithPassengers(fossil);
             level.playSound(null, fossil.getX(), fossil.getY(), fossil.getZ(), SoundEvents.SKELETON_AMBIENT, SoundSource.BLOCKS, 0.75f, 0.8f);
             fossil.gameEvent(GameEvent.ENTITY_PLACE, context.getPlayer());
         }
