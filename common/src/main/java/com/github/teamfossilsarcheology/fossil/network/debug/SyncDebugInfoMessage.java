@@ -5,7 +5,6 @@ import com.github.teamfossilsarcheology.fossil.client.gui.debug.DebugScreen;
 import com.github.teamfossilsarcheology.fossil.entity.PrehistoricSkeleton;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.util.Gender;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import dev.architectury.networking.NetworkManager;
@@ -79,7 +78,7 @@ public class SyncDebugInfoMessage {
                     prehistoric.refreshDimensions();
                     prehistoric.updateAbilities();
                 } else if (player.level().getEntity(entityId) instanceof PrehistoricSkeleton fossil) {
-                    fossil.setType(PrehistoricEntityInfo.valueOf(enumString));
+                    fossil.setInfoType(enumString);
                     fossil.setAge(age);
                 } else if (player.level().getEntity(entityId) instanceof DinosaurEgg egg) {
                     egg.setHatchingTime(age);

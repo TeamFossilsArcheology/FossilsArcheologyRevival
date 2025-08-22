@@ -8,8 +8,10 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.util.TimePeriod;
+import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -42,9 +44,9 @@ import java.util.List;
 
 import static com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo.*;
 
-public class PrehistoricSkeleton extends Entity implements GeoEntity {
+public class PrehistoricSkeleton extends Entity implements GeoEntity, EntitySpawnExtension {
     private static final EntityDataAccessor<Integer> AGE = SynchedEntityData.defineId(PrehistoricSkeleton.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<String> TYPE = SynchedEntityData.defineId(PrehistoricSkeleton.class, EntityDataSerializers.STRING);
+    private static final EntityDataAccessor<String> INFO_TYPE = SynchedEntityData.defineId(PrehistoricSkeleton.class, EntityDataSerializers.STRING);
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private boolean droppedBiofossil;
     private float frustumWidthRadius;
@@ -61,19 +63,31 @@ public class PrehistoricSkeleton extends Entity implements GeoEntity {
     @Override
     protected void defineSynchedData() {
         entityData.define(AGE, 0);
-        entityData.define(TYPE, TRICERATOPS.name());
+        entityData.define(INFO_TYPE, TRICERATOPS.name());
+    }
+
+    @Override
+    public void saveAdditionalSpawnData(FriendlyByteBuf buf) {
+        buf.writeInt(getAge());
+        buf.writeUtf(getInfoType());
+    }
+
+    @Override
+    public void loadAdditionalSpawnData(FriendlyByteBuf buf) {
+        setAge(buf.readInt());
+        setInfoType(buf.readUtf());
     }
 
     @Override
     protected void readAdditionalSaveData(CompoundTag compound) {
         setAge(compound.getInt("Age"));
-        entityData.set(TYPE, compound.getString("Type"));
+        setInfoType(compound.getString("Type"));
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag compound) {
         compound.putInt("Age", getAge());
-        compound.putString("Type", entityData.get(TYPE));
+        compound.putString("Type", getInfoType());
     }
 
     @Override
@@ -148,11 +162,11 @@ public class PrehistoricSkeleton extends Entity implements GeoEntity {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         super.onSyncedDataUpdated(key);
-        if (AGE.equals(key) || TYPE.equals(key)) {
+        if (AGE.equals(key) || INFO_TYPE.equals(key)) {
             refreshDimensions();
             refreshTexturePath();
         }
-        if (TYPE.equals(key) && level().isClientSide) {
+        if (INFO_TYPE.equals(key) && level().isClientSide) {
             List<HitboxData> hitboxesData = HitboxDataLoader.HITBOX_DATA.getHitboxes(FossilMod.location(info().resourceName));
             if (hitboxesData != null) {
                 float maxFrustumWidthRadius = 0;
@@ -233,12 +247,20 @@ public class PrehistoricSkeleton extends Entity implements GeoEntity {
         entityData.set(AGE, age);
     }
 
-    public void setType(PrehistoricEntityInfo info) {
-        entityData.set(TYPE, info.name());
+    public void setInfoType(String type) {
+        entityData.set(INFO_TYPE, type);
+    }
+
+    public String getInfoType() {
+        return entityData.get(INFO_TYPE);
+    }
+
+    public void setInfoType(PrehistoricEntityInfo info) {
+        setInfoType(info.name());
     }
 
     public PrehistoricEntityInfo info() {
-        return valueOf(entityData.get(TYPE));
+        return valueOf(getInfoType());
     }
 
 
