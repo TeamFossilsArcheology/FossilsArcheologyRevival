@@ -60,12 +60,6 @@ public class CultureVatScreen extends AbstractContainerScreen<CultureVatMenu> {
     }
 
     @Override
-    protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-        font.draw(poseStack, title, titleLabelX, titleLabelY, 0x404040);
-        font.draw(poseStack, playerInventoryTitle, inventoryLabelX, inventoryLabelY, 0x404040);
-    }
-
-    @Override
     protected void renderTooltip(PoseStack poseStack, int x, int y) {
         super.renderTooltip(poseStack, x, y);
         if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY)) {

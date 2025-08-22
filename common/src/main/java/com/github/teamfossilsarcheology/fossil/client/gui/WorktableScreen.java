@@ -49,10 +49,4 @@ public class WorktableScreen extends AbstractContainerScreen<WorktableMenu> {
         int progress = menu.getBurnProgress();
         blit(poseStack, x + 76, y + 20, 176, FUEL_HEIGHT + 2, progress, PROGRESS_HEIGHT);
     }
-
-    @Override
-    protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-        font.draw(poseStack, title, titleLabelX, titleLabelY, 0x404040);
-        font.draw(poseStack, playerInventoryTitle, inventoryLabelX, inventoryLabelY, 0x404040);
-    }
 }
