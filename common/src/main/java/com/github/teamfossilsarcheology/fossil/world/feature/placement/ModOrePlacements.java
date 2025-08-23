@@ -47,7 +47,7 @@ public class ModOrePlacements {
         PlacementUtils.register(context, ORE_FOSSIL_BLOCK_DEEP, fossilBlockOre,
                 commonOrePlacement(13, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(0), VerticalAnchor.absolute(0))));
         PlacementUtils.register(context, ORE_PERMAFROST_BLOCK, permafrostBlockOre,
-                commonOrePlacement(7, HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(100), VerticalAnchor.aboveBottom(256))));
+                commonOrePlacement(12, HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(100), VerticalAnchor.aboveBottom(256))));
         PlacementUtils.register(context, ORE_VOLCANIC_ROCK, volcanicRockOre,
                 commonOrePlacement(2, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(0))));
 

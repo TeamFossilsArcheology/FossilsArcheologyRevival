@@ -12,6 +12,15 @@
           "predicate_type": "minecraft:tag_match",
           "tag": "minecraft:dirt"
         }
+      },
+      {
+        "state": {
+          "Name": "fossil:permafrost_block"
+        },
+        "target": {
+          "block": "minecraft:grass_block",
+          "predicate_type": "minecraft:block_match"
+        }
       }
     ]
   }
