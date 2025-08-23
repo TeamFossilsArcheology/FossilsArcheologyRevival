@@ -40,6 +40,6 @@ public class FabricFossilRegion extends Region {
 
     @Override
     public int getWeight() {
-        return FossilConfig.getInt(FossilConfig.VOLCANO_BIOME_RARITY);
+        return FossilConfig.isEnabled(FossilConfig.GENERATE_VOLCANO_BIOME) ? FossilConfig.getInt(FossilConfig.VOLCANO_BIOME_RARITY) : 0;
     }
 }
