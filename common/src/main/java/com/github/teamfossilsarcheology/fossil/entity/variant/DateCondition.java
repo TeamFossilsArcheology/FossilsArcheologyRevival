@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.variant;
 
 import com.google.gson.*;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 
 import java.lang.reflect.Type;
@@ -62,7 +63,7 @@ public class DateCondition extends VariantCondition {
         return Objects.hash(chance, mode, date);
     }
 
-    static class Deserializer implements JsonDeserializer<DateCondition> {
+    public static class Serializer implements VariantCondition.Serializer<DateCondition> {
         @Override
         public DateCondition deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonObject root = json.getAsJsonObject();
@@ -83,17 +84,32 @@ public class DateCondition extends VariantCondition {
                 throw new JsonSyntaxException("Missing " + MONTH_KEY + " or " + DAY_KEY + " entry");
             }
         }
-    }
 
-    static DateCondition load(CompoundTag tag) {
-        LocalDate date = LocalDate.of(2025, tag.getInt("Month"), tag.getInt("Day"));
-        return new DateCondition(tag.getDouble("Chance"), tag.getInt("Mode"), date);
-    }
+        @Override
+        public void save(CompoundTag tag, DateCondition condition) {
+            tag.putDouble("Chance", condition.chance);
+            tag.putInt("Mode", condition.mode);
+            tag.putInt("Month", condition.date.getMonthValue());
+            tag.putInt("Day", condition.date.getDayOfMonth());
+        }
 
-    static void save(CompoundTag tag, DateCondition condition) {
-        tag.putDouble("Chance", condition.chance);
-        tag.putInt("Mode", condition.mode);
-        tag.putInt("Month", condition.date.getMonthValue());
-        tag.putInt("Day", condition.date.getDayOfMonth());
+        @Override
+        public DateCondition load(CompoundTag tag) {
+            LocalDate date = LocalDate.of(LocalDate.now().getYear(), tag.getInt("Month"), tag.getInt("Day"));
+            return new DateCondition(tag.getDouble("Chance"), tag.getInt("Mode"), date);
+        }
+
+        @Override
+        public void toNetwork(FriendlyByteBuf buf, DateCondition condition) {
+            buf.writeDouble(condition.chance);
+            buf.writeInt(condition.mode);
+            buf.writeInt(condition.date.getMonthValue());
+            buf.writeInt(condition.date.getDayOfMonth());
+        }
+
+        @Override
+        public DateCondition fromNetwork(FriendlyByteBuf buf) {
+            return new DateCondition(buf.readDouble(), buf.readInt(), LocalDate.of(LocalDate.now().getYear(), buf.readInt(), buf.readInt()));
+        }
     }
 }

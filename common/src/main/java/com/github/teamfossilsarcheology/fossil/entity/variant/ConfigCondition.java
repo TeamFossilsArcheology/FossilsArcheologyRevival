@@ -2,10 +2,10 @@ package com.github.teamfossilsarcheology.fossil.entity.variant;
 
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 
 import java.lang.reflect.Type;
@@ -46,18 +46,30 @@ public class ConfigCondition extends VariantCondition {
         return Objects.hashCode(configKey);
     }
 
-    static class Deserializer implements JsonDeserializer<ConfigCondition> {
+    public static class Serializer implements VariantCondition.Serializer<ConfigCondition> {
         @Override
         public ConfigCondition deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             return new ConfigCondition(GsonHelper.getAsString(json.getAsJsonObject(), "configKey"));
         }
-    }
 
-    static ConfigCondition load(CompoundTag tag) {
-        return new ConfigCondition(tag.getString("ConfigKey"));
-    }
+        @Override
+        public void save(CompoundTag tag, ConfigCondition condition) {
+            tag.putString("ConfigKey", condition.configKey);
+        }
 
-    static void save(CompoundTag tag, ConfigCondition condition) {
-        tag.putString("ConfigKey", condition.configKey);
+        @Override
+        public ConfigCondition load(CompoundTag tag) {
+            return new ConfigCondition(tag.getString("ConfigKey"));
+        }
+
+        @Override
+        public void toNetwork(FriendlyByteBuf buf, ConfigCondition condition) {
+            buf.writeUtf(condition.configKey);
+        }
+
+        @Override
+        public ConfigCondition fromNetwork(FriendlyByteBuf buf) {
+            return new ConfigCondition(buf.readUtf());
+        }
     }
 }

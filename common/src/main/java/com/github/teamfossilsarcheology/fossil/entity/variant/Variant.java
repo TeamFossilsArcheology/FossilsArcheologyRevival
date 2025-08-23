@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.util.Gender;
 import com.google.gson.*;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 
 import java.lang.reflect.Type;
@@ -16,21 +17,25 @@ import java.util.List;
  * @see VariantCondition
  * @see EntityVariantLoader
  */
-public class Variant {
-    private final String variantId;
-    private final String textureName;
-    private final boolean hasBabyTexture;
-    private final boolean hasTeenTexture;
-    private final boolean hasGenderTextures;
-    final VariantCondition[] conditions;
+public record Variant(String variantId, String textureName, boolean hasBabyTexture, boolean hasTeenTexture, boolean hasGenderTextures, VariantCondition[] conditions) {
+    public static Variant readBuf(FriendlyByteBuf buf) {
+        VariantCondition[] conditions = new VariantCondition[buf.readVarInt()];
+        for (int i = 0; i < conditions.length; i++) {
+            conditions[i] = VariantRegistry.fromNetwork(buf);
+        }
+        return new Variant(buf.readUtf(), buf.readUtf(), buf.readBoolean(), buf.readBoolean(), buf.readBoolean(), conditions);
+    }
 
-    private Variant(String variantId, String textureName, boolean hasBabyTexture, boolean hasTeenTexture, boolean hasGenderTextures, VariantCondition[] conditions) {
-        this.variantId = variantId;
-        this.textureName = textureName;
-        this.hasBabyTexture = hasBabyTexture;
-        this.hasTeenTexture = hasTeenTexture;
-        this.hasGenderTextures = hasGenderTextures;
-        this.conditions = conditions;
+    public static void writeBuf(FriendlyByteBuf buf, Variant variant) {
+        buf.writeVarInt(variant.conditions.length);
+        for (VariantCondition condition : variant.conditions) {
+            VariantRegistry.toNetwork(buf, condition);
+        }
+        buf.writeUtf(variant.variantId);
+        buf.writeUtf(variant.textureName);
+        buf.writeBoolean(variant.hasBabyTexture);
+        buf.writeBoolean(variant.hasTeenTexture);
+        buf.writeBoolean(variant.hasGenderTextures);
     }
 
     public void appendTextureString(StringBuilder builder, Prehistoric entity) {

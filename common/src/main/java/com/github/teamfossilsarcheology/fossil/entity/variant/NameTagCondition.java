@@ -1,11 +1,11 @@
 package com.github.teamfossilsarcheology.fossil.entity.variant;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.Entity;
@@ -24,26 +24,38 @@ public class NameTagCondition extends VariantCondition {
         this.nameTagName = nameTagName;
     }
 
-    public static class Deserializer implements JsonDeserializer<NameTagCondition> {
-        @Override
-        public NameTagCondition deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            return new NameTagCondition(GsonHelper.getAsString(json.getAsJsonObject(), "name"));
-        }
-    }
-
-    public static void save(CompoundTag tag, NameTagCondition condition) {
-        tag.putString("NameTagName", condition.nameTagName);
-    }
-
-    public static NameTagCondition load(CompoundTag tag) {
-        return new NameTagCondition(tag.getString("NameTagName"));
-    }
-
     public boolean test(Component component) {
         return nameTagName.equals(ChatFormatting.stripFormatting(component.getString()));
     }
 
     public boolean test(Entity entity) {
         return test(entity.getName());
+    }
+
+    public static class Serializer implements VariantCondition.Serializer<NameTagCondition> {
+        @Override
+        public NameTagCondition deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return new NameTagCondition(GsonHelper.getAsString(json.getAsJsonObject(), "name"));
+        }
+
+        @Override
+        public void save(CompoundTag tag, NameTagCondition condition) {
+            tag.putString("NameTagName", condition.nameTagName);
+        }
+
+        @Override
+        public NameTagCondition load(CompoundTag tag) {
+            return new NameTagCondition(tag.getString("NameTagName"));
+        }
+
+        @Override
+        public void toNetwork(FriendlyByteBuf buf, NameTagCondition condition) {
+            buf.writeUtf(condition.nameTagName);
+        }
+
+        @Override
+        public NameTagCondition fromNetwork(FriendlyByteBuf buf) {
+            return new NameTagCondition(buf.readUtf());
+        }
     }
 }

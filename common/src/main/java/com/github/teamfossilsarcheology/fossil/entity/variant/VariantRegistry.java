@@ -3,54 +3,55 @@ package com.github.teamfossilsarcheology.fossil.entity.variant;
 import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonObject;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 
 import java.lang.reflect.Type;
 import java.util.*;
-import java.util.function.Function;
 
 /**
  * Each {@link VariantCondition} needs to have their serializers and id registered here
  */
 public class VariantRegistry {
-    private static final Map<String, RegistryObject<? extends VariantCondition>> REGISTRY_MAP = new Object2ObjectOpenHashMap<>();
+    private static final Map<String, RegistryObject<? extends VariantCondition>> BY_KEY = new Object2ObjectOpenHashMap<>();
+    private static final Map<Class<? extends VariantCondition>, RegistryObject<? extends VariantCondition>> BY_CLASS = new Object2ObjectOpenHashMap<>();
     private static final List<RegistryObject<? extends VariantCondition>> PRIORITY = new ObjectArrayList<>();
 
-    public static final RegistryObject<NameTagCondition> NAME_TAG = register("nametag", NameTagCondition::save, NameTagCondition::load, NameTagCondition.class, new NameTagCondition.Deserializer());
-    public static final RegistryObject<NbtCondition> NBT = register("nbt", NbtCondition::save, NbtCondition::load, NbtCondition.class, new NbtCondition.Deserializer());
-    public static final RegistryObject<DateCondition> DATE = register("date", DateCondition::save, DateCondition::load, DateCondition.class, new DateCondition.Deserializer());
-    public static final RegistryObject<ConfigCondition> CONFIG = register("config", ConfigCondition::save, ConfigCondition::load, ConfigCondition.class, new ConfigCondition.Deserializer());
+    public static final RegistryObject<NameTagCondition> NAME_TAG = register("nametag", new NameTagCondition.Serializer(), NameTagCondition.class);
+    public static final RegistryObject<NbtCondition> NBT = register("nbt", new NbtCondition.Serializer(), NbtCondition.class);
+    public static final RegistryObject<DateCondition> DATE = register("date", new DateCondition.Serializer(), DateCondition.class);
+    public static final RegistryObject<ConfigCondition> CONFIG = register("config", new ConfigCondition.Serializer(), ConfigCondition.class);
 
     private VariantRegistry() {
     }
 
     /**
-     * @param key          unique id used for serialization
-     * @param serializer   used to save the active conditions for the entity
-     * @param deserializer used to load the active conditions for the entity
-     * @param type         used when deserializing the json object
-     * @param typeAdapter  used when deserializing the json object. {@link GsonBuilder#registerTypeAdapter(Type, Object)}
+     * @param key        unique id used for serialization
+     * @param serializer used for network and tag serialization
+     * @param type       used when deserializing the json object. {@link GsonBuilder#registerTypeAdapter(Type, Object)}
      */
-    public static <T extends VariantCondition> RegistryObject<T> register(String key, RegistryObject.Serializer<T> serializer, Function<CompoundTag, VariantCondition> deserializer, Type type, Object typeAdapter) {
+    public static <T extends VariantCondition> RegistryObject<T> register(String key, VariantCondition.Serializer<T> serializer, Class<T> type) {
         Objects.requireNonNull(key, "key");
         Objects.requireNonNull(serializer, "serializer");
-        Objects.requireNonNull(deserializer, "deserializer");
         Preconditions.checkState(key.equals(key.toLowerCase(Locale.ROOT)), "key must be lowercase: %s", key);
-        Preconditions.checkState(!REGISTRY_MAP.containsKey(key), "key '%s' already registered as VariantCondition", key);
-        Preconditions.checkState(typeAdapter instanceof JsonDeserializer<?>, "typeAdapter '%s' should be an instance of JsonDeserializer", typeAdapter);
-        RegistryObject<T> registryObject = new RegistryObject<>(key, serializer, deserializer, type, typeAdapter);
-        REGISTRY_MAP.put(key, registryObject);
+        Preconditions.checkState(!BY_KEY.containsKey(key), "key '%s' already registered as VariantCondition", key);
+        RegistryObject<T> registryObject = new RegistryObject<>(key, serializer, type, new GsonBuilder().registerTypeAdapter(type, serializer).create());
+        BY_KEY.put(key, registryObject);
+        BY_CLASS.put(type, registryObject);
         //TODO: Properly implement priority
         PRIORITY.add(registryObject);
         return registryObject;
     }
 
     public static RegistryObject<? extends VariantCondition> get(String key) {
-        return REGISTRY_MAP.get(key);
+        return BY_KEY.get(key);
+    }
+
+    public static RegistryObject<? extends VariantCondition> get(VariantCondition condition) {
+        return BY_CLASS.get(condition.getClass());
     }
 
     /**
@@ -69,30 +70,21 @@ public class VariantRegistry {
 
     }
 
-    public static class RegistryObject<T extends VariantCondition> {
-        private final String id;
-        private final Serializer<T> serializer;
-        private final Function<CompoundTag, VariantCondition> deserializer;
-        private final Type type;
-        private final Gson gson;
+    public static void toNetwork(FriendlyByteBuf buf, VariantCondition condition) {
+        BY_CLASS.get(condition.getClass()).toNetwork(buf, condition);
+    }
 
-        public RegistryObject(String id, Serializer<T> serializer, Function<CompoundTag, VariantCondition> deserializer, Type type, Object typeAdapter) {
-            this.serializer = serializer;
-            this.id = id;
-            this.deserializer = deserializer;
-            this.type = type;
-            this.gson = new GsonBuilder().registerTypeAdapter(type, typeAdapter).create();
-        }
+    public static VariantCondition fromNetwork(FriendlyByteBuf buf) {
+        String type = buf.readUtf();
+        return get(type).serializer.fromNetwork(buf);
+    }
 
+    public record RegistryObject<T extends VariantCondition>(String id, VariantCondition.Serializer<T> serializer, Type type, Gson gson) {
         public CompoundTag save(CompoundTag tag, VariantCondition.WithVariant<? extends VariantCondition> pair) {
             tag.putString("VariantConditionId", id);
             tag.putString("VariantId", pair.variant().getVariantId());
             serializer.save(tag, (T) pair.condition());
             return tag;
-        }
-
-        public VariantCondition load(CompoundTag tag) {
-            return deserializer.apply(tag);
         }
 
         public static RegistryObject<? extends VariantCondition> parse(CompoundTag tag) {
@@ -103,8 +95,9 @@ public class VariantRegistry {
             return gson.fromJson(object, type);
         }
 
-        public interface Serializer<T> {
-            void save(CompoundTag tag, T condition);
+        void toNetwork(FriendlyByteBuf buf, VariantCondition condition) {
+            buf.writeUtf(id);
+            serializer.toNetwork(buf, (T) condition);
         }
     }
 }

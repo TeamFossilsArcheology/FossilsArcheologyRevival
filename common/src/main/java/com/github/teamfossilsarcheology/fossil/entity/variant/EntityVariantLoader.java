@@ -60,7 +60,7 @@ public class EntityVariantLoader extends SimpleJsonResourceReloadListener {
         variants = builder.build();
         //Groups variants by their conditions
         variantsByCondition = variants.entrySet().stream().collect(Collectors.toUnmodifiableMap(Map.Entry::getKey, entry -> entry.getValue().values().stream()
-                .flatMap(variant -> Arrays.stream(variant.conditions).map(condition -> VariantCondition.WithVariant.of(condition, variant)).collect(
+                .flatMap(variant -> Arrays.stream(variant.conditions()).map(condition -> VariantCondition.WithVariant.of(condition, variant)).collect(
                         Collectors.toMap(pair -> pair.condition().getClass(), List::of,
                                 (list, list2) -> Stream.concat(list.stream(), list2.stream()).toList())).entrySet().stream())
                 .collect(Collectors.toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue))));
@@ -89,5 +89,13 @@ public class EntityVariantLoader extends SimpleJsonResourceReloadListener {
         var temp = variantsByCondition.getOrDefault(entityName, Map.of()).getOrDefault(clazz, List.of());
         //We know that this is safe because of how the map was built
         return temp.stream().map(pair -> VariantCondition.WithVariant.of((T) pair.condition(), pair.variant())).toList();
+    }
+
+    public Map<String, Map<String, Variant>> getVariants() {
+        return variants;
+    }
+
+    public void replaceVariants(Map<String, Map<String, Variant>> variantsMap) {
+        variants = ImmutableMap.copyOf(variantsMap);
     }
 }

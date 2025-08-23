@@ -83,6 +83,7 @@ public class FossilMod {
         MessageHandler.CAP_CHANNEL.register(S2CMammalCapMessage.class, S2CMammalCapMessage::write, S2CMammalCapMessage::new, S2CMammalCapMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(S2CMusicMessage.class, S2CMusicMessage::write, S2CMusicMessage::new, S2CMusicMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(S2CSyncEntityInfoMessage.class, S2CSyncEntityInfoMessage::write, S2CSyncEntityInfoMessage::new, S2CSyncEntityInfoMessage::apply);
+        MessageHandler.SYNC_CHANNEL.register(S2CSyncEntityVariantsMessage.class, S2CSyncEntityVariantsMessage::write, S2CSyncEntityVariantsMessage::new, S2CSyncEntityVariantsMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(S2CSyncActiveAnimationMessage.class, S2CSyncActiveAnimationMessage::write, S2CSyncActiveAnimationMessage::new, S2CSyncActiveAnimationMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(S2CSyncToyAnimationMessage.class, S2CSyncToyAnimationMessage::write, S2CSyncToyAnimationMessage::new, S2CSyncToyAnimationMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(C2SHitPlayerMessage.class, C2SHitPlayerMessage::write, C2SHitPlayerMessage::new, C2SHitPlayerMessage::apply);
@@ -93,5 +94,6 @@ public class FossilMod {
 
     public static void syncData(ServerPlayer player) {
         MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new S2CSyncEntityInfoMessage(EntityDataLoader.INSTANCE.getEntities()));
+        MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new S2CSyncEntityVariantsMessage(EntityVariantLoader.INSTANCE.getVariants()));
     }
 }
