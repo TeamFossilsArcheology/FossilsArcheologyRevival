@@ -5,7 +5,6 @@ import com.github.teamfossilsarcheology.fossil.block.entity.ModBlockEntities;
 import com.github.teamfossilsarcheology.fossil.client.particle.ModParticles;
 import com.github.teamfossilsarcheology.fossil.enchantment.ModEnchantments;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
-import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationCategoryLoader;
 import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationInfoLoader;
 import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.variant.EntityVariantLoader;
@@ -44,7 +43,6 @@ public class FossilMod {
 
     public static void init() {
         ReloadListenerRegistry.register(PackType.SERVER_DATA, ServerAnimationInfoLoader.INSTANCE);
-        ReloadListenerRegistry.register(PackType.SERVER_DATA, ServerAnimationCategoryLoader.INSTANCE);
         ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityDataLoader.INSTANCE);
         ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityVariantLoader.INSTANCE);
         VariantRegistry.register();

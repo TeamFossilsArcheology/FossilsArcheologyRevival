@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.animation;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -21,7 +22,7 @@ import java.util.Map;
 public class ClientAnimationInfoLoader extends AnimationInfoLoader<AnimationInfo> {
     private static final BakedAnimationInfo<AnimationInfo> EMPTY = new BakedAnimationInfo<>(Object2ObjectMaps.emptyMap());
     public static final ClientAnimationInfoLoader INSTANCE = new ClientAnimationInfoLoader(new GsonBuilder().create());
-    private final Map<ResourceLocation, BakedAnimationInfo<AnimationInfo>> clientAnimationInfos = new Object2ObjectOpenHashMap<>();
+    private Map<ResourceLocation, BakedAnimationInfo<AnimationInfo>> clientAnimationInfos = ImmutableMap.of();
 
     public ClientAnimationInfoLoader(Gson gson) {
         super(gson);
@@ -30,9 +31,8 @@ public class ClientAnimationInfoLoader extends AnimationInfoLoader<AnimationInfo
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> jsons, ResourceManager resourceManager, ProfilerFiller profiler) {
         //Client side. Copy from geckolib
-        Map<ResourceLocation, AnimationFile> bakedAnimations = GeckoLibCache.getInstance().getAnimations();
-        clientAnimationInfos.clear();
-        for (Map.Entry<ResourceLocation, AnimationFile> fileEntry : bakedAnimations.entrySet()) {
+        ImmutableMap.Builder<ResourceLocation, BakedAnimationInfo<AnimationInfo>> builder = ImmutableMap.builder();
+        for (Map.Entry<ResourceLocation, AnimationFile> fileEntry : GeckoLibCache.getInstance().getAnimations().entrySet()) {
             if (!fileEntry.getKey().getNamespace().equals(FossilMod.MOD_ID)) {
                 continue;
             }
@@ -40,8 +40,10 @@ public class ClientAnimationInfoLoader extends AnimationInfoLoader<AnimationInfo
             for (Map.Entry<String, Animation> animationEntry : fileEntry.getValue().animations().entrySet()) {
                 bakedMap.put(animationEntry.getKey(), new AnimationInfo(animationEntry.getValue()));
             }
-            clientAnimationInfos.put(fileEntry.getKey(), new BakedAnimationInfo<>(bakedMap));
+            builder.put(fileEntry.getKey(), new BakedAnimationInfo<>(bakedMap));
         }
+        clientAnimationInfos = builder.build();
+        AnimationCategoryLoader.INSTANCE.apply(clientAnimationInfos);
     }
 
     @Override

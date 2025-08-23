@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.animation;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.*;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMaps;
@@ -21,7 +22,7 @@ public class ServerAnimationInfoLoader extends AnimationInfoLoader<ServerAnimati
     }.getType();
     private static final BakedAnimationInfo<ServerAnimationInfo> EMPTY = new BakedAnimationInfo<>(Object2ObjectMaps.emptyMap());
     public static final ServerAnimationInfoLoader INSTANCE = new ServerAnimationInfoLoader(GSON);
-    private final Map<ResourceLocation, BakedAnimationInfo<ServerAnimationInfo>> serverAnimationInfos = new Object2ObjectOpenHashMap<>();
+    private Map<ResourceLocation, BakedAnimationInfo<ServerAnimationInfo>> serverAnimationInfos = ImmutableMap.of();
 
     protected ServerAnimationInfoLoader(Gson gson) {
         super(gson);
@@ -29,14 +30,16 @@ public class ServerAnimationInfoLoader extends AnimationInfoLoader<ServerAnimati
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> jsons, ResourceManager resourceManager, ProfilerFiller profiler) {
-        serverAnimationInfos.clear();
+        ImmutableMap.Builder<ResourceLocation, BakedAnimationInfo<ServerAnimationInfo>> builder = ImmutableMap.builder();
         for (Map.Entry<ResourceLocation, JsonElement> fileEntry : jsons.entrySet()) {
             if (!(fileEntry.getValue() instanceof JsonObject root) || !fileEntry.getKey().getNamespace().equals(FossilMod.MOD_ID)) {
                 continue;
             }
             ResourceLocation path = FossilMod.location("animations/" + fileEntry.getKey().getPath() + ".json");
-            serverAnimationInfos.put(path, GSON.fromJson(GsonHelper.getAsJsonObject(root, "animations"), TYPE));
+            builder.put(path, GSON.fromJson(GsonHelper.getAsJsonObject(root, "animations"), TYPE));
         }
+        serverAnimationInfos = builder.build();
+        AnimationCategoryLoader.INSTANCE.apply(serverAnimationInfos);
     }
 
     @Override

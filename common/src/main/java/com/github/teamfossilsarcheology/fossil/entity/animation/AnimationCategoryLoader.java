@@ -1,50 +1,26 @@
 package com.github.teamfossilsarcheology.fossil.entity.animation;
 
-import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
-import net.minecraft.util.profiling.ProfilerFiller;
 import org.slf4j.Logger;
 
 import java.util.Map;
 
-public abstract class AnimationCategoryLoader extends SimpleJsonResourceReloadListener {
+public class AnimationCategoryLoader {
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
     private static final AnimationHolder EMPTY = new AnimationHolder();
     private ImmutableMap<ResourceLocation, Map<AnimationCategory, AnimationHolder>> animations = ImmutableMap.of();
-    private final AnimationInfoLoader<? extends AnimationInfo> animationInfoLoader;
+    public static final AnimationCategoryLoader INSTANCE = new AnimationCategoryLoader();
 
-    protected AnimationCategoryLoader(AnimationInfoLoader<? extends AnimationInfo> animationInfoLoader) {
-        super(GSON, "animations");
-        this.animationInfoLoader = animationInfoLoader;
-    }
-
-    @Override
-    protected void apply(Map<ResourceLocation, JsonElement> jsons, ResourceManager resourceManager, ProfilerFiller profiler) {
-        //TODO: Dont actually need jsons here since we just use AnimationInfoLoader
-        Map<ResourceLocation, ? extends BakedAnimationInfo<? extends AnimationInfo>> allAnimations = animationInfoLoader.getAnimationInfos();
+    protected void apply(Map<ResourceLocation, ? extends BakedAnimationInfo<? extends AnimationInfo>> allAnimations) {
         ImmutableMap.Builder<ResourceLocation, Map<AnimationCategory, AnimationHolder>> builder = ImmutableMap.builder();
-        for (Map.Entry<ResourceLocation, JsonElement> fileEntry : jsons.entrySet()) {
-            if (!(fileEntry.getValue() instanceof JsonObject) || !fileEntry.getKey().getNamespace().equals(FossilMod.MOD_ID)) {
-                continue;
-            }
+        for (Map.Entry<ResourceLocation, ? extends BakedAnimationInfo<? extends AnimationInfo>> fileEntry : allAnimations.entrySet()) {
             Map<AnimationCategory, AnimationHolder> map = new Object2ObjectOpenHashMap<>();
-            ResourceLocation path = FossilMod.location("animations/" + fileEntry.getKey().getPath() + ".json");
-            if (!allAnimations.containsKey(path)) {
-                continue;
-            }
             AnimationCategory backup = null;
             for (AnimationCategory category : AnimationCategory.CATEGORIES) {
-                for (Map.Entry<String, ? extends AnimationInfo> entry : allAnimations.get(path).animations().entrySet()) {
+                for (Map.Entry<String, ? extends AnimationInfo> entry : fileEntry.getValue().animations().entrySet()) {
                     if (category.canMapAnimation(entry.getKey())) {
                         map.computeIfAbsent(category, cat -> new AnimationHolder()).add(entry.getValue());
                         backup = category;
@@ -52,8 +28,8 @@ public abstract class AnimationCategoryLoader extends SimpleJsonResourceReloadLi
                 }
             }
             if (backup == null) {
-                LOGGER.error("Mob has no animations that match any of our categories in {}", path);
-                throw new RuntimeException("Mob has no animations that match any of our categories in " + path);
+                LOGGER.error("Mob has no animations that match any of our categories in {}", fileEntry.getKey());
+                throw new RuntimeException("Mob has no animations that match any of our categories in " + fileEntry.getKey());
             }
 
             //Add backup animations to prevent crashes
@@ -63,7 +39,7 @@ public abstract class AnimationCategoryLoader extends SimpleJsonResourceReloadLi
                     map.put(category, map.containsKey(category.backup()) ? map.get(category.backup()) : map.get(backup));
                 }
             }
-            builder.put(path, map);
+            builder.put(fileEntry.getKey(), map);
         }
         animations = builder.build();
     }
