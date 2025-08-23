@@ -1,17 +1,12 @@
 package com.github.teamfossilsarcheology.fossil.config;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import net.minecraft.resources.ResourceLocation;
 
 public class FossilConfig {
-    public static final String GENERATE_ACADEMY = "generateAcademy";
-    public static final String GENERATE_AZTEC_WEAPON_SHOPS = "generateAztecWeaponShops";
     public static final String GENERATE_HELL_SHIPS = "generateHellShips";
     public static final String HELL_SHIP_SPACING = "hellShipSpacing";
     public static final String HELL_SHIP_SEPARATION = "hellShipSeparation";
     public static final String GENERATE_MOAI = "generateMoai";
-    public static final String MOAI_RARITY = "moaiRarity";
-    public static final String GENERATE_TEMPLE = "generateTemple";
     public static final String GENERATE_FOSSILS = "generateFossils";
     public static final String FOSSIL_ORE_RARITY = "fossilOreRarity";
     public static final String GENERATE_PERMAFROST = "generatePermafrost";
@@ -21,13 +16,9 @@ public class FossilConfig {
     public static final String VOLCANO_BIOME_RARITY = "volcanoBiomeRarity";
 
     public static final String FISH_ARE_PERSISTENT = "fishArePersistent";
-    public static final String SPAWN_ALLIGATOR_GAR = "spawnAlligatorGar";
     public static final String ALLIGATOR_GAR_SPAWN_WEIGHT = "alligatorGarSpawnWeight";
-    public static final String SPAWN_COELACANTH = "spawnCoelacanth";
     public static final String COELACANTH_SPAWN_WEIGHT = "coelacanthSpawnWeight";
-    public static final String SPAWN_NAUTILUS = "spawnNautilus";
     public static final String NAUTILUS_SPAWN_WEIGHT = "nautilusSpawnWeight";
-    public static final String SPAWN_STURGEON = "spawnSturgeon";
     public static final String STURGEON_SPAWN_WEIGHT = "sturgeonSpawnWeight";
     public static final String SPAWN_TAR_SLIMES = "spawnTarSlimes";
     public static final String TAR_SLIMES_SPAWN_RATE = "tarSlimesSpawnRate";
@@ -61,26 +52,6 @@ public class FossilConfig {
     public static final String FERN_TICK_RATE = "fernTickRate";
     public static final String VERSION = "version";
     public static final int VERSION_VALUE = 1;
-
-    /**
-     * Maps hardcoded structure locations to a config option
-     */
-    public static boolean isStructurePoolEnabled(ResourceLocation field) {
-        switch (field.getPath()) {
-            case "aztec_weapon_shop" -> {
-                return isEnabled(GENERATE_AZTEC_WEAPON_SHOPS);
-            }
-            case "aztec_temple" -> {
-                return isEnabled(GENERATE_TEMPLE);
-            }
-            case "egyptian_academy" -> {
-                return isEnabled(GENERATE_ACADEMY);
-            }
-            default -> {
-                return true;
-            }
-        }
-    }
 
     @ExpectPlatform
     public static boolean isEnabled(String field) {

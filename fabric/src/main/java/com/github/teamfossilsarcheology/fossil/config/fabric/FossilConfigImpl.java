@@ -17,10 +17,6 @@ public class FossilConfigImpl extends MidnightConfig {
     @MidnightConfig.Comment
     public static MidnightConfig.Comment generate;
     @MidnightConfig.Entry
-    public static boolean generateAcademy = true;
-    @MidnightConfig.Entry
-    public static boolean generateAztecWeaponShops = true;
-    @MidnightConfig.Entry
     public static boolean generateHellShips = true;
     @MidnightConfig.Entry(min = 1, max = 1000000)
     public static int hellShipSpacing = 24;
@@ -28,10 +24,6 @@ public class FossilConfigImpl extends MidnightConfig {
     public static int hellShipSeparation = 5;
     @MidnightConfig.Entry
     public static boolean generateMoai = true;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int moaiRarity = 400;
-    @MidnightConfig.Entry
-    public static boolean generateTemple = true;
     @MidnightConfig.Entry
     public static boolean generateFossils = true;
     @MidnightConfig.Entry(min = 1, max = 500)

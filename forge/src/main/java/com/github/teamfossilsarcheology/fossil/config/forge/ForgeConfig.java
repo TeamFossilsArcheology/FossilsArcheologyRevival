@@ -12,14 +12,10 @@ public class ForgeConfig {
 
     private static final Builder COMMON = new Builder();
     public static final ForgeConfigSpec COMMON_SPEC;
-    public static final ForgeConfigSpec.BooleanValue GENERATE_ACADEMY;
-    public static final ForgeConfigSpec.BooleanValue GENERATE_AZTEC_WEAPON_SHOPS;
     public static final ForgeConfigSpec.BooleanValue GENERATE_HELL_SHIPS;
     public static final ForgeConfigSpec.IntValue HELL_SHIP_SPACING;
     public static final ForgeConfigSpec.IntValue HELL_SHIP_SEPARATION;
     public static final ForgeConfigSpec.BooleanValue GENERATE_MOAI;
-    public static final ForgeConfigSpec.IntValue MOAI_RARITY;
-    public static final ForgeConfigSpec.BooleanValue GENERATE_TEMPLE;
     public static final ForgeConfigSpec.BooleanValue GENERATE_FOSSILS;
     public static final ForgeConfigSpec.IntValue FOSSIL_ORE_RARITY;
     public static final ForgeConfigSpec.BooleanValue GENERATE_PERMAFROST;
@@ -29,13 +25,9 @@ public class ForgeConfig {
     public static final ForgeConfigSpec.IntValue VOLCANO_BIOME_RARITY;
 
     public static final ForgeConfigSpec.BooleanValue FISH_ARE_PERSISTENT;
-    public static final ForgeConfigSpec.BooleanValue SPAWN_ALLIGATOR_GAR;
     public static final ForgeConfigSpec.IntValue ALLIGATOR_GAR_SPAWN_WEIGHT;
-    public static final ForgeConfigSpec.BooleanValue SPAWN_COELACANTH;
     public static final ForgeConfigSpec.IntValue COELACANTH_SPAWN_WEIGHT;
-    public static final ForgeConfigSpec.BooleanValue SPAWN_NAUTILUS;
     public static final ForgeConfigSpec.IntValue NAUTILUS_SPAWN_WEIGHT;
-    public static final ForgeConfigSpec.BooleanValue SPAWN_STURGEON;
     public static final ForgeConfigSpec.IntValue STURGEON_SPAWN_WEIGHT;
     public static final ForgeConfigSpec.BooleanValue SPAWN_TAR_SLIMES;
     public static final ForgeConfigSpec.IntValue TAR_SLIMES_SPAWN_RATE;
@@ -78,27 +70,19 @@ public class ForgeConfig {
     static {
         COMMON.builder.push("Generation Config");
         GENERATE_HELL_SHIPS = COMMON.boolEntry("True if Hell Ships are to generate naturally", FossilConfig.GENERATE_HELL_SHIPS, true);
-        GENERATE_ACADEMY = COMMON.boolEntry("True if Desert Academies are to generate naturally", FossilConfig.GENERATE_ACADEMY, true);
-        GENERATE_TEMPLE = COMMON.boolEntry("True if Aztec Temples are to generate naturally", FossilConfig.GENERATE_TEMPLE, true);
         GENERATE_FOSSILS = COMMON.boolEntry("True if Fossil Ores are to generate naturally", FossilConfig.GENERATE_FOSSILS, true);
         GENERATE_PERMAFROST = COMMON.boolEntry("True if Permafrost Ore is to generate naturally", FossilConfig.GENERATE_PERMAFROST, true);
         GENERATE_VOLCANIC_ROCK = COMMON.boolEntry("True if Volcanic Rock is to generate naturally", FossilConfig.GENERATE_VOLCANIC_ROCK, true);
-        GENERATE_AZTEC_WEAPON_SHOPS = COMMON.boolEntry("True if Aztec Weapon Shops are to generate naturally", FossilConfig.GENERATE_AZTEC_WEAPON_SHOPS, true);
         GENERATE_MOAI = COMMON.boolEntry("True if Moai Statues are to generate naturally", FossilConfig.GENERATE_MOAI, true);
         GENERATE_VOLCANO_BIOME = COMMON.boolEntry("True if Volcano Biomes are to generate naturally", FossilConfig.GENERATE_VOLCANO_BIOME, true);
         FOSSIL_ORE_RARITY = COMMON.intEntry("Rarity of Fossil ore. Higher number = more tries per chunk", FossilConfig.FOSSIL_ORE_RARITY, 13, 1, 500);
         PERMAFROST_RARITY = COMMON.intEntry("Rarity of Permafrost. Higher number = more tries per chunk", FossilConfig.PERMAFROST_RARITY, 12, 1, 500);
         HELL_SHIP_SPACING = COMMON.intEntry("Maximum number of chunks between Ship Structures", FossilConfig.HELL_SHIP_SPACING, 24, 1, 100000000);
         HELL_SHIP_SEPARATION = COMMON.intEntry("Minimum number of chunks between Ship Structures", FossilConfig.HELL_SHIP_SEPARATION, 5, 1, 100000000);
-        MOAI_RARITY = COMMON.intEntry("Rarity of Moai Statues. Higher number = more rare", FossilConfig.MOAI_RARITY, 400, 1, 100000000);
         VOLCANO_BIOME_RARITY = COMMON.intEntry("Volcano Biome Weight. Higher number = more common", FossilConfig.VOLCANO_BIOME_RARITY, 7, 1, 10000);
         COMMON.builder.pop();
         COMMON.builder.push("Spawn Config");
         SPAWN_TAR_SLIMES = COMMON.boolEntry("True if Tar Slimes are to spawn naturally in tar pits", FossilConfig.SPAWN_TAR_SLIMES, true);
-        SPAWN_NAUTILUS = COMMON.boolEntry("True if Nautilus are to spawn naturally in oceans", FossilConfig.SPAWN_NAUTILUS, true);
-        SPAWN_COELACANTH = COMMON.boolEntry("True if Coelacanths are to spawn naturally in oceans", FossilConfig.SPAWN_COELACANTH, true);
-        SPAWN_ALLIGATOR_GAR = COMMON.boolEntry("True if Alligator Gars are to spawn naturally in swamps", FossilConfig.SPAWN_ALLIGATOR_GAR, true);
-        SPAWN_STURGEON = COMMON.boolEntry("True if Sturgeons are to spawn naturally in rivers", FossilConfig.SPAWN_STURGEON, true);
         TAR_SLIMES_SPAWN_RATE = COMMON.intEntry("Tar Slime Spawn Rarity. Higher number = more rare", FossilConfig.TAR_SLIMES_SPAWN_RATE, 75, 1, 100000000);
         ALLIGATOR_GAR_SPAWN_WEIGHT = COMMON.intEntry("Alligator Gar Spawn Weight. Higher number = more common", FossilConfig.ALLIGATOR_GAR_SPAWN_WEIGHT, 4, 0, 100000000);
         COELACANTH_SPAWN_WEIGHT = COMMON.intEntry("Coelacanth Spawn Weight. Higher number = more common", FossilConfig.COELACANTH_SPAWN_WEIGHT, 3, 0, 100000000);

@@ -24,10 +24,18 @@ public class FabricBiomeModifiers {
                     GenerationStep.Decoration.SURFACE_STRUCTURES,
                     ModPlacedFeatures.MOAI_STATUE_KEY);
         }
-        spawn(ModEntities.ALLIGATOR_GAR.get(), Biomes.SWAMP, FossilConfigImpl.alligatorGarSpawnWeight, 1, 4);
-        spawn(ModEntities.COELACANTH.get(), BiomeTags.IS_OCEAN, FossilConfigImpl.coelacanthSpawnWeight, 1, 4);
-        spawn(ModEntities.NAUTILUS.get(), BiomeTags.IS_OCEAN, FossilConfigImpl.nautilusSpawnWeight, 1, 4);
-        spawn(ModEntities.STURGEON.get(), BiomeTags.IS_RIVER, FossilConfigImpl.sturgeonSpawnWeight, 1, 4);
+        if (FossilConfigImpl.spawnAlligatorGar) {
+            spawn(ModEntities.ALLIGATOR_GAR.get(), Biomes.SWAMP, FossilConfigImpl.alligatorGarSpawnWeight, 1, 4);
+        }
+        if (FossilConfigImpl.spawnCoelacanth) {
+            spawn(ModEntities.COELACANTH.get(), BiomeTags.IS_OCEAN, FossilConfigImpl.coelacanthSpawnWeight, 1, 4);
+        }
+        if (FossilConfigImpl.spawnNautilus) {
+            spawn(ModEntities.NAUTILUS.get(), BiomeTags.IS_OCEAN, FossilConfigImpl.nautilusSpawnWeight, 1, 4);
+        }
+        if (FossilConfigImpl.spawnSturgeon) {
+            spawn(ModEntities.STURGEON.get(), BiomeTags.IS_RIVER, FossilConfigImpl.sturgeonSpawnWeight, 1, 4);
+        };
     }
 
     private static void spawn(EntityType<? extends Entity> entityType, TagKey<Biome> biome, int weight, int minGroupSize, int maxGroupSize) {
