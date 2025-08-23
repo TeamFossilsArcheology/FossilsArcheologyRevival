@@ -25,10 +25,6 @@ public class ForgeConfig {
     public static final ForgeConfigSpec.IntValue VOLCANO_BIOME_RARITY;
 
     public static final ForgeConfigSpec.BooleanValue FISH_ARE_PERSISTENT;
-    public static final ForgeConfigSpec.IntValue ALLIGATOR_GAR_SPAWN_WEIGHT;
-    public static final ForgeConfigSpec.IntValue COELACANTH_SPAWN_WEIGHT;
-    public static final ForgeConfigSpec.IntValue NAUTILUS_SPAWN_WEIGHT;
-    public static final ForgeConfigSpec.IntValue STURGEON_SPAWN_WEIGHT;
     public static final ForgeConfigSpec.BooleanValue SPAWN_TAR_SLIMES;
     public static final ForgeConfigSpec.IntValue TAR_SLIMES_SPAWN_RATE;
 
@@ -84,10 +80,6 @@ public class ForgeConfig {
         COMMON.builder.push("Spawn Config");
         SPAWN_TAR_SLIMES = COMMON.boolEntry("True if Tar Slimes are to spawn naturally in tar pits", FossilConfig.SPAWN_TAR_SLIMES, true);
         TAR_SLIMES_SPAWN_RATE = COMMON.intEntry("Tar Slime Spawn Rarity. Higher number = more rare", FossilConfig.TAR_SLIMES_SPAWN_RATE, 75, 1, 100000000);
-        ALLIGATOR_GAR_SPAWN_WEIGHT = COMMON.intEntry("Alligator Gar Spawn Weight. Higher number = more common", FossilConfig.ALLIGATOR_GAR_SPAWN_WEIGHT, 4, 0, 100000000);
-        COELACANTH_SPAWN_WEIGHT = COMMON.intEntry("Coelacanth Spawn Weight. Higher number = more common", FossilConfig.COELACANTH_SPAWN_WEIGHT, 3, 0, 100000000);
-        NAUTILUS_SPAWN_WEIGHT = COMMON.intEntry("Nautilus Spawn Weight. Higher number = more common", FossilConfig.NAUTILUS_SPAWN_WEIGHT, 2, 0, 100000000);
-        STURGEON_SPAWN_WEIGHT = COMMON.intEntry("Sturgeon Spawn Weight. Higher number = more common", FossilConfig.STURGEON_SPAWN_WEIGHT, 5, 0, 100000000);
         FISH_ARE_PERSISTENT = COMMON.boolEntry("True if fish spawned via fish egg item should never despawn", FossilConfig.FISH_ARE_PERSISTENT, true);
         COMMON.builder.pop();
         COMMON.builder.push("Mob Config");

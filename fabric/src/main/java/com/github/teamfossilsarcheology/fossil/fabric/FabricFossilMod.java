@@ -15,7 +15,6 @@ import com.github.teamfossilsarcheology.fossil.fabric.capabilities.MammalCompone
 import com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.FarmersDelightCompat;
 import com.github.teamfossilsarcheology.fossil.fabric.world.biome.FabricBiomeModifiers;
 import com.github.teamfossilsarcheology.fossil.fabric.world.biome.FabricFossilRegion;
-import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.util.ModConstants;
 import com.github.teamfossilsarcheology.fossil.world.chunk.AnuLairChunkGenerator;
 import com.github.teamfossilsarcheology.fossil.world.chunk.TreasureChunkGenerator;

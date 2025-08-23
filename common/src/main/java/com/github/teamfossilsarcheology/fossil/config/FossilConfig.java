@@ -16,10 +16,6 @@ public class FossilConfig {
     public static final String VOLCANO_BIOME_RARITY = "volcanoBiomeRarity";
 
     public static final String FISH_ARE_PERSISTENT = "fishArePersistent";
-    public static final String ALLIGATOR_GAR_SPAWN_WEIGHT = "alligatorGarSpawnWeight";
-    public static final String COELACANTH_SPAWN_WEIGHT = "coelacanthSpawnWeight";
-    public static final String NAUTILUS_SPAWN_WEIGHT = "nautilusSpawnWeight";
-    public static final String STURGEON_SPAWN_WEIGHT = "sturgeonSpawnWeight";
     public static final String SPAWN_TAR_SLIMES = "spawnTarSlimes";
     public static final String TAR_SLIMES_SPAWN_RATE = "tarSlimesSpawnRate";
 
