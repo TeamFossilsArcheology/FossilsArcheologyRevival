@@ -8,7 +8,6 @@ import com.github.teamfossilsarcheology.fossil.block.entity.fabric.CultureVatBlo
 import com.github.teamfossilsarcheology.fossil.capabilities.fabric.ModCapabilitiesImpl;
 import com.github.teamfossilsarcheology.fossil.config.fabric.FossilConfigImpl;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
-import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.fish.Coelacanth;
 import com.github.teamfossilsarcheology.fossil.fabric.capabilities.FirstHatchComponent;
@@ -16,8 +15,6 @@ import com.github.teamfossilsarcheology.fossil.fabric.capabilities.MammalCompone
 import com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.FarmersDelightCompat;
 import com.github.teamfossilsarcheology.fossil.fabric.world.biome.FabricFossilRegion;
 import com.github.teamfossilsarcheology.fossil.fabric.world.biome.FabricModBiomes;
-import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
-import com.github.teamfossilsarcheology.fossil.network.S2CSyncEntityInfoMessage;
 import com.github.teamfossilsarcheology.fossil.util.ModConstants;
 import com.github.teamfossilsarcheology.fossil.world.chunk.AnuLairChunkGenerator;
 import com.github.teamfossilsarcheology.fossil.world.chunk.TreasureChunkGenerator;
@@ -66,7 +63,7 @@ public class FabricFossilMod implements ModInitializer, TerraBlenderApi, EntityC
         ModRegistries.register();
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
             if (joined) {
-                MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new S2CSyncEntityInfoMessage(EntityDataLoader.INSTANCE.getEntities()));
+                FossilMod.syncData(player);
             }
         });
         ServerLifecycleEvents.SERVER_STARTING.register(minecraftServer -> {

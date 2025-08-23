@@ -4,7 +4,6 @@ import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.capabilities.ModCapabilities;
 import com.github.teamfossilsarcheology.fossil.capabilities.forge.ModCapabilitiesImpl;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
-import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.event.ModEvents;
 import com.github.teamfossilsarcheology.fossil.forge.capabilities.mammal.MammalCapProvider;
@@ -12,7 +11,6 @@ import com.github.teamfossilsarcheology.fossil.forge.capabilities.player.FirstHa
 import com.github.teamfossilsarcheology.fossil.forge.tests.*;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.S2CMammalCapMessage;
-import com.github.teamfossilsarcheology.fossil.network.S2CSyncEntityInfoMessage;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import com.github.teamfossilsarcheology.fossil.villager.ModTrades;
 import com.github.teamfossilsarcheology.fossil.villager.ModVillagers;
@@ -164,6 +162,6 @@ public class ForgeModEvents {
 
     @SubscribeEvent
     public static void onDatapackSyncEvent(OnDatapackSyncEvent event) {
-        MessageHandler.SYNC_CHANNEL.sendToPlayer(event.getPlayer(), new S2CSyncEntityInfoMessage(EntityDataLoader.INSTANCE.getEntities()));
+        FossilMod.syncData(event.getPlayer());
     }
 }

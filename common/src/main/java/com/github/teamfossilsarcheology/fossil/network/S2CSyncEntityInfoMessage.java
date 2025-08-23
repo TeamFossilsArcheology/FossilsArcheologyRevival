@@ -21,7 +21,7 @@ public class S2CSyncEntityInfoMessage {
     }
 
     public void write(FriendlyByteBuf buf) {
-        buf.writeMap(data, (buffer, key) -> buf.writeUtf(key), EntityDataLoader.Data::writeBuf);
+        buf.writeMap(data, FriendlyByteBuf::writeUtf, EntityDataLoader.Data::writeBuf);
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
