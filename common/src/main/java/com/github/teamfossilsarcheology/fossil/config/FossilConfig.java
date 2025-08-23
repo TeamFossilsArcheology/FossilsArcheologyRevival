@@ -4,13 +4,9 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 
 public class FossilConfig {
     public static final String GENERATE_HELL_SHIPS = "generateHellShips";
-    public static final String HELL_SHIP_SPACING = "hellShipSpacing";
-    public static final String HELL_SHIP_SEPARATION = "hellShipSeparation";
     public static final String GENERATE_MOAI = "generateMoai";
     public static final String GENERATE_FOSSILS = "generateFossils";
-    public static final String FOSSIL_ORE_RARITY = "fossilOreRarity";
     public static final String GENERATE_PERMAFROST = "generatePermafrost";
-    public static final String PERMAFROST_RARITY = "permafrostRarity";
     public static final String GENERATE_VOLCANIC_ROCK = "generateVolcanicRock";
     public static final String GENERATE_VOLCANO_BIOME = "generateVolcanoBiome";
     public static final String VOLCANO_BIOME_RARITY = "volcanoBiomeRarity";

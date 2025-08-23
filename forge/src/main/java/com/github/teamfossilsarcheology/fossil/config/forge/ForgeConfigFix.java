@@ -16,8 +16,6 @@ public class ForgeConfigFix {
     private static final Map<Integer, Set<Update<?>>> FIXES = new HashMap<>();
 
     static {
-        add(1, ForgeConfig.PERMAFROST_RARITY, 12, oldValue -> oldValue < 12);
-        add(1, ForgeConfig.FOSSIL_ORE_RARITY, 13, oldValue -> oldValue < 13);
     }
 
     private static <T> void add(int version, ForgeConfigSpec.ConfigValue<T> spec, T newValue, Predicate<T> predicate) {

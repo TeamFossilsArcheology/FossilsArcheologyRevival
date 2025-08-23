@@ -59,7 +59,7 @@ public class ModOreFeatures {
 
         List<OreConfiguration.TargetBlockState> overworldPermafrostBlock = List.of(
                 OreConfiguration.target(new TagMatchTest(BlockTags.DIRT), ModBlocks.PERMAFROST_BLOCK.get().defaultBlockState()),
-                OreConfiguration.target(new TagMatchTest(Blocks.GRASS_BLOCK), ModBlocks.PERMAFROST_BLOCK.get().defaultBlockState()));
+                OreConfiguration.target(new BlockMatchTest(Blocks.GRASS_BLOCK), ModBlocks.PERMAFROST_BLOCK.get().defaultBlockState()));
         FeatureUtils.register(context, ORE_PERMAFROST_BLOCK, Feature.ORE, new OreConfiguration(overworldPermafrostBlock, 5));
 
         List<OreConfiguration.TargetBlockState> overworldVolcanicRock = List.of(

@@ -18,20 +18,12 @@ public class FossilConfigImpl extends MidnightConfig {
     public static MidnightConfig.Comment generate;
     @MidnightConfig.Entry
     public static boolean generateHellShips = true;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int hellShipSpacing = 24;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int hellShipSeparation = 5;
     @MidnightConfig.Entry
     public static boolean generateMoai = true;
     @MidnightConfig.Entry
     public static boolean generateFossils = true;
-    @MidnightConfig.Entry(min = 1, max = 500)
-    public static int fossilOreRarity = 13;
     @MidnightConfig.Entry
     public static boolean generatePermafrost = true;
-    @MidnightConfig.Entry(min = 1, max = 500)
-    public static int permafrostRarity = 12;
     @MidnightConfig.Entry
     public static boolean generateVolcanicRock = true;
     @MidnightConfig.Entry
