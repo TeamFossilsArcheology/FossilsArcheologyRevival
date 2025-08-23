@@ -1541,7 +1541,10 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public Map<AnimationCategory, AnimationHolder> getAnimations() {
-        return AnimationCategoryLoader.INSTANCE.getAnimations(animationLocation);
+        if (level.isClientSide) {
+            return ClientAnimationCategoryLoader.INSTANCE.getAnimations(animationLocation);
+        }
+        return ServerAnimationCategoryLoader.INSTANCE.getAnimations(animationLocation);
     }
 
     @Override

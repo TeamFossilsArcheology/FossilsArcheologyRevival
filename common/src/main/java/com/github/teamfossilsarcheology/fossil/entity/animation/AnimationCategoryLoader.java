@@ -16,25 +16,21 @@ import org.slf4j.Logger;
 
 import java.util.Map;
 
-public class AnimationCategoryLoader extends SimpleJsonResourceReloadListener {
+public abstract class AnimationCategoryLoader extends SimpleJsonResourceReloadListener {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
-    private Map<ResourceLocation, Map<AnimationCategory, AnimationHolder>> animations = new Object2ObjectOpenHashMap<>();
-    public static final AnimationCategoryLoader INSTANCE = new AnimationCategoryLoader(GSON);
     private static final AnimationHolder EMPTY = new AnimationHolder();
+    private ImmutableMap<ResourceLocation, Map<AnimationCategory, AnimationHolder>> animations = ImmutableMap.of();
+    private final AnimationInfoLoader<? extends AnimationInfo> animationInfoLoader;
 
-    private AnimationCategoryLoader(Gson gson) {
-        super(gson, "animations");
+    protected AnimationCategoryLoader(AnimationInfoLoader<? extends AnimationInfo> animationInfoLoader) {
+        super(GSON, "animations");
+        this.animationInfoLoader = animationInfoLoader;
     }
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> jsons, ResourceManager resourceManager, ProfilerFiller profiler) {
-        AnimationInfoLoader<? extends AnimationInfo> animationInfoLoader;
-        if (!ServerAnimationInfoLoader.INSTANCE.getAnimationInfos().isEmpty()) {
-            animationInfoLoader = ServerAnimationInfoLoader.INSTANCE;
-        } else {
-            animationInfoLoader = ClientAnimationInfoLoader.INSTANCE;
-        }
+        //TODO: Dont actually need jsons here since we just use AnimationInfoLoader
         Map<ResourceLocation, ? extends BakedAnimationInfo<? extends AnimationInfo>> allAnimations = animationInfoLoader.getAnimationInfos();
         ImmutableMap.Builder<ResourceLocation, Map<AnimationCategory, AnimationHolder>> builder = ImmutableMap.builder();
         for (Map.Entry<ResourceLocation, JsonElement> fileEntry : jsons.entrySet()) {

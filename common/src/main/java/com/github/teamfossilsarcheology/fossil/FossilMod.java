@@ -5,7 +5,7 @@ import com.github.teamfossilsarcheology.fossil.block.entity.ModBlockEntities;
 import com.github.teamfossilsarcheology.fossil.client.particle.ModParticles;
 import com.github.teamfossilsarcheology.fossil.enchantment.ModEnchantments;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategoryLoader;
+import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationCategoryLoader;
 import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationInfoLoader;
 import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.variant.EntityVariantLoader;
@@ -28,6 +28,7 @@ import com.github.teamfossilsarcheology.fossil.world.feature.structures.ModStruc
 import com.github.teamfossilsarcheology.fossil.world.feature.village.ModVillages;
 import dev.architectury.registry.ReloadListenerRegistry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.PackType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,9 +44,9 @@ public class FossilMod {
 
     public static void init() {
         ReloadListenerRegistry.register(PackType.SERVER_DATA, ServerAnimationInfoLoader.INSTANCE);
+        ReloadListenerRegistry.register(PackType.SERVER_DATA, ServerAnimationCategoryLoader.INSTANCE);
         ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityDataLoader.INSTANCE);
         ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityVariantLoader.INSTANCE);
-        ReloadListenerRegistry.register(PackType.SERVER_DATA, AnimationCategoryLoader.INSTANCE);
         VariantRegistry.register();
         ModFluids.register(); //Before ModBlocks
         ModBlocks.register();
