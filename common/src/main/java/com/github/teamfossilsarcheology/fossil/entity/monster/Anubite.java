@@ -11,7 +11,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -35,16 +34,15 @@ public class Anubite extends PathfinderMob {
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(0, new FloatGoal(this));
-        goalSelector.addGoal(1, new MeleeAttackGoal(this, 1, true));
+        goalSelector.addGoal(1, new TeleportMeleeAttackGoal(this, 1, true));
         goalSelector.addGoal(2, new MoveTowardsTargetGoal(this, 0.9, 32));
         goalSelector.addGoal(3, new RandomStrollGoal(this, 1));
         goalSelector.addGoal(4, new LookAtPlayerGoal(this, LivingEntity.class, 8));
         goalSelector.addGoal(5, new RandomLookAroundGoal(this));
-        targetSelector.addGoal(1, new AnubiteLookForPlayerGoal(this));
-        targetSelector.addGoal(2, new HurtByTargetGoal(this));
-        targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 1, true, false, this::shouldAttackPlayer));
-        targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Animal.class, true));
-        targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Villager.class, true));
+        targetSelector.addGoal(1, new HurtByTargetGoal(this));
+        targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 1, true, false, this::shouldAttackPlayer));
+        targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Animal.class, true));
+        targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Villager.class, true));
     }
 
     private boolean shouldAttackPlayer(LivingEntity player) {
@@ -147,78 +145,35 @@ public class Anubite extends PathfinderMob {
         return SoundEvents.IRON_GOLEM_DEATH;
     }
 
-    static class AnubiteLookForPlayerGoal extends NearestAttackableTargetGoal<Player> {
+    static class TeleportMeleeAttackGoal extends MeleeAttackGoal {
         private final Anubite anubite;
-        private final TargetingConditions startAggroTargetConditions;
-        private final TargetingConditions continueAggroTargetConditions = TargetingConditions.forCombat().ignoreLineOfSight();
-
-        private int aggroTime;
         private int teleportTime;
-        private Player pendingTarget;
 
-        public AnubiteLookForPlayerGoal(Anubite anubite) {
-            super(anubite, Player.class, false);
+        public TeleportMeleeAttackGoal(Anubite anubite, double speedModifier, boolean followingTargetEvenIfNotSeen) {
+            super(anubite, speedModifier, followingTargetEvenIfNotSeen);
             this.anubite = anubite;
-            startAggroTargetConditions = TargetingConditions.forNonCombat().range(getFollowDistance()).selector(anubite::shouldAttackPlayer);
-        }
-
-        @Override
-        public boolean canUse() {
-            pendingTarget = anubite.level.getNearestPlayer(startAggroTargetConditions, anubite);
-            return pendingTarget != null;
-        }
-
-        @Override
-        public boolean canContinueToUse() {
-            if (pendingTarget != null) {
-                if (!anubite.shouldAttackPlayer(pendingTarget)) {
-                    return false;
-                }
-                anubite.lookAt(pendingTarget, 10, 10);
-                return true;
-            }
-            if (target != null && continueAggroTargetConditions.test(anubite, target)) {
-                return true;
-            }
-            return super.canContinueToUse();
         }
 
         @Override
         public void start() {
-            aggroTime = 5;
+            super.start();
             teleportTime = 0;
         }
 
         @Override
-        public void stop() {
-            pendingTarget = null;
-            super.stop();
-        }
-
-        @Override
         public void tick() {
-            if (anubite.getTarget() == null) {
-                super.setTarget(null);
-                return;
-            }
-            if (pendingTarget != null) {
-                if (--aggroTime <= 0) {
-                    target = pendingTarget;
-                    pendingTarget = null;
-                    super.start();
-                }
-            } else {
-                if (target != null) {
-                    if (anubite.shouldAttackPlayer(target)) {
-                        if (target.distanceToSqr(anubite) > 45 && anubite.random.nextInt(55) == 0) {
-                            anubite.teleportRandomly();
-                        }
-                        teleportTime = 0;
-                    } else if (target.distanceToSqr(anubite) > 256 && teleportTime++ >= 30 && anubite.teleportTowards(target)) {
-                        teleportTime = 0;
+            LivingEntity target = anubite.getTarget();
+            if (target != null) {
+                if (anubite.shouldAttackPlayer(target)) {
+                    if (target.distanceToSqr(anubite) > 45 && anubite.random.nextInt(55) == 0) {
+                        anubite.teleportTowards(target);
                     }
+                    teleportTime = 0;
+                } else if (target.distanceToSqr(anubite) > 256 && teleportTime++ >= 30 && anubite.teleportTowards(target)) {
+                    teleportTime = 0;
                 }
             }
+            super.tick();
         }
     }
 }
