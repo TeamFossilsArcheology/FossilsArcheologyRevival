@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.allosaurus.walk": {
+      "blocks_per_second": 0.85
+    },
+    "animation.allosaurus.run": {
+      "blocks_per_second": 2.0
+    }
+  }
+}

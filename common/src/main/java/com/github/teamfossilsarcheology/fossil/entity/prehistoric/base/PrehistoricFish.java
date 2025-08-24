@@ -209,7 +209,10 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
 
     @Override
     public Map<AnimationCategory, AnimationHolder> getAnimations() {
-        return AnimationCategoryLoader.INSTANCE.getAnimations(animationLocation);
+        if (level.isClientSide) {
+            return AnimationCategoryLoader.CLIENT.getAnimations(animationLocation);
+        }
+        return AnimationCategoryLoader.SERVER.getAnimations(animationLocation);
     }
 
     @Override

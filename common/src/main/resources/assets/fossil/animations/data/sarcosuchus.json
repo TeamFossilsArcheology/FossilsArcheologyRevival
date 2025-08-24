@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.sarcosuchus.walk": {
+      "blocks_per_second": 0.5
+    },
+    "animation.sarcosuchus.run": {
+      "blocks_per_second": 2.0
+    }
+  }
+}

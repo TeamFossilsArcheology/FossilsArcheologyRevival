@@ -35,8 +35,7 @@
     },
     "animation.megaloceros.run": {
       "loop": true,
-      "animation_length": 1,
-      "blocks_per_second": 1.4
+      "animation_length": 1
     },
     "animation.megaloceros.sleep": {
       "loop": true,
@@ -51,8 +50,7 @@
     },
     "animation.megaloceros.walk": {
       "loop": true,
-      "animation_length": 1.9,
-      "blocks_per_second": 0.75
+      "animation_length": 1.9
     }
   },
   "geckolib_format_version": 2

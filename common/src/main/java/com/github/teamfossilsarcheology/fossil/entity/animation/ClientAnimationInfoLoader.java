@@ -62,7 +62,7 @@ public class ClientAnimationInfoLoader extends AnimationInfoLoader<ClientAnimati
             builder.put(fileEntry.getKey(), new BakedAnimationInfo<>(bakedMap));
         }
         clientAnimationInfos = builder.build();
-        AnimationCategoryLoader.INSTANCE.apply(clientAnimationInfos);
+        AnimationCategoryLoader.CLIENT.apply(clientAnimationInfos);
     }
 
     @Override

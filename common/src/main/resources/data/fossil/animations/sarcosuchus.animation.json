@@ -17,10 +17,13 @@
       "loop": true,
       "animation_length": 6
     },
+    "animation.sarcosuchus.idle_water": {
+      "loop": true,
+      "animation_length": 3.3333
+    },
     "animation.sarcosuchus.run": {
       "loop": true,
-      "animation_length": 0.6667,
-      "blocks_per_second": 2.0
+      "animation_length": 0.6667
     },
     "animation.sarcosuchus.sleep": {
       "loop": true,
@@ -32,8 +35,7 @@
     },
     "animation.sarcosuchus.walk": {
       "loop": true,
-      "animation_length": 2.8571,
-      "blocks_per_second": 0.5
+      "animation_length": 2.8571
     }
   },
   "geckolib_format_version": 2

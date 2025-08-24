@@ -47,8 +47,7 @@
     },
     "animation.deinonychus.run": {
       "loop": true,
-      "animation_length": 0.75,
-      "blocks_per_second": 3.3
+      "animation_length": 0.75
     },
     "animation.deinonychus.sit": {
       "loop": true,
@@ -64,8 +63,7 @@
     },
     "animation.deinonychus.walk": {
       "loop": true,
-      "animation_length": 1.4167,
-      "blocks_per_second": 1.1
+      "animation_length": 1.4167
     }
   },
   "geckolib_format_version": 2

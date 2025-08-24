@@ -26,8 +26,7 @@
     },
     "animation.compsognathus.run": {
       "loop": true,
-      "animation_length": 0.5833,
-      "blocks_per_second": 1.5
+      "animation_length": 0.5833
     },
     "animation.compsognathus.sleep": {
       "loop": true,
@@ -42,8 +41,7 @@
     },
     "animation.compsognathus.walk": {
       "loop": true,
-      "animation_length": 1,
-      "blocks_per_second": 0.46875
+      "animation_length": 1
     }
   },
   "geckolib_format_version": 2

@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.triceratops.walk": {
+      "blocks_per_second": 0.5
+    },
+    "animation.triceratops.run": {
+      "blocks_per_second": 0.9
+    }
+  }
+}

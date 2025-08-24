@@ -1,0 +1,7 @@
+{
+  "animations": {
+    "animation.megalograptus.walk": {
+      "blocks_per_second": 0.4
+    }
+  }
+}

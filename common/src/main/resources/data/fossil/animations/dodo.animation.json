@@ -30,8 +30,7 @@
     },
     "animation.dodo.run": {
       "loop": true,
-      "animation_length": 1,
-      "blocks_per_second": 0.9
+      "animation_length": 1
     },
     "animation.dodo.sit": {
       "loop": true,
@@ -57,8 +56,7 @@
     },
     "animation.dodo.walk": {
       "loop": true,
-      "animation_length": 2,
-      "blocks_per_second": 0.25
+      "animation_length": 2
     }
   },
   "geckolib_format_version": 2

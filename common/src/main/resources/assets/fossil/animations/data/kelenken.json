@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.kelenken.walk": {
+      "blocks_per_second": 1.3125
+    },
+    "animation.kelenken.run": {
+      "blocks_per_second": 2.8
+    }
+  }
+}

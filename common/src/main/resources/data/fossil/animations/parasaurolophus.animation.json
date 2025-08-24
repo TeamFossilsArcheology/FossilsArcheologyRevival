@@ -16,8 +16,7 @@
     },
     "animation.parasaurolophus.run": {
       "loop": true,
-      "animation_length": 1,
-      "blocks_per_second": 2.0
+      "animation_length": 1
     },
     "animation.parasaurolophus.sit": {
       "loop": true,
@@ -44,8 +43,7 @@
     },
     "animation.parasaurolophus.walk": {
       "loop": true,
-      "animation_length": 2.6667,
-      "blocks_per_second": 0.8
+      "animation_length": 2.6667
     }
   },
   "geckolib_format_version": 2

@@ -22,8 +22,7 @@
     },
     "animation.protoceratops.run": {
       "loop": true,
-      "animation_length": 1,
-      "blocks_per_second": 1.0
+      "animation_length": 1
     },
     "animation.protoceratops.sleep/sit": {
       "loop": true,
@@ -38,8 +37,7 @@
     },
     "animation.protoceratops.walk": {
       "loop": true,
-      "animation_length": 2,
-      "blocks_per_second": 0.6
+      "animation_length": 2
     },
     "animation.protoceratops.idle": {
       "loop": true,

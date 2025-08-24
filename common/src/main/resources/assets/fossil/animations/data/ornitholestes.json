@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.ornitholestes.walk": {
+      "blocks_per_second": 1.2
+    },
+    "animation.ornitholestes.run": {
+      "blocks_per_second": 3.5
+    }
+  }
+}

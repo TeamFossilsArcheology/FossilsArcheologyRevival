@@ -53,8 +53,7 @@
     },
     "animation.spinosaurus.walk": {
       "loop": true,
-      "animation_length": 2,
-      "blocks_per_second": 0.75
+      "animation_length": 2
     },
     "animation.spinosaurus.walk_water": {
       "loop": true,

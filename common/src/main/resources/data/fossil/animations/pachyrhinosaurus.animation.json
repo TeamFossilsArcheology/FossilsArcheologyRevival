@@ -40,8 +40,7 @@
     },
     "animation.pachyrhinosaurus.run": {
       "loop": true,
-      "animation_length": 1,
-      "blocks_per_second": 1.8
+      "animation_length": 1
     },
     "animation.pachyrhinosaurus.sit": {
       "loop": true,
@@ -64,8 +63,7 @@
     },
     "animation.pachyrhinosaurus.walk": {
       "loop": true,
-      "animation_length": 2,
-      "blocks_per_second": 0.8
+      "animation_length": 2
     }
   },
   "geckolib_format_version": 2

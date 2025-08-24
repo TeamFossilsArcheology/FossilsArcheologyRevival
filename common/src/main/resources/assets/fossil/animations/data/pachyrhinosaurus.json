@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.pachyrhinosaurus.walk": {
+      "blocks_per_second": 0.8
+    },
+    "animation.pachyrhinosaurus.run": {
+      "blocks_per_second": 1.8
+    }
+  }
+}

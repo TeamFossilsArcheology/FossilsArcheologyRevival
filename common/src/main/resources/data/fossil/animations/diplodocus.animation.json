@@ -23,8 +23,7 @@
     },
     "animation.diplodocus.run": {
       "loop": true,
-      "animation_length": 2.25,
-      "blocks_per_second": 0.5
+      "animation_length": 2.25
     },
     "animation.diplodocus.sit": {
       "loop": true,
@@ -43,8 +42,7 @@
     },
     "animation.diplodocus.walk": {
       "loop": true,
-      "animation_length": 3.75,
-      "blocks_per_second": 0.33
+      "animation_length": 3.75
     }
   },
   "geckolib_format_version": 2

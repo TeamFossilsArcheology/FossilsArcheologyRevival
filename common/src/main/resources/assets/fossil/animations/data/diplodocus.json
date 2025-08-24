@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.diplodocus.walk": {
+      "blocks_per_second": 0.33
+    },
+    "animation.diplodocus.run": {
+      "blocks_per_second": 0.5
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "animations": {
+    "animation.pteranodon.walk": {
+      "blocks_per_second": 1.3125
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.phorusrhacos.walk": {
+      "blocks_per_second": 1.3125
+    },
+    "animation.phorusrhacos.run": {
+      "blocks_per_second": 2.8
+    }
+  }
+}

@@ -25,12 +25,11 @@
     },
     "animation.megalania.idle": {
       "loop": true,
-      "animation_length": 4
+      "animation_length": 8
     },
     "animation.megalania.run": {
       "loop": true,
-      "animation_length": 1.0417,
-      "blocks_per_second": 1.0
+      "animation_length": 1.0417
     },
     "animation.megalania.sleep": {
       "loop": true,
@@ -48,8 +47,7 @@
     },
     "animation.megalania.walk": {
       "loop": true,
-      "animation_length": 1.5,
-      "blocks_per_second": 0.6
+      "animation_length": 1.5
     }
   },
   "geckolib_format_version": 2

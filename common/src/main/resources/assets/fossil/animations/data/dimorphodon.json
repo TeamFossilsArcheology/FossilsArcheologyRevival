@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.dimorphodon.walk": {
+      "blocks_per_second": 1.25
+    },
+    "animation.dimorphodon.run": {
+      "blocks_per_second": 3.75
+    }
+  }
+}

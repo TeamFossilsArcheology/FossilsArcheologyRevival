@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.tyrannosaurus.walk": {
+      "blocks_per_second": 0.5
+    },
+    "animation.tyrannosaurus.run": {
+      "blocks_per_second": 1.5
+    }
+  }
+}

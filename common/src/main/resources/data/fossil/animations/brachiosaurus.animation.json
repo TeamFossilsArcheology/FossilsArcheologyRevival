@@ -34,8 +34,7 @@
     },
     "animation.brachiosaurus.sprint": {
       "loop": true,
-      "animation_length": 2.8333,
-      "blocks_per_second": 0.15
+      "animation_length": 2.8333
     },
     "animation.brachiosaurus.swim": {
       "loop": true,
@@ -43,8 +42,7 @@
     },
     "animation.brachiosaurus.walk": {
       "loop": true,
-      "animation_length": 4.4583,
-      "blocks_per_second": 0.16875
+      "animation_length": 4.4583
     }
   },
   "geckolib_format_version": 2

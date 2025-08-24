@@ -63,8 +63,7 @@
     },
     "animation.pteranodon.walk": {
       "loop": true,
-      "animation_length": 2.6667,
-      "blocks_per_second": 1.3125
+      "animation_length": 2.6667
     }
   },
   "geckolib_format_version": 2

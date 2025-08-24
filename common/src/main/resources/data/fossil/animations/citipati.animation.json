@@ -23,8 +23,7 @@
     },
     "animation.citipati.run": {
       "loop": true,
-      "animation_length": 0.625,
-      "blocks_per_second": 3.0
+      "animation_length": 0.625
     },
     "animation.citipati.sit/sleep": {
       "loop": true,
@@ -39,8 +38,7 @@
     },
     "animation.citipati.walk": {
       "loop": true,
-      "animation_length": 1.3333,
-      "blocks_per_second": 1.33
+      "animation_length": 1.3333
     }
   },
   "geckolib_format_version": 2

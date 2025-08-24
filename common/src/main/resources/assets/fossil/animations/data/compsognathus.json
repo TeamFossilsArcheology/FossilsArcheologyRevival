@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.compsognathus.walk": {
+      "blocks_per_second": 0.46875
+    },
+    "animation.compsognathus.run": {
+      "blocks_per_second": 1.5
+    }
+  }
+}

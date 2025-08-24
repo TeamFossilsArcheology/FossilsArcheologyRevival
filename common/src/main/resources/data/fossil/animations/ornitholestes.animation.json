@@ -29,8 +29,7 @@
     },
     "animation.ornitholestes.run": {
       "loop": true,
-      "animation_length": 0.75,
-      "blocks_per_second": 3.5
+      "animation_length": 0.75
     },
     "animation.ornitholestes.sit": {
       "loop": true,
@@ -46,8 +45,7 @@
     },
     "animation.ornitholestes.walk": {
       "loop": true,
-      "animation_length": 1.4167,
-      "blocks_per_second": 1.2
+      "animation_length": 1.4167
     }
   },
   "geckolib_format_version": 2

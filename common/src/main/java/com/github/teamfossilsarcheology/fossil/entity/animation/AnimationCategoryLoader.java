@@ -12,7 +12,8 @@ public class AnimationCategoryLoader {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final AnimationHolder EMPTY = new AnimationHolder();
     private ImmutableMap<ResourceLocation, Map<AnimationCategory, AnimationHolder>> animations = ImmutableMap.of();
-    public static final AnimationCategoryLoader INSTANCE = new AnimationCategoryLoader();
+    public static final AnimationCategoryLoader CLIENT = new AnimationCategoryLoader();
+    public static final AnimationCategoryLoader SERVER = new AnimationCategoryLoader();
 
     protected void apply(Map<ResourceLocation, ? extends BakedAnimationInfo<? extends AnimationInfo>> allAnimations) {
         ImmutableMap.Builder<ResourceLocation, Map<AnimationCategory, AnimationHolder>> builder = ImmutableMap.builder();

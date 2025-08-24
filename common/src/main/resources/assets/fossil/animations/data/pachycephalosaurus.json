@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.pachycephalosaurus.walk": {
+      "blocks_per_second": 0.75
+    },
+    "animation.pachycephalosaurus.run": {
+      "blocks_per_second": 2.0
+    }
+  }
+}

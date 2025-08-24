@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.citipati.walk": {
+      "blocks_per_second": 1.33
+    },
+    "animation.citipati.run": {
+      "blocks_per_second": 3.0
+    }
+  }
+}

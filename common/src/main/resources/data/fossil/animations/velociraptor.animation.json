@@ -28,16 +28,15 @@
       "animation_length": 12
     },
     "animation.velociraptor.jump/fall": {
-      "loop": true,
-      "animation_length": 2
+      "loop": true
     },
     "animation.velociraptor.land": {
       "loop": "hold_on_last_frame",
       "animation_length": 0.7143
     },
-    "animation.velociraptor.latched": {
+    "animation.velociraptor.run": {
       "loop": true,
-      "animation_length": 1.0714
+      "animation_length": 0.75
     },
     "animation.velociraptor.leap": {
       "loop": "hold_on_last_frame",
@@ -46,10 +45,9 @@
         0.21
       ]
     },
-    "animation.velociraptor.run": {
+    "animation.velociraptor.latched": {
       "loop": true,
-      "animation_length": 0.75,
-      "blocks_per_second": 2.0
+      "animation_length": 1.0714
     },
     "animation.velociraptor.sit": {
       "loop": true,
@@ -65,8 +63,7 @@
     },
     "animation.velociraptor.walk": {
       "loop": true,
-      "animation_length": 1.4167,
-      "blocks_per_second": 1.1
+      "animation_length": 1.4167
     }
   },
   "geckolib_format_version": 2

@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.platybelodon.walk": {
+      "blocks_per_second": 0.5
+    },
+    "animation.platybelodon.run": {
+      "blocks_per_second": 0.8
+    }
+  }
+}

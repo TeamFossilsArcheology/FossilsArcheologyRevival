@@ -31,8 +31,7 @@
     },
     "animation.gastornis.run": {
       "loop": true,
-      "animation_length": 0.9583,
-      "blocks_per_second": 2.8
+      "animation_length": 0.9583
     },
     "animation.gastornis.sit": {
       "loop": true,
@@ -51,8 +50,7 @@
     },
     "animation.gastornis.walk": {
       "loop": true,
-      "animation_length": 2,
-      "blocks_per_second": 1.3125
+      "animation_length": 2
     }
   },
   "geckolib_format_version": 2

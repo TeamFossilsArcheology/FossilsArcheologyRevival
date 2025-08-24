@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.dilophosaurus.walk": {
+      "blocks_per_second": 1.0
+    },
+    "animation.dilophosaurus.run": {
+      "blocks_per_second": 3.0
+    }
+  }
+}

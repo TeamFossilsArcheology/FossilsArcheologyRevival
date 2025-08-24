@@ -64,8 +64,7 @@
     },
     "animation.meganeura.walk": {
       "loop": true,
-      "animation_length": 1,
-      "blocks_per_second": 0.625
+      "animation_length": 1
     },
     "animation.meganeura.walk_baby": {
       "loop": true,

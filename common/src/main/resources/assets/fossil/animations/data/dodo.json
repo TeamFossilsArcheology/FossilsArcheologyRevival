@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.dodo.walk": {
+      "blocks_per_second": 0.25
+    },
+    "animation.dodo.run": {
+      "blocks_per_second": 0.9
+    }
+  }
+}

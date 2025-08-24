@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.edaphosaurus.walk": {
+      "blocks_per_second": 0.3
+    },
+    "animation.edaphosaurus.run": {
+      "blocks_per_second": 0.8
+    }
+  }
+}

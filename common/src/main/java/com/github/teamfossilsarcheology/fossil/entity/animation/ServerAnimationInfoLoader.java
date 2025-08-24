@@ -39,7 +39,7 @@ public class ServerAnimationInfoLoader extends AnimationInfoLoader<ServerAnimati
             builder.put(path, GSON.fromJson(GsonHelper.getAsJsonObject(root, "animations"), TYPE));
         }
         serverAnimationInfos = builder.build();
-        AnimationCategoryLoader.INSTANCE.apply(serverAnimationInfos);
+        AnimationCategoryLoader.SERVER.apply(serverAnimationInfos);
     }
 
     @Override

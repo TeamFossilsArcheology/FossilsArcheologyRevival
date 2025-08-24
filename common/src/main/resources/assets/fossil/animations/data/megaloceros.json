@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.megaloceros.walk": {
+      "blocks_per_second": 0.75
+    },
+    "animation.megaloceros.run": {
+      "blocks_per_second": 1.4
+    }
+  }
+}

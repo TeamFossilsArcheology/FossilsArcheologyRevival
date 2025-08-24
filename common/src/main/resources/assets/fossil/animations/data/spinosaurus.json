@@ -1,0 +1,7 @@
+{
+  "animations": {
+    "animation.spinosaurus.walk": {
+      "blocks_per_second": 1.0
+    }
+  }
+}

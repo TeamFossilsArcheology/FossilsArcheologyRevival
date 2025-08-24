@@ -58,13 +58,11 @@
     },
     "animation.tyrannosaurus.run": {
       "loop": true,
-      "animation_length": 1.5,
-      "blocks_per_second": 0.9
+      "animation_length": 1.5
     },
     "animation.tyrannosaurus.!run_baby": {
       "loop": true,
-      "animation_length": 0.75,
-      "blocks_per_second": 4.0
+      "animation_length": 0.75
     },
     "animation.tyrannosaurus.sit_1": {
       "loop": true,
@@ -91,8 +89,7 @@
     },
     "animation.tyrannosaurus.walk": {
       "loop": true,
-      "animation_length": 3,
-      "blocks_per_second": 0.5
+      "animation_length": 3
     }
   },
   "geckolib_format_version": 2

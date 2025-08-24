@@ -36,8 +36,7 @@
     },
     "animation.megalograptus.walk": {
       "loop": true,
-      "animation_length": 1,
-      "blocks_per_second": 0.4
+      "animation_length": 1
     }
   },
   "geckolib_format_version": 2

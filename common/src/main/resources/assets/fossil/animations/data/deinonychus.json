@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.deinonychus.walk": {
+      "blocks_per_second": 1.1
+    },
+    "animation.deinonychus.run": {
+      "blocks_per_second": 2.0
+    }
+  }
+}

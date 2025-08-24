@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.parasaurolophus.walk": {
+      "blocks_per_second": 0.8
+    },
+    "animation.parasaurolophus.run": {
+      "blocks_per_second": 2.0
+    }
+  }
+}

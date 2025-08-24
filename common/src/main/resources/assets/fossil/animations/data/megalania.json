@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.megalania.walk": {
+      "blocks_per_second": 0.6
+    },
+    "animation.megalania.run": {
+      "blocks_per_second": 1.0
+    }
+  }
+}

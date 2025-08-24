@@ -32,8 +32,7 @@
     },
     "animation.henodus.walk": {
       "loop": true,
-      "animation_length": 1.25,
-      "blocks_per_second": 0.1667
+      "animation_length": 1.25
     }
   },
   "geckolib_format_version": 2

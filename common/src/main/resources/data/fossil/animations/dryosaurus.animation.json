@@ -23,8 +23,7 @@
     },
     "animation.dryosaurus.run": {
       "loop": true,
-      "animation_length": 0.75,
-      "blocks_per_second": 2.8
+      "animation_length": 0.75
     },
     "animation.dryosaurus.sit": {
       "loop": true,
@@ -43,8 +42,7 @@
     },
     "animation.dryosaurus.walk": {
       "loop": true,
-      "animation_length": 2,
-      "blocks_per_second": 0.8333
+      "animation_length": 2
     }
   },
   "geckolib_format_version": 2

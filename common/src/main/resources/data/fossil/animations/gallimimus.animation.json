@@ -26,8 +26,7 @@
     },
     "animation.gallimimus.run": {
       "loop": true,
-      "animation_length": 0.625,
-      "blocks_per_second": 3.2
+      "animation_length": 0.625
     },
     "animation.gallimimus.sit": {
       "loop": true,
@@ -46,8 +45,7 @@
     },
     "animation.gallimimus.walk": {
       "loop": true,
-      "animation_length": 1.3333,
-      "blocks_per_second": 1.75
+      "animation_length": 1.3333
     }
   },
   "geckolib_format_version": 2

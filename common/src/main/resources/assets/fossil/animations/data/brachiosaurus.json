@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.brachiosaurus.walk": {
+      "blocks_per_second": 0.16875
+    },
+    "animation.brachiosaurus.sprint": {
+      "blocks_per_second": 0.15
+    }
+  }
+}

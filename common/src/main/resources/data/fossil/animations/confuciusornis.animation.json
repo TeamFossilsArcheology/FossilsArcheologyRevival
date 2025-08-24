@@ -50,8 +50,7 @@
     },
     "animation.confuciusornis.walk": {
       "loop": true,
-      "animation_length": 1.4167,
-      "blocks_per_second": 0.3125
+      "animation_length": 1.4167
     }
   },
   "geckolib_format_version": 2

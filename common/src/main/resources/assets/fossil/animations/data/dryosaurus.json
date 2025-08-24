@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.dryosaurus.walk": {
+      "blocks_per_second": 0.8333
+    },
+    "animation.dryosaurus.run": {
+      "blocks_per_second": 2.8
+    }
+  }
+}

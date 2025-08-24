@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.titanis.walk": {
+      "blocks_per_second": 1.3125
+    },
+    "animation.titanis.run": {
+      "blocks_per_second": 2.8
+    }
+  }
+}

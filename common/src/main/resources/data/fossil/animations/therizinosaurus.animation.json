@@ -42,8 +42,7 @@
     },
     "animation.therizinosaurus.run": {
       "loop": true,
-      "animation_length": 1.5,
-      "blocks_per_second": 1.0
+      "animation_length": 1.5
     },
     "animation.therizinosaurus.run_baby": {
       "loop": true,
@@ -70,8 +69,7 @@
     },
     "animation.therizinosaurus.walk": {
       "loop": true,
-      "animation_length": 3,
-      "blocks_per_second": 0.7
+      "animation_length": 3
     },
     "animation.therizinosaurus.!walk_evil": {
       "loop": true,

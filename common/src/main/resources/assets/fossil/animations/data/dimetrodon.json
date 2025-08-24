@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.dimetrodon.walk": {
+      "blocks_per_second": 0.7
+    },
+    "animation.dimetrodon.run": {
+      "blocks_per_second": 1.0
+    }
+  }
+}
