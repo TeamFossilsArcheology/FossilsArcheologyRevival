@@ -22,8 +22,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
 
+import static software.bernie.geckolib.core.animation.Animation.LoopType.DEFAULT;
 import static software.bernie.geckolib.core.animation.Animation.LoopType.LOOP;
-import static software.bernie.geckolib.core.animation.Animation.LoopType.PLAY_ONCE;
 
 public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     //TODO: Save RawAnimations
@@ -241,7 +241,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         setAnimationSpeed(controller, animationSpeed, state.getAnimationTick());
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
         if (newAnimation.isPresent()) {
-            state.setAnimation(RawAnimation.begin().then(newAnimation.get().animationName, newAnimation.get().loop ? LOOP : PLAY_ONCE));
+            state.setAnimation(RawAnimation.begin().then(newAnimation.get().animationName, newAnimation.get().loop ? LOOP : DEFAULT));
         }
         return PlayState.CONTINUE;
     }
@@ -265,7 +265,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
 
         controller.setTransitionLength(next.transitionLength);
         controller.forceAnimationReset();
-        state.setAnimation(RawAnimation.begin().then(next.animationName, next.loop ? LOOP : null));
+        state.setAnimation(RawAnimation.begin().then(next.animationName, next.loop ? LOOP : DEFAULT));
         return true;
     }
 
@@ -274,7 +274,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             AnimationController<?> controller = state.getController();
             setAnimationSpeed(controller, activeAnimation.speed, state.getAnimationTick());
             controller.setTransitionLength(activeAnimation.transitionLength);
-            state.setAnimation(RawAnimation.begin().then(activeAnimation.animationName, activeAnimation.loop ? LOOP : PLAY_ONCE));
+            state.setAnimation(RawAnimation.begin().then(activeAnimation.animationName, activeAnimation.loop ? LOOP : DEFAULT));
             return true;
         }
         return false;
@@ -377,7 +377,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
         if (newAnimation.isPresent()) {
             controller.setTransitionLength(newAnimation.get().transitionLength);
-            state.setAnimation(RawAnimation.begin().then(newAnimation.get().animationName, newAnimation.get().loop ? LOOP : null));
+            state.setAnimation(RawAnimation.begin().then(newAnimation.get().animationName, newAnimation.get().loop ? LOOP : DEFAULT));
         }
         return PlayState.CONTINUE;
     }
@@ -414,7 +414,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
         if (newAnimation.isPresent()) {
             controller.setTransitionLength(newAnimation.get().transitionLength);
-            state.setAnimation(RawAnimation.begin().then(newAnimation.get().animationName, newAnimation.get().loop ? LOOP : PLAY_ONCE));
+            state.setAnimation(RawAnimation.begin().then(newAnimation.get().animationName, newAnimation.get().loop ? LOOP : DEFAULT));
         }
         return PlayState.CONTINUE;
     }
@@ -460,7 +460,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
         }
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
-        newAnimation.ifPresent(newInfo -> state.setAnimation(RawAnimation.begin().then(newInfo.animationName(), newInfo.loop ? LOOP : PLAY_ONCE)));
+        newAnimation.ifPresent(newInfo -> state.setAnimation(RawAnimation.begin().then(newInfo.animationName(), newInfo.loop ? LOOP : DEFAULT)));
         return PlayState.CONTINUE;
     }
 
@@ -507,7 +507,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         }
         setAnimationSpeed(controller, animationSpeed, state.getAnimationTick());
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
-        newAnimation.ifPresent(newInfo -> state.setAnimation(RawAnimation.begin().then(newInfo.animationName(), newInfo.loop ? LOOP : PLAY_ONCE)));
+        newAnimation.ifPresent(newInfo -> state.setAnimation(RawAnimation.begin().then(newInfo.animationName(), newInfo.loop ? LOOP : DEFAULT)));
         return PlayState.CONTINUE;
     }
 
