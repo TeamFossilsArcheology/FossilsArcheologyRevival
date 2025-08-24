@@ -1,4 +1,4 @@
-// 1.19.4	2025-07-07T01:21:07.6243086	Registries
+// 1.19.4	2025-08-24T15:49:45.756023	Registries
 1a7a829524ea52685fb92fe64ce72b0ab8bf2f9d data/fossil/damage_type/aquatic_suffocate.json
 0a18cb6c39dcc0e3f588b34606cabd656e0c267f data/fossil/dimension_type/anu_lair.json
 0a18cb6c39dcc0e3f588b34606cabd656e0c267f data/fossil/dimension_type/treasure_room.json
@@ -7,9 +7,9 @@
 eefddb2d735ff27de5b9245ab31bce2543e1bb6c data/fossil/forge/biome_modifier/add_moai_statue.json
 381215ff23ac6a2fb7f7da828ca447ee9584cd40 data/fossil/forge/biome_modifier/add_nautilus.json
 f87ca7d090216c3549808acc37903ec9dfe417d9 data/fossil/forge/biome_modifier/add_sturgon.json
-3ad912a243a8c60cf285823ed0c17391e539b410 data/fossil/worldgen/biome/anu_lair.json
-43e0a2a066cdacc72fab8f06343feb10d9906db7 data/fossil/worldgen/biome/treasure_room.json
-c8ac728c71a5b0e69351f51fbdec6e8f42f33e4a data/fossil/worldgen/biome/volcano.json
+d972bb53849047a56912d9ff1a86f6d78dcbc97b data/fossil/worldgen/biome/anu_lair.json
+559f35e3870df00c56c2590dc3633cd1414faa61 data/fossil/worldgen/biome/treasure_room.json
+5615ceb1c45366ad41cb3beea9d02f74bd712e68 data/fossil/worldgen/biome/volcano.json
 9a26973eefdf935f172167c91f2666cbaa1eed54 data/fossil/worldgen/configured_feature/ash_disk.json
 448db00f04cda6314916dba1cb03f8cbfb0119c4 data/fossil/worldgen/configured_feature/calamites_tree.json
 4bc62ab9a8ad3951680b83f8f332f3a9c40a2b8a data/fossil/worldgen/configured_feature/cordaites_tree.json
