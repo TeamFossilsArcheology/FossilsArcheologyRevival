@@ -19,6 +19,7 @@ import com.github.teamfossilsarcheology.fossil.item.forge.AncientHelmetItemImpl;
 import com.github.teamfossilsarcheology.fossil.util.ModConstants;
 import com.github.teamfossilsarcheology.fossil.world.chunk.AnuLairChunkGenerator;
 import com.github.teamfossilsarcheology.fossil.world.chunk.TreasureChunkGenerator;
+import com.github.teamfossilsarcheology.fossil.world.feature.placement.ModPlacedFeatures;
 import com.github.teamfossilsarcheology.fossil.world.feature.placement.ModPlacementTypes;
 import com.github.teamfossilsarcheology.fossil.world.feature.structures.ModStructureType;
 import com.github.teamfossilsarcheology.fossil.world.surfacerules.ModSurfaceRules;
@@ -77,6 +78,7 @@ public class ForgeFossilMod {
             if (ModList.get().isLoaded(ModConstants.ALEXS_MOBS)) {
                 AlexsMobsCompat.register();
             }
+            ModPlacedFeatures.register();
             ModStructureType.register();
             ModPlacementTypes.register();
             ModTriggers.register();
