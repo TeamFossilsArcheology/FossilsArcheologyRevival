@@ -64,6 +64,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -686,13 +687,17 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
+    public void setSprinting(boolean sprinting) {
+        super.setSprinting(sprinting);
+        AttributeInstance attributeInstance = this.getAttribute(Attributes.MOVEMENT_SPEED);
+        if (attributeInstance.getModifier(UUID.fromString("662A6B8D-DA3E-4C1C-8813-96EA6097278D")) != null) {
+            attributeInstance.removeModifier(UUID.fromString("662A6B8D-DA3E-4C1C-8813-96EA6097278D"));
+        }
+    }
+
+    @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
-        if (getMoveControl().hasWanted()) {
-            setSprinting(getMoveControl().getSpeedModifier() >= attributes().sprintMod());
-        } else {
-            setSprinting(false);
-        }
         if (isInWater() && horizontalCollision) {
             //Needed because the lower threshold prevents jumping out of water
             setUseLowerFluidJumpThreshold(true);
@@ -711,6 +716,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         }
 
         if (!level.isClientSide) {
+            setSprinting(getDeltaMovement().horizontalDistance() > 0.1 && getMoveControl().getSpeedModifier() >= attributes().sprintMod());
             if (getHunger() > getMaxHunger()) {
                 setHunger(getMaxHunger());
             }

@@ -96,7 +96,7 @@ public class DelayedAttackGoal<T extends Prehistoric> extends Goal {
 
     @Override
     public void start() {
-        mob.getNavigation().moveTo(path, 1);
+        mob.getNavigation().moveTo(path, speedModifier);
         mob.setAggressive(true);
         ticksUntilNextPathRecalculation = 0;
         attackEndTick = -1;
