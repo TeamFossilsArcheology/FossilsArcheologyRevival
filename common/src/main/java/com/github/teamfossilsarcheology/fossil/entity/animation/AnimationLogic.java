@@ -289,7 +289,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         double f = entity.isOnGround() ? entity.level.getBlockState(entity.blockPosition().below()).getBlock().getFriction() * 0.91F : 0.91F;
         double mobSpeed = entity.getDeltaMovement().horizontalDistance() / f * 20;
         //Limit mobSpeed to the mobs maximum natural movement speed
-        mobSpeed = Math.min(Util.attributeToSpeed(entity.getAttributeValue(Attributes.MOVEMENT_SPEED)), mobSpeed);
+        mobSpeed = Math.min(Util.attributeToSpeed(entity.getAttributeValue(Attributes.MOVEMENT_SPEED), event.getAnimatable().attributes().sprintMod(), entity.isSprinting()), mobSpeed);
         //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
         if (walkAnim.blocksPerSecond > 0) {
             animationSpeed *= mobSpeed / walkAnim.blocksPerSecond;

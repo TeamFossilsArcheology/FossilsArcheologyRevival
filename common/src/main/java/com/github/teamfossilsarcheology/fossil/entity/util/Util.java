@@ -21,7 +21,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
@@ -87,8 +86,18 @@ public class Util {
         return position.equals(rayTrace.getBlockPos());
     }
 
+    /**
+     * Returns the average blocks per second for the given {@link net.minecraft.world.entity.ai.attributes.Attributes#MOVEMENT_SPEED MOVEMENT_SPEED} value.
+     * Should be usable for all mobs using {@link com.github.teamfossilsarcheology.fossil.entity.ai.control.SmoothTurningMoveControl SmoothTurningMoveControl}
+     * with speed values ranging from ~0.08 to ~0.25. Formula is based on sample data
+     */
     public static double attributeToSpeed(double speed) {
-        return 30.7 * Mth.square(speed) + 6 * speed - 0.7;
+        //Same-ish values but probably less performance: 42.42624 * Math.pow(speed, 1.98832);
+        return 44.23174 * Mth.square(speed) - 0.504912 * speed + 0.0592455;
+    }
+
+    public static double attributeToSpeed(double speed, double sprintMod, boolean isSprinting) {
+        return attributeToSpeed(isSprinting ? speed * sprintMod : speed);
     }
 
     public static double calculateSpeed(EntityDataLoader.Data data, float scale, boolean swim) {
@@ -125,9 +134,9 @@ public class Util {
      * Returns the nearest visible entity of a given class
      *
      * @param entityClazz the class to search for
-     * @param attacker the mob to search around
-     * @param searchArea the area to search in
-     * @param predicate additional tests
+     * @param attacker    the mob to search around
+     * @param searchArea  the area to search in
+     * @param predicate   additional tests
      */
     @Nullable
     public static <T extends Entity> T getNearestEntity(Class<? extends T> entityClazz, Mob attacker, AABB searchArea, Predicate<T> predicate) {
