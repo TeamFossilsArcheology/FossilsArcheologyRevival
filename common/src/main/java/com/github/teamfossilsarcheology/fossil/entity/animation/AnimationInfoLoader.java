@@ -7,8 +7,8 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import java.util.Map;
 
 public abstract class AnimationInfoLoader<T extends AnimationInfo> extends SimpleJsonResourceReloadListener {
-    protected AnimationInfoLoader(Gson gson) {
-        super(gson, "animations");
+    protected AnimationInfoLoader(Gson gson, String directory) {
+        super(gson, directory);
     }
 
     public abstract Map<ResourceLocation, BakedAnimationInfo<T>> getAnimationInfos();

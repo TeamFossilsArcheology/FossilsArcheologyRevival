@@ -217,7 +217,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
         if (level.isClientSide) {
             return ClientAnimationInfoLoader.INSTANCE.getAnimations(animationLocation).animations();
         }
-        return ServerAnimationInfoLoader.INSTANCE.getAnimations(animationLocation).animations();
+        return getServerAnimationInfos();
     }
 
     @Override

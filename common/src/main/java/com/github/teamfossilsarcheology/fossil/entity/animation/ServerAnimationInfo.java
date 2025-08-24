@@ -11,18 +11,13 @@ public class ServerAnimationInfo extends AnimationInfo {
      */
     public final double actionDelay;
     /**
-     * move speed at which the animation looks best
-     */
-    public final double blocksPerSecond;
-    /**
      * whether an attack box should be activated for this animation
      */
     public final boolean usesAttackBox;
 
-    public ServerAnimationInfo(Animation animation, double actionDelay, double blocksPerSecond, boolean usesAttackBox) {
+    public ServerAnimationInfo(Animation animation, double actionDelay, boolean usesAttackBox) {
         super(animation);
         this.actionDelay = actionDelay;
-        this.blocksPerSecond = blocksPerSecond;
         this.usesAttackBox = usesAttackBox;
     }
 }

@@ -23,7 +23,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
@@ -142,23 +141,7 @@ public class Spinosaurus extends PrehistoricSwimming {
                         addActiveAnimation(controller.getName(), entity.getAnimation(SWIM_FLOATING).animation, AnimationCategory.SWIM, false);
                     }
                 } else {
-                    Animation walkAnim = entity.nextWalkingAnimation().animation;
-                    animationSpeed = 1 / event.getAnimatable().getScale();
-                    double f = entity.isOnGround() ? entity.level.getBlockState(entity.blockPosition().below()).getBlock().getFriction() * 0.91F : 0.91F;
-                    double mobSpeed = entity.getDeltaMovement().multiply(1/f, 0, 1/f).horizontalDistance() * 20;
-                    mobSpeed = Math.min(Util.attributeToSpeed(attributeSpeed), mobSpeed);
-                    double animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), walkAnim.animationName);
-                    if (animationTargetSpeed > 0) {
-                        animationSpeed *= mobSpeed / animationTargetSpeed;
-                    }
-                    if (animationSpeed <= 0.1) {
-                        addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
-                    } else {
-                        if (entity.isSprinting()) {
-                            animationSpeed *= 1.25;
-                        }
-                        addActiveAnimation(controller.getName(), walkAnim, AnimationCategory.WALK, false);
-                    }
+                    animationSpeed = addMovementAnimation(event, false);
                 }
             } else if (event.getAnimatable().isWeak()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.KNOCKOUT);

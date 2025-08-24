@@ -280,11 +280,9 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
                 }
             }
-        }
-        if (AGE_TICK.equals(key)) {
-            refreshDimensions();
+        } else if (AGE_TICK.equals(key)) {
             updateAbilities();
-        } else if (DATA_CUSTOM_NAME.equals(key) && !level.isClientSide) {
+        } else if (DATA_CUSTOM_NAME.equals(key)) {
             for (VariantCondition.WithVariant<NameTagCondition> pair : variantsByCondition(NameTagCondition.class)) {
                 if (pair.condition().test(this)) {
                     setVariant(VariantRegistry.NAME_TAG, pair);
@@ -293,6 +291,9 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                     clearVariant(VariantRegistry.NAME_TAG);
                 }
             }
+        }
+        if (AGE_TICK.equals(key)) {
+            refreshDimensions();
         }
         super.onSyncedDataUpdated(key);
     }
@@ -837,10 +838,6 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(Mth.lerp(percent, attributes().baseKnockBackResistance(), attributes().maxKnockBackResistance()));
 
         double speed = Util.calculateSpeed(data(), scale, false);
-        if (level.isClientSide) {
-            animationLogic.setAttributeSpeed(speed);
-            return;
-        }
 
         double healthDifference = getAttributeValue(Attributes.MAX_HEALTH);
         getAttribute(Attributes.MAX_HEALTH).setBaseValue(Math.round(Mth.lerp(percent, attributes().baseHealth(), attributes().maxHealth())));
@@ -1549,7 +1546,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         if (level.isClientSide) {
             return ClientAnimationInfoLoader.INSTANCE.getAnimations(animationLocation).animations();
         }
-        return ServerAnimationInfoLoader.INSTANCE.getAnimations(animationLocation).animations();
+        return getServerAnimationInfos();
     }
 
     @Override

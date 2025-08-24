@@ -25,7 +25,7 @@ public class ServerAnimationInfoLoader extends AnimationInfoLoader<ServerAnimati
     private Map<ResourceLocation, BakedAnimationInfo<ServerAnimationInfo>> serverAnimationInfos = ImmutableMap.of();
 
     protected ServerAnimationInfoLoader(Gson gson) {
-        super(gson);
+        super(gson, "animations");
     }
 
     @Override
@@ -66,16 +66,13 @@ public class ServerAnimationInfoLoader extends AnimationInfoLoader<ServerAnimati
                 JsonObject animationObj = entry.getValue().getAsJsonObject();
                 double animationLength = animationObj.has("animation_length") ? GsonHelper.getAsDouble(animationObj, "animation_length") * 20d : -1;
                 double actionDelay = animationObj.has("action_delay") ? animationObj.get("action_delay").getAsDouble() * 20d : 0;
-                double blockSpeed = animationObj.has("blocks_per_second") ? GsonHelper.getAsDouble(animationObj, "blocks_per_second") : 0;
                 boolean usesAttackBox = animationObj.has("uses_attack_box") && GsonHelper.getAsBoolean(animationObj, "uses_attack_box");
                 ILoopType loopType = ILoopType.fromJson(animationObj.get("loop"));
                 Animation animation = new Animation();
                 animation.animationName = entry.getKey();
                 animation.animationLength = animationLength;
                 animation.loop = loopType;
-                animations.put(entry.getKey(), new ServerAnimationInfo(
-                        animation,
-                        actionDelay, blockSpeed, usesAttackBox));
+                animations.put(entry.getKey(), new ServerAnimationInfo(animation, actionDelay, usesAttackBox));
             }
             return new BakedAnimationInfo<>(animations);
         }
