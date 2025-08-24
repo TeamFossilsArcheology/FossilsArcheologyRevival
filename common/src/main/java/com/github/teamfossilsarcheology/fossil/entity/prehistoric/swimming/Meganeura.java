@@ -80,6 +80,7 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
     protected boolean isAirNavigator;
     private int timeInWater = 0;
     private int timeOnLand = 0;
+    private int dimensionSwitchCooldown = -1;
 
     public Meganeura(EntityType<Meganeura> entityType, Level level) {
         super(entityType, level);
@@ -125,7 +126,11 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         if (ATTACHED_FACE.equals(key)) {
-            refreshDimensions();
+            if (attachSystem.getAttachmentFace() == Direction.UP) {
+                dimensionSwitchCooldown = 20;
+            } else {
+                refreshDimensions();
+            }
         }
         super.onSyncedDataUpdated(key);
     }
@@ -185,6 +190,18 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
         } else if (onGround) {
             timeInWater = 0;
             timeOnLand++;
+        }
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (dimensionSwitchCooldown > 0) {
+            dimensionSwitchCooldown--;
+            if (dimensionSwitchCooldown == 0) {
+                refreshDimensions();
+                dimensionSwitchCooldown = -1;
+            }
         }
     }
 

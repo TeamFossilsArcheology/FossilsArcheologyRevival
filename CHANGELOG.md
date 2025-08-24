@@ -11,6 +11,8 @@
 - Walking animations not playing correctly on servers
 - Some variants not being loaded correctly on servers
 - The generateVolcanoBiome config option not actually being used
+- Thrown bird eggs not initializing mobs correctly
+- Meganeura clipping through walls (hopefully, maybe, pls)
 
 ### Mod compatibility
 - Fixed food points of Farmers Delight pies
