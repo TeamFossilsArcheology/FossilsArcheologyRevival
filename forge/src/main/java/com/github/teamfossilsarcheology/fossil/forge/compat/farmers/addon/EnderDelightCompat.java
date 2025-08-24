@@ -1,10 +1,9 @@
 package com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon;
 
+import com.axedgaming.endersdelight.block.ModBlocks;
+import com.axedgaming.endersdelight.block.PieBlock;
 import com.axedgaming.endersdelight.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
-import vectorwing.farmersdelight.common.block.PieBlock;
-
-import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.FarmersDelightCompat.getPieValue;
 
 public class EnderDelightCompat {
     public static void registerFoodMappings() {
@@ -19,7 +18,11 @@ public class EnderDelightCompat {
         FoodMappings.addMeat(ModItems.UNCANNY_COOKIES.get()); //Has endermite skin in it, I will count that as meat.
         FoodMappings.addMeat(ModItems.CRISPY_SKEWER.get());
         FoodMappings.addPlant(ModItems.CHORUS_PIE_SLICE.get());
-        FoodMappings.addPlant(ModItems.CHORUS_PIE.get(), getPieValue((PieBlock) com.axedgaming.endersdelight.block.ModBlocks.CHORUS_PIE.get()));
+        FoodMappings.addPlant(ModItems.CHORUS_PIE.get(), getPieValue((PieBlock) ModBlocks.CHORUS_PIE.get()));
         //18/21 added, Excluded 3 items because they cause nausea.
+    }
+
+    private static int getPieValue(PieBlock block) {
+        return block.getPieSliceItem().getItem().getFoodProperties().getNutrition() * block.getMaxBites() * 5;
     }
 }
