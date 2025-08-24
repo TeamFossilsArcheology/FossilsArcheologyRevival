@@ -53,7 +53,6 @@ public class TreasureChunkGenerator extends ChunkGenerator {
 
     @Override
     public void createStructures(RegistryAccess registryAccess, ChunkGeneratorStructureState structureState, StructureManager structureManager, ChunkAccess chunk, StructureTemplateManager structureTemplateManager) {
-        super.createStructures(registryAccess, structureState, structureManager, chunk, structureTemplateManager);
         if (chunk.getPos().x == 0 && chunk.getPos().z == 0) {
             HolderLookup<Structure> structures = registryAccess.lookupOrThrow(Registries.STRUCTURE);
             Structure structure = structures.getOrThrow(ModStructures.TREASURE_ROOM_KEY).value();
