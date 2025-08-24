@@ -99,7 +99,7 @@ public class ThrownBirdEgg extends ThrowableItemProjectile {
         if (info.mobType() != PrehistoricMobType.VANILLA_BIRD) {
             for (int i = 0; i < amount; ++i) {
                 Prehistoric entity = (Prehistoric) info.entityType().create(level);
-                entity.setAgeInDays(0);
+                entity.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);
                 entity.moveTo(getX(), getY(), getZ(), getYRot(), 0);
                 level.addFreshEntity(entity);
                 if (getOwner() instanceof ServerPlayer player) {
@@ -115,10 +115,10 @@ public class ThrownBirdEgg extends ThrowableItemProjectile {
                 AgeableMob entity;
                 if (info == VanillaEntityInfo.PARROT) {
                     entity = EntityType.PARROT.create(level);
-                    entity.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(blockPosition()), MobSpawnType.BREEDING, null, null);
                 } else {
                     entity = EntityType.CHICKEN.create(level);
                 }
+                entity.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(blockPosition()), MobSpawnType.BREEDING, null, null);
                 entity.setAge(-24000);
                 entity.moveTo(getX(), getY(), getZ(), getYRot(), 0);
                 level.addFreshEntity(entity);
