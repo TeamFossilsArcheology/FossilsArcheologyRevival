@@ -4,7 +4,10 @@
       "blocks_per_second": 0.85
     },
     "animation.stegosaurus.run": {
-      "blocks_per_second": 1.4
+      "blocks_per_second": 1.2
+    },
+    "animation.stegosaurus.run_baby": {
+      "blocks_per_second": 4.5
     }
   }
 }

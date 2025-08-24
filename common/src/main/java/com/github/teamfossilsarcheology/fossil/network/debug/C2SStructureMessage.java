@@ -53,7 +53,7 @@ public class C2SStructureMessage {
             }
         }
         BlockState ironBlock = Blocks.JUNGLE_PLANKS.defaultBlockState();
-        for (BlockPos blockPos : BlockPos.betweenClosed(0, 119, 0, length * 5 + 20, 119, 30)) {
+        for (BlockPos blockPos : BlockPos.betweenClosed(0, 119, 0, length * 5 + 20, 119, 50)) {
             level.setBlock(blockPos, ironBlock, 2);
         }
         for (int i = 0; i < toAdd.size(); i++) {
@@ -61,7 +61,7 @@ public class C2SStructureMessage {
             double xOffset = i * 5d + 3;
             List<Instruction> instructions = List.of(
                     new Instruction.TeleportTo(new BlockPos(xOffset, 120, 0), 0),
-                    new Instruction.MoveTo(new BlockPos(xOffset, 120, 25)));
+                    new Instruction.MoveTo(new BlockPos(xOffset, 120, 45)));
             prehistoric.finalizeSpawn(level, level.getCurrentDifficultyAt(prehistoric.blockPosition()), MobSpawnType.SPAWN_EGG, null, null);
             prehistoric.moveTo(xOffset, 120, 0, 0, 0);
             if (prehistoric instanceof PrehistoricSwimming swimming && !swimming.isAmphibious()) {

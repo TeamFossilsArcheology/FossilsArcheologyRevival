@@ -1,10 +1,10 @@
 {
   "animations": {
     "animation.ankylosaurus.walk": {
-      "blocks_per_second": 0.75
+      "blocks_per_second": 0.85
     },
     "animation.ankylosaurus.run": {
-      "blocks_per_second": 1.5
+      "blocks_per_second": 2.5
     }
   }
 }
