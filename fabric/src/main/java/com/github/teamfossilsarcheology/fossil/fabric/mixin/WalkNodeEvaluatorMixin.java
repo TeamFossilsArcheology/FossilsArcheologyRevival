@@ -24,13 +24,13 @@ public abstract class WalkNodeEvaluatorMixin extends NodeEvaluator {
 
     @Inject(method = "getBlockPathTypeRaw", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/material/FluidState;is(Lnet/minecraft/tags/TagKey;)Z", ordinal = 0), cancellable = true)
     private static void addTarAsDangerousPath(BlockGetter level, BlockPos pos, CallbackInfoReturnable<BlockPathTypes> cir, @Local FluidState fluidState) {
-        if (fluidState.is(ModFluids.TAR.get())) {
+        if (ModFluids.TAR.isPresent() && fluidState.is(ModFluids.TAR.get())) {
             cir.setReturnValue(BlockPathTypes.LAVA);
         }
     }
     @Inject(method = "isBurningBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/tags/TagKey;)Z", ordinal = 0), cancellable = true)
     private static void addTarAsDangerousPath(BlockState state, CallbackInfoReturnable<Boolean> cir) {
-        if (state.is(ModBlocks.TAR.get())) {
+        if (ModBlocks.TAR.isPresent() && state.is(ModBlocks.TAR.get())) {
             cir.setReturnValue(true);
         }
     }

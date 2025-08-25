@@ -2,15 +2,9 @@ package com.github.teamfossilsarcheology.fossil.forge.mixin;
 
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
-import com.github.teamfossilsarcheology.fossil.material.ModFluids;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.NodeEvaluator;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
@@ -24,7 +18,7 @@ public abstract class WalkNodeEvaluatorMixin extends NodeEvaluator {
 
     @Inject(method = "isBurningBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/tags/TagKey;)Z", ordinal = 0), cancellable = true)
     private static void addTarAsDangerousPath(BlockState state, CallbackInfoReturnable<Boolean> cir) {
-        if (state.is(ModBlocks.TAR.get())) {
+        if (ModBlocks.TAR.isPresent() && state.is(ModBlocks.TAR.get())) {
             cir.setReturnValue(true);
         }
     }
