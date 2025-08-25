@@ -1,2 +1,7 @@
-## This is a potentially unstable alpha build. 
-### If you encounter issues you can report them on [Github](https://github.com/TeamFossilsArcheology/FossilsArcheologyRevival/issues) or our [Discord server](https://discord.gg/fossils-archaeology-revival-252498968695537664)
+### Added
+
+### Fixed
+- Crash with nethers delight
+- Ores not being generated in world
+
+### Mod compatibility
