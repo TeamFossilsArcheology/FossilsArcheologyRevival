@@ -42,7 +42,7 @@ dependencies {
     shadowBundle project(path: ':common', configuration: 'transformProductionForge')
 
     modImplementation "software.bernie.geckolib:geckolib-forge-$minecraft_version:$gecko_lib_version"
-    implementation "com.eliotlash.mclib:mclib:20"
+    forgeRuntimeLibrary  "com.eliotlash.mclib:mclib:20"
     modImplementation "com.github.glitchfiend:TerraBlender-forge:$minecraft_version-$terra_blender_version"
     modImplementation "com.github.darkpred.morehitboxes:morehitboxes-forge-$minecraft_version:$more_hitboxes_version"
 
