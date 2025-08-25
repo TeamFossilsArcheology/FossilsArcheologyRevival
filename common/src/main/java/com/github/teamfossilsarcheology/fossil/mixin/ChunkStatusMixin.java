@@ -23,8 +23,7 @@ public class ChunkStatusMixin {
 
     //require 0 to prevent crash in development
     @Inject(method = "method_39464", at = @At("HEAD"), require = 0)
-    private static void allow(ChunkStatus chunkStatus, Executor executor, ServerLevel serverLevel, ChunkGenerator chunkGenerator, StructureTemplateManager structureTemplateManager,
-                              ThreadedLevelLightEngine threadedLevelLightEngine, Function function, List list, ChunkAccess chunkAccess, boolean bl, CallbackInfoReturnable<CompletableFuture> cir) {
+    private static void allow(ChunkStatus chunkStatus, Executor executor, ServerLevel serverLevel, ChunkGenerator chunkGenerator, StructureTemplateManager structureTemplateManager, ThreadedLevelLightEngine threadedLevelLightEngine, Function function, List list, ChunkAccess chunkAccess, CallbackInfoReturnable<CompletableFuture> cir) {
         if (chunkGenerator instanceof TreasureChunkGenerator || chunkGenerator instanceof AnuLairChunkGenerator) {
             if (!chunkAccess.getStatus().isOrAfter(chunkStatus) && !serverLevel.getServer().getWorldData().worldGenOptions().generateStructures()) {
                 chunkGenerator.createStructures(serverLevel.registryAccess(), serverLevel.getChunkSource().getGeneratorState(), serverLevel.structureManager(), chunkAccess, structureTemplateManager);
