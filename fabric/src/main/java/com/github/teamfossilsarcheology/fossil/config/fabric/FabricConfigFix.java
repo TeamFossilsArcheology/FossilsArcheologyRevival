@@ -33,7 +33,7 @@ public class FabricConfigFix {
         try {
             if (version != null && (Integer) version.get(null) < FossilConfig.VERSION_VALUE) {
                 FossilMod.LOGGER.info("Config version is outdated: {} -> {}", version.get(null), FossilConfig.VERSION_VALUE);
-                for (Update<?> update : FIXES.get(FossilConfig.VERSION_VALUE)) {
+                for (Update<?> update : FIXES.getOrDefault(FossilConfig.VERSION_VALUE, new HashSet<>())) {
                     Field field = fields.get(update.name);
                     if (field == null) continue;
                     Object oldValue = field.get(null);

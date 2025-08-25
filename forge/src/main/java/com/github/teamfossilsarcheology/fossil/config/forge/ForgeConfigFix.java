@@ -32,7 +32,7 @@ public class ForgeConfigFix {
             var version = config.get(ForgeConfig.VERSION.getPath());
             if (version instanceof Integer v && v < FossilConfig.VERSION_VALUE) {
                 FossilMod.LOGGER.info("Config version is outdated: {} -> {}", v, FossilConfig.VERSION_VALUE);
-                for (Update<?> update : FIXES.get(FossilConfig.VERSION_VALUE)) {
+                for (Update<?> update : FIXES.getOrDefault(FossilConfig.VERSION_VALUE, new HashSet<>())) {
                     Object object = config.get(update.path);
                     if (object != null && update.canReplace(object)) {
                         FossilMod.LOGGER.info("Updating {}: {} -> {}", update.path, object, update.newValue);

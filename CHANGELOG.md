@@ -1,2 +1,10 @@
-## This is a potentially unstable alpha build. 
-### If you encounter issues you can report them on [Github](https://github.com/TeamFossilsArcheology/FossilsArcheologyRevival/issues) or our [Discord server](https://discord.gg/fossils-archaeology-revival-252498968695537664)
+### Added
+- Anu castle and treasure room now get generated even if structure generation is disabled
+
+### Fixed
+- Crash with nethers delight
+- Ores not being generated in world
+- Crash due to config issue
+- Duplicate anu castle being generated
+
+### Mod compatibility

@@ -17,6 +17,7 @@ import com.github.teamfossilsarcheology.fossil.forge.world.biome.ForgeFossilRegi
 import com.github.teamfossilsarcheology.fossil.util.ModConstants;
 import com.github.teamfossilsarcheology.fossil.world.chunk.AnuLairChunkGenerator;
 import com.github.teamfossilsarcheology.fossil.world.chunk.TreasureChunkGenerator;
+import com.github.teamfossilsarcheology.fossil.world.feature.placement.ModPlacedFeatures;
 import com.github.teamfossilsarcheology.fossil.world.feature.structures.ModStructureType;
 import com.github.teamfossilsarcheology.fossil.world.surfacerules.ModSurfaceRules;
 import dev.architectury.platform.forge.EventBuses;
@@ -73,6 +74,7 @@ public class ForgeFossilMod {
             if (ModList.get().isLoaded(ModConstants.ALEXS_MOBS)) {
                 AlexsMobsCompat.register();
             }
+            ModPlacedFeatures.register();
             ModStructureType.register();
             ModTriggers.register();
             Regions.register(new ForgeFossilRegion("overworld", RegionType.OVERWORLD, 4));
