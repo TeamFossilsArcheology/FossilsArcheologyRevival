@@ -43,6 +43,8 @@ public class CasualnessDelightCompat {
         FoodMappings.addMeat(ItemRegistry.FriedDumpling.get());
         FoodMappings.addMeat(ItemRegistry.BowlOfFriedDumpling.get());
         FoodMappings.addPlant(ItemRegistry.BowlOfSweetRice.get());
-        //32/39, 7 excluded
+        FoodMappings.addMeat(ItemRegistry.ChickenBoboChicken.get());
+        FoodMappings.addMeat(ItemRegistry.QuicheLorraine.get(), /*it is 4 slices of quichelorraine*/4*(ItemRegistry.QuicheLorraineSlice.get().asItem().getFoodProperties() != null ? ItemRegistry.QuicheLorraineSlice.get().asItem().getFoodProperties().getNutrition() * 7 : 20));
+        //34/41, 7 excluded
     }
 }

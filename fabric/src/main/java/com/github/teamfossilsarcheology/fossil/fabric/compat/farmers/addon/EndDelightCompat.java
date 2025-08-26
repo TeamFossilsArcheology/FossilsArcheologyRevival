@@ -44,6 +44,15 @@ public class EndDelightCompat {
         FoodMappings.addPlant(ModItem.StuffedRiceCake.get());
         FoodMappings.addPlant(ModItem.DriedChorusFlower.get(), 5);
         FoodMappings.addEgg(ModItem.SteamedDragonEgg.get());
-        //33/33 added
+        FoodMappings.addMeat(ModItem.EndermanGristle.get()); //this should barely be considered a food, but closer to meat
+        FoodMappings.addMeat(ModItem.RawEnderSausage.get()); //these addon devs have some respectable creativity
+        FoodMappings.addMeat(ModItem.EnderSausage.get());
+        FoodMappings.addMeat(ModItem.EndermanGristleStew.get());
+        FoodMappings.addMeat(ModItem.ShulkerSoup.get()); //made of shulker meat
+        FoodMappings.addEgg(ModItem.ShulkerOmelette.get()); //Egg because omelette is made of egg
+        FoodMappings.addEgg(ModItem.ShulkerOmeletteMixture.get());
+        FoodMappings.addMeat(ModItem.EnderNoodle.get()); //contains endermite meat
+        FoodMappings.addMeat(ModItem.EnderBambooRice.get()); //contains dragon meat
+        //42/42 added
     }
 }

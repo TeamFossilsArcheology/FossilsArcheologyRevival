@@ -21,6 +21,10 @@ public class OceanDelightCompat {
         FoodMappings.addFish(ODItems.FUGU_SLICE);
         FoodMappings.addFish(ODItems.FUGU_ROLL);
         FoodMappings.addPlant(ODItems.BRAISED_SEA_PICKLE);
-        //16/16 added
+        FoodMappings.addPlant(ODItems.HONEY_FRIED_KELP);
+        FoodMappings.addFish(ODItems.STUFFED_COD);
+        FoodMappings.addFish(ODItems.COOKED_STUFFED_COD);
+        FoodMappings.addPlant(ODItems.SEAGRASS_SALAD);
+        //20/20 added
     }
 }
