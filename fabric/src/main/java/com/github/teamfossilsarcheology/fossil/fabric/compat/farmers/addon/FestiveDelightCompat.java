@@ -21,6 +21,7 @@ public class FestiveDelightCompat {
         FoodMappings.addPlant(FestiveDelightModItems.GINGERBREAD);
         //FoodMappings.addPlant(FestiveDelightModItems.SUGAR_CANE); Not suitable for dinos
         FoodMappings.addPlant(FestiveDelightModBlocks.CINNAMON_BUSH, 15);
-        //14/15 added, 1 excluded
+        FoodMappings.addPlant(FestiveDelightModItems.CINNAMON_STICKS, 10);
+        //15/16 added, 1 excluded
     }
 }

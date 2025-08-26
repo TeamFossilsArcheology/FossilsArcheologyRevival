@@ -13,6 +13,16 @@ public class BrewinAndChewinCompat {
         FoodMappings.addPlant(BCObjects.KIMCHI);
         FoodMappings.addMeat(BCObjects.PIZZA_SLICE); //Contains meat
         FoodMappings.addMeat(BCObjects.HAM_AND_CHEESE_SANDWICH);
-        //8/8 added
+        FoodMappings.addMeat(BCObjects.HORROR_LASAGNA); //contains meat
+        FoodMappings.addMeat(BCObjects.QUICHE);
+        FoodMappings.addMeat(BCObjects.QUICHE_SLICE); //can be made both without and with meat, so added twice
+        FoodMappings.addPlant(BCObjects.QUICHE_SLICE);
+        FoodMappings.addMeat(BCObjects.SCARLET_PIEROGIES);
+        FoodMappings.addEgg(BCObjects.SCARLET_PIEROGIES); //also has eggs
+        FoodMappings.addMeat(BCObjects.FIERY_FONDUE);
+        FoodMappings.addPlant(BCObjects.CREAMY_ONION_SOUP);
+        FoodMappings.addEgg(BCObjects.VEGETABLE_OMELET); //egg
+        FoodMappings.addPlant(BCObjects.CHEESY_PASTA);
+        //16/16 added
     }
 }
