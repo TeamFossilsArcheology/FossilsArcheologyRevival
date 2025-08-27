@@ -18,7 +18,7 @@ import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.recipe.ModRecipes;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import com.github.teamfossilsarcheology.fossil.tags.ModEntityTypeTags;
-import com.github.teamfossilsarcheology.fossil.util.FossilFoodMappings;
+import com.github.teamfossilsarcheology.fossil.food.FossilFoodMappings;
 import com.github.teamfossilsarcheology.fossil.world.dimension.ModDimensions;
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.common.BlockEvent;

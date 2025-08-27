@@ -1,8 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.forge.compat.alexsmobs;
 
-import net.minecraft.resources.ResourceLocation;
-
-import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
 import com.github.alexthe666.alexsmobs.item.AMItemRegistry;
 import com.github.alexthe666.alexsmobs.entity.AMEntityRegistry;
 

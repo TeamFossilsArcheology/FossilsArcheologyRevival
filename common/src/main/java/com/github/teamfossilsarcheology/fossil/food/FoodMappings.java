@@ -1,4 +1,4 @@
-package com.github.teamfossilsarcheology.fossil.util;
+package com.github.teamfossilsarcheology.fossil.food;
 
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;

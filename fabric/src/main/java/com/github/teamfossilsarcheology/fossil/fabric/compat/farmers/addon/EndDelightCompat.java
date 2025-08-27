@@ -2,7 +2,7 @@ package com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon;
 
 import cn.foggyhillside.ends_delight.registry.ModBlock;
 import cn.foggyhillside.ends_delight.registry.ModItem;
-import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
 import com.nhoryzon.mc.farmersdelight.block.PieBlock;
 
 import static com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.FarmersDelightCompat.getPieValue;

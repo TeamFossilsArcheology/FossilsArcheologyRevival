@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon;
 
-import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
 import com.ianm1647.expandeddelight.block.BlockList;
 import com.ianm1647.expandeddelight.item.ItemList;
 

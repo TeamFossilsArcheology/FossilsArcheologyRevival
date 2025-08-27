@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.data;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
-import com.github.teamfossilsarcheology.fossil.util.Diet;
+import com.github.teamfossilsarcheology.fossil.food.Diet;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.*;
 import net.minecraft.network.FriendlyByteBuf;

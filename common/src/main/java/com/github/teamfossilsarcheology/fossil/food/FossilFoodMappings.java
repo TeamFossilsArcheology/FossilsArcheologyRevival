@@ -1,4 +1,4 @@
-package com.github.teamfossilsarcheology.fossil.util;
+package com.github.teamfossilsarcheology.fossil.food;
 
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
@@ -14,8 +14,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
-import static com.github.teamfossilsarcheology.fossil.util.FoodMappings.addFishEntity;
-import static com.github.teamfossilsarcheology.fossil.util.FoodMappings.addMeatEntity;
+import static com.github.teamfossilsarcheology.fossil.food.FoodMappings.addFishEntity;
+import static com.github.teamfossilsarcheology.fossil.food.FoodMappings.addMeatEntity;
 
 public class FossilFoodMappings {
     public static void register() {

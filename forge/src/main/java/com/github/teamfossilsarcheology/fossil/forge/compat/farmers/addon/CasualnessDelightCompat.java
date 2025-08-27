@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon;
 
-import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
 import com.va11halla.casualness_delight.registry.ItemRegistry;
 
 public class CasualnessDelightCompat {

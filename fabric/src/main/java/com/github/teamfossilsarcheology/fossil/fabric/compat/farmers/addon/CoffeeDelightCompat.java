@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon;
 
 import club.someoneice.cofe_delight.init.ItemInit;
-import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
 
 public class CoffeeDelightCompat {
     public static void registerFoodMappings() {

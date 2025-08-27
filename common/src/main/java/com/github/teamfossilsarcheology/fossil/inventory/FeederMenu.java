@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.inventory;
 
-import com.github.teamfossilsarcheology.fossil.util.Diet;
-import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
+import com.github.teamfossilsarcheology.fossil.food.Diet;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;

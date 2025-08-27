@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.fabric.compat.farmers;
 
 import com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon.util.AddonConstants;
-import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
 import com.nhoryzon.mc.farmersdelight.block.PieBlock;
 import com.nhoryzon.mc.farmersdelight.registry.BlocksRegistry;
 import com.nhoryzon.mc.farmersdelight.registry.ItemsRegistry;

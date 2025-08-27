@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon;
 
 import cn.mcmod.corn_delight.item.ItemRegistry;
-import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
 
 public class CornDelightCompat {
     public static void registerFoodMappings() {

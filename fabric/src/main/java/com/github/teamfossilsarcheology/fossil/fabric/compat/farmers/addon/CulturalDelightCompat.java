@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon;
 
-import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
 import dev.sterner.culturaldelights.common.registry.CDObjects;
 
 import java.util.Objects;

@@ -2,7 +2,7 @@ package com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon;
 
 import club.someoneice.pineapple_delight.BlockInit;
 import club.someoneice.pineapple_delight.ItemInit;
-import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
 import com.nhoryzon.mc.farmersdelight.block.PieBlock;
 
 import static com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.FarmersDelightCompat.getPieValue;

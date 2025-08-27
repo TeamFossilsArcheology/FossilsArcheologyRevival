@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon;
 
 import alabaster.crabbersdelight.common.registry.ModItems;
-import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
 
 public class CrabberDelightCompat {
     public static void registerFoodMappings() {

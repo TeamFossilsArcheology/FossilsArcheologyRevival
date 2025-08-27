@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.forge.compat.farmers;
 
 import com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.util.AddonConstants;
-import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
 import vectorwing.farmersdelight.common.block.PieBlock;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
 import vectorwing.farmersdelight.common.registry.ModItems;
