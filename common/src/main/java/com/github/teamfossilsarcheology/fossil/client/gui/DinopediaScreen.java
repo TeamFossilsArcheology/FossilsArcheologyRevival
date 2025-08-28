@@ -268,7 +268,7 @@ public class DinopediaScreen extends Screen {
             var tempText = dino.aiResponseType().getName();
             renderHoverInfo(guiGraphics, x, y + 60, mouseX, mouseY, tempText, dino.aiResponseType().getDescription());
             guiGraphics.drawString(font, dino.getGender().getName(), x, y + 70, col, false);
-            if (dino.getOwner() == null) {
+            if (dino.getOwnerUUID() == null) {
                 guiGraphics.drawString(font, Component.translatable("pedia.fossil.untamed"), x, y + 80, col, false);
             } else {
                 try {
