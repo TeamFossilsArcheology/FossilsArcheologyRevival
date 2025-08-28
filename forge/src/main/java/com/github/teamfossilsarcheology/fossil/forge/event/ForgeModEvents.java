@@ -161,6 +161,14 @@ public class ForgeModEvents {
 
     @SubscribeEvent
     public static void onDatapackSyncEvent(OnDatapackSyncEvent event) {
-        FossilMod.syncData(event.getPlayer());
+        //On join
+        ServerPlayer p = event.getPlayer();
+        if(p != null) FossilMod.syncData(p);
+
+        //On reload
+        for(ServerPlayer sp : event.getPlayers())
+        {
+            FossilMod.syncData(sp);
+        }
     }
 }
