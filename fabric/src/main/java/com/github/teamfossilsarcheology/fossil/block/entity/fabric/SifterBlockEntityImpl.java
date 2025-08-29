@@ -67,7 +67,7 @@ public class SifterBlockEntityImpl extends FabricContainerBlockEntity implements
 
         if (canProcess()) {
             cookingProgress++;
-            if (cookingProgress >= 20) {
+            if (cookingProgress >= SifterMenu.SIFTER_DURATION) {
                 cookingProgress = 0;
                 createItem();
                 dirty = true;
