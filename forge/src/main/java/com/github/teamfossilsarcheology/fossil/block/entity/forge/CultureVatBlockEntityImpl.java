@@ -115,13 +115,11 @@ public class CultureVatBlockEntityImpl extends ForgeEnergyContainerBlockEntity i
             }
             return;
         }
+        int prevCookingProgress = cookingProgress;
         boolean wasFueled = litTime > 0;
         boolean wasProcessing = cookingProgress > 0;
         boolean dirty = false;
         if (litTime > 0) {
-            if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY)) {
-                energyStorage.extractEnergy(FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE), false);
-            }
             --litTime;
         }
 
@@ -145,6 +143,9 @@ public class CultureVatBlockEntityImpl extends ForgeEnergyContainerBlockEntity i
                 createItem();
                 dirty = true;
             }
+        }
+        if (prevCookingProgress != cookingProgress && FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY)) {
+            energyStorage.extractEnergy(FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE), false);
         }
         if (litTime == 0 && cookingProgress > 0 || litTime > 0 && cookingProgress > 0 && !canProcess(fuel)) {
             cookingProgress = Mth.clamp(cookingProgress - 2, 0, CultureVatMenu.CULTIVATION_DURATION);
@@ -252,6 +253,7 @@ public class CultureVatBlockEntityImpl extends ForgeEnergyContainerBlockEntity i
         }
         if (slot == CultureVatMenu.INPUT_SLOT_ID && !sameItems) {
             cookingProgress = 0;
+            level.setBlock(getBlockPos(), getBlockState().setValue(CultureVatBlock.EMBRYO, getDNAType()), 3);
             setChanged();
         }
     }
