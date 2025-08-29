@@ -1,10 +1,19 @@
 ### Added
-- Anu castle and treasure room now get generated even if structure generation is disabled
+- Mobs can now hunt villagers
+- Fish and meat now count separately in the feeder
+- Frog dna (texture still missing)
 
 ### Fixed
-- Crash with nethers delight
-- Ores not being generated in world
-- Crash due to config issue
-- Duplicate anu castle being generated
+- Sifter duration being too short on fabric
+- Sifter and Worktable not resetting their progress correctly
+- Worktable duration breaking when taking out fuel
+- Culture Vat embryo not always updating
+- Data /reload not working on forge and not doing anything on fabric
+- Music discs stopping way too soon on forge
 
 ### Mod compatibility
+- All machines now work again when VMinus is installed
+- Updated the minimum requirements for some optional dependencies
+
+### Api
+- Reworked food system. Food values can now be added via datapack

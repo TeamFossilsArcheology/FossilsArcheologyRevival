@@ -121,25 +121,27 @@ components.java {
     }
 }
 
-modrinth {
-    token = "${project.property("MODRINTH_TOKEN") ?: "no value"}"
-    projectId = "IJY7IqPP"
-    versionNumber = "$minecraft_version-$mod_version-${project.name}"
-    versionType = "release"
-    uploadFile = tasks.remapJar
-    versionName = "$mod_version for Fabric $minecraft_version"
-    debugMode = true
-    dependencies {
-        required.project("fabric-api")
-        required.project("architectury-api")
-        required.project("geckolib")
-        required.project("terrablender")
-        required.project("more-hitboxes")
-        embedded.project("cardinal-components-api")
-        embedded.project("sructurized-reborn")
-        embedded.project("midnightlib")
+tasks.named("modrinth") {
+    modrinth {
+        token = "${project.property("MODRINTH_TOKEN") ?: "no value"}"
+        projectId = "IJY7IqPP"
+        versionNumber = "$minecraft_version-$mod_version-${project.name}"
+        versionType = "release"
+        uploadFile = tasks.remapJar
+        versionName = "$mod_version for Fabric $minecraft_version"
+        debugMode = true
+        dependencies {
+            required.project("fabric-api")
+            required.project("architectury-api")
+            required.project("geckolib")
+            required.project("terrablender")
+            required.project("more-hitboxes")
+            embedded.project("cardinal-components-api")
+            embedded.project("sructurized-reborn")
+            embedded.project("midnightlib")
+        }
+        changelog = rootProject.file("CHANGELOG.md").text
     }
-    changelog = rootProject.file("CHANGELOG.md").text
 }
 
 tasks.register('publishCurseForge', TaskPublishCurseForge) {

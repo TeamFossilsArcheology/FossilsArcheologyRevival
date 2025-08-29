@@ -1,8 +1,10 @@
 package com.github.teamfossilsarcheology.fossil.client;
 
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.jetbrains.annotations.NotNull;
@@ -17,12 +19,12 @@ import java.util.Map;
 /**
  * Loads different instances of the geo models to prevent the skeletons from playing geckolib animations
  */
-public class SkeletonGeoModelLoader extends ClientResourceLoader<Map<ResourceLocation, BakedGeoModel>> {
+public class SkeletonGeoModelLoader extends ResourceLoader<Map<ResourceLocation, BakedGeoModel>> {
     public static final SkeletonGeoModelLoader INSTANCE = new SkeletonGeoModelLoader();
     private Map<ResourceLocation, BakedGeoModel> geoModels = ImmutableMap.of();
 
     public SkeletonGeoModelLoader() {
-        super("geo/entity", ".json");
+        super(PackType.CLIENT_RESOURCES, "geo/entity", ".json");
     }
 
     @Override
@@ -40,6 +42,7 @@ public class SkeletonGeoModelLoader extends ClientResourceLoader<Map<ResourceLoc
         ImmutableMap.Builder<ResourceLocation, BakedGeoModel> mapBuilder = ImmutableMap.builder();
         mapBuilder.putAll(files);
         geoModels = mapBuilder.build();
+        FossilMod.LOGGER.info("Loaded {} skeleton models", geoModels.size());
     }
 
     public BakedGeoModel getSkeletonModel(ResourceLocation file) {

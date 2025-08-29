@@ -1,15 +1,17 @@
 package com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon;
 
+import com.github.teamfossilsarcheology.fossil.food.FoodMappingsManager;
+
 public class BrewinAndChewinCompat {
-    public static void registerFoodMappings() {
-//        FoodMappings.addPlant(BCObjects.KIMCHI);
-//        FoodMappings.addMeat(BCObjects.JERKY);
-//        FoodMappings.addPlant(BCObjects.PICKLED_PICKLES);
-//        FoodMappings.addFish(BCObjects.KIPPERS);
-//        FoodMappings.addPlant(BCObjects.COCOA_FUDGE);
-//        FoodMappings.addPlant(BCObjects.KIMCHI);
-//        FoodMappings.addMeat(BCObjects.PIZZA_SLICE); //Contains meat
-//        FoodMappings.addMeat(BCObjects.HAM_AND_CHEESE_SANDWICH);
+    public static void registerFoodMappings(FoodMappingsManager manager) {
+//        manager.addPlant(BCObjects.KIMCHI);
+//        manager.addMeat(BCObjects.JERKY);
+//        manager.addPlant(BCObjects.PICKLED_PICKLES);
+//        manager.addFish(BCObjects.KIPPERS);
+//        manager.addPlant(BCObjects.COCOA_FUDGE);
+//        manager.addPlant(BCObjects.KIMCHI);
+//        manager.addMeat(BCObjects.PIZZA_SLICE); //Contains meat
+//        manager.addMeat(BCObjects.HAM_AND_CHEESE_SANDWICH);
         //8/8 added
     }
 }

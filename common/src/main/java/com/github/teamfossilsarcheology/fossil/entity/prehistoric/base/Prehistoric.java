@@ -25,14 +25,14 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.SleepSy
 import com.github.teamfossilsarcheology.fossil.entity.util.InstructionSystem;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.entity.variant.*;
+import com.github.teamfossilsarcheology.fossil.food.Diet;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.network.C2SHitPlayerMessage;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.C2SDisableAIMessage;
 import com.github.teamfossilsarcheology.fossil.network.debug.SyncDebugInfoMessage;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
-import com.github.teamfossilsarcheology.fossil.util.Diet;
-import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 import com.github.teamfossilsarcheology.fossil.util.Gender;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import dev.architectury.extensions.network.EntitySpawnExtension;
@@ -1515,7 +1515,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     public EntityDataLoader.Data data() {
-        return EntityDataLoader.INSTANCE.getData(info().resourceName);
+        return info().data();
     }
 
     public Attribute attributes() {

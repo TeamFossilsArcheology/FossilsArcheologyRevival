@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
+import com.github.teamfossilsarcheology.fossil.food.Diet;
 import com.github.teamfossilsarcheology.fossil.item.*;
-import com.github.teamfossilsarcheology.fossil.util.Diet;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -25,6 +25,7 @@ public enum VanillaEntityInfo implements EntityInfo {
     DOLPHIN(EntityType.DOLPHIN, PrehistoricMobType.MAMMAL, Diet.PISCI_CARNIVORE),
     DONKEY(EntityType.DONKEY, PrehistoricMobType.MAMMAL, Diet.HERBIVORE),
     FOX(EntityType.FOX, PrehistoricMobType.MAMMAL, Diet.OMNIVORE),
+    FROG(EntityType.FROG, PrehistoricMobType.OTHER, Diet.HERBIVORE),
     GOAT(EntityType.GOAT, PrehistoricMobType.MAMMAL, Diet.HERBIVORE),
     GLOW_SQUID(EntityType.GLOW_SQUID, PrehistoricMobType.FISH, Diet.PISCI_CARNIVORE),
     HOGLIN(EntityType.HOGLIN, PrehistoricMobType.MAMMAL, Diet.OMNIVORE),

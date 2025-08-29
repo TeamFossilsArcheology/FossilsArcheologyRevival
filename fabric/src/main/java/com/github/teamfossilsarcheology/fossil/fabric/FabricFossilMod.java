@@ -3,8 +3,6 @@ package com.github.teamfossilsarcheology.fossil.fabric;
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.advancements.ModTriggers;
 import com.github.teamfossilsarcheology.fossil.block.entity.ModBlockEntities;
-import com.github.teamfossilsarcheology.fossil.block.entity.fabric.AnalyzerBlockEntityImpl;
-import com.github.teamfossilsarcheology.fossil.block.entity.fabric.CultureVatBlockEntityImpl;
 import com.github.teamfossilsarcheology.fossil.capabilities.fabric.ModCapabilitiesImpl;
 import com.github.teamfossilsarcheology.fossil.config.fabric.FossilConfigImpl;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
@@ -15,6 +13,7 @@ import com.github.teamfossilsarcheology.fossil.fabric.capabilities.MammalCompone
 import com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.FarmersDelightCompat;
 import com.github.teamfossilsarcheology.fossil.fabric.world.biome.FabricBiomeModifiers;
 import com.github.teamfossilsarcheology.fossil.fabric.world.biome.FabricFossilRegion;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappingsManager;
 import com.github.teamfossilsarcheology.fossil.util.ModConstants;
 import com.github.teamfossilsarcheology.fossil.world.chunk.AnuLairChunkGenerator;
 import com.github.teamfossilsarcheology.fossil.world.chunk.TreasureChunkGenerator;
@@ -61,21 +60,17 @@ public class FabricFossilMod implements ModInitializer, TerraBlenderApi, EntityC
         ModTriggers.register();
         ModPlacedFeatures.register();
         ModRegistries.register();
-        ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
-            if (joined) {
-                FossilMod.syncData(player);
-            }
-        });
+        ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> FossilMod.syncData(player));
         ServerLifecycleEvents.SERVER_STARTING.register(minecraftServer -> {
             if (FabricLoader.getInstance().isModLoaded(ModConstants.FARMERS)) {
-                FarmersDelightCompat.registerFoodMappings();
+                FoodMappingsManager.INSTANCE.listen(FarmersDelightCompat::registerFoodMappings);
             }
         });
         ModBlockEntities.ANALYZER.listen(blockEntityType -> {
-            EnergyStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> ((AnalyzerBlockEntityImpl) blockEntity).energyStorage, blockEntityType);
+            EnergyStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> (EnergyStorage) blockEntity.getEnergyStorage(), blockEntityType);
         });
         ModBlockEntities.CULTURE_VAT.listen(blockEntityType -> {
-            EnergyStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> ((CultureVatBlockEntityImpl) blockEntity).energyStorage, blockEntityType);
+            EnergyStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> (EnergyStorage) blockEntity.getEnergyStorage(), blockEntityType);
         });
     }
 

@@ -1,4 +1,4 @@
-// 1.19.3	2025-06-22T00:46:24.6634315	Item Models: fossil
+// 1.19.3	2025-08-30T01:35:25.7162486	Item Models: fossil
 85278cf934a028444f8b185c2c311b061e0ea0bd assets/fossil/models/item/alligator_gar_dna.json
 51ab511af360e56776aeb0c4922c7c04017afa87 assets/fossil/models/item/allosaurus_dna.json
 7479d6547547a6569fb486a85a75cd7fd3a2c826 assets/fossil/models/item/ankylosaurus_dna.json
@@ -612,6 +612,7 @@ b7975c1b1a79e05ac187dae70bf04b9a07f935ca assets/fossil/models/item/fossil_seed_v
 aad5a71cfbf618bdefd747655938021d2192b511 assets/fossil/models/item/fossil_seed_welwitschia.json
 88af79a0f2f926c246ee29270cbd0151fff74060 assets/fossil/models/item/fossil_seed_zamites.json
 4de34cab365eb162826110a66c2c9d9bdc9efa95 assets/fossil/models/item/fox_dna.json
+5ee56719c825fd24b5b5b1f0ef82c378ebd8b940 assets/fossil/models/item/frog_dna.json
 b0321f0aed702e14971337a16a2a7eba4029c14d assets/fossil/models/item/fur_elasmotherium.json
 50bc53b7bc00da4adb89cdaa8b92f256f8ed4c8f assets/fossil/models/item/fur_mammoth.json
 e860baecb266dbbfc3f6bb3927c3078d483ccf26 assets/fossil/models/item/fur_therizinosaurus.json

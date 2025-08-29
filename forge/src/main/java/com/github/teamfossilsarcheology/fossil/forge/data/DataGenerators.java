@@ -34,5 +34,6 @@ public class DataGenerators {
                 output, lookup, efh, List.of((registries, writer, existingFileHelper) -> new FossilAdvancements().accept(writer))));
         generator.addProvider(event.includeServer(), (DataProvider.Factory<DataProvider>) ModLootProvider::new);
         generator.addProvider(event.includeServer(), (DataProvider.Factory<DataProvider>) output -> new ModWorldGenProvider(output, lookup));
+        generator.addProvider(event.includeServer(), (DataProvider.Factory<DataProvider>) ModFoodValueProvider::new);
     }
 }

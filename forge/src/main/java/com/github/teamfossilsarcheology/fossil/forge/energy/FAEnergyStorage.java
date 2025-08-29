@@ -1,9 +1,10 @@
 package com.github.teamfossilsarcheology.fossil.forge.energy;
 
+import com.github.teamfossilsarcheology.fossil.block.entity.CommonEnergyStorage;
 import net.minecraft.nbt.Tag;
 import net.minecraftforge.energy.EnergyStorage;
 
-public abstract class FAEnergyStorage extends EnergyStorage {
+public abstract class FAEnergyStorage extends EnergyStorage implements CommonEnergyStorage {
 
     protected FAEnergyStorage(int capacity, int maxReceive, int maxExtract, int energy) {
         super(capacity, maxReceive, maxExtract, energy);
@@ -36,5 +37,25 @@ public abstract class FAEnergyStorage extends EnergyStorage {
         } else {
             super.deserializeNBT(nbt);
         }
+    }
+
+    @Override
+    public int getEnergy() {
+        return getEnergyStored();
+    }
+
+    @Override
+    public void extractEnergy(int maxExtract) {
+        extractEnergy(maxExtract, false);
+    }
+
+    @Override
+    public void load(Tag tag) {
+        deserializeNBT(tag);
+    }
+
+    @Override
+    public Tag save() {
+        return serializeNBT();
     }
 }

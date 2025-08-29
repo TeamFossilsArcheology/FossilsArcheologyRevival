@@ -1,10 +1,13 @@
 package com.github.teamfossilsarcheology.fossil.capabilities.forge;
 
+import com.github.teamfossilsarcheology.fossil.block.entity.CommonEnergyStorage;
+import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.EntityInfo;
 import com.github.teamfossilsarcheology.fossil.forge.capabilities.mammal.IMammalCap;
 import com.github.teamfossilsarcheology.fossil.forge.capabilities.mammal.MammalCapProvider;
 import com.github.teamfossilsarcheology.fossil.forge.capabilities.player.FirstHatchCapProvider;
 import com.github.teamfossilsarcheology.fossil.forge.capabilities.player.IFirstHatchCap;
+import com.github.teamfossilsarcheology.fossil.forge.energy.FAEnergyStorage;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.S2CMammalCapMessage;
 import net.minecraft.server.level.ServerLevel;
@@ -72,5 +75,14 @@ public class ModCapabilitiesImpl {
 
     public static void setHatchedDinosaur(Player player, boolean hatched) {
         getFirstHatchCap(player).ifPresent(iFirstHatchCap -> iFirstHatchCap.setHatchedDinosaur(hatched));
+    }
+
+    public static CommonEnergyStorage createEnergyStorage(Runnable setChanged) {
+        return new FAEnergyStorage(FossilConfig.getInt(FossilConfig.MACHINE_MAX_ENERGY), FossilConfig.getInt(FossilConfig.MACHINE_TRANSFER_RATE), FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE), 0) {
+            @Override
+            protected void onChange() {
+                setChanged.run();
+            }
+        };
     }
 }
