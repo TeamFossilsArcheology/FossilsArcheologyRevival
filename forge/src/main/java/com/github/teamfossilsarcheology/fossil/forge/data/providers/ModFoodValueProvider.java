@@ -211,6 +211,6 @@ public class ModFoodValueProvider extends FoodValueProvider {
 
     @Override
     public @NotNull String getName() {
-        return null;
+        return "Fossil Food Values";
     }
 }

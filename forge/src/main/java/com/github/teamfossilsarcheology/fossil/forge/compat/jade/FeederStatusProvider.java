@@ -27,6 +27,10 @@ public enum FeederStatusProvider implements IComponentProvider, IServerDataProvi
             tooltip.add(new TranslatableComponent("fossil.jade.plant", accessor.getServerData().getInt(FoodType.PLANT.name()))
                     .withStyle(ChatFormatting.GREEN));
         }
+        if (accessor.getServerData().contains(FoodType.FISH.name())) {
+            tooltip.add(new TranslatableComponent("fossil.jade.fish", accessor.getServerData().getInt(FoodType.FISH.name()))
+                    .withStyle(ChatFormatting.BLUE));
+        }
     }
 
     @Override
@@ -34,5 +38,6 @@ public enum FeederStatusProvider implements IComponentProvider, IServerDataProvi
         FeederBlockEntity feeder = (FeederBlockEntity) blockEntity;
         data.putInt(FoodType.MEAT.name(), feeder.getValue(FoodType.MEAT));
         data.putInt(FoodType.PLANT.name(), feeder.getValue(FoodType.PLANT));
+        data.putInt(FoodType.FISH.name(), feeder.getValue(FoodType.FISH));
     }
 }
