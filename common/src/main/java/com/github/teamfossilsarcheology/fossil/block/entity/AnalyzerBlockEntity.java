@@ -161,7 +161,7 @@ public class AnalyzerBlockEntity extends EnergyContainerBlockEntity {
     }
 
     @Override
-    public NonNullList<ItemStack> getItems() {
+    public @NotNull NonNullList<ItemStack> getItems() {
         return items;
     }
 

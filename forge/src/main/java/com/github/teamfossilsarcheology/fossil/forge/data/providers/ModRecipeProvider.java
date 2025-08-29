@@ -41,7 +41,9 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 

@@ -1,6 +1,5 @@
 package com.github.teamfossilsarcheology.fossil.world.feature;
 
-import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

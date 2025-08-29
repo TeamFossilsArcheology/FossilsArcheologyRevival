@@ -1,6 +1,5 @@
 package com.github.teamfossilsarcheology.fossil.world.feature.structures;
 
-import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.QuartPos;

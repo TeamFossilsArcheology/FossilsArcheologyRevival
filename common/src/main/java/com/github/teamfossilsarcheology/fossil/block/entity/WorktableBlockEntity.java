@@ -182,7 +182,7 @@ public class WorktableBlockEntity extends MachineContainerBlockEntity {
     }
 
     @Override
-    public NonNullList<ItemStack> getItems() {
+    public @NotNull NonNullList<ItemStack> getItems() {
         return items;
     }
 

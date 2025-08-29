@@ -6,7 +6,6 @@ import com.github.teamfossilsarcheology.fossil.food.Diet;
 import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
 import com.github.teamfossilsarcheology.fossil.food.FoodType;
 import com.github.teamfossilsarcheology.fossil.inventory.FeederMenu;
-import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
