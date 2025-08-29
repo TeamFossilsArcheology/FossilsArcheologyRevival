@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.block.entity;
 
+import com.github.teamfossilsarcheology.fossil.block.custom_blocks.CustomEntityBlock;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.WorktableBlock;
 import com.github.teamfossilsarcheology.fossil.inventory.WorktableMenu;
 import com.github.teamfossilsarcheology.fossil.recipe.ModRecipes;
@@ -17,7 +18,6 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -111,7 +111,7 @@ public class WorktableBlockEntity extends MachineContainerBlockEntity {
                 dirty = true;
             }
         }
-        if (litTime == 0 && cookingProgress > 0) {
+        if (litTime == 0 && cookingProgress > 0 || litTime > 0 && cookingProgress > 0 && !canProcess(fuel)) {
             cookingProgress = Mth.clamp(cookingProgress - 2, 0, cookingTotalTime);
         }
 
@@ -209,6 +209,7 @@ public class WorktableBlockEntity extends MachineContainerBlockEntity {
                 cookingTotalTime = timeToSmelt(stack, items.get(WorktableMenu.FUEL_SLOT_ID));
             }
             cookingProgress = 0;
+            level.setBlock(getBlockPos(), getBlockState().setValue(CustomEntityBlock.ACTIVE, false), 3);
         } else if (slot == WorktableMenu.FUEL_SLOT_ID && !sameItem) {
             if (!items.get(WorktableMenu.INPUT_SLOT_ID).isEmpty()) {
                 cookingTotalTime = timeToSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), stack);

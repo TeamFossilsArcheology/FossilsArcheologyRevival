@@ -8,6 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -77,6 +78,8 @@ public class SifterBlockEntity extends MachineContainerBlockEntity {
                 createItem();
                 dirty = true;
             }
+        } else {
+            cookingProgress = Mth.clamp(cookingProgress - 2, 0, SifterMenu.SIFTER_DURATION);
         }
 
         if (wasProcessing != cookingProgress > 0) {

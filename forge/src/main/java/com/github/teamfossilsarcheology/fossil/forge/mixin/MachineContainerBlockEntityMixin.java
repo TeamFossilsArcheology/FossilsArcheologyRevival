@@ -21,7 +21,11 @@ import javax.annotation.Nullable;
 @Mixin(MachineContainerBlockEntity.class)
 public abstract class MachineContainerBlockEntityMixin extends BaseContainerBlockEntity {
     @Unique
-    LazyOptional<? extends IItemHandler>[] fossilsArcheologyRevival$handlers = SidedInvWrapper.create((MachineContainerBlockEntity)(Object) this, Direction.UP, Direction.DOWN, Direction.NORTH);
+    LazyOptional<? extends IItemHandler>[] fossilsArcheologyRevival$handlers = initArray((MachineContainerBlockEntity)(Object) this);
+
+    private static LazyOptional<? extends IItemHandler>[] initArray(WorldlyContainer container) {
+        return SidedInvWrapper.create(container, Direction.UP, Direction.DOWN, Direction.NORTH);
+    }
 
     private MachineContainerBlockEntityMixin(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
