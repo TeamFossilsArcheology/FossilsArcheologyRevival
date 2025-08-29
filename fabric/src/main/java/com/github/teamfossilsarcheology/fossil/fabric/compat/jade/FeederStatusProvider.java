@@ -35,8 +35,8 @@ public enum FeederStatusProvider implements IBlockComponentProvider, IServerData
     @Override
     public void appendServerData(CompoundTag data, ServerPlayer serverPlayer, Level level, BlockEntity blockEntity, boolean b) {
         FeederBlockEntity feeder = (FeederBlockEntity) blockEntity;
-        data.putInt(FoodType.MEAT.name(), feeder.getMeat());
-        data.putInt(FoodType.PLANT.name(), feeder.getPlant());
+        data.putInt(FoodType.MEAT.name(), feeder.getValue(FoodType.MEAT));
+        data.putInt(FoodType.PLANT.name(), feeder.getValue(FoodType.PLANT));
     }
 
     @Override

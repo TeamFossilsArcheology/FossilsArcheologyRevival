@@ -6,6 +6,7 @@ import com.github.teamfossilsarcheology.fossil.food.Diet;
 import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
 import com.github.teamfossilsarcheology.fossil.food.FoodType;
 import com.github.teamfossilsarcheology.fossil.inventory.FeederMenu;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -25,87 +26,65 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
+
+import static com.github.teamfossilsarcheology.fossil.food.FoodType.*;
+import static com.github.teamfossilsarcheology.fossil.inventory.FeederMenu.*;
+
 public class FeederBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
-    public static final String MEAT = "Meat";
-    public static final String PLANT = "Plant";
-    private static final int[] SLOTS_TOP = new int[]{FeederMenu.MEAT_SLOT_ID, FeederMenu.PLANT_SLOT_ID};
-    protected NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
-    private int meat;
-    private int plant;
+    private static final int SIZE = 3;
+    private static final int[] SLOTS_TOP = new int[]{MEAT_SLOT_ID, PLANT_SLOT_ID, FISH_SLOT_ID};
+    private static final String[] NAMES = new String[]{"Meat", "Plant", "Fish"};
+    private static final FoodType[] FOOD_TYPES = new FoodType[]{MEAT, PLANT, FISH};
+    private final Map<FoodType, Integer> foodStored = new Object2IntOpenHashMap<>(SIZE);
     private final ContainerData dataAccess = new ContainerData() {
 
         @Override
         public int get(int index) {
-            switch (index) {
-                case 0 -> {
-                    return meat;
-                }
-                case 1 -> {
-                    return plant;
-                }
-            }
-            return 0;
+            return foodStored.getOrDefault(FOOD_TYPES[index], 0);
         }
 
         @Override
         public void set(int index, int value) {
-            switch (index) {
-                case 0 -> meat = value;
-                case 1 -> plant = value;
-            }
+            foodStored.put(FOOD_TYPES[index], value);
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return SIZE;
         }
     };
-    private int prevMeat;
-    private int prevPlant;
+    protected NonNullList<ItemStack> items = NonNullList.withSize(SIZE, ItemStack.EMPTY);
     private int ticksExisted;
 
     public FeederBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.FEEDER.get(), blockPos, blockState);
+        for (FoodType type : FOOD_TYPES) {
+            foodStored.put(type, 0);
+        }
     }
-
     public static void serverTick(Level level, BlockPos pos, BlockState state, FeederBlockEntity blockEntity) {
         blockEntity.ticksExisted++;
-        blockEntity.prevMeat = blockEntity.meat;
-        blockEntity.prevPlant = blockEntity.plant;
-        blockEntity.meat = Math.max(blockEntity.meat, 0);
-        blockEntity.plant = Math.max(blockEntity.plant, 0);
         boolean dirty = false;
-        ItemStack foodStack = blockEntity.getItem(FeederMenu.MEAT_SLOT_ID);
-        if (!foodStack.isEmpty()) {
-            if (blockEntity.ticksExisted % 5 == 0 && blockEntity.meat < 10000) {
-                int foodPoints = FoodMappings.getFoodAmount(foodStack.getItem(), Diet.CARNIVORE_EGG);
-                if (foodPoints == 0) {
-                    foodPoints = FoodMappings.getFoodAmount(foodStack.getItem(), Diet.PISCI_CARNIVORE);
-                }
-                if (foodPoints > 0) {
-                    dirty = true;
-                    blockEntity.meat += foodPoints;
-                    foodStack.shrink(1);
-                }
-            }
-        }
-        foodStack = blockEntity.getItem(FeederMenu.PLANT_SLOT_ID);
-        if (!foodStack.isEmpty()) {
-            if (blockEntity.ticksExisted % 5 == 0 && blockEntity.plant < 10000) {
-                int foodPoints = FoodMappings.getFoodAmount(foodStack.getItem(), Diet.HERBIVORE);
-                if (foodPoints > 0) {
-                    dirty = true;
-                    blockEntity.plant += foodPoints;
-                    foodStack.shrink(1);
+        for (int i = 0; i < FOOD_TYPES.length; i++) {
+            FoodType type = FOOD_TYPES[i];
+            int current = blockEntity.foodStored.get(type);
+            blockEntity.foodStored.put(type, Math.max(current, 0));
+            ItemStack foodStack = blockEntity.getItem(i);
+            if (!foodStack.isEmpty()) {
+                if (blockEntity.ticksExisted % 5 == 0 && current < 10000) {
+                    int foodPoints = FoodMappings.getFoodAmount(foodStack.getItem(), type);
+                    if (foodPoints > 0) {
+                        dirty = true;
+                        blockEntity.foodStored.put(type, current + foodPoints);
+                        foodStack.shrink(1);
+                    }
                 }
             }
-        }
-        if (blockEntity.prevMeat != blockEntity.meat || blockEntity.prevPlant != blockEntity.plant) {
-            dirty = true;
-            state = state.setValue(FeederBlock.HERB, blockEntity.plant > 0).setValue(FeederBlock.CARN, blockEntity.meat > 0);
-            level.setBlock(pos, state, 3);
         }
         if (dirty) {
+            state = state.setValue(FeederBlock.HERB, blockEntity.foodStored.get(PLANT) > 0).setValue(FeederBlock.CARN, blockEntity.foodStored.get(MEAT) > 0 || blockEntity.foodStored.get(FISH) > 0);
+            level.setBlock(pos, state, 3);
             setChanged(level, pos, state);
         }
     }
@@ -115,15 +94,17 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
         super.load(tag);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(tag, this.items);
-        this.meat = tag.getShort(MEAT);
-        this.plant = tag.getShort(PLANT);
+        for (int i = 0; i < FOOD_TYPES.length; i++) {
+            foodStored.put(FOOD_TYPES[i], (int) tag.getShort(NAMES[i]));
+        }
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.putShort(MEAT, (short) this.meat);
-        tag.putShort(PLANT, (short) this.plant);
+        for (int i = 0; i < FOOD_TYPES.length; i++) {
+            tag.putShort(NAMES[i], (short) (int) foodStored.get(FOOD_TYPES[i]));
+        }
         ContainerHelper.saveAllItems(tag, this.items);
     }
 
@@ -152,40 +133,31 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
     }
 
     public boolean isEmpty(Diet diet) {
-        boolean canEatMeat = diet.canEat(FoodType.MEAT) || diet.canEat(FoodType.FISH);
-        if (canEatMeat && !diet.canEat(FoodType.PLANT)) {
-            return meat == 0;
+        for (Map.Entry<FoodType, Integer> entry : foodStored.entrySet()) {
+            if (entry.getValue() > 0 && diet.canEat(entry.getKey())) {
+                return false;
+            }
         }
-        if (!canEatMeat && diet.canEat(FoodType.PLANT)) {
-            return plant == 0;
-        }
-        return meat == 0 && plant == 0;
+        return true;
+    }
+
+    public Integer getSignalStrength() {
+        return foodStored.values().stream().reduce(Integer::sum).orElse(0);
     }
 
     public void feedDinosaur(Prehistoric mob) {
         if (level != null) {
             int feedAmount = 0;
             Diet diet = mob.data().diet();
-            if (!isEmpty(diet)) {
-                boolean canEatMeat = diet.canEat(FoodType.MEAT) || diet.canEat(FoodType.FISH);
-                if (canEatMeat && !diet.canEat(FoodType.PLANT)) {
-                    meat--;
+            for (Map.Entry<FoodType, Integer> entry : foodStored.entrySet()) {
+                if (entry.getValue() > 0 && diet.canEat(entry.getKey())) {
+                    foodStored.put(entry.getKey(), entry.getValue() - 1);
                     feedAmount++;
-                } else if (!canEatMeat && diet.canEat(FoodType.PLANT)) {
-                    plant--;
-                    feedAmount++;
-                } else {
-                    if (meat != 0) {
-                        meat--;
-                        feedAmount++;
-                    } else if (plant != 0) {
-                        plant--;
-                        feedAmount++;
-                    }
+                    break;
                 }
             }
             if (feedAmount > 0) {
-                BlockState blockState = level.getBlockState(getBlockPos()).setValue(FeederBlock.HERB, plant > 0).setValue(FeederBlock.CARN, meat > 0);
+                BlockState blockState = level.getBlockState(getBlockPos()).setValue(FeederBlock.HERB, foodStored.get(PLANT) > 0).setValue(FeederBlock.CARN, foodStored.get(MEAT) > 0 || foodStored.get(FISH) > 0);
                 level.setBlockAndUpdate(getBlockPos(), blockState);
                 setChanged(level, getBlockPos(), blockState);
                 mob.feed(feedAmount);
@@ -229,12 +201,7 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
 
     @Override
     public boolean canPlaceItem(int index, ItemStack stack) {
-        if (index == FeederMenu.MEAT_SLOT_ID) {
-            return FoodMappings.getFoodAmount(stack.getItem(), Diet.CARNIVORE_EGG) > 0 || FoodMappings.getFoodAmount(stack.getItem(), Diet.PISCI_CARNIVORE) > 0;
-        } else if (index == FeederMenu.PLANT_SLOT_ID) {
-            return FoodMappings.getFoodAmount(stack.getItem(), Diet.HERBIVORE) > 0;
-        }
-        return false;
+        return FoodMappings.getFoodAmount(stack.getItem(), FOOD_TYPES[index]) > 0;
     }
 
     @Override
@@ -252,19 +219,7 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
         return false;
     }
 
-    public void setMeat(int meat) {
-        this.meat = meat;
-    }
-
-    public void setPlant(int plant) {
-        this.plant = plant;
-    }
-
-    public int getMeat() {
-        return meat;
-    }
-
-    public int getPlant() {
-        return plant;
+    public int getValue(FoodType type) {
+        return foodStored.get(type);
     }
 }

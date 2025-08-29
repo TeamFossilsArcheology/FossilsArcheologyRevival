@@ -16,27 +16,34 @@ import org.jetbrains.annotations.NotNull;
 public class FeederMenu extends AbstractContainerMenu {
     public static final int MEAT_SLOT_ID = 0;
     public static final int PLANT_SLOT_ID = 1;
+    public static final int FISH_SLOT_ID = 2;
     private final Container container;
     private final ContainerData containerData;
 
     public FeederMenu(int id, Inventory playerInventory) {
-        this(id, playerInventory, new SimpleContainer(2), new SimpleContainerData(2));
+        this(id, playerInventory, new SimpleContainer(3), new SimpleContainerData(3));
     }
 
     public FeederMenu(int id, Inventory playerInventory, Container container, ContainerData containerData) {
         super(ModMenus.FEEDER.get(), id);
         this.container = container;
         this.containerData = containerData;
-        addSlot(new Slot(container, 0, 59, 62) {
+        addSlot(new Slot(container, MEAT_SLOT_ID, 68, 61) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return isMeat(stack);
             }
         });
-        addSlot(new Slot(container, 1, 101, 62) {
+        addSlot(new Slot(container, PLANT_SLOT_ID, 110, 61) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return isPlant(stack);
+            }
+        });
+        addSlot(new Slot(container, FISH_SLOT_ID, 152, 61) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return isFish(stack);
             }
         });
         for (int y = 0; y < 3; y++) {
@@ -58,12 +65,20 @@ public class FeederMenu extends AbstractContainerMenu {
         return FoodMappings.getFoodAmount(stack.getItem(), FoodType.PLANT) > 0;
     }
 
+    private boolean isFish(ItemStack stack) {
+        return FoodMappings.getFoodAmount(stack.getItem(), FoodType.FISH) > 0;
+    }
+
     public int getMeat() {
         return containerData.get(MEAT_SLOT_ID);
     }
 
     public int getVeg() {
         return containerData.get(PLANT_SLOT_ID);
+    }
+
+    public int getFish() {
+        return containerData.get(FISH_SLOT_ID);
     }
 
     @Override
@@ -87,6 +102,10 @@ public class FeederMenu extends AbstractContainerMenu {
                 }
             } else if (isPlant(current)) {
                 if (!moveItemStackTo(current, PLANT_SLOT_ID, PLANT_SLOT_ID + 1, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (isFish(current)) {
+                if (!moveItemStackTo(current, FISH_SLOT_ID, FISH_SLOT_ID + 1, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (index < bottomRowStart) {
