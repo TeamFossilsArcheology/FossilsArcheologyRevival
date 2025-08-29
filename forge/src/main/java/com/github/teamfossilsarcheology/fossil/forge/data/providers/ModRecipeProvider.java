@@ -121,6 +121,9 @@ public class ModRecipeProvider extends RecipeProvider {
             ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TOY_TETHERED_LOGS.get(WoodType.WARPED.name()).get()).define('S', Items.STRING)
                     .define('L', Blocks.WARPED_STEM).pattern("S").pattern("S").pattern("L").unlockedBy("has_log",
                             RecipeProvider.has(Blocks.WARPED_STEM)).save(consumer);
+            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TOY_TETHERED_LOGS.get(WoodType.BAMBOO.name()).get()).define('S', Items.STRING)
+                    .define('L', Blocks.BAMBOO_BLOCK).pattern("S").pattern("S").pattern("L").unlockedBy("has_log",
+                            RecipeProvider.has(Blocks.BAMBOO_BLOCK)).save(consumer);
             for (Map.Entry<String, RegistrySupplier<ToyScratchingPostItem>> entry : TOY_SCRATCHING_POSTS.entrySet()) {
                 var block = BuiltInRegistries.BLOCK.getOptional(new ResourceLocation("minecraft:" + entry.getKey() + "_slab"));
                 block.ifPresent(slab -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, entry.getValue().get()).define('S', Items.STICK).define('X', slab)
