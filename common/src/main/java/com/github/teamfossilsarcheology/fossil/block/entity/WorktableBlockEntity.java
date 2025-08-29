@@ -92,6 +92,7 @@ public class WorktableBlockEntity extends MachineContainerBlockEntity {
         if (canProcess() && (litTime == 0 || (litTime > 0 && !canProcess(fuel)))) {
             ItemStack fuelStack = items.get(WorktableMenu.FUEL_SLOT_ID);
             litDuration = litTime = getItemFuelTime(fuelStack);
+            cookingTotalTime = timeToSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), fuelStack);
             fuel = fuelStack.copy();
             if (litTime > 0) {
                 dirty = true;
@@ -106,7 +107,6 @@ public class WorktableBlockEntity extends MachineContainerBlockEntity {
             cookingProgress++;
             if (cookingProgress >= cookingTotalTime) {
                 cookingProgress = 0;
-                cookingTotalTime = timeToSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), fuel);
                 createItem();
                 dirty = true;
             }
@@ -205,15 +205,8 @@ public class WorktableBlockEntity extends MachineContainerBlockEntity {
             stack.setCount(getMaxStackSize());
         }
         if (slot == WorktableMenu.INPUT_SLOT_ID && !sameItem) {
-            if (!items.get(WorktableMenu.FUEL_SLOT_ID).isEmpty()) {
-                cookingTotalTime = timeToSmelt(stack, items.get(WorktableMenu.FUEL_SLOT_ID));
-            }
             cookingProgress = 0;
             level.setBlock(getBlockPos(), getBlockState().setValue(CustomEntityBlock.ACTIVE, false), 3);
-        } else if (slot == WorktableMenu.FUEL_SLOT_ID && !sameItem) {
-            if (!items.get(WorktableMenu.INPUT_SLOT_ID).isEmpty()) {
-                cookingTotalTime = timeToSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), stack);
-            }
         }
         setChanged();
     }
