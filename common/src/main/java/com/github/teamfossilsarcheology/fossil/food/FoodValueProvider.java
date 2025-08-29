@@ -7,7 +7,6 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -40,12 +39,11 @@ public abstract class FoodValueProvider implements DataProvider {
         buildFoodValues();
         List<CompletableFuture<?>> list = new ArrayList<>();
         builders.forEach((type, foodAppender) -> {
-            Path path = getPath(type);
-            if (foodAppender.items.isEmpty() && foodAppender.entities.isEmpty() && output instanceof HashCache.CacheUpdater updater) {
+            if (foodAppender.items.isEmpty() && foodAppender.entities.isEmpty()) {
                 return;
             }
             JsonObject jsonobject = foodAppender.serializeToJson();
-            list.add(DataProvider.saveStable(output, jsonobject, path));
+            list.add(DataProvider.saveStable(output, jsonobject, getPath(type)));
         });
         return CompletableFuture.allOf(list.toArray(CompletableFuture[]::new));
     }

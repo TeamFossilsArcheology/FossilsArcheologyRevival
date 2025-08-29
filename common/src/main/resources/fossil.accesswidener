@@ -21,6 +21,3 @@ accessible field net/minecraft/world/entity/Entity dimensions Lnet/minecraft/wor
 accessible field net/minecraft/world/entity/Entity eyeHeight F
 accessible field net/minecraft/world/level/Level threadSafeRandom Lnet/minecraft/util/RandomSource;
 accessible method net/minecraft/world/entity/ai/village/poi/PoiTypes registerBlockStates (Lnet/minecraft/core/Holder;Ljava/util/Set;)V
-accessible class net/minecraft/data/HashCache$CacheUpdater
-accessible field net/minecraft/data/HashCache$CacheUpdater oldCache Lnet/minecraft/data/HashCache$ProviderCache;
-accessible method net/minecraft/data/HashCache$ProviderCache data ()Ljava/util/Map;
