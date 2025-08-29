@@ -136,7 +136,7 @@ side = "BOTH"
 [[dependencies.${mod_id}]]
 modId = "culturaldelights"
 mandatory = false
-versionRange = "[0.15,)"
+versionRange = "[0.15.10,)"
 ordering = "NONE"
 side = "BOTH"
 
@@ -213,7 +213,7 @@ side = "BOTH"
 [[dependencies.${mod_id}]]
 modId = "brewinandchewin"
 mandatory = false
-versionRange = "[2.0,)"
+versionRange = "[1.19-2.0,)"
 ordering = "NONE"
 side = "BOTH"
 
@@ -227,6 +227,6 @@ side = "BOTH"
 [[dependencies.${mod_id}]]
 modId = "farmersrespite"
 mandatory = false
-versionRange = "[2.2.0,)"
+versionRange = "[1.19-2.2.0,)"
 ordering = "NONE"
 side = "BOTH"
