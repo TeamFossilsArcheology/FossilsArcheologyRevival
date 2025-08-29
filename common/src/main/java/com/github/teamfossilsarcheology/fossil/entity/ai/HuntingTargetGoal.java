@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
@@ -56,18 +57,23 @@ public class HuntingTargetGoal extends TargetGoal {
         return false;
     }
 
-    private boolean canTargetPlayer(Player player) {
-        if (player.isCreative()) {
-            return false;
-        } else if (dino.moodSystem.getMoodFace() == PrehistoricMoodType.HAPPY || dino.moodSystem.getMoodFace() == PrehistoricMoodType.CONTENT) {
+    private boolean canTargetHumanoid(LivingEntity entity) {
+        if (dino.moodSystem.getMoodFace() == PrehistoricMoodType.HAPPY || dino.moodSystem.getMoodFace() == PrehistoricMoodType.CONTENT) {
             return false;
         } else if (dino.moodSystem.getMoodFace() == PrehistoricMoodType.ANGRY || dino.moodSystem.getMoodFace() == PrehistoricMoodType.SAD) {
             return true;
         } else {
             //Calm and can hunt
             //TODO: Maybe use attack damage to limit
-            return FoodMappings.getMobFoodPoints(player, dino.data().diet()) > 0 && dino.getBbWidth() * dino.getTargetScale() >= player.getBbWidth();
+            return FoodMappings.getMobFoodPoints(entity, dino.data().diet()) > 0 && dino.getBbWidth() * dino.getTargetScale() >= entity.getBbWidth();
         }
+    }
+
+    private boolean canTargetPlayer(Player player) {
+        if (player.isCreative()) {
+            return false;
+        }
+        return canTargetHumanoid(player);
     }
 
     @Override
@@ -84,6 +90,9 @@ public class HuntingTargetGoal extends TargetGoal {
     private boolean canTarget(LivingEntity target) {
         if (target instanceof Player player) {
             return canTargetPlayer(player);
+        }
+        if (target instanceof Villager) {
+            return canTargetHumanoid(target);
         }
         if (dino instanceof Trilobite && target instanceof Trilobite) {
             return false;
