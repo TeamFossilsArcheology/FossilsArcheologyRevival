@@ -62,6 +62,7 @@ public class ClientAnimationInfoLoader extends AnimationInfoLoader<ClientAnimati
             builder.put(fileEntry.getKey(), new BakedAnimationInfo<>(bakedMap));
         }
         clientAnimationInfos = builder.build();
+        FossilMod.LOGGER.info("Loaded {} client animations for {} entities", clientAnimationInfos.values().stream().map(info -> info.animations().size()).reduce(Integer::sum).orElse(0), clientAnimationInfos.size());
         AnimationCategoryLoader.CLIENT.apply(clientAnimationInfos);
     }
 

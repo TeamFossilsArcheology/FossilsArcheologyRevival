@@ -1,4 +1,4 @@
-// 1.19.2	2025-03-12T16:33:21.8880795	Recipes
+// 1.19.2	2025-08-30T00:45:21.936299	Recipes
 678b39195f6b730c7171f03ec91c99079964d1eb data/fossil/advancements/recipes/fossil.fa_block_tab/analyzer.json
 4fe9cf431ec9b75860bab8350528908c82080fdb data/fossil/advancements/recipes/fossil.fa_block_tab/ancient_stone_bricks_from_ancient_stone_stonecutting.json
 55fe0eff14f0389a4c070642655586265afe7903 data/fossil/advancements/recipes/fossil.fa_block_tab/ancient_stone_slab_from_ancient_stone_bricks_stonecutting.json
@@ -427,7 +427,7 @@ f1f7783186b76a04b0363d65847ae019280341c1 data/fossil/recipes/analyzer/beef.json
 e066d64ccdeceb836475dc4dadfd8a867f9a113c data/fossil/recipes/analyzer/egg.json
 028e6b10545bcda6718fee98379de76e3ce7e9e5 data/fossil/recipes/analyzer/egg_item_chicken.json
 08b5d2284652ed30b404fd494a0885cdcb9582b9 data/fossil/recipes/analyzer/egg_item_parrot.json
-fc4ec7fac009b2c28aa23379c7be67fc1da55beb data/fossil/recipes/analyzer/failuresaurus_flesh.json
+78588a4b5d6cf080d149a65b9a678a5b0fe33f8f data/fossil/recipes/analyzer/failuresaurus_flesh.json
 07e360f05c965737bd6998d460e64fd4bd97f2b0 data/fossil/recipes/analyzer/feather.json
 c81829a84f8617a4ca6b27b74e07d3c73d650494 data/fossil/recipes/analyzer/fossil_bio.json
 89365d63741871d8b83c196127569c9e92febda8 data/fossil/recipes/analyzer/fossil_plant.json

@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.animation;
 
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
@@ -43,6 +44,7 @@ public class AnimationCategoryLoader {
             builder.put(fileEntry.getKey(), map);
         }
         animations = builder.build();
+        FossilMod.LOGGER.info("Loaded {} animation category entries for {} entities", animations.values().stream().map(Map::size).reduce(Integer::sum).orElse(0), animations.size());
     }
 
     public Map<AnimationCategory, AnimationHolder> getAnimations(ResourceLocation path) {

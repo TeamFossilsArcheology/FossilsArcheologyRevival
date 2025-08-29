@@ -26,8 +26,9 @@ public class FeederScreen extends AbstractContainerScreen<FeederMenu> {
         RenderSystem.setShaderColor(1, 1, 1, 1);
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
-        drawString(poseStack, font, String.valueOf(menu.getMeat()), x + 22, y + 32, 16711680);
-        drawString(poseStack, font, String.valueOf(menu.getVeg()), x + 122, y + 32, 0X35AC47);
+        drawString(poseStack, font, String.valueOf(menu.getMeat()), x + 10, y + 20, 0xff285e);
+        drawString(poseStack, font, String.valueOf(menu.getVeg()), x + 10, y + 39, 0X35AC47);
+        drawString(poseStack, font, String.valueOf(menu.getFish()), x + 10, y + 58, 0X00cfff);
         renderTooltip(poseStack, mouseX, mouseY);
     }
 
@@ -40,8 +41,10 @@ public class FeederScreen extends AbstractContainerScreen<FeederMenu> {
         int y = (height - imageHeight) / 2;
         blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
         int scaledMeat = menu.getMeat() * BAR_HEIGHT / 10000;
-        blit(poseStack, x + 64, y + 55 - scaledMeat, imageWidth, BAR_HEIGHT - scaledMeat, BAR_WIDTH, scaledMeat);
+        blit(poseStack, x + 73, y + 55 - scaledMeat, imageWidth, BAR_HEIGHT - scaledMeat, BAR_WIDTH, scaledMeat);
         int scaledVeg = menu.getVeg() * BAR_HEIGHT / 10000;
-        blit(poseStack, x + 107, y + 55 - scaledVeg, 176, BAR_HEIGHT - scaledVeg, BAR_WIDTH, scaledVeg);
+        blit(poseStack, x + 116, y + 55 - scaledVeg, 176, BAR_HEIGHT - scaledVeg, BAR_WIDTH, scaledVeg);
+        int scaledFish = menu.getFish() * BAR_HEIGHT / 10000;
+        blit(poseStack, x + 158, y + 55 - scaledFish, 176, BAR_HEIGHT - scaledFish, BAR_WIDTH, scaledFish);
     }
 }

@@ -1,5 +1,6 @@
-package com.github.teamfossilsarcheology.fossil.util;
+package com.github.teamfossilsarcheology.fossil.food;
 
+import com.github.teamfossilsarcheology.fossil.util.DinopediaInfo;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -9,40 +10,35 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.GsonHelper;
 
 import java.lang.reflect.Type;
+import java.util.EnumSet;
 import java.util.Locale;
+import java.util.Set;
+
+import static com.github.teamfossilsarcheology.fossil.food.FoodType.*;
 
 public enum Diet implements DinopediaInfo {
-    CARNIVORE(true, false, false),
-    HERBIVORE(false, false, true),
-    OMNIVORE(true, true, true),
-    PISCIVORE(false, true, false),
-    CARNIVORE_EGG(true, false, false),
-    INSECTIVORE(true, false, false),
-    PISCI_CARNIVORE(true, true, false),
-    PASSIVE(false, false, false);
+    CARNIVORE(MEAT),
+    HERBIVORE(PLANT),
+    OMNIVORE(MEAT, PLANT, FISH),
+    PISCIVORE(FISH),
+    CARNIVORE_EGG(MEAT, EGG),
+    INSECTIVORE(MEAT),
+    PISCI_CARNIVORE(MEAT, FISH),
+    PASSIVE;
     private final Component name = Component.translatable("pedia.fossil.diet." + name().toLowerCase(Locale.ROOT));
     private final Component description = Component.translatable("pedia.fossil.diet." + name().toLowerCase(Locale.ROOT) + ".desc");
+    private final Set<FoodType> flag;
 
-    private final boolean canEatMeat;
-    private final boolean canEatFish;
-    private final boolean canEatPlant;
-
-    Diet(boolean canEatMeat, boolean canEatFish, boolean canEatPlant) {
-        this.canEatMeat = canEatMeat;
-        this.canEatFish = canEatFish;
-        this.canEatPlant = canEatPlant;
+    Diet(FoodType... types) {
+        this.flag = types.length > 0 ? EnumSet.of(types[0], types) : EnumSet.noneOf(FoodType.class);
     }
 
-    public boolean canEatMeat() {
-        return canEatMeat;
+    public boolean canEat(FoodType type) {
+        return flag.contains(type);
     }
 
-    public boolean canEatFish() {
-        return canEatFish;
-    }
-
-    public boolean canEatPlant() {
-        return canEatPlant;
+    public Set<FoodType> flags() {
+        return flag;
     }
 
     @Override

@@ -64,6 +64,7 @@ public class EntityVariantLoader extends SimpleJsonResourceReloadListener {
                         Collectors.toMap(pair -> pair.condition().getClass(), List::of,
                                 (list, list2) -> Stream.concat(list.stream(), list2.stream()).toList())).entrySet().stream())
                 .collect(Collectors.toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue))));
+        FossilMod.LOGGER.info("Loaded {} variants", variants.values().stream().map(Map::size).reduce(Integer::sum).orElse(0));
     }
 
     /**

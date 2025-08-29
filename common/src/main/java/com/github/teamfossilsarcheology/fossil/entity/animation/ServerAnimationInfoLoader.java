@@ -39,6 +39,7 @@ public class ServerAnimationInfoLoader extends AnimationInfoLoader<ServerAnimati
             builder.put(path, GSON.fromJson(GsonHelper.getAsJsonObject(root, "animations"), TYPE));
         }
         serverAnimationInfos = builder.build();
+        FossilMod.LOGGER.info("Loaded {} server animations for {} entities", serverAnimationInfos.values().stream().map(info -> info.animations().size()).reduce(Integer::sum).orElse(0), serverAnimationInfos.size());
         AnimationCategoryLoader.SERVER.apply(serverAnimationInfos);
     }
 

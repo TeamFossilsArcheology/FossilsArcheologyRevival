@@ -7,6 +7,7 @@ import com.github.teamfossilsarcheology.fossil.entity.animation.PausableAnimatio
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFish;
+import com.github.teamfossilsarcheology.fossil.food.FoodType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -54,7 +55,7 @@ public class Nautilus extends PrehistoricFish {
             return true;
         }
         if (entity instanceof Prehistoric prehistoric) {
-            return prehistoric.data().diet().canEatFish();
+            return prehistoric.data().diet().canEat(FoodType.FISH);
         }
         if (entity instanceof Nautilus) {
             return false;

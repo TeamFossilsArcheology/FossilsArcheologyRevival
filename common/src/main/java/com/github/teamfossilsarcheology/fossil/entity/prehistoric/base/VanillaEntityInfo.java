@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
+import com.github.teamfossilsarcheology.fossil.food.Diet;
 import com.github.teamfossilsarcheology.fossil.item.*;
-import com.github.teamfossilsarcheology.fossil.util.Diet;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
