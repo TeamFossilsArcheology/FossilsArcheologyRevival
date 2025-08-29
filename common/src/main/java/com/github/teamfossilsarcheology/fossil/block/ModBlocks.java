@@ -381,7 +381,7 @@ public class ModBlocks {
     }
 
     private static RegistrySupplier<RotatedPillarBlock> log(ModWoodTypes.WoodInfo woodInfo, boolean stripped) {
-        return rotatedPillar((stripped ? "stripped_" : "") + woodInfo.name() + "_log", BlockBehaviour.Properties.of(Material.WOOD, woodInfo.materialColor()));
+        return rotatedPillar((stripped ? "stripped_" : "") + woodInfo.name() + "_log", woodProp(woodInfo).strength(2));
     }
 
     private static RegistrySupplier<RotatedPillarBlock> wood(ModWoodTypes.WoodInfo woodInfo, boolean stripped) {
