@@ -6,10 +6,10 @@ import com.github.teamfossilsarcheology.fossil.block.custom_blocks.AnalyzerBlock
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.CultureVatBlock;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.SifterBlock;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.WorktableBlock;
-import com.github.teamfossilsarcheology.fossil.block.entity.forge.AnalyzerBlockEntityImpl;
-import com.github.teamfossilsarcheology.fossil.block.entity.forge.CultureVatBlockEntityImpl;
-import com.github.teamfossilsarcheology.fossil.block.entity.forge.SifterBlockEntityImpl;
-import com.github.teamfossilsarcheology.fossil.block.entity.forge.WorktableBlockEntityImpl;
+import com.github.teamfossilsarcheology.fossil.block.entity.AnalyzerBlockEntity;
+import com.github.teamfossilsarcheology.fossil.block.entity.CultureVatBlockEntity;
+import com.github.teamfossilsarcheology.fossil.block.entity.SifterBlockEntity;
+import com.github.teamfossilsarcheology.fossil.block.entity.WorktableBlockEntity;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.inventory.CultureVatMenu;
 import com.github.teamfossilsarcheology.fossil.inventory.WorktableMenu;
@@ -54,7 +54,7 @@ public class HopperTests {
     @GameTest(batch = "culture_vat", template = "culture_vat_hopper", timeoutTicks = 11)
     public static void cultureVatHopperFuel(GameTestHelper helper) {
         BlockEntity blockEntity = RecipeTests.getBlockEntity(MACHINE_POS, helper, CultureVatBlock.class);
-        if (blockEntity instanceof CultureVatBlockEntityImpl cultureVatEntity) {
+        if (blockEntity instanceof CultureVatBlockEntity cultureVatEntity) {
             helper.assertContainerEmpty(MACHINE_POS);
             for (int i = 0; i < 4; i++) {
                 BlockPos sidePos = MACHINE_POS.relative(directions[i]);
@@ -79,7 +79,7 @@ public class HopperTests {
     @GameTest(batch = "culture_vat", template = "culture_vat_hopper", timeoutTicks = 5)
     public static void cultureVatHopperOutput(GameTestHelper helper) {
         BlockEntity blockEntity = RecipeTests.getBlockEntity(MACHINE_POS, helper, CultureVatBlock.class);
-        if (blockEntity instanceof CultureVatBlockEntityImpl cultureVatEntity) {
+        if (blockEntity instanceof CultureVatBlockEntity cultureVatEntity) {
             BlockPos downPos = MACHINE_POS.below();
             helper.setBlock(downPos, Blocks.HOPPER);
             helper.assertContainerEmpty(downPos);
@@ -98,7 +98,7 @@ public class HopperTests {
     @GameTest(batch = "culture_vat", template = "culture_vat_hopper", timeoutTicks = 5)
     public static void cultureVatHopperInput(GameTestHelper helper) {
         BlockEntity blockEntity = RecipeTests.getBlockEntity(MACHINE_POS, helper, CultureVatBlock.class);
-        if (blockEntity instanceof CultureVatBlockEntityImpl) {
+        if (blockEntity instanceof CultureVatBlockEntity) {
             helper.assertContainerEmpty(MACHINE_POS);
             BlockPos upPos = MACHINE_POS.above();
             helper.setBlock(upPos, Blocks.HOPPER);
@@ -117,7 +117,7 @@ public class HopperTests {
     @GameTest(batch = "worktable", template = "worktable_hopper", timeoutTicks = 11)
     public static void worktableHopperFuel(GameTestHelper helper) {
         BlockEntity blockEntity = RecipeTests.getBlockEntity(MACHINE_POS, helper, WorktableBlock.class);
-        if (blockEntity instanceof WorktableBlockEntityImpl worktableEntity) {
+        if (blockEntity instanceof WorktableBlockEntity worktableEntity) {
             helper.assertContainerEmpty(MACHINE_POS);
             for (int i = 0; i < 4; i++) {
                 BlockPos sidePos = MACHINE_POS.relative(directions[i]);
@@ -142,7 +142,7 @@ public class HopperTests {
     @GameTest(batch = "worktable", template = "worktable_hopper", timeoutTicks = 5)
     public static void worktableHopperOutput(GameTestHelper helper) {
         BlockEntity blockEntity = RecipeTests.getBlockEntity(MACHINE_POS, helper, WorktableBlock.class);
-        if (blockEntity instanceof WorktableBlockEntityImpl worktableEntity) {
+        if (blockEntity instanceof WorktableBlockEntity worktableEntity) {
             BlockPos downPos = MACHINE_POS.below();
             helper.setBlock(downPos, Blocks.HOPPER);
             helper.assertContainerEmpty(downPos);
@@ -161,7 +161,7 @@ public class HopperTests {
     @GameTest(batch = "worktable", template = "worktable_hopper", timeoutTicks = 5)
     public static void worktableHopperInput(GameTestHelper helper) {
         BlockEntity blockEntity = RecipeTests.getBlockEntity(MACHINE_POS, helper, WorktableBlock.class);
-        if (blockEntity instanceof WorktableBlockEntityImpl) {
+        if (blockEntity instanceof WorktableBlockEntity) {
             helper.assertContainerEmpty(MACHINE_POS);
             BlockPos upPos = MACHINE_POS.above();
             helper.setBlock(upPos, Blocks.HOPPER);
@@ -181,7 +181,7 @@ public class HopperTests {
     @GameTest(batch = "analyzer", template = "analyzer_hopper", timeoutTicks = 11)
     public static void analyzerHopperInputSide(GameTestHelper helper) {
         BlockEntity blockEntity = RecipeTests.getBlockEntity(MACHINE_POS, helper, AnalyzerBlock.class);
-        if (blockEntity instanceof AnalyzerBlockEntityImpl analyzerEntity) {
+        if (blockEntity instanceof AnalyzerBlockEntity analyzerEntity) {
             helper.assertContainerEmpty(MACHINE_POS);
             for (int i = 0; i < 4; i++) {
                 BlockPos sidePos = MACHINE_POS.relative(directions[i]);
@@ -206,7 +206,7 @@ public class HopperTests {
     @GameTest(batch = "analyzer", template = "analyzer_hopper", timeoutTicks = 5)
     public static void analyzerHopperInput(GameTestHelper helper) {
         BlockEntity blockEntity = RecipeTests.getBlockEntity(MACHINE_POS, helper, AnalyzerBlock.class);
-        if (blockEntity instanceof AnalyzerBlockEntityImpl) {
+        if (blockEntity instanceof AnalyzerBlockEntity) {
             helper.assertContainerEmpty(MACHINE_POS);
             BlockPos upPos = MACHINE_POS.above();
             helper.setBlock(upPos, Blocks.HOPPER);
@@ -225,7 +225,7 @@ public class HopperTests {
     @GameTest(batch = "analyzer", template = "analyzer_hopper", timeoutTicks = 5)
     public static void analyzerHopperOutput(GameTestHelper helper) {
         BlockEntity blockEntity = RecipeTests.getBlockEntity(MACHINE_POS, helper, AnalyzerBlock.class);
-        if (blockEntity instanceof AnalyzerBlockEntityImpl analyzerEntity) {
+        if (blockEntity instanceof AnalyzerBlockEntity analyzerEntity) {
             BlockPos downPos = MACHINE_POS.below();
             helper.setBlock(downPos, Blocks.HOPPER);
             helper.assertContainerEmpty(downPos);
@@ -244,7 +244,7 @@ public class HopperTests {
     @GameTest(batch = "sifter", template = "sifter_hopper", timeoutTicks = 11)
     public static void sifterHopperInputSide(GameTestHelper helper) {
         BlockEntity blockEntity = RecipeTests.getBlockEntity(MACHINE_POS, helper, SifterBlock.class);
-        if (blockEntity instanceof SifterBlockEntityImpl sifterEntity) {
+        if (blockEntity instanceof SifterBlockEntity sifterEntity) {
             helper.assertContainerEmpty(MACHINE_POS);
             for (int i = 0; i < 4; i++) {
                 BlockPos sidePos = MACHINE_POS.relative(directions[i]);
@@ -269,7 +269,7 @@ public class HopperTests {
     @GameTest(batch = "sifter", template = "sifter_hopper", timeoutTicks = 5)
     public static void sifterHopperOutput(GameTestHelper helper) {
         BlockEntity blockEntity = RecipeTests.getBlockEntity(MACHINE_POS, helper, SifterBlock.class);
-        if (blockEntity instanceof SifterBlockEntityImpl sifterEntity) {
+        if (blockEntity instanceof SifterBlockEntity sifterEntity) {
             BlockPos downPos = MACHINE_POS.below();
             helper.setBlock(downPos, Blocks.HOPPER);
             helper.assertContainerEmpty(downPos);
@@ -288,7 +288,7 @@ public class HopperTests {
     @GameTest(batch = "sifter", template = "sifter_hopper", timeoutTicks = 5)
     public static void sifterHopperInput(GameTestHelper helper) {
         BlockEntity blockEntity = RecipeTests.getBlockEntity(MACHINE_POS, helper, SifterBlock.class);
-        if (blockEntity instanceof SifterBlockEntityImpl) {
+        if (blockEntity instanceof SifterBlockEntity) {
             helper.assertContainerEmpty(MACHINE_POS);
             BlockPos upPos = MACHINE_POS.above();
             helper.setBlock(upPos, Blocks.HOPPER);

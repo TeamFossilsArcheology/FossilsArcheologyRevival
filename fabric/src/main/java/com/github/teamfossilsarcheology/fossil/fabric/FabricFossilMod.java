@@ -3,8 +3,6 @@ package com.github.teamfossilsarcheology.fossil.fabric;
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.advancements.ModTriggers;
 import com.github.teamfossilsarcheology.fossil.block.entity.ModBlockEntities;
-import com.github.teamfossilsarcheology.fossil.block.entity.fabric.AnalyzerBlockEntityImpl;
-import com.github.teamfossilsarcheology.fossil.block.entity.fabric.CultureVatBlockEntityImpl;
 import com.github.teamfossilsarcheology.fossil.capabilities.fabric.ModCapabilitiesImpl;
 import com.github.teamfossilsarcheology.fossil.config.fabric.FossilConfigImpl;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
@@ -72,10 +70,10 @@ public class FabricFossilMod implements ModInitializer, TerraBlenderApi, EntityC
             }
         });
         ModBlockEntities.ANALYZER.listen(blockEntityType -> {
-            EnergyStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> ((AnalyzerBlockEntityImpl) blockEntity).energyStorage, blockEntityType);
+            EnergyStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> (EnergyStorage) blockEntity.getEnergyStorage(), blockEntityType);
         });
         ModBlockEntities.CULTURE_VAT.listen(blockEntityType -> {
-            EnergyStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> ((CultureVatBlockEntityImpl) blockEntity).energyStorage, blockEntityType);
+            EnergyStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> (EnergyStorage) blockEntity.getEnergyStorage(), blockEntityType);
         });
     }
 

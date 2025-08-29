@@ -159,7 +159,7 @@ public class CultureVatBlock extends CustomEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return CultureVatBlockEntity.get(pos, state);
+        return new CultureVatBlockEntity(pos, state);
     }
 
     public enum EmbryoType implements StringRepresentable {

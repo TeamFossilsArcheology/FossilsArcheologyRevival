@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.capabilities;
 
+import com.github.teamfossilsarcheology.fossil.block.entity.CommonEnergyStorage;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.EntityInfo;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.entity.animal.Animal;
@@ -60,6 +61,11 @@ public class ModCapabilities {
 
     @ExpectPlatform
     public static void setHatchedDinosaur(Player player, boolean hatched) {
+        throw new NotImplementedException();
+    }
+
+    @ExpectPlatform
+    public static CommonEnergyStorage createEnergyStorage(Runnable setChanged) {
         throw new NotImplementedException();
     }
 }
