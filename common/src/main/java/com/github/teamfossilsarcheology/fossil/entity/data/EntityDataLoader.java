@@ -39,6 +39,7 @@ public class EntityDataLoader extends SimpleJsonResourceReloadListener {
             builder.put(fileEntry.getKey().getPath(), GSON.fromJson(root, Data.class));
         }
         entities = builder.build();
+        FossilMod.LOGGER.info("Loaded data for {} entities", entities.size());
     }
 
     public Data getData(String entityName) {

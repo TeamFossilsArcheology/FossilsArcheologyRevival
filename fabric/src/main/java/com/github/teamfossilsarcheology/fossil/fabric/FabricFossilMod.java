@@ -59,11 +59,7 @@ public class FabricFossilMod implements ModInitializer, TerraBlenderApi, EntityC
         ModPlacedFeatures.register();
         FabricModBiomes.register();
         ModRegistries.register();
-        ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
-            if (joined) {
-                FossilMod.syncData(player);
-            }
-        });
+        ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> FossilMod.syncData(player));
         ServerLifecycleEvents.SERVER_STARTING.register(minecraftServer -> {
             if (FabricLoader.getInstance().isModLoaded(ModConstants.FARMERS)) {
                 FarmersDelightCompat.registerFoodMappings();

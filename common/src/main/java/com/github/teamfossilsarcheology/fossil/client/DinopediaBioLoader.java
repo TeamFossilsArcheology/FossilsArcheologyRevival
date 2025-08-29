@@ -81,6 +81,8 @@ public class DinopediaBioLoader extends ClientResourceLoader<Map<String, Map<Str
         ImmutableMap.Builder<String, String> fallbackBuilder = ImmutableMap.builder();
         dinopediaTexts = selectedBuilder.putAll(files.get(Minecraft.getInstance().options.languageCode)).build();
         englishFallback = fallbackBuilder.putAll(files.get(Language.DEFAULT)).build();
+        FossilMod.LOGGER.info("Loaded {} dinopedia texts for {}", dinopediaTexts.size(), Minecraft.getInstance().options.languageCode);
+        FossilMod.LOGGER.info("Loaded {} fallback dinopedia texts for {}", englishFallback.size(), Language.DEFAULT);
     }
 
     public boolean hasFallback(String entityName) {

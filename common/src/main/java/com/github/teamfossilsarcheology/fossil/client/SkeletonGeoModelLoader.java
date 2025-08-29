@@ -49,6 +49,7 @@ public class SkeletonGeoModelLoader extends ClientResourceLoader<Map<ResourceLoc
         ImmutableMap.Builder<ResourceLocation, GeoModel> mapBuilder = ImmutableMap.builder();
         mapBuilder.putAll(files);
         geoModels = mapBuilder.build();
+        FossilMod.LOGGER.info("Loaded {} skeleton models", geoModels.size());
     }
 
     public GeoModel getSkeletonModel(ResourceLocation file) {

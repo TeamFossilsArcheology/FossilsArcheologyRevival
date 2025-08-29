@@ -41,8 +41,10 @@ public class OptionalTextureLoader extends ClientResourceLoader<Pair<Set<String>
     protected void apply(Pair<Set<String>, Set<String>> object, ResourceManager resourceManager, ProfilerFiller profiler) {
         babyTextures.clear();
         babyTextures.addAll(object.getFirst());
+        FossilMod.LOGGER.info("Loaded {} optional baby textures", babyTextures.size());
         teenTextures.clear();
         teenTextures.addAll(object.getSecond());
+        FossilMod.LOGGER.info("Loaded {} optional teen textures", teenTextures.size());
     }
 
     public boolean hasBabyTexture(String entityName) {
