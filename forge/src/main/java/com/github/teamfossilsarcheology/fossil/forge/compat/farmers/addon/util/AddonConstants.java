@@ -1,13 +1,15 @@
 package com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.util;
 
+import com.github.teamfossilsarcheology.fossil.food.FoodMappingsManager;
 import com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon.*;
 import net.minecraftforge.fml.ModList;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class AddonConstants {
-    private static final Map<String, Runnable> SUPPORTED_ADDONS = new HashMap<>();
+    private static final Map<String, Consumer<FoodMappingsManager>> SUPPORTED_ADDONS = new HashMap<>();
 
     static {
         register("alexsdelight", AlexDelightCompat::registerFoodMappings);
@@ -37,15 +39,15 @@ public class AddonConstants {
 
     public static void registerAddonFoodMappings() {
         //We cycle through each addon and check if it is loaded
-        for (Map.Entry<String, Runnable> entry : AddonConstants.SUPPORTED_ADDONS.entrySet()) {
+        for (Map.Entry<String, Consumer<FoodMappingsManager>> entry : AddonConstants.SUPPORTED_ADDONS.entrySet()) {
             if (!ModList.get().isLoaded(entry.getKey())) {
                 continue;
             }
-            entry.getValue().run();
+            FoodMappingsManager.INSTANCE.listen(entry.getValue());
         }
     }
 
-    private static void register(String modId, Runnable function) {
+    private static void register(String modId, Consumer<FoodMappingsManager> function) {
         SUPPORTED_ADDONS.put(modId, function);
     }
 }

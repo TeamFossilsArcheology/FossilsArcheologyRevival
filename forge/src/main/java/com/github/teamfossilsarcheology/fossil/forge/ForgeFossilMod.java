@@ -9,6 +9,7 @@ import com.github.teamfossilsarcheology.fossil.config.forge.ForgeConfigFix;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.fish.Coelacanth;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappingsManager;
 import com.github.teamfossilsarcheology.fossil.forge.capabilities.mammal.IMammalCap;
 import com.github.teamfossilsarcheology.fossil.forge.client.ClientModEvents;
 import com.github.teamfossilsarcheology.fossil.forge.client.model.PlantModelLoader;
@@ -79,10 +80,10 @@ public class ForgeFossilMod {
     public void onCommon(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             if (ModList.get().isLoaded(ModConstants.FARMERS)) {
-                FarmersDelightCompat.registerFoodMappings();
+                FoodMappingsManager.INSTANCE.listen(FarmersDelightCompat::registerFoodMappings);
             }
             if (ModList.get().isLoaded(ModConstants.ALEXS_MOBS)) {
-                AlexsMobsCompat.register();
+                FoodMappingsManager.INSTANCE.listen(AlexsMobsCompat::register);
             }
             ModPlacementTypes.register();
             ModTriggers.register();

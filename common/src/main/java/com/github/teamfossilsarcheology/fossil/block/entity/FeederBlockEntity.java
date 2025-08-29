@@ -2,9 +2,11 @@ package com.github.teamfossilsarcheology.fossil.block.entity;
 
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.FeederBlock;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
-import com.github.teamfossilsarcheology.fossil.inventory.FeederMenu;
 import com.github.teamfossilsarcheology.fossil.food.Diet;
 import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
+import com.github.teamfossilsarcheology.fossil.food.FoodType;
+import com.github.teamfossilsarcheology.fossil.inventory.FeederMenu;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -151,11 +153,11 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
     }
 
     public boolean isEmpty(Diet diet) {
-        boolean canEatMeat = diet.canEatMeat() || diet.canEatFish();
-        if (canEatMeat && !diet.canEatPlant()) {
+        boolean canEatMeat = diet.canEat(FoodType.MEAT) || diet.canEat(FoodType.FISH);
+        if (canEatMeat && !diet.canEat(FoodType.PLANT)) {
             return meat == 0;
         }
-        if (!canEatMeat && diet.canEatPlant()) {
+        if (!canEatMeat && diet.canEat(FoodType.PLANT)) {
             return plant == 0;
         }
         return meat == 0 && plant == 0;
@@ -166,11 +168,11 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
             int feedAmount = 0;
             Diet diet = mob.data().diet();
             if (!isEmpty(diet)) {
-                boolean canEatMeat = diet.canEatMeat() || diet.canEatFish();
-                if (canEatMeat && !diet.canEatPlant()) {
+                boolean canEatMeat = diet.canEat(FoodType.MEAT) || diet.canEat(FoodType.FISH);
+                if (canEatMeat && !diet.canEat(FoodType.PLANT)) {
                     meat--;
                     feedAmount++;
-                } else if (!canEatMeat && diet.canEatPlant()) {
+                } else if (!canEatMeat && diet.canEat(FoodType.PLANT)) {
                     plant--;
                     feedAmount++;
                 } else {

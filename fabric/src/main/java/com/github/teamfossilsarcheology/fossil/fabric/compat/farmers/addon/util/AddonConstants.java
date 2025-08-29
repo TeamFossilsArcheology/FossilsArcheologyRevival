@@ -1,13 +1,15 @@
 package com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon.util;
 
 import com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon.*;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappingsManager;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class AddonConstants {
-    private static final Map<String, Runnable> SUPPORTED_ADDONS = new HashMap<>();
+    private static final Map<String, Consumer<FoodMappingsManager>> SUPPORTED_ADDONS = new HashMap<>();
 
     static {
         register("casualness_delight", CasualnessDelightCompat::registerFoodMappings);
@@ -23,15 +25,15 @@ public class AddonConstants {
 
     public static void registerAddonFoodMappings() {
         //We cycle through each addon and check if it is loaded
-        for (Map.Entry<String, Runnable> entry : SUPPORTED_ADDONS.entrySet()) {
+        for (Map.Entry<String, Consumer<FoodMappingsManager>> entry : SUPPORTED_ADDONS.entrySet()) {
             if (!FabricLoader.getInstance().isModLoaded(entry.getKey())) {
                 continue;
             }
-            entry.getValue().run();
+            FoodMappingsManager.INSTANCE.listen(entry.getValue());
         }
     }
 
-    private static void register(String modId, Runnable function) {
+    private static void register(String modId, Consumer<FoodMappingsManager> function) {
         SUPPORTED_ADDONS.put(modId, function);
     }
 }

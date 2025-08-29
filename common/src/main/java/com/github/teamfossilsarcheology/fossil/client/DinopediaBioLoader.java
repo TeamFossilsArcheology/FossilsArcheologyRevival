@@ -6,6 +6,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.locale.Language;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -22,14 +23,14 @@ import java.util.Map;
 /**
  * Loads dinopedia bio entries for the currently selected language and fallback language
  */
-public class DinopediaBioLoader extends ClientResourceLoader<Map<String, Map<String, String>>> {
+public class DinopediaBioLoader extends ResourceLoader<Map<String, Map<String, String>>> {
     public static final DinopediaBioLoader INSTANCE = new DinopediaBioLoader();
     private static final Logger LOGGER = LogUtils.getLogger();
     private ImmutableMap<String, String> englishFallback = ImmutableMap.of();
     private ImmutableMap<String, String> dinopediaTexts = ImmutableMap.of();
 
     public DinopediaBioLoader() {
-        super(FossilMod.MOD_ID, "dinopedia", ".txt");
+        super(PackType.CLIENT_RESOURCES, FossilMod.MOD_ID, "dinopedia", ".txt");
     }
 
     @Override

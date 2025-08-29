@@ -1,48 +1,48 @@
 package com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon;
 
-import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappingsManager;
 import org.va11halla.casualness_delight.registry.ItemRegistry;
 
 public class CasualnessDelightCompat {
 
-    public static void registerFoodMappings() {
-        FoodMappings.addFish(ItemRegistry.FishAndChips.get());
-        FoodMappings.addPlant(ItemRegistry.YorkshirePudding.get());
-        FoodMappings.addMeat(ItemRegistry.BeefNoodles.get());
-        FoodMappings.addMeat(ItemRegistry.QuicheLorraineSlice.get());
-        //FoodMappings.addMeat(ItemRegistry.StargazyPie.get()); excluded because it gives you nausea
-        FoodMappings.addFish(ItemRegistry.BowlOfPaperWrappedFish.get());
-        FoodMappings.addMeat(ItemRegistry.BoboChicken.get());
-        FoodMappings.addMeat(ItemRegistry.PhantomDumplings.get());
+    public static void registerFoodMappings(FoodMappingsManager manager) {
+        manager.addFish(ItemRegistry.FishAndChips.get());
+        manager.addPlant(ItemRegistry.YorkshirePudding.get());
+        manager.addMeat(ItemRegistry.BeefNoodles.get());
+        manager.addMeat(ItemRegistry.QuicheLorraineSlice.get());
+        //manager.addMeat(ItemRegistry.StargazyPie.get()); excluded because it gives you nausea
+        manager.addFish(ItemRegistry.BowlOfPaperWrappedFish.get());
+        manager.addMeat(ItemRegistry.BoboChicken.get());
+        manager.addMeat(ItemRegistry.PhantomDumplings.get());
         //2 cheese wheels and cheese wheel slice excluded because they are made of milk, so they don't fit into any food category
-        //FoodMappings.addMeat(ItemRegistry.PhantomPuff.get()); Phantom membrane is not edible, and this is just phantom membrane+cheese+milk
-        //FoodMappings.addMeat(ItemRegistry.SpicyStrips.get()); Excluded because it gives rotten effect
-        //FoodMappings.addMeat(ItemRegistry.GreenTongue.get()); Popsicle, so a no-go
-        FoodMappings.addPlant(ItemRegistry.RawGluten.get());
-        FoodMappings.addPlant(ItemRegistry.Gluten.get());
-        FoodMappings.addPlant(ItemRegistry.GlutenSkewer.get());
-        FoodMappings.addPlant(ItemRegistry.RoastGluten.get());
-        FoodMappings.addMeat(ItemRegistry.RawDonkeyMeat.get());
-        FoodMappings.addMeat(ItemRegistry.CookedDonkeyMeat.get());
-        FoodMappings.addMeat(ItemRegistry.DonkeyBurger.get());
-        FoodMappings.addPlant(ItemRegistry.RawPotatoBoboChicken.get(), 4 * 7); //This is just a potato+a stick
-        FoodMappings.addPlant(ItemRegistry.RawCabbageBoboChicken.get(), 4 * 7); //This is just a cabbage+a stick
-        FoodMappings.addMeat(ItemRegistry.RawChickenBoboChicken.get(), 4 * 7);
-        FoodMappings.addPlant(ItemRegistry.PotatoBoboChicken.get());
-        FoodMappings.addPlant(ItemRegistry.CabbageBoboChicken.get());
-        FoodMappings.addMeat(ItemRegistry.RawChickenBoboChicken.get(), 4 * 7);
-        FoodMappings.addPlant(ItemRegistry.PotatoSlice.get(), 4 * 7);
-        FoodMappings.addPlant(ItemRegistry.PotatoChip.get());
-        FoodMappings.addMeat(ItemRegistry.RawSpringRoll.get(), 4 * 7);
-        FoodMappings.addMeat(ItemRegistry.SpringRoll.get());
-        FoodMappings.addMeat(ItemRegistry.SpringRollMedley.get(), 6 * 6 * 7); //Made of 6 spring rolls
-        FoodMappings.addMeat(ItemRegistry.FriedChickenChip.get());
-        FoodMappings.addFish(ItemRegistry.FriedFish.get());
-        FoodMappings.addMeat(ItemRegistry.Tonkatsu.get());
-        FoodMappings.addMeat(ItemRegistry.RawFriedDumpling.get());
-        FoodMappings.addMeat(ItemRegistry.FriedDumpling.get());
-        FoodMappings.addMeat(ItemRegistry.BowlOfFriedDumpling.get());
-        FoodMappings.addPlant(ItemRegistry.BowlOfSweetRice.get());
+        //manager.addMeat(ItemRegistry.PhantomPuff.get()); Phantom membrane is not edible, and this is just phantom membrane+cheese+milk
+        //manager.addMeat(ItemRegistry.SpicyStrips.get()); Excluded because it gives rotten effect
+        //manager.addMeat(ItemRegistry.GreenTongue.get()); Popsicle, so a no-go
+        manager.addPlant(ItemRegistry.RawGluten.get());
+        manager.addPlant(ItemRegistry.Gluten.get());
+        manager.addPlant(ItemRegistry.GlutenSkewer.get());
+        manager.addPlant(ItemRegistry.RoastGluten.get());
+        manager.addMeat(ItemRegistry.RawDonkeyMeat.get());
+        manager.addMeat(ItemRegistry.CookedDonkeyMeat.get());
+        manager.addMeat(ItemRegistry.DonkeyBurger.get());
+        manager.addPlant(ItemRegistry.RawPotatoBoboChicken.get(), 4 * 7); //This is just a potato+a stick
+        manager.addPlant(ItemRegistry.RawCabbageBoboChicken.get(), 4 * 7); //This is just a cabbage+a stick
+        manager.addMeat(ItemRegistry.RawChickenBoboChicken.get(), 4 * 7);
+        manager.addPlant(ItemRegistry.PotatoBoboChicken.get());
+        manager.addPlant(ItemRegistry.CabbageBoboChicken.get());
+        manager.addMeat(ItemRegistry.RawChickenBoboChicken.get(), 4 * 7);
+        manager.addPlant(ItemRegistry.PotatoSlice.get(), 4 * 7);
+        manager.addPlant(ItemRegistry.PotatoChip.get());
+        manager.addMeat(ItemRegistry.RawSpringRoll.get(), 4 * 7);
+        manager.addMeat(ItemRegistry.SpringRoll.get());
+        manager.addMeat(ItemRegistry.SpringRollMedley.get(), 6 * 6 * 7); //Made of 6 spring rolls
+        manager.addMeat(ItemRegistry.FriedChickenChip.get());
+        manager.addFish(ItemRegistry.FriedFish.get());
+        manager.addMeat(ItemRegistry.Tonkatsu.get());
+        manager.addMeat(ItemRegistry.RawFriedDumpling.get());
+        manager.addMeat(ItemRegistry.FriedDumpling.get());
+        manager.addMeat(ItemRegistry.BowlOfFriedDumpling.get());
+        manager.addPlant(ItemRegistry.BowlOfSweetRice.get());
         //32/39, 7 excluded
     }
 }

@@ -9,6 +9,7 @@ import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.monster.Failuresaurus;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricMobType;
+import com.github.teamfossilsarcheology.fossil.food.FoodType;
 import com.github.teamfossilsarcheology.fossil.inventory.CultureVatMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -94,7 +95,7 @@ public class CultureVatBlock extends CustomEntityBlock {
                             ((Failuresaurus) entity).setVariant(Failuresaurus.Variant.FLYING.name());
                         } else if (inputEntity.mobType == PrehistoricMobType.FISH || inputEntity.mobType == PrehistoricMobType.DINOSAUR_FISH) {
                             ((Failuresaurus) entity).setVariant(Failuresaurus.Variant.FISH.name());
-                        } else if (EntityDataLoader.INSTANCE.getData(inputEntity.resourceName).diet().canEatMeat()) {
+                        } else if (EntityDataLoader.INSTANCE.getData(inputEntity.resourceName).diet().canEat(FoodType.MEAT)) {
                             //Let's ignore that this probably isn't scientifically accurate
                             ((Failuresaurus) entity).setVariant(Failuresaurus.Variant.THEROPOD.name());
                         } else {

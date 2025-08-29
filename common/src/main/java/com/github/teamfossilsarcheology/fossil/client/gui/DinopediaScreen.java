@@ -10,7 +10,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricShearable;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.MoodSystem;
-import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappingsManager;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -36,7 +36,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
@@ -45,7 +44,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -377,9 +375,8 @@ public class DinopediaScreen extends Screen {
             blit(poseStack, x - moodSystem.getMoodPosition(), y, 0, 26, 4, 10);
             poseStack.popPose();
 
-            var foodMap = FoodMappings.getFoodRenderList(dino.data().diet());
-            var keys = foodMap.keySet().stream().filter(itemLike -> itemLike instanceof Item).sorted(
-                    Comparator.comparingInt(item -> Item.getId(item.asItem()))).limit(64).toList();
+            var foodMap = FoodMappingsManager.INSTANCE.getItemCache().get(dino.data().diet());
+            var keys = foodMap.stream().limit(64).toList();
             int itemCount = 0;
             int renderSize = 16;
             for (ItemLike itemLike : keys) {

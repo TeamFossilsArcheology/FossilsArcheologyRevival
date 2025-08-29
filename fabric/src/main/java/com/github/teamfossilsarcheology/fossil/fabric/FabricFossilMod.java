@@ -13,6 +13,7 @@ import com.github.teamfossilsarcheology.fossil.fabric.capabilities.MammalCompone
 import com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.FarmersDelightCompat;
 import com.github.teamfossilsarcheology.fossil.fabric.world.biome.FabricFossilRegion;
 import com.github.teamfossilsarcheology.fossil.fabric.world.biome.FabricModBiomes;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappingsManager;
 import com.github.teamfossilsarcheology.fossil.util.ModConstants;
 import com.github.teamfossilsarcheology.fossil.world.chunk.AnuLairChunkGenerator;
 import com.github.teamfossilsarcheology.fossil.world.chunk.TreasureChunkGenerator;
@@ -62,7 +63,7 @@ public class FabricFossilMod implements ModInitializer, TerraBlenderApi, EntityC
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> FossilMod.syncData(player));
         ServerLifecycleEvents.SERVER_STARTING.register(minecraftServer -> {
             if (FabricLoader.getInstance().isModLoaded(ModConstants.FARMERS)) {
-                FarmersDelightCompat.registerFoodMappings();
+                FoodMappingsManager.INSTANCE.listen(FarmersDelightCompat::registerFoodMappings);
             }
         });
         ModBlockEntities.ANALYZER.listen(blockEntityType -> {

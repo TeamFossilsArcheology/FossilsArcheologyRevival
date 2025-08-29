@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.jetbrains.annotations.NotNull;
@@ -20,12 +21,12 @@ import java.util.Map;
 /**
  * Loads different instances of the geo models to prevent the skeletons from playing geckolib animations
  */
-public class SkeletonGeoModelLoader extends ClientResourceLoader<Map<ResourceLocation, GeoModel>> {
+public class SkeletonGeoModelLoader extends ResourceLoader<Map<ResourceLocation, GeoModel>> {
     public static final SkeletonGeoModelLoader INSTANCE = new SkeletonGeoModelLoader();
     private Map<ResourceLocation, GeoModel> geoModels = ImmutableMap.of();
 
     public SkeletonGeoModelLoader() {
-        super(FossilMod.MOD_ID, "geo/entity", ".json");
+        super(PackType.CLIENT_RESOURCES, FossilMod.MOD_ID, "geo/entity", ".json");
     }
 
     @Override

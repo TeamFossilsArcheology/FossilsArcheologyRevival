@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.inventory;
 
-import com.github.teamfossilsarcheology.fossil.food.Diet;
 import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
+import com.github.teamfossilsarcheology.fossil.food.FoodType;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -51,20 +51,19 @@ public class FeederMenu extends AbstractContainerMenu {
     }
 
     private boolean isMeat(ItemStack stack) {
-        return FoodMappings.getFoodAmount(stack.getItem(), Diet.CARNIVORE_EGG) > 0 || FoodMappings.getFoodAmount(stack.getItem(),
-                Diet.PISCI_CARNIVORE) > 0;
+        return FoodMappings.getFoodAmount(stack.getItem(), FoodType.MEAT) > 0;
     }
 
     private boolean isPlant(ItemStack stack) {
-        return FoodMappings.getFoodAmount(stack.getItem(), Diet.HERBIVORE) > 0;
+        return FoodMappings.getFoodAmount(stack.getItem(), FoodType.PLANT) > 0;
     }
 
     public int getMeat() {
-        return containerData.get(0);
+        return containerData.get(MEAT_SLOT_ID);
     }
 
     public int getVeg() {
-        return containerData.get(1);
+        return containerData.get(PLANT_SLOT_ID);
     }
 
     @Override
