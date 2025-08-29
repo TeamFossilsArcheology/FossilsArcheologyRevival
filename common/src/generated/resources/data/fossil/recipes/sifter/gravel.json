@@ -10,7 +10,7 @@
     },
     {
       "item": "minecraft:beetroot_seeds",
-      "weight": 5.0
+      "weight": 3.0
     },
     {
       "item": "minecraft:bone_meal",
@@ -18,11 +18,11 @@
     },
     {
       "item": "minecraft:carrot",
-      "weight": 15.0
+      "weight": 10.0
     },
     {
       "item": "minecraft:clay_ball",
-      "weight": 10.0
+      "weight": 15.0
     },
     {
       "item": "minecraft:cobblestone",
@@ -42,11 +42,11 @@
     },
     {
       "item": "minecraft:gold_nugget",
-      "weight": 3.0
+      "weight": 4.0
     },
     {
       "item": "minecraft:iron_nugget",
-      "weight": 3.0
+      "weight": 4.0
     },
     {
       "item": "minecraft:melon_seeds",

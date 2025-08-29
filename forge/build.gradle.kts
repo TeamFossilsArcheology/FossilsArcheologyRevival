@@ -23,6 +23,7 @@ configurations {
     named("developmentForge").get().extendsFrom(common)
 }
 
+val modId: String by rootProject
 val minecraftVersion: String by rootProject
 val modVersion: String by rootProject
 val forgeVersion: String by project
@@ -113,14 +114,19 @@ dependencies {
 loom {
     accessWidenerPath.set(project(":common").loom.accessWidenerPath)
 
+    runs {
+        create("data") {
+            data()
+            programArgs("--all", "--mod", modId)
+            programArgs("--output",  project(":common").file("src/generated/resources/").absolutePath)
+            programArgs("--existing", project(":common").file("src/main/resources/").absolutePath)
+        }
+    }
+
     forge {
         convertAccessWideners.set(true)
         extraAccessWideners.add(loom.accessWidenerPath.get().asFile.name)
         mixinConfig("fossil_forge.mixins.json")
-
-        dataGen { //breaks my forge run, so I disable it when not needed
-            mod(archivesBaseName)
-        }
         /*
         mixinConfig("fa-common.mixins.json")
         mixinConfig("fa-forge.mixins.json")
@@ -160,21 +166,24 @@ val javaComponent = components["java"] as AdhocComponentWithVariants
 javaComponent.withVariantsFromConfiguration(configurations["shadowRuntimeElements"]) {
     skip()
 }
-modrinth {
-    token = "${project.property("MODRINTH_TOKEN") ?: "no value"}"
-    projectId = "IJY7IqPP"
-    versionNumber.set("$minecraftVersion-$modVersion-${project.name}")
-    versionType.set("release")
-    uploadFile.set(tasks.remapJar)
-    versionName = "$modVersion for Forge $minecraftVersion"
-    debugMode = true
-    dependencies {
-        required.project("architectury-api")
-        required.project("geckolib")
-        required.project("terrablender")
-        required.project("more-hitboxes")
+
+tasks.named("modrinth") {
+    modrinth {
+        token = "${project.property("MODRINTH_TOKEN") ?: "no value"}"
+        projectId = "IJY7IqPP"
+        versionNumber.set("$minecraftVersion-$modVersion-${project.name}")
+        versionType.set("release")
+        uploadFile.set(tasks.remapJar)
+        versionName = "$modVersion for Forge $minecraftVersion"
+        debugMode = true
+        dependencies {
+            required.project("architectury-api")
+            required.project("geckolib")
+            required.project("terrablender")
+            required.project("more-hitboxes")
+        }
+        changelog.set(rootProject.file("CHANGELOG.md").readText())
     }
-    changelog.set(rootProject.file("CHANGELOG.md").readText())
 }
 
 tasks.register<TaskPublishCurseForge>("publishCurseForge") {

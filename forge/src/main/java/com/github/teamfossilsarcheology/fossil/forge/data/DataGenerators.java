@@ -23,5 +23,6 @@ public class DataGenerators {
         generator.addProvider(new ModLootProvider(generator));
         generator.addProvider(new ModRecipeProvider(generator));
         generator.addProvider(new ModAdvancements(generator, event.getExistingFileHelper()));
+        generator.addProvider(new ModFoodValueProvider(generator));
     }
 }
