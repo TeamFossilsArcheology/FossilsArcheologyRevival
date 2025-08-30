@@ -1,4 +1,4 @@
-// 1.19.3	2025-08-30T01:35:25.7082506	Tags for minecraft:item mod id fossil
+// 1.19.3	2025-08-30T02:37:20.2246924	Tags for minecraft:item mod id fossil
 30ad71309b4c0300cbd8e097db1b57f469960c26 data/fossil/tags/items/all_eggs.json
 748289a71b4a14833170e105ad945e76cf90203b data/fossil/tags/items/ancient_wood_logs.json
 ef19dfc8354f2b11915f6a99b787a7735d2cbb84 data/fossil/tags/items/bird_eggs.json
@@ -17,12 +17,12 @@ ba9259978c43dffd57edbdb5f1b45a6c28cb2cc5 data/fossil/tags/items/bones_tail.json
 b057417db4a2d14befd1fd92bdee83e44deabd4c data/fossil/tags/items/cordaites_logs.json
 044b49287f6266fe573a34d531e35ee47fedee60 data/fossil/tags/items/dino_dna.json
 d1ea966b07dd7379ee8318e2f8dd3314e14a9734 data/fossil/tags/items/dino_eggs.json
-5196486d7bb70370a5c35e2c28592cd6a42a2faa data/fossil/tags/items/dna.json
+0c3d351db3273cf5011257481276c5e61ddaa1b0 data/fossil/tags/items/dna.json
 0e343381adbcbf1b6fd37b11bbee5c6e268bee78 data/fossil/tags/items/dna_insects.json
 edc9f8f5f60e8cbc738b3f91fcc0488ff536941f data/fossil/tags/items/dna_limbless.json
 bfc1f335618389891fe704b3a7b329e2ee36c0b4 data/fossil/tags/items/dna_plants.json
-a57911012b82cd78cde0c9f0033bdd92afed6d39 data/fossil/tags/items/embryos.json
-177cfa677844a6fc9077a06fa7a9e0938f435de3 data/fossil/tags/items/embryo_dna.json
+f738af123c7f13a297505eb5c318ccff147cec96 data/fossil/tags/items/embryos.json
+c7c31a896bef6a005441aecbaf6224ddc4a76eaf data/fossil/tags/items/embryo_dna.json
 4019d04ea898ff5015af2c9c44c981a4460850a5 data/fossil/tags/items/figurines.json
 0571151e8980ac5cbfe1b13b7a86ac2d1e2c3947 data/fossil/tags/items/filter_bones.json
 7ced0e6361ca75a09749043fc10919a1fc5510f9 data/fossil/tags/items/filter_buckets.json

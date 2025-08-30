@@ -20,6 +20,7 @@ public enum VanillaEntityInfo implements EntityInfo {
     BEE(EntityType.BAT, PrehistoricMobType.OTHER, Diet.HERBIVORE),
     CAT(EntityType.CAT, PrehistoricMobType.MAMMAL, Diet.CARNIVORE),
     CHICKEN(EntityType.CHICKEN, PrehistoricMobType.VANILLA_BIRD, Diet.HERBIVORE),
+    CAMEL(EntityType.CAMEL, PrehistoricMobType.MAMMAL, Diet.HERBIVORE),
     COD(EntityType.COD, PrehistoricMobType.FISH, Diet.PISCI_CARNIVORE),
     COW(EntityType.COW, PrehistoricMobType.MAMMAL, Diet.HERBIVORE),
     DOLPHIN(EntityType.DOLPHIN, PrehistoricMobType.MAMMAL, Diet.PISCI_CARNIVORE),

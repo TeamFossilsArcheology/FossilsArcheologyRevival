@@ -11,6 +11,16 @@
       },
       "trigger": "fossil:implant_embryo"
     },
+    "syringe_camel": {
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_camel"
+          ]
+        }
+      },
+      "trigger": "fossil:implant_embryo"
+    },
     "syringe_cat": {
       "conditions": {
         "item": {
@@ -291,6 +301,9 @@
     ],
     [
       "syringe_cat"
+    ],
+    [
+      "syringe_camel"
     ],
     [
       "syringe_cow"
