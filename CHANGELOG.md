@@ -15,10 +15,12 @@
 - Aztec temple structure id
 - All wood logs having a strength of 0
 - Movement animation speeds not being loaded correctly
+- Mob owner not being displayed in dinopedia
 
 ### Mod compatibility
 - All machines now work again when VMinus is installed
 - Updated the minimum requirements for some optional dependencies
+- Game no longer crashes on startup when Lithium + specific other mods are loaded together
 
 ### Api
 - Reworked food system. Food values can now be added via datapack
