@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon;
 
-import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappingsManager;
 import org.hiedacamellia.seeddelight.registry.BlockRegistry;
 import org.hiedacamellia.seeddelight.registry.ItemRegistry;
 import vectorwing.farmersdelight.common.block.PieBlock;
@@ -8,37 +8,37 @@ import vectorwing.farmersdelight.common.block.PieBlock;
 import static com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.FarmersDelightCompat.getPieValue;
 
 public class SeedDelightCompat {
-    public static void registerFoodMappings() {
-        FoodMappings.addPlant(ItemRegistry.Acorn.get(), 5);
-        FoodMappings.addPlant(ItemRegistry.AcornKernel.get());
-        FoodMappings.addPlant(ItemRegistry.Pinecone.get(), 5);
-        FoodMappings.addPlant(ItemRegistry.PineNutKernel.get());
-        FoodMappings.addPlant(ItemRegistry.SunflowerSeed.get(), 5);
-        FoodMappings.addPlant(ItemRegistry.FriedSunflowerSeed.get());
-        FoodMappings.addPlant(ItemRegistry.DriedWatermelonSeed.get());
-        FoodMappings.addPlant(ItemRegistry.DriedWatermelonSeed.get());
-        FoodMappings.addPlant(ItemRegistry.Rosehip.get());
-        FoodMappings.addPlant(ItemRegistry.Cherry.get());
-        FoodMappings.addPlant(ItemRegistry.RawAcornNoodle.get());
-        FoodMappings.addPlant(ItemRegistry.RosehipJamSandwich.get());
-        FoodMappings.addPlant(ItemRegistry.CherryJamSandwich.get());
-        FoodMappings.addPlant(ItemRegistry.SunflowerSeedCrisp.get());
-        FoodMappings.addPlant(ItemRegistry.SunflowerSeedToast.get());
-        FoodMappings.addPlant(ItemRegistry.SeedRosehipPie.get());
-        FoodMappings.addMeat(ItemRegistry.RoastedBeefWithSeed.get());
-        FoodMappings.addPlant(ItemRegistry.AcornTofu.get());
-        FoodMappings.addPlant(ItemRegistry.StirFriedCabbageWithAcorn.get());
-        FoodMappings.addPlant(ItemRegistry.AcornBread.get());
-        FoodMappings.addPlant(ItemRegistry.PinenutGruel.get());
-        FoodMappings.addPlant(ItemRegistry.PinenutCake.get());
-        FoodMappings.addPlant(ItemRegistry.SeedTart.get());
-        FoodMappings.addMeat(ItemRegistry.PinenutWithMeatballs.get());
-        FoodMappings.addPlant(ItemRegistry.RoseCookie.get());
-        FoodMappings.addPlant(ItemRegistry.RosehipCake.get());
-        FoodMappings.addMeat(ItemRegistry.CherryPork.get());
-        FoodMappings.addPlant(ItemRegistry.MilkCherryMouss.get());
-        FoodMappings.addPlant(ItemRegistry.RosehipPie.get(), getPieValue((PieBlock) BlockRegistry.RosehipPie.get()));
-        FoodMappings.addPlant(ItemRegistry.RosehipPieSlice.get());
+    public static void registerFoodMappings(FoodMappingsManager manager) {
+        manager.addPlant(ItemRegistry.Acorn.get(), 5);
+        manager.addPlant(ItemRegistry.AcornKernel.get());
+        manager.addPlant(ItemRegistry.Pinecone.get(), 5);
+        manager.addPlant(ItemRegistry.PineNutKernel.get());
+        manager.addPlant(ItemRegistry.SunflowerSeed.get(), 5);
+        manager.addPlant(ItemRegistry.FriedSunflowerSeed.get());
+        manager.addPlant(ItemRegistry.DriedWatermelonSeed.get());
+        manager.addPlant(ItemRegistry.DriedWatermelonSeed.get());
+        manager.addPlant(ItemRegistry.Rosehip.get());
+        manager.addPlant(ItemRegistry.Cherry.get());
+        manager.addPlant(ItemRegistry.RawAcornNoodle.get());
+        manager.addPlant(ItemRegistry.RosehipJamSandwich.get());
+        manager.addPlant(ItemRegistry.CherryJamSandwich.get());
+        manager.addPlant(ItemRegistry.SunflowerSeedCrisp.get());
+        manager.addPlant(ItemRegistry.SunflowerSeedToast.get());
+        manager.addPlant(ItemRegistry.SeedRosehipPie.get());
+        manager.addMeat(ItemRegistry.RoastedBeefWithSeed.get());
+        manager.addPlant(ItemRegistry.AcornTofu.get());
+        manager.addPlant(ItemRegistry.StirFriedCabbageWithAcorn.get());
+        manager.addPlant(ItemRegistry.AcornBread.get());
+        manager.addPlant(ItemRegistry.PinenutGruel.get());
+        manager.addPlant(ItemRegistry.PinenutCake.get());
+        manager.addPlant(ItemRegistry.SeedTart.get());
+        manager.addMeat(ItemRegistry.PinenutWithMeatballs.get());
+        manager.addPlant(ItemRegistry.RoseCookie.get());
+        manager.addPlant(ItemRegistry.RosehipCake.get());
+        manager.addMeat(ItemRegistry.CherryPork.get());
+        manager.addPlant(ItemRegistry.MilkCherryMouss.get());
+        manager.addPlant(ItemRegistry.RosehipPie.get(), getPieValue((PieBlock) BlockRegistry.RosehipPie.get()));
+        manager.addPlant(ItemRegistry.RosehipPieSlice.get());
         //30/30 added
     }
 }

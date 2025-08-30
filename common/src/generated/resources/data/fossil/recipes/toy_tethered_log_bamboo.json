@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": {
+      "item": "minecraft:bamboo_block"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "S",
+    "S",
+    "L"
+  ],
+  "result": {
+    "item": "fossil:toy_tethered_log_bamboo"
+  },
+  "show_notification": true
+}

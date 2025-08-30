@@ -28,7 +28,7 @@ public class ClientAnimationInfoLoader extends AnimationInfoLoader<ClientAnimati
     private Map<ResourceLocation, BakedAnimationInfo<ClientAnimationInfo>> clientAnimationInfos = ImmutableMap.of();
 
     public ClientAnimationInfoLoader(Gson gson) {
-        super(gson, "animations/data");
+        super(gson, "animations/entity/data");
     }
 
     @Override
@@ -44,7 +44,7 @@ public class ClientAnimationInfoLoader extends AnimationInfoLoader<ClientAnimati
                 double blockSpeed = animationObj.has("blocks_per_second") ? GsonHelper.getAsDouble(animationObj, "blocks_per_second") : 0;
                 innerBuilder.put(entry.getKey(), blockSpeed);
             }
-            ResourceLocation path = FossilMod.location("animations/" + fileEntry.getKey().getPath() + ".animation.json");
+            ResourceLocation path = FossilMod.location("animations/entity/" + fileEntry.getKey().getPath() + ".animation.json");
             data.put(path, innerBuilder.build());
         }
 
@@ -62,6 +62,7 @@ public class ClientAnimationInfoLoader extends AnimationInfoLoader<ClientAnimati
             builder.put(fileEntry.getKey(), new BakedAnimationInfo<>(bakedMap));
         }
         clientAnimationInfos = builder.build();
+        FossilMod.LOGGER.info("Loaded {} client animations for {} entities", clientAnimationInfos.values().stream().map(info -> info.animations().size()).reduce(Integer::sum).orElse(0), clientAnimationInfos.size());
         AnimationCategoryLoader.CLIENT.apply(clientAnimationInfos);
     }
 

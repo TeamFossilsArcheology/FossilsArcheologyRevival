@@ -10,6 +10,8 @@ import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.variant.EntityVariantLoader;
 import com.github.teamfossilsarcheology.fossil.entity.variant.VariantRegistry;
 import com.github.teamfossilsarcheology.fossil.event.ModEvents;
+import com.github.teamfossilsarcheology.fossil.food.FoodMappingsManager;
+import com.github.teamfossilsarcheology.fossil.food.FossilFoodMappings;
 import com.github.teamfossilsarcheology.fossil.inventory.ModMenus;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.item.ModTabs;
@@ -44,6 +46,7 @@ public class FossilMod {
     public static void init() {
         ReloadListenerRegistry.register(PackType.SERVER_DATA, ServerAnimationInfoLoader.INSTANCE);
         ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityDataLoader.INSTANCE);
+        ReloadListenerRegistry.register(PackType.SERVER_DATA, FoodMappingsManager.INSTANCE);
         ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityVariantLoader.INSTANCE);
         VariantRegistry.register();
         ModSounds.register();
@@ -64,6 +67,7 @@ public class FossilMod {
         ModEffects.register();
         ModLootItemFunctionTypes.register();
         ModEvents.init();
+        FossilFoodMappings.register();
 
         if (Version.debugEnabled()) {
             MessageHandler.DEBUG_CHANNEL.register(C2SDisableAIMessage.class, C2SDisableAIMessage::write, C2SDisableAIMessage::new, C2SDisableAIMessage::apply);
@@ -82,6 +86,7 @@ public class FossilMod {
         MessageHandler.CAP_CHANNEL.register(S2CMammalCapMessage.class, S2CMammalCapMessage::write, S2CMammalCapMessage::new, S2CMammalCapMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(S2CMusicMessage.class, S2CMusicMessage::write, S2CMusicMessage::new, S2CMusicMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(S2CSyncEntityInfoMessage.class, S2CSyncEntityInfoMessage::write, S2CSyncEntityInfoMessage::new, S2CSyncEntityInfoMessage::apply);
+        MessageHandler.SYNC_CHANNEL.register(S2CSyncFoodMappingsMessage.class, S2CSyncFoodMappingsMessage::write, S2CSyncFoodMappingsMessage::new, S2CSyncFoodMappingsMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(S2CSyncEntityVariantsMessage.class, S2CSyncEntityVariantsMessage::write, S2CSyncEntityVariantsMessage::new, S2CSyncEntityVariantsMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(S2CSyncActiveAnimationMessage.class, S2CSyncActiveAnimationMessage::write, S2CSyncActiveAnimationMessage::new, S2CSyncActiveAnimationMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(S2CSyncToyAnimationMessage.class, S2CSyncToyAnimationMessage::write, S2CSyncToyAnimationMessage::new, S2CSyncToyAnimationMessage::apply);
@@ -93,6 +98,7 @@ public class FossilMod {
 
     public static void syncData(ServerPlayer player) {
         MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new S2CSyncEntityInfoMessage(EntityDataLoader.INSTANCE.getEntities()));
+        MessageHandler.SYNC_CHANNEL.sendToPlayer(player, FoodMappingsManager.INSTANCE.message());
         MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new S2CSyncEntityVariantsMessage(EntityVariantLoader.INSTANCE.getVariants()));
     }
 }

@@ -7,7 +7,7 @@
     "GeoEntityRendererMixin"
   ],
   "mixins": [
-    "PickupHandlerMixin", "WalkNodeEvaluatorMixin"
+    "EnergyContainerBlockEntityMixin", "MachineContainerBlockEntityMixin", "PickupHandlerMixin", "WalkNodeEvaluatorMixin"
   ],
   "plugin": "com.github.teamfossilsarcheology.fossil.forge.ForgeFossilMixinPlugin",
   "injectors": {

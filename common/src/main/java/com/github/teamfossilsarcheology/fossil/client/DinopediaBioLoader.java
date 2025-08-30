@@ -1,10 +1,12 @@
 package com.github.teamfossilsarcheology.fossil.client;
 
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.locale.Language;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -18,14 +20,14 @@ import java.util.Map;
 /**
  * Loads dinopedia bio entries for the currently selected language and fallback language
  */
-public class DinopediaBioLoader extends ClientResourceLoader<Map<String, Map<String, String>>> {
+public class DinopediaBioLoader extends ResourceLoader<Map<String, Map<String, String>>> {
     public static final DinopediaBioLoader INSTANCE = new DinopediaBioLoader();
     private static final Logger LOGGER = LogUtils.getLogger();
     private ImmutableMap<String, String> englishFallback = ImmutableMap.of();
     private ImmutableMap<String, String> dinopediaTexts = ImmutableMap.of();
 
     public DinopediaBioLoader() {
-        super("dinopedia", ".txt");
+        super(PackType.CLIENT_RESOURCES, "dinopedia", ".txt");
     }
 
     @Override
@@ -77,6 +79,8 @@ public class DinopediaBioLoader extends ClientResourceLoader<Map<String, Map<Str
         ImmutableMap.Builder<String, String> fallbackBuilder = ImmutableMap.builder();
         dinopediaTexts = selectedBuilder.putAll(files.get(Minecraft.getInstance().options.languageCode)).build();
         englishFallback = fallbackBuilder.putAll(files.get(Language.DEFAULT)).build();
+        FossilMod.LOGGER.info("Loaded {} dinopedia texts for {}", dinopediaTexts.size(), Minecraft.getInstance().options.languageCode);
+        FossilMod.LOGGER.info("Loaded {} fallback dinopedia texts for {}", englishFallback.size(), Language.DEFAULT);
     }
 
     public boolean hasFallback(String entityName) {

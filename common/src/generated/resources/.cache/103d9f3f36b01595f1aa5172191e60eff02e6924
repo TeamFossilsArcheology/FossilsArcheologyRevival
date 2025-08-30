@@ -1,4 +1,4 @@
-// 1.19.4	2025-08-24T15:49:45.756023	Registries
+// 1.20.1	2025-08-30T03:23:15.6778423	Registries
 1a7a829524ea52685fb92fe64ce72b0ab8bf2f9d data/fossil/damage_type/aquatic_suffocate.json
 0a18cb6c39dcc0e3f588b34606cabd656e0c267f data/fossil/dimension_type/anu_lair.json
 0a18cb6c39dcc0e3f588b34606cabd656e0c267f data/fossil/dimension_type/treasure_room.json
@@ -42,7 +42,7 @@ b8bae5438a8c2e82c947c498c89e0e3b714b8c06 data/fossil/worldgen/placed_feature/vol
 25fbe93ae8b9e398a79c5a7ae17069d3c4a8a8b7 data/fossil/worldgen/placed_feature/volcano_magma_disk.json
 16ecee2742a9a75d86a25e3d6b00fa37882d7bba data/fossil/worldgen/placed_feature/volcano_vent.json
 3590feb56437261443e31a569dc5b9a540eb0774 data/fossil/worldgen/structure/anu_castle.json
-a572df5e0429c5b58ef944658a9afc9a33f19f4e data/fossil/worldgen/structure/aztec_templte.json
+a572df5e0429c5b58ef944658a9afc9a33f19f4e data/fossil/worldgen/structure/aztec_temple.json
 11a61c800c564b810742320fb509e855b1938b4e data/fossil/worldgen/structure/aztec_weapon_shop.json
 86863f695267b87eaf16af759c5dfc688e0b4564 data/fossil/worldgen/structure/egyptian_academy.json
 e802b77d7aaa4a14bed474394da7734bffa6be77 data/fossil/worldgen/structure/fossil_site_badlands.json
@@ -58,7 +58,7 @@ a4ca72f636cbc36a4e957450e9c93799cf5e32c9 data/fossil/worldgen/structure/tar_site
 cea1cecf0e9dc032a7fbfba2d52fc8772020d00a data/fossil/worldgen/structure/tar_site_tent_snowy.json
 5c4d27510e2fc0c95444b1bc11fa41db1ee1e4fb data/fossil/worldgen/structure/treasure_room.json
 b58f10c2b8244622578b1ad562bd64b155f110cd data/fossil/worldgen/structure_set/anu_castle.json
-695dca6bc9460c473852f564f6f9e3be04ab82fa data/fossil/worldgen/structure_set/aztec_templte.json
+4e9108b1635440b65961dc49cac56222a1d22557 data/fossil/worldgen/structure_set/aztec_temple.json
 e391afb4ede6ffbc58dc942bb9dc04814f2fbf0b data/fossil/worldgen/structure_set/aztec_weapon_shop.json
 e0fa0904643a54efb463088bb8922490cb602ff7 data/fossil/worldgen/structure_set/egyptian_academy.json
 dc7aab603c68dc3d5451e674bf4e6f275cc62826 data/fossil/worldgen/structure_set/fossil_site.json

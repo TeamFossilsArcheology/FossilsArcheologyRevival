@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.client.renderer.blockentity;
 
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.CultureVatBlock;
+import com.github.teamfossilsarcheology.fossil.block.entity.CultureVatBlockEntity;
 import com.github.teamfossilsarcheology.fossil.client.model.EmbryoGenericModel;
 import com.github.teamfossilsarcheology.fossil.client.model.EmbryoPlantModel;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -11,9 +12,8 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class CultureVatRenderer implements BlockEntityRenderer<BlockEntity> {
+public class CultureVatRenderer implements BlockEntityRenderer<CultureVatBlockEntity> {
     private final ModelPart modelGeneric;
     private final ModelPart modelPlant;
 
@@ -23,7 +23,7 @@ public class CultureVatRenderer implements BlockEntityRenderer<BlockEntity> {
     }
 
     @Override
-    public void render(BlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight,
+    public void render(CultureVatBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight,
                        int packedOverlay) {
         if (blockEntity.getBlockState().getValue(CultureVatBlock.ACTIVE)) {
             float rot = Minecraft.getInstance().player.tickCount + partialTick;

@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
+import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.item.*;
 import com.github.teamfossilsarcheology.fossil.tags.ModEntityTypeTags;
 import com.github.teamfossilsarcheology.fossil.util.TimePeriod;
@@ -251,6 +252,10 @@ public enum PrehistoricEntityInfo implements EntityInfo {
     @Override
     public Item dnaItem() {
         return dnaItem;
+    }
+
+    public EntityDataLoader.Data data() {
+        return EntityDataLoader.INSTANCE.getData(resourceName);
     }
 
     public boolean hasBones() {
