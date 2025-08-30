@@ -35,13 +35,13 @@ public class AddonConstants {
         register("seeddelight", SeedDelightCompat::registerFoodMappings);
     }
 
-    public static void registerAddonFoodMappings() {
+    public static void registerAddonFoodMappings(FoodMappingsManager manager) {
         //We cycle through each addon and check if it is loaded
         for (Map.Entry<String, Consumer<FoodMappingsManager>> entry : AddonConstants.SUPPORTED_ADDONS.entrySet()) {
             if (!ModList.get().isLoaded(entry.getKey())) {
                 continue;
             }
-            FoodMappingsManager.INSTANCE.listen(entry.getValue());
+            entry.getValue().accept(manager);
         }
     }
 
