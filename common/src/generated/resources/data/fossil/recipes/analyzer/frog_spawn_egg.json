@@ -1,0 +1,12 @@
+{
+  "type": "fossil:analyzer",
+  "input": {
+    "item": "minecraft:frog_spawn_egg"
+  },
+  "outputs": [
+    {
+      "item": "fossil:frog_dna",
+      "weight": 100.0
+    }
+  ]
+}
