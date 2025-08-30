@@ -88,6 +88,9 @@ public class HuntingTargetGoal extends TargetGoal {
     }
 
     private boolean canTarget(LivingEntity target) {
+        if (dino.aiResponseType() == PrehistoricEntityInfoAI.Response.SCARED) {
+            return false;
+        }
         if (target instanceof Player player) {
             return canTargetPlayer(player);
         }

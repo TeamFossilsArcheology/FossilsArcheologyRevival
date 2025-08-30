@@ -1,4 +1,4 @@
-// 1.19.4	2025-08-30T02:46:40.3796043	Recipes
+// 1.19.4	2025-08-30T22:08:31.1309375	Recipes
 4fe9cf431ec9b75860bab8350528908c82080fdb data/fossil/advancements/recipes/building_blocks/ancient_stone_bricks_from_ancient_stone_stonecutting.json
 55fe0eff14f0389a4c070642655586265afe7903 data/fossil/advancements/recipes/building_blocks/ancient_stone_slab_from_ancient_stone_bricks_stonecutting.json
 c04d6279c04dac7568afc151637216669166e138 data/fossil/advancements/recipes/building_blocks/ancient_stone_slab_from_ancient_stone_stonecutting.json
@@ -431,12 +431,13 @@ f1f7783186b76a04b0363d65847ae019280341c1 data/fossil/recipes/analyzer/beef.json
 e066d64ccdeceb836475dc4dadfd8a867f9a113c data/fossil/recipes/analyzer/egg.json
 028e6b10545bcda6718fee98379de76e3ce7e9e5 data/fossil/recipes/analyzer/egg_item_chicken.json
 08b5d2284652ed30b404fd494a0885cdcb9582b9 data/fossil/recipes/analyzer/egg_item_parrot.json
-6e2f2258968999db7a14843e9839a9ee009a04a6 data/fossil/recipes/analyzer/failuresaurus_flesh.json
+aedff5b3707c65408a4d0ca491c5e479e0300cd3 data/fossil/recipes/analyzer/failuresaurus_flesh.json
 07e360f05c965737bd6998d460e64fd4bd97f2b0 data/fossil/recipes/analyzer/feather.json
 c81829a84f8617a4ca6b27b74e07d3c73d650494 data/fossil/recipes/analyzer/fossil_bio.json
 89365d63741871d8b83c196127569c9e92febda8 data/fossil/recipes/analyzer/fossil_plant.json
 88bd3096fda36deb5bae993f66804f02ef683543 data/fossil/recipes/analyzer/fossil_shale.json
 760f37363586dc27d070abbfc7e49f00ee4cbcd1 data/fossil/recipes/analyzer/fossil_tar.json
+2e85ab33383bbd0984a4e4768e07f08f18c928f5 data/fossil/recipes/analyzer/frog_spawn_egg.json
 b2f9fdd9529c45ef7a4ef1c5dbde1aeb26f1ed7b data/fossil/recipes/analyzer/frozen_meat.json
 996ed6fba7a2638ba89ca2ac56f398fc8f40ed2f data/fossil/recipes/analyzer/glow_ink_sac.json
 b8ce775e90038254c5a67dcc7eb1547693f86136 data/fossil/recipes/analyzer/honeycomb.json
@@ -693,6 +694,7 @@ dccb2b9e247cd355660905253614a32608acf17b data/fossil/recipes/culture_vat/axolotl
 7ba89012e7545058e3be35dcf30f404de55abd43 data/fossil/recipes/culture_vat/bat_dna.json
 b6375c09a2522495724b9b4a29a7eb3e50202b04 data/fossil/recipes/culture_vat/bee_dna.json
 2bedb237f31deb94f9d8c253ac72866046f5ef9d data/fossil/recipes/culture_vat/brachiosaurus_dna.json
+0cf6ec1e04ed8b8a80a591084ff5dd6d3332af10 data/fossil/recipes/culture_vat/camel_dna.json
 2b2de64bff6717103d970c9b4e93b4dcf37cc0a7 data/fossil/recipes/culture_vat/cat_dna.json
 80c8fa12094fa8405e75be0698b71741e1655ee7 data/fossil/recipes/culture_vat/ceratosaurus_dna.json
 2f5abe819fcfc484b6a762f7e1ca001298f53e56 data/fossil/recipes/culture_vat/chicken_dna.json
@@ -742,6 +744,7 @@ f8818d180e04bae5a0603c14d7964598db49ad0f data/fossil/recipes/culture_vat/fossil_
 2a80c16e8fdda131d397276ea1390d2c34508394 data/fossil/recipes/culture_vat/fossil_seed_welwitschia.json
 4f1164fe35ae4a3a45e631f03c01fa3cb1754fe5 data/fossil/recipes/culture_vat/fossil_seed_zamites.json
 a565ffe58496cc0148482a7358ae4da1a8d421cd data/fossil/recipes/culture_vat/fox_dna.json
+b3130ece03054d7a53c9d5b1dc99c9bbf4478df2 data/fossil/recipes/culture_vat/frog_dna.json
 4205302fd721039c2c71864db0ec7b0622547197 data/fossil/recipes/culture_vat/gallimimus_dna.json
 374d88b9fe5c88191530d172784de7168ffd6865 data/fossil/recipes/culture_vat/gastornis_dna.json
 6777b1c3ed8da04c28474bf97029bced0f2293ab data/fossil/recipes/culture_vat/glow_squid_dna.json

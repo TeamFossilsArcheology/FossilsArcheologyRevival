@@ -36,6 +36,7 @@ import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -292,6 +293,14 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
                 setFlyingUp(false);
             }
         }
+    }
+
+    @Override
+    public boolean eatItem(ItemStack stack) {
+        if (isFlying() || isTakingOff()) {
+            return false;
+        }
+        return super.eatItem(stack);
     }
 
     @Nullable

@@ -1,4 +1,4 @@
-// 1.19.4	2025-08-30T02:46:40.3847013	Item Models: fossil
+// 1.19.4	2025-08-30T22:08:31.135937	Item Models: fossil
 85278cf934a028444f8b185c2c311b061e0ea0bd assets/fossil/models/item/alligator_gar_dna.json
 51ab511af360e56776aeb0c4922c7c04017afa87 assets/fossil/models/item/allosaurus_dna.json
 7479d6547547a6569fb486a85a75cd7fd3a2c826 assets/fossil/models/item/ankylosaurus_dna.json
@@ -429,6 +429,7 @@ c44d85d9c9205d35c86d29929dea9777f9dafe99 assets/fossil/models/item/bucket_item_s
 85c400c40d0e5c9b8982c3f258587c2a282e3f85 assets/fossil/models/item/bucket_item_sturgeon.json
 03292a115ee830027d269ad513b748ef70074102 assets/fossil/models/item/bucket_item_tiktaalik.json
 9a6d9f27066c27bc6c2af3de98d4deb818ee09ad assets/fossil/models/item/bucket_item_walliserops.json
+36d694cdce43752eee411f6d3314bff7192218f9 assets/fossil/models/item/camel_dna.json
 3361a05c4aa8cfc1d434104c656c7cf681e14d3a assets/fossil/models/item/cat_dna.json
 d159ca3ff7ee1aaf72af863f8c9e3e87961bf524 assets/fossil/models/item/ceratosaurus_dna.json
 ea96a938f4459416d5be1c89b958b112fc4f2277 assets/fossil/models/item/chicken_dna.json
@@ -822,6 +823,7 @@ c2fb2164063649e61ffbef62aac926303bbf2624 assets/fossil/models/item/sniffer_dna.j
 f1896d771bdee266c38e169ccd678076c09eaea0 assets/fossil/models/item/strider_dna.json
 2eb73483cc88c54ebb4d4a44cf45ad16e74c7022 assets/fossil/models/item/sturgeon_dna.json
 f616c608c9af0fc0113cfadb60fa04f415ca9484 assets/fossil/models/item/syringe_bat.json
+552429bd4130941877cbb266ea61a33cb29b096a assets/fossil/models/item/syringe_camel.json
 612978c997a2928beff8fdbf9067d59b163695b7 assets/fossil/models/item/syringe_cat.json
 1dc76cf310bec3837d7c1d3c82edbb6e9bc9e900 assets/fossil/models/item/syringe_cow.json
 6dbe170dfa486c9e5959076d7ba914469a9c3c82 assets/fossil/models/item/syringe_dolphin.json
