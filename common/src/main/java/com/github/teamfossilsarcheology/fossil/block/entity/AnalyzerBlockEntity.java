@@ -87,6 +87,8 @@ public class AnalyzerBlockEntity extends EnergyContainerBlockEntity {
             if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY)) {
                 energyStorage.extractEnergy(FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE));
             }
+        } else {
+            cookingProgress = Mth.clamp(cookingProgress - 2, 0, AnalyzerMenu.ANALYZE_DURATION);
         }
 
         if (wasProcessing != cookingProgress > 0) {

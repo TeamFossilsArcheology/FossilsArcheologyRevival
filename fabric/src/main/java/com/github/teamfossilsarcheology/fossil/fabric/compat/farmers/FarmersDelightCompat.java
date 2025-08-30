@@ -91,7 +91,7 @@ public class FarmersDelightCompat {
         manager.addFish(ItemsRegistry.COD_ROLL.get());
         manager.addFish(ItemsRegistry.COD_ROLL.get());
 
-        AddonConstants.registerAddonFoodMappings();
+        AddonConstants.registerAddonFoodMappings(manager);
     }
 
     public static int getPieValue(PieBlock block) {
