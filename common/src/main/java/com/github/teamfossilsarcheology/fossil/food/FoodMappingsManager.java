@@ -36,7 +36,7 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
     public static final FoodMappingsManager INSTANCE = new FoodMappingsManager();
     private Map<FoodType, Map<Item, Integer>> itemValues = ImmutableMap.of();
     private Map<FoodType, Map<EntityType<?>, Integer>> entityValues = ImmutableMap.of();
-    private Map<Diet, TreeSet<Item>> items = ImmutableMap.of();
+    private Map<Diet, TreeSet<Item>> items;
     private Set<EntityType<?>> entities = ImmutableSet.of();
     private final List<Consumer<FoodMappingsManager>> listeners = new ArrayList<>();
 
@@ -108,9 +108,7 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
         entityValues = mapPair.entities;
         entities = mapPair.allEntities;
         listeners.forEach(listener -> listener.accept(this));
-        Comparator<Item> byId = Comparator.comparingInt(item -> Item.getId(item.asItem()));
-        Supplier<TreeSet<Item>> set = () -> new TreeSet<>(byId);
-        items = Arrays.stream(Diet.values()).collect(Collectors.toMap(Function.identity(), diet -> diet.flags().stream().flatMap(type -> itemValues.get(type).keySet().stream()).collect(Collectors.toCollection(set))));
+        generateCache();
     }
 
     public void listen(Consumer<FoodMappingsManager> listener) {
@@ -121,6 +119,13 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
         this.itemValues = itemValues;
         this.entityValues = entityValues;
         this.entities = entities;
+        generateCache();
+    }
+
+    private void generateCache() {
+        Comparator<Item> byId = Comparator.comparingInt(item -> Item.getId(item.asItem()));
+        Supplier<TreeSet<Item>> set = () -> new TreeSet<>(byId);
+        items = Arrays.stream(Diet.values()).collect(Collectors.toMap(Function.identity(), diet -> diet.flags().stream().flatMap(type -> itemValues.get(type).keySet().stream()).collect(Collectors.toCollection(set))));
     }
 
     public Map<Item, Integer> getItemValues(FoodType type) {
@@ -145,9 +150,7 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
 
     public Map<Diet, TreeSet<Item>> getItemCache() {
         if (items == null) {
-            Comparator<Item> byId = Comparator.comparingInt(item -> Item.getId(item.asItem()));
-            Supplier<TreeSet<Item>> set = () -> new TreeSet<>(byId);
-            items = Arrays.stream(Diet.values()).collect(Collectors.toMap(Function.identity(), diet -> diet.flags().stream().flatMap(type -> itemValues.get(type).keySet().stream()).collect(Collectors.toCollection(set))));
+            generateCache();
         }
         return items;
     }
