@@ -1,0 +1,11 @@
+{
+  "type": "fossil:culture_vat",
+  "duration": 6000,
+  "fuel": {
+    "item": "fossil:bio_goo"
+  },
+  "input": {
+    "item": "fossil:frog_dna"
+  },
+  "result": "minecraft:frog_spawn_egg"
+}
