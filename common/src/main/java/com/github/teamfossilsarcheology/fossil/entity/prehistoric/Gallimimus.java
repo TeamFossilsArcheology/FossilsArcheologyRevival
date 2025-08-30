@@ -50,6 +50,9 @@ public class Gallimimus extends PrehistoricFlocking {
 
     @Override
     public PrehistoricEntityInfoAI.Response aiResponseType() {
+        if (hasGroupLeader()) {
+            return groupLeader.aiResponseType();
+        }
         return groupSize >= 3 ? PrehistoricEntityInfoAI.Response.TERRITORIAL : PrehistoricEntityInfoAI.Response.SCARED;
     }
 

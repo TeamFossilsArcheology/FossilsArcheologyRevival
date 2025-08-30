@@ -1128,13 +1128,15 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         entityData.set(HUNGER, Math.min(hunger, getMaxHunger()));
     }
 
-    public void eatItem(ItemStack stack) {
+    public boolean eatItem(ItemStack stack) {
         if (stack != null && (FoodMappings.getFoodAmount(stack.getItem(), data().diet()) != 0)) {
             moodSystem.increaseMood(5);
             feed(FoodMappings.getFoodAmount(stack.getItem(), data().diet()));
             stack.shrink(1);
             animationLogic.triggerAnimation(AnimationLogic.IDLE_CTRL, getAnimation(AnimationCategory.EAT), AnimationCategory.EAT);
+            return true;
         }
+        return false;
     }
 
     public void feed(int foodAmount) {
@@ -1245,8 +1247,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         } else if (FoodMappings.getFoodAmount(stack.getItem(), data().diet()) > 0) {
             //Feed dino
             if (getHunger() < getMaxHunger() || getHealth() < getMaxHealth() && FossilConfig.isEnabled(FossilConfig.HEALING_DINOS) || !isTame() && aiTameType() == Taming.FEEDING) {
-                if (!level.isClientSide) {
-                    eatItem(stack);
+                if (!level.isClientSide && eatItem(stack)) {
                     if (FossilConfig.isEnabled(FossilConfig.HEALING_DINOS)) {
                         heal(3);
                     }
