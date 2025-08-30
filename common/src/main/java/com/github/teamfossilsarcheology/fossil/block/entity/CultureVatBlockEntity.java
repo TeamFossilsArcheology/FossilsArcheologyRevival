@@ -125,7 +125,7 @@ public class CultureVatBlockEntity extends EnergyContainerBlockEntity {
             if (litTime > 0) {
                 dirty = true;
                 fuelStack.shrink(1);
-                if (fuelStack.isEmpty()) {
+                if (fuelStack.isEmpty() && fuelStack.getItem().hasCraftingRemainingItem()) {
                     items.set(CultureVatMenu.FUEL_SLOT_ID, new ItemStack(fuelStack.getItem().getCraftingRemainingItem()));
                 }
             }
