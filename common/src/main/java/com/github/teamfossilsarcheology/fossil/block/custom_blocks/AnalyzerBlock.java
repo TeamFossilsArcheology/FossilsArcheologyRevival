@@ -74,6 +74,6 @@ public class AnalyzerBlock extends CustomEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return AnalyzerBlockEntity.get(pos, state);
+        return new AnalyzerBlockEntity(pos, state);
     }
 }

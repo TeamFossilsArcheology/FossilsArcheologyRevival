@@ -1,7 +1,6 @@
-package com.github.teamfossilsarcheology.fossil.forge.block.entity;
+package com.github.teamfossilsarcheology.fossil.block.entity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Container;
@@ -13,23 +12,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
-
-public abstract class ForgeContainerBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, Container {
+public abstract class MachineContainerBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, Container {
     protected int litTime; //fuel goes from x to 0
     protected int litDuration; //fuel x
-    public int cookingProgress; //item goes from 0 to x
+    protected int cookingProgress; //item goes from 0 to x
     protected int cookingTotalTime; //item x
-    LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
 
-    protected ForgeContainerBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
+    protected MachineContainerBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
     }
 
@@ -48,29 +39,18 @@ public abstract class ForgeContainerBlockEntity extends BaseContainerBlockEntity
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.putShort("LitTime", (short) litTime);
-        tag.putShort("LitDuration", (short) litDuration);
-        tag.putShort("CookingProgress", (short) cookingProgress);
-        tag.putShort("CookingTotalTime", (short) cookingTotalTime);
+        tag.putShort("LitTime", (short) this.litTime);
+        tag.putShort("LitDuration", (short) this.litDuration);
+        tag.putShort("CookingProgress", (short) this.cookingProgress);
+        tag.putShort("CookingTotalTime", (short) this.cookingTotalTime);
         ContainerHelper.saveAllItems(tag, getItems());
-    }
-
-    /**
-     * @return the amount of ingredient slots this container has
-     */
-    public int getIngredientsSize() {
-        return 1;
-    }
-
-    protected boolean isProcessing() {
-        return litTime > 0;
     }
 
     protected abstract boolean canProcess();
 
     protected abstract void createItem();
 
-    protected abstract NonNullList<ItemStack> getItems();
+    protected abstract @NotNull NonNullList<ItemStack> getItems();
 
     @Override
     public int getContainerSize() {
@@ -101,6 +81,7 @@ public abstract class ForgeContainerBlockEntity extends BaseContainerBlockEntity
         return ContainerHelper.takeItem(getItems(), slot);
     }
 
+
     @Override
     public boolean stillValid(@NotNull Player player) {
         if (level.getBlockEntity(worldPosition) != this) {
@@ -112,34 +93,5 @@ public abstract class ForgeContainerBlockEntity extends BaseContainerBlockEntity
     @Override
     public void clearContent() {
         getItems().clear();
-    }
-
-    @NotNull
-    @Override
-    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (!remove && side != null && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            if (side == Direction.UP) {
-                return handlers[0].cast();
-            }
-            if (side == Direction.DOWN) {
-                return handlers[1].cast();
-            }
-            return handlers[2].cast();
-        }
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        for (LazyOptional<? extends IItemHandler> handler : handlers) {
-            handler.invalidate();
-        }
-    }
-
-    @Override
-    public void reviveCaps() {
-        super.reviveCaps();
-        handlers = SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
     }
 }

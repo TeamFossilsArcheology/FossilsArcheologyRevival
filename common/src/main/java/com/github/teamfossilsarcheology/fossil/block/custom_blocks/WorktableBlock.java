@@ -74,6 +74,6 @@ public class WorktableBlock extends CustomEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return WorktableBlockEntity.get(pos, state);
+        return new WorktableBlockEntity(pos, state);
     }
 }

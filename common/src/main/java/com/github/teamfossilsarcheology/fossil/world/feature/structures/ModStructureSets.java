@@ -19,7 +19,7 @@ import java.util.List;
 public class ModStructureSets {
     public static final ResourceKey<StructureSet> ANU_CASTLE_KEY = createKey("anu_castle");
     public static final ResourceKey<StructureSet> TREASURE_ROOM_KEY = createKey("treasure_room");
-    public static final ResourceKey<StructureSet> AZTEC_TEMPLE_KEY = createKey("aztec_templte");
+    public static final ResourceKey<StructureSet> AZTEC_TEMPLE_KEY = createKey("aztec_temple");
     public static final ResourceKey<StructureSet> AZTEC_WEAPON_SHOP_KEY = createKey("aztec_weapon_shop");
     public static final ResourceKey<StructureSet> EGYPTIAN_ACADEMY_KEY = createKey("egyptian_academy");
     public static final ResourceKey<StructureSet> HELL_BOAT_KEY = createKey("hell_boat");

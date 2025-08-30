@@ -1,0 +1,120 @@
+{
+  "entities": [],
+  "items": [
+    {
+      "id": "fossil:fern_seed",
+      "value": 10
+    },
+    {
+      "id": "minecraft:apple"
+    },
+    {
+      "id": "minecraft:baked_potato"
+    },
+    {
+      "id": "minecraft:beetroot"
+    },
+    {
+      "id": "minecraft:beetroot_seeds",
+      "value": 5
+    },
+    {
+      "id": "minecraft:bread"
+    },
+    {
+      "id": "minecraft:brown_mushroom",
+      "value": 15
+    },
+    {
+      "id": "minecraft:cake",
+      "value": 60
+    },
+    {
+      "id": "minecraft:carrot"
+    },
+    {
+      "id": "minecraft:chorus_flower",
+      "value": 20
+    },
+    {
+      "id": "minecraft:chorus_fruit"
+    },
+    {
+      "id": "minecraft:chorus_plant",
+      "value": 10
+    },
+    {
+      "id": "minecraft:cookie"
+    },
+    {
+      "id": "minecraft:dried_kelp"
+    },
+    {
+      "id": "minecraft:glow_berries"
+    },
+    {
+      "id": "minecraft:grass",
+      "value": 5
+    },
+    {
+      "id": "minecraft:hay_block",
+      "value": 90
+    },
+    {
+      "id": "minecraft:lily_pad",
+      "value": 15
+    },
+    {
+      "id": "minecraft:melon",
+      "value": 65
+    },
+    {
+      "id": "minecraft:melon_seeds",
+      "value": 5
+    },
+    {
+      "id": "minecraft:melon_slice"
+    },
+    {
+      "id": "minecraft:potato"
+    },
+    {
+      "id": "minecraft:pumpkin",
+      "value": 30
+    },
+    {
+      "id": "minecraft:pumpkin_pie"
+    },
+    {
+      "id": "minecraft:pumpkin_seeds",
+      "value": 5
+    },
+    {
+      "id": "minecraft:red_mushroom",
+      "value": 15
+    },
+    {
+      "id": "minecraft:sugar",
+      "value": 7
+    },
+    {
+      "id": "minecraft:sugar_cane",
+      "value": 15
+    },
+    {
+      "id": "minecraft:sweet_berries"
+    },
+    {
+      "id": "minecraft:tall_grass",
+      "value": 10
+    },
+    {
+      "id": "minecraft:wheat",
+      "value": 13
+    },
+    {
+      "id": "minecraft:wheat_seeds",
+      "value": 5
+    }
+  ]
+}

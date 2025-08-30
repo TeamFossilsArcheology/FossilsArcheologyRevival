@@ -35,7 +35,9 @@ public abstract class MultiOutputAndSlotsRecipe implements Recipe<Container> {
 
     @Override
     public @NotNull NonNullList<Ingredient> getIngredients() {
-        return NonNullList.of(input);
+        NonNullList<Ingredient> nonNullList = NonNullList.create();
+        nonNullList.add(input);
+        return nonNullList;
     }
 
     public Ingredient getInput() {

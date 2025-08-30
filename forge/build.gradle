@@ -136,21 +136,23 @@ components.java {
     }
 }
 
-modrinth {
-    token = "${project.property("MODRINTH_TOKEN") ?: "no value"}"
-    projectId = "IJY7IqPP"
-    versionNumber = "$minecraft_version-$mod_version-${project.name}"
-    versionType = "release"
-    uploadFile = tasks.remapJar
-    versionName = "$mod_version for Forge $minecraft_version"
-    debugMode = true
-    dependencies {
-        required.project("architectury-api")
-        required.project("geckolib")
-        required.project("terrablender")
-        required.project("more-hitboxes")
+tasks.named("modrinth") {
+    modrinth {
+        token = "${project.property("MODRINTH_TOKEN") ?: "no value"}"
+        projectId = "IJY7IqPP"
+        versionNumber = "$minecraft_version-$mod_version-${project.name}"
+        versionType = "release"
+        uploadFile = tasks.remapJar
+        versionName = "$mod_version for Forge $minecraft_version"
+        debugMode = true
+        dependencies {
+            required.project("architectury-api")
+            required.project("geckolib")
+            required.project("terrablender")
+            required.project("more-hitboxes")
+        }
+        changelog = rootProject.file("CHANGELOG.md").text
     }
-    changelog = rootProject.file("CHANGELOG.md").text
 }
 
 tasks.register('publishCurseForge', TaskPublishCurseForge) {
@@ -159,7 +161,7 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     apiToken = project.property("CURSEFORGE_TOKEN") ?: "no value"
     debugMode = true
     def mainFile = upload(223908, tasks.remapJar)
-    mainFile.displayName = "$modVersion for Forge $minecraftVersion"
+    mainFile.displayName = "$mod_version for Forge $minecraft_version"
     mainFile.addEnvironment("Forge")
     mainFile.changelog = rootProject.file("CHANGELOG.md").text
     mainFile.changelogType = "markdown"

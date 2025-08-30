@@ -10,6 +10,6 @@ import net.minecraft.world.item.RecordItem;
  */
 public class CustomRecordItemImpl {
     public static RecordItem get(int analogOutput, RegistrySupplier<SoundEvent> sound, Item.Properties properties, int lengthInSeconds) {
-        return new RecordItem(analogOutput, sound, properties, lengthInSeconds);
+        return new RecordItem(analogOutput, sound, properties, lengthInSeconds * 20);
     }
 }

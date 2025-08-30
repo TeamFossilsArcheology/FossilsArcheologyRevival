@@ -1,15 +1,17 @@
 package com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon;
 
+import com.github.teamfossilsarcheology.fossil.food.FoodMappingsManager;
+
 public class BYGAndDelightfuLCompat {
-    public static void registerFoodMappings() {
-        //FoodMappings.addPlant(BYGItems.BLUEBERRY_PIE.get(), getPieValue((PieBlock) DelightfulBlocks.BLUEBERRY_PIE.get()));
-        //FoodMappings.addPlant(DelightfulItems.BLUEBERRY_PIE_SLICE.get());
-        //FoodMappings.addPlant(BYGItems.CRIMSON_BERRY_PIE.get(), getPieValue((PieBlock) DelightfulBlocks.CRIMSON_BERRY_PIE.get()));
-        //FoodMappings.addPlant(DelightfulItems.CRIMSON_BERRY_PIE_SLICE.get());
-        //FoodMappings.addPlant(BYGItems.GREEN_APPLE_PIE.get(), getPieValue((PieBlock) DelightfulBlocks.GREEN_APPLE_PIE.get()));
-        //FoodMappings.addPlant(DelightfulItems.GREEN_APPLE_PIE_SLICE.get());
-        //FoodMappings.addPlant(BYGItems.NIGHTSHADE_BERRY_PIE.get(), getPieValue((PieBlock) DelightfulBlocks.NIGHTSHADE_BERRY_PIE.get()));
-        //FoodMappings.addPlant(DelightfulItems.NIGHTSHADE_BERRY_PIE_SLICE.get());
+    public static void registerFoodMappings(FoodMappingsManager manager) {
+//        manager.addPlant(BYGItems.BLUEBERRY_PIE.get(), getPieValue((PieBlock) DelightfulBlocks.BLUEBERRY_PIE.get()));
+//        manager.addPlant(DelightfulItems.BLUEBERRY_PIE_SLICE.get());
+//        manager.addPlant(BYGItems.CRIMSON_BERRY_PIE.get(), getPieValue((PieBlock) DelightfulBlocks.CRIMSON_BERRY_PIE.get()));
+//        manager.addPlant(DelightfulItems.CRIMSON_BERRY_PIE_SLICE.get());
+//        manager.addPlant(BYGItems.GREEN_APPLE_PIE.get(), getPieValue((PieBlock) DelightfulBlocks.GREEN_APPLE_PIE.get()));
+//        manager.addPlant(DelightfulItems.GREEN_APPLE_PIE_SLICE.get());
+//        manager.addPlant(BYGItems.NIGHTSHADE_BERRY_PIE.get(), getPieValue((PieBlock) DelightfulBlocks.NIGHTSHADE_BERRY_PIE.get()));
+//        manager.addPlant(DelightfulItems.NIGHTSHADE_BERRY_PIE_SLICE.get());
         //8/8 added
     }
 }

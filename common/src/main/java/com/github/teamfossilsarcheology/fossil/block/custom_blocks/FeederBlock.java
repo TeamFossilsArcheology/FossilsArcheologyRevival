@@ -88,7 +88,7 @@ public class FeederBlock extends BaseEntityBlock {
     public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof FeederBlockEntity feeder) {
-            float f = (feeder.getMeat() + feeder.getPlant());
+            float f = feeder.getSignalStrength();
             if (f > 0) {
                 return 1 + Mth.floor(f * 14);
             }

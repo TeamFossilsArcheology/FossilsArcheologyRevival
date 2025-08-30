@@ -32,7 +32,7 @@ public class ModStructures {
     public static final ResourceKey<Structure> HELL_BOAT_KEY = createKey("hell_boat");
     public static final ResourceKey<Structure> TREASURE_ROOM_KEY = createKey("treasure_room");
 
-    public static final ResourceKey<Structure> AZTEC_TEMPLE_KEY = createKey("aztec_templte");
+    public static final ResourceKey<Structure> AZTEC_TEMPLE_KEY = createKey("aztec_temple");
     public static final ResourceKey<Structure> AZTEC_WEAPON_SHOP_KEY = createKey("aztec_weapon_shop");
     public static final ResourceKey<Structure> EGYPTIAN_ACADEMY_KEY = createKey("egyptian_academy");
     public static final ResourceKey<Structure> FOSSIL_SITE_BADLANDS_KEY = createKey("fossil_site_badlands");

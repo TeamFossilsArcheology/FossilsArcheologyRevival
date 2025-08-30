@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.recipe;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -55,6 +56,13 @@ public abstract class WithFuelRecipe implements Recipe<WithFuelRecipe.ContainerW
     @Override
     public @NotNull ItemStack getResultItem(RegistryAccess registryAccess) {
         return result.copy();
+    }
+
+    @Override
+    public @NotNull NonNullList<Ingredient> getIngredients() {
+        NonNullList<Ingredient> nonNullList = NonNullList.create();
+        nonNullList.add(input);
+        return nonNullList;
     }
 
     @Override

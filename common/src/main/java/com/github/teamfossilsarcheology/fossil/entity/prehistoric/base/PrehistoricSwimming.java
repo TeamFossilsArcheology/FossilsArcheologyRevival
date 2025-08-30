@@ -10,7 +10,7 @@ import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.animation.PausableAnimationController;
 import com.github.teamfossilsarcheology.fossil.entity.damagesource.ModDamageTypes;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
-import com.github.teamfossilsarcheology.fossil.util.Diet;
+import com.github.teamfossilsarcheology.fossil.food.Diet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
