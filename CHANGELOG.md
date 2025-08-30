@@ -3,6 +3,7 @@
 - Fish and meat now count separately in the feeder
 - Frog dna (texture still missing)
 - Missing bamboo tethered log recipe (texture still missing)
+- Sniffer dna (texture still missing)
 
 ### Fixed
 - Sifter duration being too short on fabric

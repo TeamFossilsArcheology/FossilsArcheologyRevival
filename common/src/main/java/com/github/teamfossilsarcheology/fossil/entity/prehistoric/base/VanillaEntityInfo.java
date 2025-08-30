@@ -41,6 +41,7 @@ public enum VanillaEntityInfo implements EntityInfo {
     RABBIT(EntityType.RABBIT, PrehistoricMobType.MAMMAL, Diet.HERBIVORE),
     SALMON(EntityType.SALMON, PrehistoricMobType.FISH, Diet.PISCI_CARNIVORE),
     SHEEP(EntityType.SHEEP, PrehistoricMobType.MAMMAL, Diet.HERBIVORE),
+    SNIFFER(EntityType.SNIFFER, PrehistoricMobType.OTHER, Diet.HERBIVORE),
     SQUID(EntityType.SQUID, PrehistoricMobType.FISH, Diet.PISCI_CARNIVORE),
     STRIDER(EntityType.STRIDER, PrehistoricMobType.MAMMAL, Diet.HERBIVORE),
     TROPICAL_FISH(EntityType.TROPICAL_FISH, PrehistoricMobType.FISH, Diet.PISCI_CARNIVORE),
