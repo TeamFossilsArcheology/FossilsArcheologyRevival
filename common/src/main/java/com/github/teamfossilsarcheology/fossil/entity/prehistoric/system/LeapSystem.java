@@ -10,12 +10,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.UUID;
+
 import static com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricLeaping.*;
 
 public class LeapSystem extends AISystem {
     public static final int JUMP_DISTANCE = 30;
     private final PrehistoricLeaping mob;
     private final SynchedEntityData entityData;
+    private UUID loadedTarget;
     private LivingEntity target;
     private Vec3 blockTarget;
     private boolean leaping;
@@ -33,6 +36,15 @@ public class LeapSystem extends AISystem {
     @Override
     public void serverTick() {
         long currentTick = mob.level().getGameTime();
+        if (mob.getVehicle() != null) {
+            if (mob.getVehicle().getUUID().equals(loadedTarget)) {
+                setLeapTarget((LivingEntity) mob.getVehicle());
+                loadedTarget = null;
+            } else if (target == null && isAttackRiding()) {
+                mob.stopRiding();
+                stopAttackRiding();
+            }
+        }
         if (!isLeaping() && target != null && target.isAlive()) {
             mob.lookAt(target, 100, 10);
             if (mob.distanceToSqr(target) < JUMP_DISTANCE) {
@@ -236,13 +248,17 @@ public class LeapSystem extends AISystem {
     @Override
     public void saveAdditional(CompoundTag tag) {
         tag.putBoolean("AttackRiding", isAttackRiding());
+        if (target != null) {
+            tag.putUUID("AttackRidingVehicle", target.getUUID());
+        }
     }
 
     @Override
     public void load(CompoundTag tag) {
-        if (tag.getBoolean("AttackRiding")) {
+        if (tag.getBoolean("AttackRiding") && tag.contains("AttackRidingVehicle")) {
             setAttackRiding(true);
             setLeaping(true);
+            loadedTarget = tag.getUUID("AttackRidingVehicle");
         }
     }
 }

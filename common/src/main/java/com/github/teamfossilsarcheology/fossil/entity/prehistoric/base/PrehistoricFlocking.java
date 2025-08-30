@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.FlockBuildGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.FlockWanderGoal;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -12,7 +13,9 @@ import java.util.stream.Stream;
 
 public abstract class PrehistoricFlocking extends Prehistoric {
     protected int groupSize = 1;
-    private PrehistoricFlocking groupLeader;
+    protected PrehistoricFlocking groupLeader;
+    protected long flockAttackedTick;
+    protected LivingEntity flockAttackedTarget;
 
     protected PrehistoricFlocking(EntityType<? extends Prehistoric> entityType, Level level) {
         super(entityType, level);
@@ -23,6 +26,15 @@ public abstract class PrehistoricFlocking extends Prehistoric {
         super.registerGoals();
         goalSelector.addGoal(0, new FlockBuildGoal(this));
         goalSelector.addGoal(Util.WANDER + 1, new FlockWanderGoal(this, 1));
+    }
+
+    public void setFlockAttacked(LivingEntity target) {
+        flockAttackedTick = level().getGameTime();
+        flockAttackedTarget = target;
+    }
+
+    public LivingEntity getFlockAttackedTarget() {
+        return flockAttackedTarget;
     }
 
     public void leaveGroup() {
@@ -51,7 +63,7 @@ public abstract class PrehistoricFlocking extends Prehistoric {
     }
 
     public boolean inRangeOfGroupLeader() {
-        return distanceToSqr(groupLeader) <= 121;
+        return distanceToSqr(groupLeader) <= 151;
     }
 
     public boolean isPartOfSameFlock(PrehistoricFlocking other) {
@@ -92,6 +104,9 @@ public abstract class PrehistoricFlocking extends Prehistoric {
             if (level().getEntitiesOfClass(getClass(), getBoundingBox().inflate(getFlockDistance())).size() <= 1) {
                 groupSize = 1;
             }
+        }
+        if (flockAttackedTarget != null && flockAttackedTick < level().getGameTime() - 100) {
+            flockAttackedTarget = null;
         }
     }
 

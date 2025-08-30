@@ -1,9 +1,10 @@
 package com.github.teamfossilsarcheology.fossil.entity.ai;
 
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlocking;
-import com.mojang.datafixers.DataFixUtils;
 import net.minecraft.world.entity.ai.goal.Goal;
 
+import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
 public class FlockBuildGoal extends Goal {
@@ -26,10 +27,36 @@ public class FlockBuildGoal extends Goal {
     @Override
     public void start() {
         Predicate<PrehistoricFlocking> canJoin = other -> other.canGroupGrow() || !other.hasGroupLeader();
-        var potentialFlock = entity.level().getEntitiesOfClass(entity.getClass(), entity.getBoundingBox().inflate(entity.getFlockDistance()),
-                canJoin);
-        var newGroupLeader = DataFixUtils.orElse(potentialFlock.stream().findFirst(), entity);
-        newGroupLeader.addFollowers(potentialFlock.stream().filter(flocking -> !flocking.hasGroupLeader()));
+        var potentialFlock = entity.level().getEntitiesOfClass(entity.getClass(), entity.getBoundingBox().inflate(entity.getFlockDistance(), 10, entity.getFlockDistance()), canJoin);
+        if (potentialFlock.size() == 1) {
+            return;
+        }
+        //First try to follow older mobs and never younger ones
+        BiConsumer<Predicate<PrehistoricFlocking>, Boolean> canAdd = (predicate, addSelf) -> {
+            var newGroupLeader = potentialFlock.stream().filter(PrehistoricFlocking::canGroupGrow).filter(predicate).findAny();
+            if (newGroupLeader.isPresent()) {
+                newGroupLeader.get().addFollowers(potentialFlock.stream().filter(flocking -> !flocking.hasGroupLeader()));
+            } else if (Boolean.TRUE.equals(addSelf)) {
+                entity.addFollowers(potentialFlock.stream().filter(flocking -> !flocking.hasGroupLeader()));
+            }
+        };
+        if (entity.isAdult()) {
+            canAdd.accept(Prehistoric::isAdult, true);
+        } else if (entity.isTeen()) {
+            if (potentialFlock.stream().anyMatch(Prehistoric::isAdult)) {
+                canAdd.accept(Prehistoric::isAdult, false);
+            } else {
+                canAdd.accept(Prehistoric::isTeen, true);
+            }
+        } else if (entity.isBaby()) {
+            if (potentialFlock.stream().anyMatch(Prehistoric::isAdult)) {
+                canAdd.accept(Prehistoric::isAdult, false);
+            } else if (potentialFlock.stream().anyMatch(Prehistoric::isTeen)) {
+                canAdd.accept(Prehistoric::isTeen, false);
+            } else {
+                canAdd.accept(Prehistoric::isBaby, true);
+            }
+        }
     }
 
     @Override

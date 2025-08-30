@@ -1,4 +1,5 @@
 ### Fixed
-- Analyzer not resetting its progress correctly
-- Crash when opening the dinopedia on a server
-- Not being able to load worlds when Farmers Delight is installed
+- Culture Vats and Worktable sometimes crashing the game
+- Attack riding (Raptor, etc) breaking on world load
+- Scared mobs still being able to hunt
+- Herd behaviour not working correctly

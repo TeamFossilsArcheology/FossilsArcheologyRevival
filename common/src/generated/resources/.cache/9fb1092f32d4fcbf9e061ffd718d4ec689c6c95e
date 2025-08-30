@@ -1,4 +1,4 @@
-// 1.20.1	2025-08-30T03:23:15.6738422	Recipes
+// 1.20.1	2025-08-30T22:14:26.7569339	Recipes
 17860219dec57e479d1808cf8475b00d56e60d04 data/fossil/advancements/recipes/building_blocks/ancient_stone_bricks_from_ancient_stone_stonecutting.json
 92fe9ca08bef3f909f5904f4eec5575fc765bf99 data/fossil/advancements/recipes/building_blocks/ancient_stone_slab_from_ancient_stone_bricks_stonecutting.json
 d8b883debb0f6c0f79f5869a55991ae87b95b3c4 data/fossil/advancements/recipes/building_blocks/ancient_stone_slab_from_ancient_stone_stonecutting.json
@@ -437,6 +437,7 @@ c81829a84f8617a4ca6b27b74e07d3c73d650494 data/fossil/recipes/analyzer/fossil_bio
 89365d63741871d8b83c196127569c9e92febda8 data/fossil/recipes/analyzer/fossil_plant.json
 88bd3096fda36deb5bae993f66804f02ef683543 data/fossil/recipes/analyzer/fossil_shale.json
 760f37363586dc27d070abbfc7e49f00ee4cbcd1 data/fossil/recipes/analyzer/fossil_tar.json
+2e85ab33383bbd0984a4e4768e07f08f18c928f5 data/fossil/recipes/analyzer/frog_spawn_egg.json
 b2f9fdd9529c45ef7a4ef1c5dbde1aeb26f1ed7b data/fossil/recipes/analyzer/frozen_meat.json
 996ed6fba7a2638ba89ca2ac56f398fc8f40ed2f data/fossil/recipes/analyzer/glow_ink_sac.json
 b8ce775e90038254c5a67dcc7eb1547693f86136 data/fossil/recipes/analyzer/honeycomb.json
@@ -742,6 +743,7 @@ f8818d180e04bae5a0603c14d7964598db49ad0f data/fossil/recipes/culture_vat/fossil_
 2a80c16e8fdda131d397276ea1390d2c34508394 data/fossil/recipes/culture_vat/fossil_seed_welwitschia.json
 4f1164fe35ae4a3a45e631f03c01fa3cb1754fe5 data/fossil/recipes/culture_vat/fossil_seed_zamites.json
 a565ffe58496cc0148482a7358ae4da1a8d421cd data/fossil/recipes/culture_vat/fox_dna.json
+b3130ece03054d7a53c9d5b1dc99c9bbf4478df2 data/fossil/recipes/culture_vat/frog_dna.json
 4205302fd721039c2c71864db0ec7b0622547197 data/fossil/recipes/culture_vat/gallimimus_dna.json
 374d88b9fe5c88191530d172784de7168ffd6865 data/fossil/recipes/culture_vat/gastornis_dna.json
 6777b1c3ed8da04c28474bf97029bced0f2293ab data/fossil/recipes/culture_vat/glow_squid_dna.json

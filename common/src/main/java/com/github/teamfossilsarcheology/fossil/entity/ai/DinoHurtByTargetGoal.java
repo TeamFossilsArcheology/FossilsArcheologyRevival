@@ -4,6 +4,8 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlocking;
 import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.phys.AABB;
 
@@ -12,17 +14,16 @@ import java.util.List;
 public class DinoHurtByTargetGoal extends HurtByTargetGoal {
     public DinoHurtByTargetGoal(Prehistoric dino) {
         super(dino);
-        if (dino instanceof PrehistoricFlocking) {
-            setAlertOthers();
-        }
     }
 
     @Override
-    public boolean canUse() {
+    public void start() {
         if (((Prehistoric) mob).aiResponseType() == PrehistoricEntityInfoAI.Response.SCARED) {
-            return false;
+            alertOthers();
+            stop();
+        } else {
+            super.start();
         }
-        return super.canUse();
     }
 
     @Override
@@ -41,6 +42,15 @@ public class DinoHurtByTargetGoal extends HurtByTargetGoal {
             }
         } else {
             super.alertOthers();
+        }
+    }
+
+    @Override
+    protected void alertOther(Mob mob, LivingEntity target) {
+        if (mob instanceof PrehistoricFlocking flocking && flocking.aiResponseType() == PrehistoricEntityInfoAI.Response.SCARED) {
+            flocking.setFlockAttacked(target);
+        } else {
+            super.alertOther(mob, target);
         }
     }
 }
