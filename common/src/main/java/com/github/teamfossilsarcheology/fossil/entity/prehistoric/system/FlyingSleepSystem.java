@@ -23,16 +23,17 @@ public class FlyingSleepSystem extends SleepSystem {
 
     @Override
     protected void trySleeping() {
-        if (mob.isSleeping() || !wantsToSleep() || !canSleep()) {
-            return;
-        }
         if (nextTryTick == -1) {
+            if (!mob.isFlying() && !mob.isTakingOff()) {
+                super.trySleeping();
+                return;
+            }
             if (mob.aiActivityType() == PrehistoricEntityInfoAI.Activity.BOTH) {
-                if (mob.getRandom().nextInt(1200) == 0) {
+                if (mob.getRandom().nextInt(1200) == 0 && wantsToSleep() && canSleep()) {
                     trySleepingOrLanding();
                 }
             } else if (mob.aiActivityType() != PrehistoricEntityInfoAI.Activity.NO_SLEEP) {
-                if (mob.getRandom().nextInt(200) == 0) {
+                if (mob.getRandom().nextInt(200) == 0 && wantsToSleep() && canSleep()) {
                     trySleepingOrLanding();
                 }
             }
@@ -46,6 +47,7 @@ public class FlyingSleepSystem extends SleepSystem {
             landingPos = findGroundTarget();
             if (landingPos != null) {
                 mob.moveTo(Vec3.atCenterOf(landingPos), true, true);
+                nextTryTick = mob.level.getGameTime() + 100;
             } else {
                 nextTryTick = mob.level.getGameTime() + 20;
             }
@@ -60,13 +62,13 @@ public class FlyingSleepSystem extends SleepSystem {
         if (PrehistoricSwimming.isOverWater(mob)) {
             return false;
         }
-        if (disabled || mob.hasTarget() || mob.getLastHurtByMob() != null || mob.isVehicle()) {
+        if (isDisabled() || mob.hasTarget() || mob.getLastHurtByMob() != null || mob.getCurrentOrder() == OrderType.FOLLOW || mob.isVehicle()) {
             return false;
         }
-        if (mob.isOnGround() || mob.isInWater()) {
+        if (mob.isDeadlyHungry()) {
             return false;
         }
-        return mob.getCurrentOrder() != OrderType.FOLLOW;
+        return !mob.isInWater();
     }
 
     @Override
