@@ -25,6 +25,8 @@ subprojects {
         archivesName = archives_base_name
     }
 
+    java.toolchain.languageVersion.set(JavaLanguageVersion.of(java_version))
+
     repositories {
         maven {
             name = "ParchmentMC"
