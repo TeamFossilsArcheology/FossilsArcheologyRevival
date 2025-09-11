@@ -98,5 +98,6 @@ public class EntityVariantLoader extends SimpleJsonResourceReloadListener {
 
     public void replaceVariants(Map<String, Map<String, Variant>> variantsMap) {
         variants = ImmutableMap.copyOf(variantsMap);
+        FossilMod.LOGGER.info("Replacing {} client variants", variants.size());
     }
 }
