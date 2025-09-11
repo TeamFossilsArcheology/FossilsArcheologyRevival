@@ -60,7 +60,7 @@ dependencies {
     modCompileOnly "maven.modrinth:ars-nouveau:4.12.7" //for delightful
     modCompileOnly "maven.modrinth:enders-delight:1.1.3" //1.20.1-1.1.3
     modCompileOnly "maven.modrinth:ends-delight:2.5.1+forge.1.20.1"
-    modCompileOnly "maven.modrinth:crabbers-delight:1.1.7" //1.20-1.1.7
+    modCompileOnly "maven.modrinth:crabbers-delight:1.2.0" //1.20-1.1.2
     modCompileOnly "maven.modrinth:miners-delight:1.20.1-1.2.3"
     modCompileOnly "maven.modrinth:corn-delight:1.0.4-1.20.1"
     modCompileOnly "maven.modrinth:mmlib:1.4.4-1.20.1" //For corn delight
