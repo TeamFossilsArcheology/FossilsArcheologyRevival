@@ -1,13 +1,11 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "minecraft:diamond_hoe"
-    },
-    {
-      "item": "fossil:scarab_gem"
-    }
-  ],
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:diamond_hoe"
+  },
+  "addition": {
+    "item": "fossil:scarab_gem"
+  },
   "result": {
     "item": "fossil:scarab_hoe"
   }

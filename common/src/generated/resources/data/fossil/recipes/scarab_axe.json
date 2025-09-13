@@ -1,13 +1,11 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "minecraft:diamond_axe"
-    },
-    {
-      "item": "fossil:scarab_gem"
-    }
-  ],
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:diamond_axe"
+  },
+  "addition": {
+    "item": "fossil:scarab_gem"
+  },
   "result": {
     "item": "fossil:scarab_axe"
   }

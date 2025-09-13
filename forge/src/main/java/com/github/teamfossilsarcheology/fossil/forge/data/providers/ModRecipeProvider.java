@@ -132,11 +132,11 @@ public class ModRecipeProvider extends RecipeProvider {
             var hasScarabGem = RecipeProvider.has(SCARAB_GEM.get());
             ShapelessRecipeBuilder.shapeless(AQUATIC_SCARAB_GEM.get()).requires(SCARAB_GEM.get()).requires(AMBER_CHUNK_DOMINICAN.get())
                     .unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
-            ShapelessRecipeBuilder.shapeless(SCARAB_AXE.get()).requires(Items.DIAMOND_AXE).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
-            ShapelessRecipeBuilder.shapeless(SCARAB_HOE.get()).requires(Items.DIAMOND_HOE).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
-            ShapelessRecipeBuilder.shapeless(SCARAB_PICKAXE.get()).requires(Items.DIAMOND_PICKAXE).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
-            ShapelessRecipeBuilder.shapeless(SCARAB_SHOVEL.get()).requires(Items.DIAMOND_SHOVEL).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
-            ShapelessRecipeBuilder.shapeless(SCARAB_SWORD.get()).requires(Items.DIAMOND_SWORD).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
+            smithing(Items.DIAMOND_AXE, SCARAB_GEM.get(), SCARAB_AXE.get(), consumer);
+            smithing(Items.DIAMOND_HOE, SCARAB_GEM.get(), SCARAB_HOE.get(), consumer);
+            smithing(Items.DIAMOND_PICKAXE, SCARAB_GEM.get(), SCARAB_PICKAXE.get(), consumer);
+            smithing(Items.DIAMOND_SHOVEL, SCARAB_GEM.get(), SCARAB_SHOVEL.get(), consumer);
+            smithing(Items.DIAMOND_SWORD, SCARAB_GEM.get(), SCARAB_SWORD.get(), consumer);
 
             var bonesLeg = ModItemTags.LEG_BONES;
             var bonesFoot = ModItemTags.FOOT_BONES;
@@ -529,6 +529,12 @@ public class ModRecipeProvider extends RecipeProvider {
             case BLACK -> Items.BLACK_DYE;
         };
 
+    }
+
+    private static void smithing(ItemLike base, ItemLike addition, ItemLike result, Consumer<FinishedRecipe> consumer) {
+        UpgradeRecipeBuilder.smithing(Ingredient.of(base), Ingredient.of(addition), result.asItem())
+                .unlocks("has_item", inventoryTrigger(ItemPredicate.Builder.item().of(addition).build()))
+                .save(consumer, Registry.ITEM.getKey(result.asItem()));
     }
 
     private static void fullCooking(Ingredient ingredient, ItemPredicate predicate, ItemLike result, String ingredientName, String resultName, Consumer<FinishedRecipe> consumer, float exp) {
