@@ -59,7 +59,7 @@ side = "BOTH"
 [[dependencies.${mod_id}]]
 modId = "morehitboxes"
 mandatory = true
-versionRange = "[1.9.1,)"
+versionRange = "[1.9.2,)"
 ordering = "AFTER"
 side = "BOTH"
 
@@ -69,3 +69,6 @@ mandatory = false
 versionRange = "[2.0.1.9,)"
 ordering = "NONE"
 side = "BOTH"
+
+[modproperties.${mod_id}]
+catalogueImageIcon="fossils.png"

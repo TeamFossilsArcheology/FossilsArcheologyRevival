@@ -1,14 +1,11 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "category": "equipment",
-  "ingredients": [
-    {
-      "item": "minecraft:diamond_sword"
-    },
-    {
-      "item": "fossil:scarab_gem"
-    }
-  ],
+  "type": "minecraft:smithing",
+  "addition": {
+    "item": "fossil:scarab_gem"
+  },
+  "base": {
+    "item": "minecraft:diamond_sword"
+  },
   "result": {
     "item": "fossil:scarab_sword"
   }

@@ -22,6 +22,7 @@ import com.mojang.datafixers.util.Pair;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.Util;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
@@ -133,11 +134,11 @@ public class ModRecipeProvider extends RecipeProvider {
             var hasScarabGem = RecipeProvider.has(SCARAB_GEM.get());
             ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AQUATIC_SCARAB_GEM.get()).requires(SCARAB_GEM.get()).requires(AMBER_CHUNK_DOMINICAN.get())
                     .unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
-            ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, SCARAB_AXE.get()).requires(Items.DIAMOND_AXE).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
-            ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, SCARAB_HOE.get()).requires(Items.DIAMOND_HOE).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
-            ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, SCARAB_PICKAXE.get()).requires(Items.DIAMOND_PICKAXE).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
-            ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, SCARAB_SHOVEL.get()).requires(Items.DIAMOND_SHOVEL).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
-            ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, SCARAB_SWORD.get()).requires(Items.DIAMOND_SWORD).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
+            smithing(Items.DIAMOND_AXE, SCARAB_GEM.get(), SCARAB_AXE.get(), RecipeCategory.TOOLS, consumer);
+            smithing(Items.DIAMOND_HOE, SCARAB_GEM.get(), SCARAB_HOE.get(), RecipeCategory.TOOLS, consumer);
+            smithing(Items.DIAMOND_PICKAXE, SCARAB_GEM.get(), SCARAB_PICKAXE.get(), RecipeCategory.TOOLS, consumer);
+            smithing(Items.DIAMOND_SHOVEL, SCARAB_GEM.get(), SCARAB_SHOVEL.get(), RecipeCategory.TOOLS, consumer);
+            smithing(Items.DIAMOND_SWORD, SCARAB_GEM.get(), SCARAB_SWORD.get(), RecipeCategory.COMBAT, consumer);
 
             var bonesLeg = ModItemTags.LEG_BONES;
             var bonesFoot = ModItemTags.FOOT_BONES;
@@ -532,6 +533,12 @@ public class ModRecipeProvider extends RecipeProvider {
             case BLACK -> Items.BLACK_DYE;
         };
 
+    }
+
+    private static void smithing(ItemLike base, ItemLike addition, ItemLike result, RecipeCategory recipeCategory, Consumer<FinishedRecipe> consumer) {
+        UpgradeRecipeBuilder.smithing(Ingredient.of(base), Ingredient.of(addition), recipeCategory, result.asItem())
+                .unlocks("has_item", inventoryTrigger(ItemPredicate.Builder.item().of(addition).build()))
+                .save(consumer, BuiltInRegistries.ITEM.getKey(result.asItem()));
     }
 
     private static void fullCooking(RecipeCategory category, Ingredient ingredient, ItemPredicate predicate, ItemLike result, String ingredientName, String resultName, Consumer<FinishedRecipe> consumer, float exp) {

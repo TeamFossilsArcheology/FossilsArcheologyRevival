@@ -51,7 +51,10 @@ dependencies {
 
     //Optional
     modImplementation "maven.modrinth:jade:$jade_version_forge"
-    modImplementation "me.shedaniel:RoughlyEnoughItems-forge:$rei_version"
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-forge:$rei_version"
+    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-forge:$rei_version"
+    modCompileOnly "mezz.jei:jei-$minecraft_version-forge-api:$jei_version"
+    //modRuntimeOnly "mezz.jei:jei-$minecraft_version-forge:$jei_version"
     modCompileOnly "maven.modrinth:carry-on:$carry_on_version"
     //modCompileOnly "maven.modrinth:farmers-delight:$minecraft_version-$farmers_delight_version_forge"
     //modCompileOnly("maven.modrinth:oceans-delight:1.0.2-1.20")

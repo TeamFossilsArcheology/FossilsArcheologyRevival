@@ -219,7 +219,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
             }
         } else {
             setDeltaMovement(Vec3.ZERO);
-            calculateEntityAnimation(this, this instanceof FlyingAnimal);
+            calculateEntityAnimation(this, true);
         }
     }
 

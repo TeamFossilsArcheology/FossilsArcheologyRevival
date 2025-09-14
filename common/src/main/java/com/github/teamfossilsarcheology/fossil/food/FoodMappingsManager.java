@@ -107,6 +107,7 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
         itemValues = mapPair.items;
         entityValues = mapPair.entities;
         entities = mapPair.allEntities;
+        FossilMod.LOGGER.info("Loaded food values: {}, {}, {}", itemValues.size(), entityValues.size(), entities.size());
         listeners.forEach(listener -> listener.accept(this));
         generateCache();
     }
@@ -116,6 +117,7 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
     }
 
     public void replaceValues(Map<FoodType, Map<Item, Integer>> itemValues, Map<FoodType, Map<EntityType<?>, Integer>> entityValues, Set<EntityType<?>> entities) {
+        FossilMod.LOGGER.info("Replacing client food values: {}, {}, {}", itemValues.size(), entityValues.size(), entities.size());
         this.itemValues = itemValues;
         this.entityValues = entityValues;
         this.entities = entities;
