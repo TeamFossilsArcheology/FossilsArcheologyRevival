@@ -62,6 +62,7 @@ allprojects {
         maven { url "https://maven.shedaniel.me/" }
         maven { url "https://maven.minecraftforge.net/" }
         maven { url "https://modmaven.dev/" }
+        maven { url "https://dvs1.progwml6.com/files/maven/" }//JEI
         maven {
             name = "tterrag maven"
             url =  "https://maven.tterrag.com/"

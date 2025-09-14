@@ -31,6 +31,9 @@
     "rei_common": [
       "com.github.teamfossilsarcheology.fossil.compat.rei.FossilREICommonPlugin"
     ],
+    "jei_mod_plugin": [
+      "com.github.teamfossilsarcheology.fossil.compat.jei.FossilJEIPlugin"
+    ],
     "jade": [
       "com.github.teamfossilsarcheology.fossil.fabric.compat.jade.FossilJadePluginFabric"
     ]
@@ -46,7 +49,7 @@
     "geckolib3": ">=3.1",
     "terrablender": ">=2",
     "cardinal-components-base": ">=5",
-    "morehitboxes": ">=1.9.1"
+    "morehitboxes": ">=1.9.2"
   },
   "suggests": {
     "cloth_config": ">=6.3.81",

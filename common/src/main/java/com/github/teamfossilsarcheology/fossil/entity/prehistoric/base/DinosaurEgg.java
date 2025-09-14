@@ -54,7 +54,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
 
     private float scaleOverride = -1;
 
-    private PrehistoricEntityInfo prehistoricEntityInfo;
+    private PrehistoricEntityInfo prehistoricEntityInfo = PrehistoricEntityInfo.TRICERATOPS;
 
     public DinosaurEgg(EntityType<DinosaurEgg> type, Level level) {
         super(type, level);

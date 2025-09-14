@@ -52,7 +52,7 @@ public class WorktableCategory implements DisplayCategory<WorktableDisplay> {
             helper.blit(matrices, startPoint.x, startPoint.y, 40, 16, 96, 55);
             long time = System.currentTimeMillis();
             int progress = FUEL_HEIGHT - Mth.floor(time / 250d % (double) FUEL_HEIGHT);
-            helper.blit(matrices, startPoint.x + 41, startPoint.y + 20 + FUEL_HEIGHT - progress, 176, FUEL_HEIGHT - progress, FUEL_WIDTH, progress + 1);
+            helper.blit(matrices, startPoint.x + 41, startPoint.y + 20 + FUEL_HEIGHT - progress, 176, FUEL_HEIGHT - progress, FUEL_WIDTH+1, progress + 1);
             progress = Mth.ceil(time / 250d % (double) PROGRESS_WIDTH);
             helper.blit(matrices, startPoint.x + 36, startPoint.y + 4, 176, FUEL_HEIGHT + 2, progress, PROGRESS_HEIGHT);
         }));

@@ -47,6 +47,7 @@ Robberto08
 Thylaconical
 
 ###### Language Contributors
+TillusoryZenos (Chinese Simplified),
 Roda (Chinese Traditional),
 Wietse Dekker (Dutch),
 DarkPred (German),

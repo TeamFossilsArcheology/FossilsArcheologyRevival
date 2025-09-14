@@ -92,7 +92,7 @@ public class EatItemEntityGoal extends MoveToFoodGoal {
             this.clearTicks = !avoidCache.isEmpty() ? CLEAR_TICKS : 0;
             return false;
         } else {
-            targetPos = targetItem.blockPosition();
+            setTargetPos(targetItem.blockPosition());
             return true;
         }
     }

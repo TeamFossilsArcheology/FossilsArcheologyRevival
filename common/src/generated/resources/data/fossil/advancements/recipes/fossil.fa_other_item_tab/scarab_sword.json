@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_scarab_gem": {
+    "has_item": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_scarab_gem",
+      "has_item",
       "has_the_recipe"
     ]
   ],
