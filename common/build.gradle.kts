@@ -1,5 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
+val minecraftVersion: String by rootProject
 val enabledPlatforms: String by rootProject
 val fabricLoaderVersion: String by rootProject
 val architecturyVersion: String by rootProject
@@ -7,6 +8,7 @@ val archivesBaseName: String by rootProject
 val parchmentDate: String by rootProject
 val moreHitboxesVersion: String by rootProject
 val reiVersion: String by rootProject
+val jeiVersion: String by rootProject
 
 architectury {
     common(enabledPlatforms.split(","))
@@ -40,6 +42,7 @@ dependencies {
     //Optional
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-api:${reiVersion}")
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${reiVersion}")
+    modCompileOnly("mezz.jei:jei-$minecraftVersion-common-api:${jeiVersion}")
 }
 
 publishing {

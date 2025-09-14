@@ -42,6 +42,7 @@ val architecturyVersion: String by rootProject
 val archivesBaseName: String by rootProject
 val parchmentDate: String by rootProject
 val reiVersion: String by rootProject
+val jeiVersion: String by rootProject
 val moreHitboxesVersion: String by rootProject
 val terraBlenderVersion: String by rootProject
 val cardinalComponentsVersion: String by project
@@ -112,6 +113,8 @@ dependencies {
     modCompileOnly("maven.modrinth:jade:MSJGBHIo")
     modRuntimeOnly("maven.modrinth:jade:MSJGBHIo")
     modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:${reiVersion}")
+    modCompileOnly("mezz.jei:jei-$minecraftVersion-fabric-api:${jeiVersion}")
+    //modRuntimeOnly("mezz.jei:jei-$minecraftVersion-fabric:${jeiVersion}")
     modCompileOnly("maven.modrinth:farmers-delight-fabric:$farmersDelightVersion")
 
     //FD addons

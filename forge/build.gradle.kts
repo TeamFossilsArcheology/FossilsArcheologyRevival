@@ -31,6 +31,7 @@ val architecturyVersion: String by rootProject
 val archivesBaseName: String by rootProject
 val parchmentDate: String by rootProject
 val reiVersion: String by rootProject
+val jeiVersion: String by rootProject
 val moreHitboxesVersion: String by rootProject
 val terraBlenderVersion: String by rootProject
 val geckoLibVersion: String by project
@@ -65,7 +66,10 @@ dependencies {
 
     //Optional
     modImplementation("maven.modrinth:jade:L2um3gq1")
-    modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
+    modRuntimeOnly("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
+    modCompileOnly("mezz.jei:jei-$minecraftVersion-forge-api:${jeiVersion}")
+    //modRuntimeOnly("mezz.jei:jei-$minecraftVersion-forge:${jeiVersion}")
     modCompileOnly("maven.modrinth:carry-on:$carryOnVersion")
     //(Optional) FD & Addons
     modCompileOnly("maven.modrinth:farmers-delight:$farmersDelightVersion")
