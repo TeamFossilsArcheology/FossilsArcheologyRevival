@@ -322,6 +322,7 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
                 if (!isNoGravity() && level.getFluidState(blockPosition().below()).is(FluidTags.WATER)) {
                     setDeltaMovement(getDeltaMovement().add(0.0, -0.005, 0.0));
                 }
+                calculateEntityAnimation(this instanceof FlyingAnimal);
             } else {
                 super.travel(travelVector);
             }

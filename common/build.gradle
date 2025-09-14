@@ -25,4 +25,5 @@ dependencies {
     //Optional
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:$rei_version"
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin:$rei_version"
+    modCompileOnly "mezz.jei:jei-$minecraft_version-common-api:$jei_version"
 }

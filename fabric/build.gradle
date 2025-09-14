@@ -56,6 +56,8 @@ dependencies {
     modCompileOnly "maven.modrinth:jade:$jade_version_fabric"
     modRuntimeOnly "maven.modrinth:jade:$jade_version_fabric"
     modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
+    modCompileOnly "mezz.jei:jei-$minecraft_version-fabric-api:$jei_version"
+    //modRuntimeOnly "mezz.jei:jei-$minecraft_version-fabric:$jei_version"
     modCompileOnly "maven.modrinth:carry-on:$carry_on_version_fabric"
     //modCompileOnly "maven.modrinth:farmers-delight-fabric:$farmers_delight_version_fabric"
 

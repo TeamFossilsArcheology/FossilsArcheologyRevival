@@ -94,14 +94,14 @@ public abstract class PrehistoricFlocking extends Prehistoric {
      * Adds followers from a stream until the group size limit has been reached.
      */
     public void addFollowers(Stream<? extends PrehistoricFlocking> followers) {
-        followers.limit(getMaxGroupSize() - groupSize).filter(dino -> dino != this).forEach(dino -> dino.startFollowing(this));
+        followers.filter(dino -> dino != this).limit(getMaxGroupSize() - groupSize).forEach(dino -> dino.startFollowing(this));
     }
 
     @Override
     public void aiStep() {
         super.aiStep();
         if (isGroupLeader() && level.random.nextInt(200) == 1) {
-            if (level.getEntitiesOfClass(getClass(), getBoundingBox().inflate(getFlockDistance())).size() <= 1) {
+            if (level.getEntitiesOfClass(getClass(), getBoundingBox().inflate(getFlockDistance()), flocking -> flocking.groupLeader == this).size() <= 1) {
                 groupSize = 1;
             }
         }

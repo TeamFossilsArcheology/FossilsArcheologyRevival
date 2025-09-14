@@ -52,6 +52,7 @@ public class EntityDataLoader extends SimpleJsonResourceReloadListener {
 
     public void replaceData(Map<String, Data> dataMap) {
         entities = ImmutableMap.copyOf(dataMap);
+        FossilMod.LOGGER.info("Replacing client data for {} entities", entities.size());
     }
 
     public record Data(Attribute attributes, AI ai, Diet diet, float eggScale, float minScale, float maxScale,

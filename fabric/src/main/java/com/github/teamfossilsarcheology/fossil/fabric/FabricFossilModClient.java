@@ -2,18 +2,14 @@ package com.github.teamfossilsarcheology.fossil.fabric;
 
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.github.teamfossilsarcheology.fossil.client.ClientInit;
-import com.github.teamfossilsarcheology.fossil.client.renderer.OverlayRenderer;
 import com.github.teamfossilsarcheology.fossil.fabric.client.model.PlantModelPlugin;
 import com.github.teamfossilsarcheology.fossil.fabric.client.renderer.CustomItemRendererFabricImpl;
 import com.github.teamfossilsarcheology.fossil.world.effect.ComfyBedEffect;
 import com.github.teamfossilsarcheology.fossil.world.effect.ModEffects;
-import com.mojang.blaze3d.platform.Window;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.loading.v1.PreparableModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
-import net.minecraft.client.Minecraft;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 
@@ -29,10 +25,6 @@ public class FabricFossilModClient implements ClientModInitializer {
         BuiltinItemRendererRegistry.INSTANCE.register(ModBlocks.ANUBITE_STATUE.get().asItem(), CustomItemRendererFabricImpl.INSTANCE);
         BuiltinItemRendererRegistry.INSTANCE.register(ModBlocks.ANCIENT_CHEST.get().asItem(), CustomItemRendererFabricImpl.INSTANCE);
         BuiltinItemRendererRegistry.INSTANCE.register(ModBlocks.SARCOPHAGUS.get().asItem(), CustomItemRendererFabricImpl.INSTANCE);
-        HudRenderCallback.EVENT.register((matrixStack, tickDelta) -> {
-            Window window = Minecraft.getInstance().getWindow();
-            OverlayRenderer.renderHelmet(window.getGuiScaledWidth(), window.getGuiScaledHeight());
-        });
         EntitySleepEvents.ALLOW_SLEEP_TIME.register((player, sleepingPos, vanillaResult) -> {
             if (ComfyBedEffect.canApply(Optional.of(sleepingPos), player.level)) {
                 return InteractionResult.sidedSuccess(player.level.isClientSide);
