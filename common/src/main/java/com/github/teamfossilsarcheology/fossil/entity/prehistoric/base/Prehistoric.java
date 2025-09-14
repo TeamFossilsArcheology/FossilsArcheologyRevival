@@ -1059,6 +1059,12 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         }
     }
 
+    @Override
+    public void setOwnerUUID(@Nullable UUID uuid) {
+        super.setOwnerUUID(uuid);
+        FossilMod.LOGGER.info("Setting owner for {}, {} to {}. {}", info().name(), getUUID(), uuid, level().isClientSide);
+    }
+
     public int getMatingCooldown() {
         return matingCooldown;
     }
