@@ -82,7 +82,7 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
                 .map(Map.Entry::getKey)
                 .min(Comparator.comparingInt(pos -> pos.distManhattan(mobPos)));
         if (target.isPresent()) {
-            targetPos = target.get();
+            setTargetPos(target.get());
             return true;
         }
         clearTicks = !avoidCache.isEmpty() ? CLEAR_TICKS : 0;

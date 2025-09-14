@@ -841,6 +841,7 @@
   "subtitle.fossil.velociraptor_ambient": "Velociraptor kreischt",
   "subtitle.fossil.velociraptor_hurt": "Velociraptor nimmt Schaden",
   "subtitle.fossil.velociraptor_death": "Velociraptor stirbt",
+  "fossil.jade.fish": "Fisch: %s",
   "fossil.jade.meat": "Fleisch: %s",
   "fossil.jade.plant": "Pflanzen: %s",
   "fossil.midnightconfig.title": "Fossils and Archeology: Revival Konfiguration",

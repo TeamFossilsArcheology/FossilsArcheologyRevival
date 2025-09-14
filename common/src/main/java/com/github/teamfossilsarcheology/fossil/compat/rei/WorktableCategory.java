@@ -50,9 +50,9 @@ public class WorktableCategory implements DisplayCategory<WorktableDisplay> {
             ResourceLocation texture =  ConfigObject.getInstance().isUsingDarkTheme() ? DARK_TEXTURE : TEXTURE;
             guiGraphics.blit(texture, startPoint.x, startPoint.y, 40, 16, 96, 55);
             long time = System.currentTimeMillis();
-            int progress = FUEL_HEIGHT - Mth.floor(time / 250d % (double) FUEL_HEIGHT);
-            guiGraphics.blit(texture, startPoint.x + 41, startPoint.y + 20 + FUEL_HEIGHT - progress, 176, FUEL_HEIGHT - progress, FUEL_WIDTH, progress);
-            progress = Mth.ceil(time / 250d % (double) PROGRESS_WIDTH);
+            int progress = FUEL_HEIGHT - Mth.floor(time / 250d % FUEL_HEIGHT);
+            guiGraphics.blit(texture, startPoint.x + 41, startPoint.y + 20 + FUEL_HEIGHT - progress, 176, FUEL_HEIGHT - progress, FUEL_WIDTH + 1, progress);
+            progress = Mth.ceil(time / 250d % PROGRESS_WIDTH);
             guiGraphics.blit(texture, startPoint.x + 36, startPoint.y + 4, 176, FUEL_HEIGHT, progress, PROGRESS_HEIGHT);
         }));
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 5, startPoint.y + 5)).entries(display.getInputEntries().get(0)).disableBackground().markInput());

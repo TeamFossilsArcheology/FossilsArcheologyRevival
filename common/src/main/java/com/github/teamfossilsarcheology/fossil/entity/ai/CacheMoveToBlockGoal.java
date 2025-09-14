@@ -7,6 +7,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.AABB;
 
@@ -49,6 +51,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
      * Block to move to
      */
     protected BlockPos targetPos = BlockPos.ZERO;
+    protected Block targetBlock = Blocks.AIR;
     protected boolean reachedTarget;
     protected Path path;
     private BlockPos lastStuckPos;
@@ -232,7 +235,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
                 .filter(pos1 -> isValidTarget(entity.level(), pos1))
                 .min(Comparator.comparingInt(value -> value.distManhattan(pos)));
         if (target.isPresent()) {
-            targetPos = target.get();
+            setTargetPos(target.get());
             return true;
         }
         clearTicks = !avoidCache.isEmpty() ? CLEAR_TICKS : 0;
@@ -246,5 +249,10 @@ public abstract class CacheMoveToBlockGoal extends Goal {
      */
     protected boolean isValidTarget(LevelReader level, BlockPos pos) {
         return !avoidCache.contains(pos.asLong());
+    }
+
+    protected void setTargetPos(BlockPos targetPos) {
+        this.targetPos = targetPos;
+        this.targetBlock = entity.level().getBlockState(targetPos).getBlock();
     }
 }

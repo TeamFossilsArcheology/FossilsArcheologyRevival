@@ -26,7 +26,7 @@ public class FlockBuildGoal extends Goal {
 
     @Override
     public void start() {
-        Predicate<PrehistoricFlocking> canJoin = other -> other.canGroupGrow() || !other.hasGroupLeader();
+        Predicate<PrehistoricFlocking> canJoin = other -> other.canGroupGrow() || (!other.isGroupLeader() && !other.hasGroupLeader());
         var potentialFlock = entity.level().getEntitiesOfClass(entity.getClass(), entity.getBoundingBox().inflate(entity.getFlockDistance(), 10, entity.getFlockDistance()), canJoin);
         if (potentialFlock.size() == 1) {
             return;

@@ -4,9 +4,7 @@ import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.github.teamfossilsarcheology.fossil.client.renderer.OverlayRenderer;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RenderBlockScreenEffectEvent;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -19,11 +17,5 @@ public class ClientModEvents {
             event.setCanceled(true);
             OverlayRenderer.renderTar(event.getPoseStack());
         }
-    }
-
-    @SubscribeEvent
-    public static void onRegisterGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
-        event.registerAbove(VanillaGuiOverlay.HELMET.id(), "fossil_helmets", (gui, poseStack, partialTick, screenWidth, screenHeight) ->
-                OverlayRenderer.renderHelmet(screenWidth, screenHeight));
     }
 }

@@ -12,8 +12,8 @@ public class WorktableScreen extends AbstractContainerScreen<WorktableMenu> {
     private static final ResourceLocation TEXTURE = FossilMod.location("textures/gui/workbench.png");
     public static final int PROGRESS_WIDTH = 24;
     public static final int PROGRESS_HEIGHT = 14;
-    public static final int FUEL_WIDTH = 12;
-    public static final int FUEL_HEIGHT = 12;
+    public static final int FUEL_WIDTH = 14;
+    public static final int FUEL_HEIGHT = 14;
 
     public WorktableScreen(WorktableMenu containerMenu, Inventory inventory, Component component) {
         super(containerMenu, inventory, component);
@@ -39,9 +39,9 @@ public class WorktableScreen extends AbstractContainerScreen<WorktableMenu> {
         guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
         if (menu.isLit()) {
             int progress = menu.getLitProgress();
-            guiGraphics.blit(TEXTURE, x + 82, y + 36 + FUEL_HEIGHT - progress, 177, FUEL_HEIGHT - progress, FUEL_WIDTH, progress + 1);
+            guiGraphics.blit(TEXTURE, x + 82, y + 36 + FUEL_HEIGHT - progress, 177, FUEL_HEIGHT - progress, FUEL_WIDTH, progress);
         }
         int progress = menu.getBurnProgress();
-        guiGraphics.blit(TEXTURE, x + 76, y + 20, 176, FUEL_HEIGHT + 2, progress, PROGRESS_HEIGHT);
+        guiGraphics.blit(TEXTURE, x + 76, y + 20, 176, FUEL_HEIGHT, progress, PROGRESS_HEIGHT);
     }
 }

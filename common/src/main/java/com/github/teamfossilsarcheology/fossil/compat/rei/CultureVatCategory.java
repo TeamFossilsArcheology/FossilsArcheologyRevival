@@ -51,7 +51,7 @@ public class CultureVatCategory implements DisplayCategory<CultureVatDisplay> {
             guiGraphics.blit(texture, startPoint.x, startPoint.y, 40, 16, 96, 55);
             long time = System.currentTimeMillis();
             int progress = FUEL_HEIGHT - Mth.floor(time / 250d % (double) FUEL_HEIGHT);
-            guiGraphics.blit(texture, startPoint.x + 41, startPoint.y + 20 + FUEL_HEIGHT - progress, 176, FUEL_HEIGHT - progress, FUEL_WIDTH, progress);
+            guiGraphics.blit(texture, startPoint.x + 42, startPoint.y + 21 + FUEL_HEIGHT - progress, 176, FUEL_HEIGHT - progress, FUEL_WIDTH, progress);
             progress = Mth.ceil(time / 250d % (double) PROGRESS_WIDTH);
             guiGraphics.blit(texture, startPoint.x + 38, startPoint.y + 6, 176, FUEL_HEIGHT, progress, PROGRESS_HEIGHT);
         }));
