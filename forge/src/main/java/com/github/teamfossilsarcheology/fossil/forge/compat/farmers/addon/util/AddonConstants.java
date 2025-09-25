@@ -15,7 +15,6 @@ public class AddonConstants {
         register("alexsdelight", AlexDelightCompat::registerFoodMappings);
         register("argentinas_delight", ArgentinaDelightCompat::registerFoodMappings);
         register("brewinandchewin", BrewinAndChewinCompat::registerFoodMappings);
-        register("butchersdelight", ButcherDelightFoodCompat::registerFoodMappings);
         register("butchersdelightfoods", ButcherDelightFoodCompat::registerFoodMappings);
         register("casualness_delight", CasualnessDelightCompat::registerFoodMappings);
         register("coffee_delight", CoffeeDelightCompat::registerFoodMappings);
