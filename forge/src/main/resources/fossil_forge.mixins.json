@@ -9,7 +9,6 @@
   "mixins": [
     "EnergyContainerBlockEntityMixin", "MachineContainerBlockEntityMixin", "PickupHandlerMixin", "WalkNodeEvaluatorMixin"
   ],
-  "plugin": "com.github.teamfossilsarcheology.fossil.forge.ForgeFossilMixinPlugin",
   "injectors": {
     "defaultRequire": 1
   }

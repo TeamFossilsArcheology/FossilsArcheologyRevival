@@ -1,6 +1,9 @@
-package com.github.teamfossilsarcheology.fossil.fabric;
+package com.github.teamfossilsarcheology.fossil;
 
 import com.github.teamfossilsarcheology.fossil.util.Version;
+import dev.architectury.injectables.annotations.ExpectPlatform;
+import dev.architectury.platform.Platform;
+import org.apache.commons.lang3.NotImplementedException;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -11,7 +14,7 @@ import java.util.Set;
 /**
  * For now just disables mixins used for debugging
  */
-public class FabricFossilMixinPlugin implements IMixinConfigPlugin {
+public class FossilMixinPlugin implements IMixinConfigPlugin {
     @Override
     public void onLoad(String mixinPackage) {
     }
@@ -23,7 +26,10 @@ public class FabricFossilMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        return !mixinClassName.contains("Debug") || Version.debugEnabled();
+        if (!isModLoaded(FossilMod.MOD_ID) || mixinClassName.contains("Debug") && !Version.debugEnabled()) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -43,5 +49,13 @@ public class FabricFossilMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+    }
+
+    /**
+     * Needed because {@link Platform#isModLoaded(String)} won't work on forge during mixin loading
+     */
+    @ExpectPlatform
+    private static boolean isModLoaded(String mod) {
+        throw new NotImplementedException();
     }
 }

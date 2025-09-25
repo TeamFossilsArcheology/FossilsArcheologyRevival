@@ -5,4 +5,5 @@ public class ModConstants {
     public static final String CARRY_ON = "carryon";
     public static final String CREATE = "create";
     public static final String FARMERS = "farmersdelight";
+    public static final String LITHOSTITCHED = "lithostitched";
 }

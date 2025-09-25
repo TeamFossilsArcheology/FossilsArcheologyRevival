@@ -8,8 +8,9 @@
   ],
   "mixins": [
     "AbstractFishMixin", "AnimatableManagerAccessor", "AnimationControllerAccessor", "AnimationControllerMixin", "AnimationProcessorMixin", "ChunkStatusMixin", "ExplosionMixin",
-    "JigsawPlacementMixin", "MobMixin", "NaturalSpawnerMixin", "ServerEntityMixin"
+    "JigsawPlacementMixin", "JigsawStructureMixin", "MobMixin", "NaturalSpawnerMixin", "ServerEntityMixin"
   ],
+  "plugin": "com.github.teamfossilsarcheology.fossil.FossilMixinPlugin",
   "injectors": {
     "defaultRequire": 1
   }

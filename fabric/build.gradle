@@ -77,6 +77,8 @@ dependencies {
 
     //Dev only
 
+   // modLocalRuntime("maven.modrinth:tectonic:3.0.13")
+   // modLocalRuntime("maven.modrinth:lithostitched:1.4.11-fabric-1.20")
     modLocalRuntime "maven.modrinth:auth-me:7.0.2+1.20"
     modLocalRuntime "maven.modrinth:huge-structure-blocks:1.0.9"
     modLocalRuntime "curse.maven:worldedit-225608:4586218" //1.20.1
