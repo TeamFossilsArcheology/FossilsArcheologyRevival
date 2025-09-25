@@ -72,6 +72,11 @@ public class Spinosaurus extends PrehistoricSwimming {
     }
 
     @Override
+    public float grabTargetSize() {
+        return getBbWidth();
+    }
+
+    @Override
     public @NotNull AnimationInfo nextGrabbingAnimation() {
         return getAllAnimations().get(GRAB);
     }
