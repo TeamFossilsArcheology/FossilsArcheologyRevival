@@ -21,7 +21,7 @@ public class FlockBuildGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return entity.hasGroupLeader() && entity.inRangeOfGroupLeader();
+        return entity.hasGroupLeader() && entity.inRangeOfGroupLeader() && entity.getRandom().nextInt(1200) > 0;
     }
 
     @Override
@@ -61,8 +61,6 @@ public class FlockBuildGoal extends Goal {
 
     @Override
     public void stop() {
-        if (entity.hasGroupLeader()) {
-            entity.leaveGroup();
-        }
+        entity.leaveGroup();
     }
 }
