@@ -131,7 +131,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
             return false;
         }
         //Check if the mob can reach it
-        if (path.getNodeCount() < 16 && path.getEndNode().distanceTo(getMoveToTarget()) > 1) {
+        if (path.getNodeCount() < 16 && path.getEndNode().distanceTo(getMoveToTarget()) > acceptedDistance()) {
             avoidCache.add(getMoveToTarget().asLong());
             return false;
         }
