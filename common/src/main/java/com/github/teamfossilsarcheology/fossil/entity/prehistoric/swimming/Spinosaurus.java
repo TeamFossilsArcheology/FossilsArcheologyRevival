@@ -136,14 +136,19 @@ public class Spinosaurus extends PrehistoricSwimming {
                 addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
             } else if (event.isMoving()) {
                 if (entity.isInWater()) {
+                    boolean onGround = (entity.getY() - Math.floor(entity.getY()) < 0.05) && entity.level.getFluidState(entity.blockPosition().below()).isEmpty();
                     if (entity.isEyeInFluid(FluidTags.WATER)) {
-                        if (entity.isOnGround()) {
+                        if (onGround) {
                             addActiveAnimation(controller.getName(), entity.getAnimation(WALK_WATER).animation, AnimationCategory.SWIM, false);
                         } else {
                             addActiveAnimation(controller.getName(), entity.getAnimation(SWIM_UNDERWATER).animation, AnimationCategory.SWIM, false);
                         }
                     } else {
-                        addActiveAnimation(controller.getName(), entity.getAnimation(SWIM_FLOATING).animation, AnimationCategory.SWIM, false);
+                        if (onGround) {
+                            animationSpeed = addMovementAnimation(event, false);
+                        } else {
+                            addActiveAnimation(controller.getName(), entity.getAnimation(SWIM_FLOATING).animation, AnimationCategory.SWIM, false);
+                        }
                     }
                 } else {
                     animationSpeed = addMovementAnimation(event, false);
