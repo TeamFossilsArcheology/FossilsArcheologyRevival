@@ -1,103 +1,103 @@
 {
   "items": [
     {
-      "id": "minecraft:cod"
+      "item": "minecraft:cod"
     },
     {
-      "id": "minecraft:cooked_cod"
+      "item": "minecraft:cooked_cod"
     },
     {
-      "id": "minecraft:cooked_salmon"
+      "item": "minecraft:cooked_salmon"
     },
     {
-      "id": "minecraft:pufferfish"
+      "item": "minecraft:pufferfish"
     },
     {
-      "id": "minecraft:salmon"
+      "item": "minecraft:salmon"
     },
     {
-      "id": "minecraft:tropical_fish"
+      "item": "minecraft:tropical_fish"
     }
   ],
   "entities": [
     {
-      "id": "betteranimalsplus:crab",
+      "entry": "betteranimalsplus:crab",
       "value": 5
     },
     {
-      "id": "betteranimalsplus:eel",
+      "entry": "betteranimalsplus:eel",
       "value": 20
     },
     {
-      "id": "betteranimalsplus:flying_fish",
+      "entry": "betteranimalsplus:flying_fish",
       "value": 5
     },
     {
-      "id": "betteranimalsplus:horseshoecrab",
+      "entry": "betteranimalsplus:horseshoecrab",
       "value": 7
     },
     {
-      "id": "betteranimalsplus:lamprey",
+      "entry": "betteranimalsplus:lamprey",
       "value": 5
     },
     {
-      "id": "betteranimalsplus:nautilus",
+      "entry": "betteranimalsplus:nautilus",
       "value": 10
     },
     {
-      "id": "betteranimalsplus:shark",
+      "entry": "betteranimalsplus:shark",
       "value": 40
     },
     {
-      "id": "betteranimalsplus:whale",
+      "entry": "betteranimalsplus:whale",
       "value": 60
     },
     {
-      "id": "minecraft:cod",
+      "entry": "minecraft:cod",
       "value": 5
     },
     {
-      "id": "minecraft:dolphin",
+      "entry": "minecraft:dolphin",
       "value": 17
     },
     {
-      "id": "minecraft:glow_squid",
+      "entry": "minecraft:glow_squid",
       "value": 20
     },
     {
-      "id": "minecraft:guardian",
+      "entry": "minecraft:guardian",
       "value": 65
     },
     {
-      "id": "minecraft:pufferfish",
+      "entry": "minecraft:pufferfish",
       "value": 5
     },
     {
-      "id": "minecraft:salmon",
+      "entry": "minecraft:salmon",
       "value": 5
     },
     {
-      "id": "minecraft:squid",
+      "entry": "minecraft:squid",
       "value": 20
     },
     {
-      "id": "minecraft:tropical_fish",
+      "entry": "minecraft:tropical_fish",
       "value": 5
     },
     {
-      "id": "minecraft:turtle",
+      "entry": "minecraft:turtle",
       "value": 5
     },
     {
-      "id": "naturalist:bass",
+      "entry": "naturalist:bass",
       "value": 10
     },
     {
-      "id": "naturalist:catfish",
+      "entry": "naturalist:catfish",
       "value": 10
     },
     {
-      "id": "naturalist:duck",
+      "entry": "naturalist:duck",
       "value": 10
     }
   ]
