@@ -40,7 +40,7 @@ public class Spinosaurus extends PrehistoricSwimming {
     public static final String IDLE_WATER_FLOAT = "animation.spinosaurus.idle_water_float";
     public static final String SWIM_FLOATING = "animation.spinosaurus.swim_floating";
     public static final String SWIM_UNDERWATER = "animation.spinosaurus.swim_underwater";
-    public static final String WALK_WATER = "animation.spinosaurus.walk_water";
+    public static final String SWIM_GROUND = "animation.spinosaurus.swim_ground";
     private final SpinoAnimationLogic animationLogic = new SpinoAnimationLogic(this);
 
     public Spinosaurus(EntityType<Spinosaurus> entityType, Level level) {
@@ -69,6 +69,11 @@ public class Spinosaurus extends PrehistoricSwimming {
     @Override
     public float getTargetScale() {
         return 1.5f;
+    }
+
+    @Override
+    public float grabTargetSize() {
+        return getBbWidth();
     }
 
     @Override
@@ -131,14 +136,19 @@ public class Spinosaurus extends PrehistoricSwimming {
                 addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
             } else if (event.isMoving()) {
                 if (entity.isInWater()) {
+                    boolean onGround = (entity.getY() - Math.floor(entity.getY()) < 0.05) && entity.level.getFluidState(entity.blockPosition().below()).isEmpty();
                     if (entity.isEyeInFluid(FluidTags.WATER)) {
-                        if (entity.isOnGround()) {
-                            addActiveAnimation(controller.getName(), entity.getAnimation(WALK_WATER).animation, AnimationCategory.SWIM, false);
+                        if (onGround) {
+                            addActiveAnimation(controller.getName(), entity.getAnimation(SWIM_GROUND).animation, AnimationCategory.SWIM, false);
                         } else {
                             addActiveAnimation(controller.getName(), entity.getAnimation(SWIM_UNDERWATER).animation, AnimationCategory.SWIM, false);
                         }
                     } else {
-                        addActiveAnimation(controller.getName(), entity.getAnimation(SWIM_FLOATING).animation, AnimationCategory.SWIM, false);
+                        if (onGround) {
+                            animationSpeed = addMovementAnimation(event, false);
+                        } else {
+                            addActiveAnimation(controller.getName(), entity.getAnimation(SWIM_FLOATING).animation, AnimationCategory.SWIM, false);
+                        }
                     }
                 } else {
                     animationSpeed = addMovementAnimation(event, false);

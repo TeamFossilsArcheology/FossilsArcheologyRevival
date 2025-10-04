@@ -4,20 +4,23 @@ import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mojang.logging.LogUtils;
-import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.Registry;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
@@ -71,10 +74,14 @@ public abstract class FoodValueProvider implements DataProvider {
     }
 
     protected static class FoodAppender {
-        private final Map<ResourceLocation, Integer> items = new Object2IntOpenHashMap<>();
-        private final Map<ResourceLocation, Integer> entities = new Object2IntOpenHashMap<>();
+        private final List<Entry> items = new ObjectArrayList<>();
+        private final List<Entry> entities = new ObjectArrayList<>();
 
         public FoodAppender() {
+        }
+
+        public void itemTag(TagKey<Item> tag) {
+            items.add(new Entry(tag.location(), -1, "tag"));
         }
 
         public void item(ItemLike item) {
@@ -82,11 +89,11 @@ public abstract class FoodValueProvider implements DataProvider {
         }
 
         public void item(ItemLike item, int value) {
-            item(Registry.ITEM.getKey(item.asItem()), value);
+            items.add(new Entry(Registry.ITEM.getKey(item.asItem()), value, "item"));
         }
 
-        public void item(ResourceLocation location, int value) {
-            items.put(location, value);
+        public void entityTag(TagKey<EntityType<?>> tag) {
+            entities.add(new Entry(tag.location(), -1, "tag"));
         }
 
         public void entity(EntityType<?> entityType) {
@@ -98,7 +105,7 @@ public abstract class FoodValueProvider implements DataProvider {
         }
 
         public void entity(ResourceLocation location, int value) {
-            entities.put(location, value);
+            entities.add(new Entry(location, value, "entry"));
         }
 
         public JsonObject serializeToJson() {
@@ -107,31 +114,32 @@ public abstract class FoodValueProvider implements DataProvider {
             JsonArray entityArray = new JsonArray();
             root.add("items", itemArray);
             root.add("entities", entityArray);
-            items.entrySet().stream().sorted(Map.Entry.comparingByKey(FoodAppender::compare)).forEach(entry -> {
-                JsonObject object = new JsonObject();
-                object.addProperty("id", entry.getKey().toString());
-                if (entry.getValue() >= 0) {
-                    object.addProperty("value", entry.getValue());
-                }
-                itemArray.add(object);
+            items.stream().sorted(FoodAppender::compare).forEach(entry -> {
+                itemArray.add(entry.serialize());
             });
-            entities.entrySet().stream().sorted(Map.Entry.comparingByKey(FoodAppender::compare)).forEach(entry -> {
-                JsonObject object = new JsonObject();
-                object.addProperty("id", entry.getKey().toString());
-                if (entry.getValue() >= 0) {
-                    object.addProperty("value", entry.getValue());
-                }
-                entityArray.add(object);
+            entities.stream().sorted(FoodAppender::compare).forEach(entry -> {
+                entityArray.add(entry.serialize());
             });
             return root;
         }
 
-        public static int compare(ResourceLocation one, ResourceLocation other) {
-            int i = one.getNamespace().compareTo(other.getNamespace());
+        private static int compare(Entry one, Entry other) {
+            int i = one.id.getNamespace().compareTo(other.id.getNamespace());
             if (i == 0) {
-                i = one.getPath().compareTo(other.getPath());
+                i = one.id.getPath().compareTo(other.id.getPath());
             }
             return i;
+        }
+
+        private record Entry(ResourceLocation id, int value, String key) {
+            public JsonObject serialize() {
+                JsonObject object = new JsonObject();
+                object.addProperty(key, id.toString());
+                if (value >= 0) {
+                    object.addProperty("value", value);
+                }
+                return object;
+            }
         }
     }
 }

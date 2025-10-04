@@ -45,7 +45,7 @@ public abstract class MoveToFoodGoal extends CacheMoveToBlockGoal {
         if (entity.getHunger() >= entity.getMaxHunger()) {
             return false;
         }
-        if (entity.level.getBlockState(targetPos).is(targetBlock)) {
+        if (!entity.level.getBlockState(targetPos).is(targetBlock)) {
             return false;
         }
         return super.canContinueToUse();

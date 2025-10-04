@@ -25,11 +25,11 @@ public class AnimationHolder {
                 //No weight
             }
         }
-        if (name.contains("baby")) {
+        if (name.contains("_baby")) {
             addAnimation(babyAnimations, animation, weight);
-        } else if (name.contains("water")) {
+        } else if (name.contains("_water")) {
             addAnimation(waterAnimations, animation, weight);
-        } else if (name.contains("air")) {
+        } else if (name.contains("_air")) {
             addAnimation(airAnimations, animation, weight);
         } else {
             addAnimation(animations, animation, weight);

@@ -9,6 +9,7 @@ import net.minecraft.nbt.CompoundTag;
  * This system determines when a mob can and should sleep
  */
 public class SleepSystem extends AISystem {
+    private static final int MAX_SLEEP_DURATION = 5 * 60 * 20;
     private boolean sleepForced;
     private int ticksSlept;
     /**
@@ -29,6 +30,9 @@ public class SleepSystem extends AISystem {
         if (mob.isSleeping() && !sleepForced) {
             ticksSlept++;
             if (ticksSlept > 100 && mob.getRandom().nextInt(100) == 0 && !wantsToSleep()) {
+                setSleeping(false);
+            }
+            if (ticksSlept > MAX_SLEEP_DURATION) {
                 setSleeping(false);
             }
             if (mob.tickCount % 10 == 0 && !canSleep()) {

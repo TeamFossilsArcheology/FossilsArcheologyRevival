@@ -128,6 +128,7 @@ public class ModFoodValueProvider extends FoodValueProvider {
         meat.entity(new ResourceLocation("bewitchment", "snake"), 4);
         meat.entity(new ResourceLocation("bewitchment", "toad"), 3);
 
+        //TODO: Farmers delight tags?
         String betterAnimalsPlus = "betteranimalsplus";
         meat.entity(new ResourceLocation(betterAnimalsPlus, "deer"), 35);
         meat.entity(new ResourceLocation(betterAnimalsPlus, "pheasant"), 10);
