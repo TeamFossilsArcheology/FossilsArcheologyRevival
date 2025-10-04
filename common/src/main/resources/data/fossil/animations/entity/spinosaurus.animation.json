@@ -13,6 +13,9 @@
     "animation.spinosaurus.eat": {
       "animation_length": 3
     },
+    "animation.spinosaurus.eat_water": {
+      "animation_length": 3
+    },
     "animation.spinosaurus.jump/fall_1": {
       "loop": true,
       "animation_length": 2
@@ -55,7 +58,7 @@
       "loop": true,
       "animation_length": 2
     },
-    "animation.spinosaurus.walk_water": {
+    "animation.spinosaurus.swim_ground": {
       "loop": true,
       "animation_length": 4
     }

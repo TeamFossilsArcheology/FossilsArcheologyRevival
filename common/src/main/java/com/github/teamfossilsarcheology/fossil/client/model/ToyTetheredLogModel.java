@@ -20,8 +20,12 @@ import java.util.stream.Collectors;
 
 public class ToyTetheredLogModel extends EntityModel<ToyTetheredLog> {
     //This should prevent wood types from other mods
-    public static final Map<String, ResourceLocation> TEXTURES = WoodType.values().filter(woodType -> !woodType.name().contains(":")).collect(Collectors.toMap(WoodType::name,
+    public static final Map<String, ResourceLocation> TEXTURES = WoodType.values().filter(ToyTetheredLogModel::isVanillaWood).collect(Collectors.toMap(WoodType::name,
             woodType -> FossilMod.location("textures/entity/toy/log_swing_" + woodType.name() + ".png")));
+
+    public static boolean isVanillaWood(WoodType woodType) {
+        return !woodType.name().contains(":") && !woodType.name().contains(".");
+    }
 
     private final ModelPart model = createBodyLayer().bakeRoot();
     private final ModelPart rope1 = model.getChild("rope1");

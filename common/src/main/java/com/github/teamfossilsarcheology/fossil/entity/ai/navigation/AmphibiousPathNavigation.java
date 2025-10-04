@@ -42,7 +42,7 @@ public class AmphibiousPathNavigation<T extends Prehistoric & SwimmingAnimal> ex
         final Vec3 base = entityPos.add(-mob.getBbWidth() * 0.5F, 0, -mob.getBbWidth() * 0.5F);
         final Vec3 max = base.add(mob.getBbWidth(), mob.getBbHeight(), mob.getBbWidth());
         if (!tryShortcut(path, new Vec3(mob.getX(), mob.getY(), mob.getZ()), pathLength, base, max)) {
-            if (!mob.isInWater() || NavUtil.isAt(mob, path, Math.min(mob.getBbWidth() * 0.75f, 0.5f), 0.5f)) {
+            if (mob.isInWater() || NavUtil.isAt(mob, path, Math.min(mob.getBbWidth() * 0.75f, 0.5f), 0.5f)) {
                 //TODO: Maybe instead check for ledge (0=(?,0,?), 1=(?,1,?), 2=(?,1,?)
                 if (NavUtil.isAt(mob, path, Math.min(mob.getBbWidth() * 0.75f, 0.5f), 1) || NavUtil.atElevationChange(mob, path) && NavUtil.isAt(mob, path, mob.getBbWidth() * 0.75F, 1)) {
                     path.advance();

@@ -65,6 +65,11 @@ public abstract class WithFuelRecipe implements Recipe<WithFuelRecipe.ContainerW
     }
 
     @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
+    @Override
     public @NotNull ResourceLocation getId() {
         return location;
     }
