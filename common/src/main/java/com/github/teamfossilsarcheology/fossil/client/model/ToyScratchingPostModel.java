@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class ToyScratchingPostModel extends EntityModel<ToyScratchingPost> {
     //This should prevent wood types from other mods
-    public static final Map<String, ResourceLocation> TEXTURES = WoodType.values().filter(woodType -> !woodType.name().contains(":")).collect(Collectors.toMap(WoodType::name,
+    public static final Map<String, ResourceLocation> TEXTURES = WoodType.values().filter(ToyTetheredLogModel::isVanillaWood).collect(Collectors.toMap(WoodType::name,
             woodType -> FossilMod.location("textures/entity/toy/scratching_post_" + woodType.name() + ".png")));
 
     private final ModelPart model = createBodyLayer().bakeRoot();

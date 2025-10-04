@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.level.LevelReader;
@@ -11,6 +12,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Comparator;
 import java.util.EnumSet;
@@ -129,7 +131,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
             return false;
         }
         //Check if the mob can reach it
-        if (path.getNodeCount() < 16 && path.getEndNode().distanceTo(getMoveToTarget()) > 1) {
+        if (path.getNodeCount() < 16 && path.getEndNode().distanceTo(getMoveToTarget()) > acceptedDistance()) {
             avoidCache.add(getMoveToTarget().asLong());
             return false;
         }
@@ -141,7 +143,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     }
 
     protected void moveMobToBlock() {
-         entity.getNavigation().moveTo(path, calculateSpeedModifier());
+        entity.getNavigation().moveTo(path, calculateSpeedModifier());
     }
 
     public double acceptedDistance() {
@@ -212,7 +214,9 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     }
 
     protected boolean checkReachedTarget() {
-        return targetPos.closerToCenterThan(entity.position(), acceptedDistance());
+        double horizontal = Vec3.atBottomCenterOf(targetPos).subtract(entity.position()).horizontalDistanceSqr();
+        double vertical = Mth.square(targetPos.getY() - entity.getY());
+        return horizontal < Mth.square(acceptedDistance()) && vertical < Mth.square(entity.getBbHeight() + 0.1);
     }
 
     protected boolean isReachedTarget() {

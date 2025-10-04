@@ -5,7 +5,8 @@
       "loop": true
     },
     "walk": {
-      "loop": true
+      "loop": true,
+      "animation_length": 1.5
     },
     "attack": {
       "animation_length": 0.75

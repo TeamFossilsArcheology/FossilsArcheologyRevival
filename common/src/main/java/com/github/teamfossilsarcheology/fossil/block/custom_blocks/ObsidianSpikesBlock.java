@@ -37,7 +37,7 @@ public class ObsidianSpikesBlock extends Block {
 
     @Override
     public @NotNull BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos currentPos, BlockPos neighborPos) {
-        if (direction == Direction.DOWN && !this.canSurvive(state, level, currentPos)) {
+        if (direction == Direction.DOWN && !canSurvive(state, level, currentPos)) {
             return Blocks.AIR.defaultBlockState();
         }
         return super.updateShape(state, direction, neighborState, level, currentPos, neighborPos);
@@ -45,7 +45,7 @@ public class ObsidianSpikesBlock extends Block {
 
     @Override
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        return state.isSolid();
+        return level.getBlockState(pos.below()).isSolid();
     }
 
     @Override
