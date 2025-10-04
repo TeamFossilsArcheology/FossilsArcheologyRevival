@@ -83,6 +83,11 @@ public abstract class MultiOutputAndSlotsRecipe implements Recipe<Container> {
     }
 
     @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
+    @Override
     public @NotNull ResourceLocation getId() {
         return id;
     }

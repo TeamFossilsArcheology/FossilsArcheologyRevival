@@ -2,118 +2,138 @@
   "entities": [],
   "items": [
     {
-      "id": "fossil:fern_seed",
+      "item": "fossil:fern_seed",
       "value": 10
     },
     {
-      "id": "minecraft:apple"
+      "item": "minecraft:apple"
     },
     {
-      "id": "minecraft:baked_potato"
+      "item": "minecraft:baked_potato"
     },
     {
-      "id": "minecraft:beetroot"
+      "item": "minecraft:beetroot"
     },
     {
-      "id": "minecraft:beetroot_seeds",
+      "item": "minecraft:beetroot_seeds",
       "value": 5
     },
     {
-      "id": "minecraft:bread"
+      "item": "minecraft:bread"
     },
     {
-      "id": "minecraft:brown_mushroom",
+      "item": "minecraft:brown_mushroom",
       "value": 15
     },
     {
-      "id": "minecraft:cake",
+      "item": "minecraft:cake",
       "value": 60
     },
     {
-      "id": "minecraft:carrot"
+      "item": "minecraft:cake",
+      "value": 60
     },
     {
-      "id": "minecraft:chorus_flower",
+      "item": "minecraft:carrot",
       "value": 20
     },
     {
-      "id": "minecraft:chorus_fruit"
+      "item": "minecraft:carrot"
     },
     {
-      "id": "minecraft:chorus_plant",
+      "item": "minecraft:chorus_flower",
+      "value": 20
+    },
+    {
+      "item": "minecraft:chorus_fruit"
+    },
+    {
+      "item": "minecraft:chorus_plant",
       "value": 10
     },
     {
-      "id": "minecraft:cookie"
+      "item": "minecraft:cookie"
     },
     {
-      "id": "minecraft:dried_kelp"
+      "item": "minecraft:dried_kelp"
     },
     {
-      "id": "minecraft:glow_berries"
+      "item": "minecraft:glow_berries"
     },
     {
-      "id": "minecraft:grass",
+      "item": "minecraft:grass",
       "value": 5
     },
     {
-      "id": "minecraft:hay_block",
+      "item": "minecraft:hay_block",
       "value": 90
     },
     {
-      "id": "minecraft:lily_pad",
+      "item": "minecraft:lily_pad",
       "value": 15
     },
     {
-      "id": "minecraft:melon",
+      "item": "minecraft:melon",
       "value": 65
     },
     {
-      "id": "minecraft:melon_seeds",
+      "item": "minecraft:melon_seeds",
       "value": 5
     },
     {
-      "id": "minecraft:melon_slice"
+      "item": "minecraft:melon_slice"
     },
     {
-      "id": "minecraft:potato"
+      "item": "minecraft:potato",
+      "value": 25
     },
     {
-      "id": "minecraft:pumpkin",
+      "item": "minecraft:potato"
+    },
+    {
+      "item": "minecraft:pumpkin",
       "value": 30
     },
     {
-      "id": "minecraft:pumpkin_pie"
+      "item": "minecraft:pumpkin_pie"
     },
     {
-      "id": "minecraft:pumpkin_seeds",
+      "item": "minecraft:pumpkin_seeds",
       "value": 5
     },
     {
-      "id": "minecraft:red_mushroom",
+      "item": "minecraft:red_mushroom",
       "value": 15
     },
     {
-      "id": "minecraft:sugar",
+      "item": "minecraft:sugar",
       "value": 7
     },
     {
-      "id": "minecraft:sugar_cane",
+      "item": "minecraft:sugar_cane",
       "value": 15
     },
     {
-      "id": "minecraft:sweet_berries"
+      "item": "minecraft:sugar_cane",
+      "value": 15
     },
     {
-      "id": "minecraft:tall_grass",
+      "item": "minecraft:sweet_berries"
+    },
+    {
+      "item": "minecraft:tall_grass",
       "value": 10
     },
     {
-      "id": "minecraft:wheat",
+      "item": "minecraft:wheat",
       "value": 13
     },
     {
-      "id": "minecraft:wheat_seeds",
+      "item": "minecraft:wheat_seeds",
+      "value": 13
+    },
+    {
+      "item": "minecraft:wheat_seeds",
       "value": 5
     }
   ]

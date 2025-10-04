@@ -1,407 +1,407 @@
 {
   "entities": [
     {
-      "id": "betteranimalsplus:boar",
+      "entry": "betteranimalsplus:boar",
       "value": 30
     },
     {
-      "id": "betteranimalsplus:deer",
+      "entry": "betteranimalsplus:deer",
       "value": 35
     },
     {
-      "id": "betteranimalsplus:gazelle",
+      "entry": "betteranimalsplus:gazelle",
       "value": 15
     },
     {
-      "id": "betteranimalsplus:goose",
+      "entry": "betteranimalsplus:goose",
       "value": 10
     },
     {
-      "id": "betteranimalsplus:lammergeier",
+      "entry": "betteranimalsplus:lammergeier",
       "value": 8
     },
     {
-      "id": "betteranimalsplus:moose",
+      "entry": "betteranimalsplus:moose",
       "value": 45
     },
     {
-      "id": "betteranimalsplus:pheasant",
+      "entry": "betteranimalsplus:pheasant",
       "value": 10
     },
     {
-      "id": "betteranimalsplus:reindeer",
+      "entry": "betteranimalsplus:reindeer",
       "value": 35
     },
     {
-      "id": "betteranimalsplus:songbird",
+      "entry": "betteranimalsplus:songbird",
       "value": 3
     },
     {
-      "id": "betteranimalsplus:squirrel",
+      "entry": "betteranimalsplus:squirrel",
       "value": 3
     },
     {
-      "id": "betteranimalsplus:turkey",
+      "entry": "betteranimalsplus:turkey",
       "value": 10
     },
     {
-      "id": "bewitchment:owl",
+      "entry": "bewitchment:owl",
       "value": 7
     },
     {
-      "id": "bewitchment:raven",
+      "entry": "bewitchment:raven",
       "value": 5
     },
     {
-      "id": "bewitchment:snake",
+      "entry": "bewitchment:snake",
       "value": 4
     },
     {
-      "id": "bewitchment:toad",
+      "entry": "bewitchment:toad",
       "value": 3
     },
     {
-      "id": "exoticbirds:bluejay",
+      "entry": "exoticbirds:bluejay",
       "value": 3
     },
     {
-      "id": "exoticbirds:booby",
+      "entry": "exoticbirds:booby",
       "value": 7
     },
     {
-      "id": "exoticbirds:budgerigar",
+      "entry": "exoticbirds:budgerigar",
       "value": 3
     },
     {
-      "id": "exoticbirds:cardinal",
+      "entry": "exoticbirds:cardinal",
       "value": 3
     },
     {
-      "id": "exoticbirds:cassowary",
+      "entry": "exoticbirds:cassowary",
       "value": 25
     },
     {
-      "id": "exoticbirds:crane",
+      "entry": "exoticbirds:crane",
       "value": 15
     },
     {
-      "id": "exoticbirds:duck",
+      "entry": "exoticbirds:duck",
       "value": 10
     },
     {
-      "id": "exoticbirds:emperorpenguin",
+      "entry": "exoticbirds:emperorpenguin",
       "value": 7
     },
     {
-      "id": "exoticbirds:flamingo",
+      "entry": "exoticbirds:flamingo",
       "value": 7
     },
     {
-      "id": "exoticbirds:gouldianfinch",
+      "entry": "exoticbirds:gouldianfinch",
       "value": 3
     },
     {
-      "id": "exoticbirds:heron",
+      "entry": "exoticbirds:heron",
       "value": 15
     },
     {
-      "id": "exoticbirds:hummingbird",
+      "entry": "exoticbirds:hummingbird",
       "value": 3
     },
     {
-      "id": "exoticbirds:kingfisher",
+      "entry": "exoticbirds:kingfisher",
       "value": 5
     },
     {
-      "id": "exoticbirds:kiwi",
+      "entry": "exoticbirds:kiwi",
       "value": 3
     },
     {
-      "id": "exoticbirds:kookaburra",
+      "entry": "exoticbirds:kookaburra",
       "value": 5
     },
     {
-      "id": "exoticbirds:lyrebird",
+      "entry": "exoticbirds:lyrebird",
       "value": 5
     },
     {
-      "id": "exoticbirds:magpie",
+      "entry": "exoticbirds:magpie",
       "value": 3
     },
     {
-      "id": "exoticbirds:ostrich",
+      "entry": "exoticbirds:ostrich",
       "value": 27
     },
     {
-      "id": "exoticbirds:owl",
+      "entry": "exoticbirds:owl",
       "value": 7
     },
     {
-      "id": "exoticbirds:parrot",
+      "entry": "exoticbirds:parrot",
       "value": 5
     },
     {
-      "id": "exoticbirds:peafowl",
+      "entry": "exoticbirds:peafowl",
       "value": 10
     },
     {
-      "id": "exoticbirds:pelican",
+      "entry": "exoticbirds:pelican",
       "value": 5
     },
     {
-      "id": "exoticbirds:pigeon",
+      "entry": "exoticbirds:pigeon",
       "value": 3
     },
     {
-      "id": "exoticbirds:roadrunner",
+      "entry": "exoticbirds:roadrunner",
       "value": 5
     },
     {
-      "id": "exoticbirds:robin",
+      "entry": "exoticbirds:robin",
       "value": 3
     },
     {
-      "id": "exoticbirds:seagull",
+      "entry": "exoticbirds:seagull",
       "value": 3
     },
     {
-      "id": "exoticbirds:swan",
+      "entry": "exoticbirds:swan",
       "value": 12
     },
     {
-      "id": "exoticbirds:toucan",
+      "entry": "exoticbirds:toucan",
       "value": 7
     },
     {
-      "id": "exoticbirds:vulture",
+      "entry": "exoticbirds:vulture",
       "value": 7
     },
     {
-      "id": "exoticbirds:woodpecker",
+      "entry": "exoticbirds:woodpecker",
       "value": 3
     },
     {
-      "id": "minecraft:axolotl",
+      "entry": "minecraft:axolotl",
       "value": 5
     },
     {
-      "id": "minecraft:bat",
+      "entry": "minecraft:bat",
       "value": 5
     },
     {
-      "id": "minecraft:cat",
+      "entry": "minecraft:cat",
       "value": 10
     },
     {
-      "id": "minecraft:cave_spider",
+      "entry": "minecraft:cave_spider",
       "value": 15
     },
     {
-      "id": "minecraft:chicken",
+      "entry": "minecraft:chicken",
       "value": 7
     },
     {
-      "id": "minecraft:cow",
+      "entry": "minecraft:cow",
       "value": 40
     },
     {
-      "id": "minecraft:donkey",
+      "entry": "minecraft:donkey",
       "value": 45
     },
     {
-      "id": "minecraft:fox",
+      "entry": "minecraft:fox",
       "value": 15
     },
     {
-      "id": "minecraft:goat",
+      "entry": "minecraft:goat",
       "value": 30
     },
     {
-      "id": "minecraft:hoglin",
+      "entry": "minecraft:hoglin",
       "value": 55
     },
     {
-      "id": "minecraft:horse",
+      "entry": "minecraft:horse",
       "value": 55
     },
     {
-      "id": "minecraft:llama",
+      "entry": "minecraft:llama",
       "value": 50
     },
     {
-      "id": "minecraft:mooshroom",
+      "entry": "minecraft:mooshroom",
       "value": 40
     },
     {
-      "id": "minecraft:mule",
+      "entry": "minecraft:mule",
       "value": 50
     },
     {
-      "id": "minecraft:ocelot",
+      "entry": "minecraft:ocelot",
       "value": 4
     },
     {
-      "id": "minecraft:panda",
+      "entry": "minecraft:panda",
       "value": 27
     },
     {
-      "id": "minecraft:parrot",
+      "entry": "minecraft:parrot",
       "value": 2
     },
     {
-      "id": "minecraft:pig",
+      "entry": "minecraft:pig",
       "value": 20
     },
     {
-      "id": "minecraft:player",
+      "entry": "minecraft:player",
       "value": 27
     },
     {
-      "id": "minecraft:polar_bear",
+      "entry": "minecraft:polar_bear",
       "value": 60
     },
     {
-      "id": "minecraft:rabbit",
+      "entry": "minecraft:rabbit",
       "value": 5
     },
     {
-      "id": "minecraft:sheep",
+      "entry": "minecraft:sheep",
       "value": 35
     },
     {
-      "id": "minecraft:spider",
+      "entry": "minecraft:spider",
       "value": 30
     },
     {
-      "id": "minecraft:villager",
+      "entry": "minecraft:villager",
       "value": 27
     },
     {
-      "id": "minecraft:wolf",
+      "entry": "minecraft:wolf",
       "value": 15
     },
     {
-      "id": "naturalist:bear",
+      "entry": "naturalist:bear",
       "value": 35
     },
     {
-      "id": "naturalist:boar",
+      "entry": "naturalist:boar",
       "value": 10
     },
     {
-      "id": "naturalist:coral_snake",
+      "entry": "naturalist:coral_snake",
       "value": 10
     },
     {
-      "id": "naturalist:deer",
+      "entry": "naturalist:deer",
       "value": 40
     },
     {
-      "id": "naturalist:giraffe",
+      "entry": "naturalist:giraffe",
       "value": 50
     },
     {
-      "id": "naturalist:ostrich",
+      "entry": "naturalist:ostrich",
       "value": 35
     },
     {
-      "id": "naturalist:rattlesnake",
+      "entry": "naturalist:rattlesnake",
       "value": 10
     },
     {
-      "id": "naturalist:rhino",
+      "entry": "naturalist:rhino",
       "value": 60
     },
     {
-      "id": "naturalist:snake",
+      "entry": "naturalist:snake",
       "value": 10
     },
     {
-      "id": "naturalist:vulture",
+      "entry": "naturalist:vulture",
       "value": 15
     },
     {
-      "id": "naturalist:zebra",
+      "entry": "naturalist:zebra",
       "value": 40
     },
     {
-      "id": "quark:crab",
+      "entry": "quark:crab",
       "value": 5
     },
     {
-      "id": "quark:frog",
+      "entry": "quark:frog",
       "value": 3
     },
     {
-      "id": "rats:rat",
+      "entry": "rats:rat",
       "value": 5
     },
     {
-      "id": "totemic:bald_eagle",
+      "entry": "totemic:bald_eagle",
       "value": 8
     },
     {
-      "id": "totemic:buffalo",
+      "entry": "totemic:buffalo",
       "value": 55
     },
     {
-      "id": "twilightforest:bighorn_sheep",
+      "entry": "twilightforest:bighorn_sheep",
       "value": 35
     },
     {
-      "id": "twilightforest:boar",
+      "entry": "twilightforest:boar",
       "value": 20
     },
     {
-      "id": "twilightforest:deer",
+      "entry": "twilightforest:deer",
       "value": 35
     },
     {
-      "id": "twilightforest:penguin",
+      "entry": "twilightforest:penguin",
       "value": 10
     },
     {
-      "id": "twilightforest:squirrel",
+      "entry": "twilightforest:squirrel",
       "value": 3
     }
   ],
   "items": [
     {
-      "id": "fossil:failuresaurus_flesh",
+      "item": "fossil:failuresaurus_flesh",
       "value": 15
     },
     {
-      "id": "minecraft:beef"
+      "item": "minecraft:beef"
     },
     {
-      "id": "minecraft:chicken"
+      "item": "minecraft:chicken"
     },
     {
-      "id": "minecraft:cooked_beef"
+      "item": "minecraft:cooked_beef"
     },
     {
-      "id": "minecraft:cooked_chicken"
+      "item": "minecraft:cooked_chicken"
     },
     {
-      "id": "minecraft:cooked_mutton"
+      "item": "minecraft:cooked_mutton"
     },
     {
-      "id": "minecraft:cooked_porkchop"
+      "item": "minecraft:cooked_porkchop"
     },
     {
-      "id": "minecraft:cooked_rabbit"
+      "item": "minecraft:cooked_rabbit"
     },
     {
-      "id": "minecraft:mutton"
+      "item": "minecraft:mutton"
     },
     {
-      "id": "minecraft:porkchop"
+      "item": "minecraft:porkchop"
     },
     {
-      "id": "minecraft:rabbit"
+      "item": "minecraft:rabbit"
     },
     {
-      "id": "minecraft:rabbit_foot",
+      "item": "minecraft:rabbit_foot",
       "value": 7
     }
   ]

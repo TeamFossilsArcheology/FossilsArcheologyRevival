@@ -2,7 +2,7 @@
   "entities": [],
   "items": [
     {
-      "id": "minecraft:egg",
+      "item": "minecraft:egg",
       "value": 7
     }
   ]

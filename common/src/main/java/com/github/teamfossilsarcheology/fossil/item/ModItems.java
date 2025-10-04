@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.item;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
+import com.github.teamfossilsarcheology.fossil.client.model.ToyTetheredLogModel;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.VanillaEntityInfo;
@@ -33,13 +34,13 @@ public class ModItems {
     public static final RegistrySupplier<Item> TAR_DROP = ITEMS.register("tar_drop",
             () -> new Item(new Item.Properties().arch$tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<RecordItem> MUSIC_DISC_BONES = ITEMS.register("music_disc_bones",
-            () -> CustomRecordItem.get(0, ModSounds.MUSIC_BONES, new Item.Properties().stacksTo(1).arch$tab(ModTabs.FA_OTHER_ITEM_TAB), 196));
+            () -> CustomRecordItem.get(0, ModSounds.MUSIC_BONES, new Item.Properties().stacksTo(1).arch$tab(ModTabs.FA_OTHER_ITEM_TAB).rarity(Rarity.RARE), 196));
     public static final RegistrySupplier<RecordItem> MUSIC_DISC_ANU = ITEMS.register("music_disc_anu",
-            () -> CustomRecordItem.get(1, ModSounds.MUSIC_ANU, new Item.Properties().stacksTo(1).arch$tab(ModTabs.FA_OTHER_ITEM_TAB), 221));
+            () -> CustomRecordItem.get(1, ModSounds.MUSIC_ANU, new Item.Properties().stacksTo(1).arch$tab(ModTabs.FA_OTHER_ITEM_TAB).rarity(Rarity.RARE), 221));
     public static final RegistrySupplier<RecordItem> MUSIC_DISC_SCARAB = ITEMS.register("music_disc_scarab",
-            () -> CustomRecordItem.get(2, ModSounds.MUSIC_SCARAB, new Item.Properties().stacksTo(1).arch$tab(ModTabs.FA_OTHER_ITEM_TAB), 153));
+            () -> CustomRecordItem.get(2, ModSounds.MUSIC_SCARAB, new Item.Properties().stacksTo(1).arch$tab(ModTabs.FA_OTHER_ITEM_TAB).rarity(Rarity.RARE), 153));
     public static final RegistrySupplier<RecordItem> MUSIC_DISC_DISCOVERY = ITEMS.register("music_disc_discovery",
-            () -> CustomRecordItem.get(3, ModSounds.MUSIC_DISCOVERY, new Item.Properties().stacksTo(1).arch$tab(ModTabs.FA_OTHER_ITEM_TAB), 250));
+            () -> CustomRecordItem.get(3, ModSounds.MUSIC_DISCOVERY, new Item.Properties().stacksTo(1).arch$tab(ModTabs.FA_OTHER_ITEM_TAB).rarity(Rarity.RARE), 250));
     public static final RegistrySupplier<Item> BIO_FOSSIL = ITEMS.register("fossil_bio", () -> new FossilItem(TimePeriod.MESOZOIC));
     public static final RegistrySupplier<Item> PlANT_FOSSIL = ITEMS.register("fossil_plant", () -> new FossilItem(null));
     public static final RegistrySupplier<Item> SHALE_FOSSIL = ITEMS.register("fossil_shale", () -> new FossilItem(TimePeriod.PALEOZOIC));
@@ -140,8 +141,8 @@ public class ModItems {
     public static final RegistrySupplier<SpawnEggItem> FAILURESAURUS_SPAWN_EGG = registerSpawnEgg("spawn_egg_failuresaurus", ModEntities.FAILURESAURUS, 0X46DA9b, 0X257B47);
 
     public static final Map<DyeColor, RegistrySupplier<ToyBallItem>> TOY_BALLS = Arrays.stream(DyeColor.values()).collect(Collectors.toMap(Function.identity(), ModItems::registerBall));
-    public static final Map<String, RegistrySupplier<ToyTetheredLogItem>> TOY_TETHERED_LOGS = WoodType.values().filter(woodType -> !woodType.name().contains(":")).collect(Collectors.toMap(WoodType::name, ModItems::registerTetheredLog));
-    public static final Map<String, RegistrySupplier<ToyScratchingPostItem>> TOY_SCRATCHING_POSTS = WoodType.values().filter(woodType -> !woodType.name().contains(":")).collect(Collectors.toMap(WoodType::name, ModItems::registerScratchingPost));
+    public static final Map<String, RegistrySupplier<ToyTetheredLogItem>> TOY_TETHERED_LOGS = WoodType.values().filter(ToyTetheredLogModel::isVanillaWood).collect(Collectors.toMap(WoodType::name, ModItems::registerTetheredLog));
+    public static final Map<String, RegistrySupplier<ToyScratchingPostItem>> TOY_SCRATCHING_POSTS = WoodType.values().filter(ToyTetheredLogModel::isVanillaWood).collect(Collectors.toMap(WoodType::name, ModItems::registerScratchingPost));
 
     private static <T extends Mob> RegistrySupplier<SpawnEggItem> registerSpawnEgg(String id, RegistrySupplier<EntityType<T>> type, int color1, int color2) {
         return ITEMS.register(id, () -> new ArchitecturySpawnEggItem(type, color1, color2, new Item.Properties().arch$tab(ModTabs.FA_MOB_ITEM_TAB)));
