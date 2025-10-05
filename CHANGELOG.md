@@ -1,2 +1,2 @@
 ### Fixed
-- Crash when Spinosaurus walks underwater
+- Crashing when using this mod on a server
