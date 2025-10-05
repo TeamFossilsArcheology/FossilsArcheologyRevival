@@ -12,6 +12,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class ToyBase extends Entity {
@@ -24,6 +25,11 @@ public abstract class ToyBase extends Entity {
         this.moodBonus = moodBonus;
         this.attackNoise = attackNoise;
     }
+
+    public static boolean isVanillaWood(WoodType woodType) {
+        return !woodType.name().contains(":") && !woodType.name().contains(".");
+    }
+
 
     protected boolean tickAI() {
         return false;

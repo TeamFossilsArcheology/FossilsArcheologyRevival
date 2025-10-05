@@ -2,8 +2,8 @@ package com.github.teamfossilsarcheology.fossil.item;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
-import com.github.teamfossilsarcheology.fossil.client.model.ToyTetheredLogModel;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
+import com.github.teamfossilsarcheology.fossil.entity.ToyBase;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.github.teamfossilsarcheology.fossil.material.ModFluids;
@@ -141,8 +141,8 @@ public class ModItems {
     public static final RegistrySupplier<SpawnEggItem> FAILURESAURUS_SPAWN_EGG = registerSpawnEgg("spawn_egg_failuresaurus", ModEntities.FAILURESAURUS, 0X46DA9b, 0X257B47);
 
     public static final Map<DyeColor, RegistrySupplier<ToyBallItem>> TOY_BALLS = Arrays.stream(DyeColor.values()).collect(Collectors.toMap(Function.identity(), ModItems::registerBall));
-    public static final Map<String, RegistrySupplier<ToyTetheredLogItem>> TOY_TETHERED_LOGS = WoodType.values().filter(ToyTetheredLogModel::isVanillaWood).collect(Collectors.toMap(WoodType::name, ModItems::registerTetheredLog));
-    public static final Map<String, RegistrySupplier<ToyScratchingPostItem>> TOY_SCRATCHING_POSTS = WoodType.values().filter(ToyTetheredLogModel::isVanillaWood).collect(Collectors.toMap(WoodType::name, ModItems::registerScratchingPost));
+    public static final Map<String, RegistrySupplier<ToyTetheredLogItem>> TOY_TETHERED_LOGS = WoodType.values().filter(ToyBase::isVanillaWood).collect(Collectors.toMap(WoodType::name, ModItems::registerTetheredLog));
+    public static final Map<String, RegistrySupplier<ToyScratchingPostItem>> TOY_SCRATCHING_POSTS = WoodType.values().filter(ToyBase::isVanillaWood).collect(Collectors.toMap(WoodType::name, ModItems::registerScratchingPost));
 
     private static <T extends Mob> RegistrySupplier<SpawnEggItem> registerSpawnEgg(String id, RegistrySupplier<EntityType<T>> type, int color1, int color2) {
         return ITEMS.register(id, () -> new ArchitecturySpawnEggItem(type, color1, color2, new Item.Properties().arch$tab(ModTabs.FA_MOB_ITEM_TAB)));
