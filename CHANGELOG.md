@@ -13,3 +13,4 @@
 - Tempskya leaves replacing blocks when the tree is grown
 - Slime trails models looking like rails
 - Animation interpolation not always working correctly
+- Mobs acting like they were untamed after reloading the entity

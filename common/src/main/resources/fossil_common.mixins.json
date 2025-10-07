@@ -8,7 +8,7 @@
   ],
   "mixins": [
     "AbstractFishMixin", "AnimatableManagerAccessor", "AnimationControllerAccessor", "AnimationControllerMixin", "AnimationProcessorMixin", "ChunkStatusMixin", "ExplosionMixin",
-    "JigsawPlacementMixin", "MobMixin", "NaturalSpawnerMixin", "ServerEntityMixin"
+    "JigsawPlacementMixin", "MobMixin", "NaturalSpawnerMixin", "ServerEntityMixin", "SyncedEntityDataMixin"
   ],
   "injectors": {
     "defaultRequire": 1

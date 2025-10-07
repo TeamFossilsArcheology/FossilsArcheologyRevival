@@ -28,10 +28,10 @@ import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.entity.variant.*;
 import com.github.teamfossilsarcheology.fossil.food.Diet;
 import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
-import com.github.teamfossilsarcheology.fossil.item.LaserPointerItem;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.network.C2SHitPlayerMessage;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
+import com.github.teamfossilsarcheology.fossil.network.SyncedEntityDataHelper;
 import com.github.teamfossilsarcheology.fossil.network.debug.C2SDisableAIMessage;
 import com.github.teamfossilsarcheology.fossil.network.debug.SyncDebugInfoMessage;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
@@ -39,6 +39,7 @@ import com.github.teamfossilsarcheology.fossil.util.Gender;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
+import dev.architectury.platform.Platform;
 import it.unimi.dsi.fastutil.Pair;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
@@ -153,6 +154,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     protected double swimSpeed;
     private boolean useLowerFluidJumpThreshold;
     private final Map<VariantRegistry.RegistryObject<?>, VariantCondition.WithVariant<?>> allVariants = new HashMap<>();
+    private long synTime = -1;
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, ResourceLocation animationLocation) {
         super(entityType, level);
@@ -730,6 +732,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         }
 
         if (!level.isClientSide) {
+            if (synTime > 0 && synTime >= level.getGameTime()) {
+                synTime = -1;
+                //TLDR: Idk why but on fabric if the entity gets loaded in, the ClientboundSetEntityDataPacket gets handled faster than the Architectury SpawnEntityPacket. To me: see trello for detailed reason
+                ((SyncedEntityDataHelper) getEntityData()).fossilsArcheologyRevival$markNonDefaultAsDirty();
+            }
             setSprinting(getDeltaMovement().horizontalDistance() > 0.1 && getMoveControl().getSpeedModifier() >= attributes().sprintMod());
             if (getHunger() > getMaxHunger()) {
                 setHunger(getMaxHunger());
@@ -1506,6 +1513,9 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
+        if (Platform.isFabric()) {
+            synTime = level.getGameTime() + 20;
+        }
         return NetworkManager.createAddEntityPacket(this);
     }
 
