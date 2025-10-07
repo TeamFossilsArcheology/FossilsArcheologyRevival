@@ -23,11 +23,20 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(FossilMod.MOD_ID, Registry.ITEM_REGISTRY);
+
+    public static final RegistrySupplier<Item> IRON_FEEDER_UPGRADE = ITEMS.register("iron_feeder_upgrade",
+            () -> new DescriptiveItem(new Item.Properties().tab(ModTabs.FA_OTHER_ITEM_TAB).stacksTo(1)));
+    public static final RegistrySupplier<Item> DIAMOND_FEEDER_UPGRADE = ITEMS.register("diamond_feeder_upgrade",
+            () -> new DescriptiveItem(new Item.Properties().tab(ModTabs.FA_OTHER_ITEM_TAB).stacksTo(1)));
+    public static final RegistrySupplier<Item> NETHERITE_FEEDER_UPGRADE = ITEMS.register("netherite_feeder_upgrade",
+            () -> new DescriptiveItem(new Item.Properties().tab(ModTabs.FA_OTHER_ITEM_TAB).stacksTo(1)));
+
 
     public static final RegistrySupplier<Item> TAR_BUCKET = ITEMS.register("tar_bucket",
             () -> new ArchitecturyBucketItem(ModFluids.TAR, new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET).tab(ModTabs.FA_OTHER_ITEM_TAB)));
@@ -158,6 +167,15 @@ public class ModItems {
 
     private static RegistrySupplier<ToyScratchingPostItem> registerScratchingPost(WoodType woodType) {
         return ITEMS.register("toy_scratching_post_" + woodType.name(), () -> new ToyScratchingPostItem(woodType, new Item.Properties().tab(ModTabs.FA_BLOCK_TAB)));
+    }
+
+    // TODO: maybe use a less hardcode-y method for checking whether an item is an upgrade (possibly a tag or a custom item class)
+    public static Set<Item> getFeederUpgrades() {
+        return Set.of(
+                IRON_FEEDER_UPGRADE.get(),
+                DIAMOND_FEEDER_UPGRADE.get(),
+                NETHERITE_FEEDER_UPGRADE.get()
+            );
     }
 
     public static void register() {

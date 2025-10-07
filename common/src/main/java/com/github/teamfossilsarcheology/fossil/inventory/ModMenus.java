@@ -14,6 +14,7 @@ public class ModMenus {
     }
 
     public static final RegistrySupplier<MenuType<FeederMenu>> FEEDER = MENUS.register("feeder", () -> new MenuType<>(FeederMenu::new));
+    public static final RegistrySupplier<MenuType<AOEFeederMenu>> AOE_FEEDER = MENUS.register("aoe_feeder", () -> new MenuType<>(AOEFeederMenu::new));
     public static final RegistrySupplier<MenuType<SifterMenu>> SIFTER = MENUS.register("sifter", () -> new MenuType<>(SifterMenu::new));
     public static final RegistrySupplier<MenuType<AnalyzerMenu>> ANALYZER = MENUS.register("analyzer", () -> new MenuType<>(AnalyzerMenu::new));
     public static final RegistrySupplier<MenuType<WorktableMenu>> WORKTABLE = MENUS.register("worktable", () -> new MenuType<>(WorktableMenu::new));

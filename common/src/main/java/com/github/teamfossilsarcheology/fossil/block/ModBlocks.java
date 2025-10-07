@@ -51,6 +51,10 @@ public class ModBlocks {
     public static final RegistrySupplier<FeederBlock> FEEDER = registerBlock("feeder",
             () -> new FeederBlock(Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
 
+    public static final RegistrySupplier<FeederBlock> AOE_FEEDER = registerBlock("aoe_feeder",
+            () -> new AOEFeederBlock(Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
+
+
     public static final RegistrySupplier<ArchitecturyLiquidBlock> TAR = registerBlockWithoutBlockItem("tar",
             () -> TarBlock.get(ModFluids.TAR, Properties.copy(Blocks.WATER).isViewBlocking(ModBlocks::always)));
 

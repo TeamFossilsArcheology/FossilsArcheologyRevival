@@ -15,6 +15,7 @@ public class ModBlockEntities {
     public static final RegistrySupplier<BlockEntityType<BubbleBlowerBlockEntity>> BUBBLE_BLOWER = register(BubbleBlowerBlockEntity::new, ModBlocks.BUBBLE_BLOWER);
     public static final RegistrySupplier<BlockEntityType<CultureVatBlockEntity>> CULTURE_VAT = register(CultureVatBlockEntity::new, ModBlocks.CULTURE_VAT);
     public static final RegistrySupplier<BlockEntityType<FeederBlockEntity>> FEEDER = register(FeederBlockEntity::new, ModBlocks.FEEDER);
+    public static final RegistrySupplier<BlockEntityType<AOEFeederBlockEntity>> AOE_FEEDER = register(AOEFeederBlockEntity::new, ModBlocks.AOE_FEEDER);
     public static final RegistrySupplier<BlockEntityType<SifterBlockEntity>> SIFTER = register(SifterBlockEntity::new, ModBlocks.SIFTER);
     public static final RegistrySupplier<BlockEntityType<WorktableBlockEntity>> WORKTABLE = register(WorktableBlockEntity::new, ModBlocks.WORKTABLE);
     public static final RegistrySupplier<BlockEntityType<AnuBarrierBlockEntity>> ANU_BARRIER = register(AnuBarrierBlockEntity::new, ModBlocks.ANU_BARRIER_ORIGIN);

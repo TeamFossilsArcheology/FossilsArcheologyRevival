@@ -162,6 +162,7 @@ public class ClientInit {
         registerBlockRenderers();
         registerEventHandlers();
         MenuScreens.register(ModMenus.FEEDER.get(), FeederScreen::new);
+        MenuScreens.register(ModMenus.AOE_FEEDER.get(), AOEFeederScreen::new);
         MenuScreens.register(ModMenus.SIFTER.get(), SifterScreen::new);
         MenuScreens.register(ModMenus.CULTURE_VAT.get(), CultureVatScreen::new);
         MenuScreens.register(ModMenus.ANALYZER.get(), AnalyzerScreen::new);

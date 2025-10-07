@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "carn=false,facing=north,herb=false": {
+      "model": "fossil:block/feeder_empty"
+    },
+    "carn=false,facing=east,herb=false": {
+      "model": "fossil:block/feeder_empty",
+      "y": 90
+    },
+    "carn=false,facing=south,herb=false": {
+      "model": "fossil:block/feeder_empty",
+      "y": 180
+    },
+    "carn=false,facing=west,herb=false": {
+      "model": "fossil:block/feeder_empty",
+      "y": 270
+    },
+    "carn=false,facing=north,herb=true": {
+      "model": "fossil:block/feeder_plant"
+    },
+    "carn=false,facing=east,herb=true": {
+      "model": "fossil:block/feeder_plant",
+      "y": 90
+    },
+    "carn=false,facing=south,herb=true": {
+      "model": "fossil:block/feeder_plant",
+      "y": 180
+    },
+    "carn=false,facing=west,herb=true": {
+      "model": "fossil:block/feeder_plant",
+      "y": 270
+    },
+    "carn=true,facing=north,herb=false": {
+      "model": "fossil:block/feeder_meat"
+    },
+    "carn=true,facing=east,herb=false": {
+      "model": "fossil:block/feeder_meat",
+      "y": 90
+    },
+    "carn=true,facing=south,herb=false": {
+      "model": "fossil:block/feeder_meat",
+      "y": 180
+    },
+    "carn=true,facing=west,herb=false": {
+      "model": "fossil:block/feeder_meat",
+      "y": 270
+    },
+    "carn=true,facing=north,herb=true": {
+      "model": "fossil:block/feeder_both"
+    },
+    "carn=true,facing=east,herb=true": {
+      "model": "fossil:block/feeder_both",
+      "y": 90
+    },
+    "carn=true,facing=south,herb=true": {
+      "model": "fossil:block/feeder_both",
+      "y": 180
+    },
+    "carn=true,facing=west,herb=true": {
+      "model": "fossil:block/feeder_both",
+      "y": 270
+    }
+  }
+}

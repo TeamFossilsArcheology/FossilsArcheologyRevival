@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.inventory;
 
 import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
 import com.github.teamfossilsarcheology.fossil.food.FoodType;
+import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -13,19 +14,20 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class FeederMenu extends AbstractContainerMenu {
+public class AOEFeederMenu extends AbstractContainerMenu {
     public static final int MEAT_SLOT_ID = 0;
     public static final int PLANT_SLOT_ID = 1;
     public static final int FISH_SLOT_ID = 2;
+    public static final int UPGRADE_SLOT_ID = 3;
     private final Container container;
     private final ContainerData containerData;
 
-    public FeederMenu(int id, Inventory playerInventory) {
-        this(id, playerInventory, new SimpleContainer(3), new SimpleContainerData(3));
+    public AOEFeederMenu(int id, Inventory playerInventory) {
+        this(id, playerInventory, new SimpleContainer(4), new SimpleContainerData(3));
     }
 
-    public FeederMenu(int id, Inventory playerInventory, Container container, ContainerData containerData) {
-        super(ModMenus.FEEDER.get(), id);
+    public AOEFeederMenu(int id, Inventory playerInventory, Container container, ContainerData containerData) {
+        super(ModMenus.AOE_FEEDER.get(), id);
         this.container = container;
         this.containerData = containerData;
         addSlot(new Slot(container, MEAT_SLOT_ID, 68, 61) {
@@ -46,6 +48,14 @@ public class FeederMenu extends AbstractContainerMenu {
                 return isFish(stack);
             }
         });
+
+        addSlot(new Slot(container, UPGRADE_SLOT_ID, 50, 31) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return isUpgrade(stack);
+            }
+        });
+
         for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 9; x++) {
                 addSlot(new Slot(playerInventory, x + y * 9 + 9, 8 + x * 18, 84 + y * 18));
@@ -69,6 +79,11 @@ public class FeederMenu extends AbstractContainerMenu {
         return FoodMappings.getFoodAmount(stack.getItem(), FoodType.FISH) > 0;
     }
 
+    private boolean isUpgrade(ItemStack stack) {
+        return ModItems.getFeederUpgrades().contains(stack.getItem());
+    }
+
+
     public int getMeat() {
         return containerData.get(MEAT_SLOT_ID);
     }
@@ -89,7 +104,7 @@ public class FeederMenu extends AbstractContainerMenu {
             ItemStack current = slot.getItem();
             itemStack = current.copy();
             final int inventorySlots = 36;
-            int feederSlots = 3;
+            int feederSlots = 4;
             int bottomRowEnd = inventorySlots + feederSlots;
             int bottomRowStart = bottomRowEnd - 9;
             if (index < feederSlots) {
@@ -108,7 +123,13 @@ public class FeederMenu extends AbstractContainerMenu {
                 if (!moveItemStackTo(current, FISH_SLOT_ID, FISH_SLOT_ID + 1, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (index < bottomRowStart) {
+            }
+            else if (isUpgrade(current)) {
+                if (!moveItemStackTo(current, UPGRADE_SLOT_ID, UPGRADE_SLOT_ID + 1, false)) {
+                    return ItemStack.EMPTY;
+                }
+            }
+            else if (index < bottomRowStart) {
                 if (!moveItemStackTo(current, bottomRowStart, bottomRowEnd, false)) {
                     return ItemStack.EMPTY;
                 }

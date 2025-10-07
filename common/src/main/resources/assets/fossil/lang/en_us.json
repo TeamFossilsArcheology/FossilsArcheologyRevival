@@ -229,6 +229,14 @@
   "item.fossil.iron_javelin": "Iron Javelin",
   "item.fossil.stone_javelin": "Stone Javelin",
   "item.fossil.wooden_javelin": "Wooden Javelin",
+  "item.fossil.iron_feeder_upgrade": "Iron Feeder Upgrade",
+  "item.fossil.iron_feeder_upgrade.desc": "Increases feeding range by 16 blocks.",
+  "item.fossil.diamond_feeder_upgrade": "Diamond Feeder Upgrade",
+  "item.fossil.diamond_feeder_upgrade.desc": "Increases feeding range by 32 blocks.",
+  "item.fossil.netherite_feeder_upgrade": "Netherite Feeder Upgrade",
+  "item.fossil.netherite_feeder_upgrade.desc": "Increases feeding range by 64 blocks.",
+
+
   "block.fossil.amber_block": "Amber Block",
   "block.fossil.amber_chunk": "Amber Chunk",
   "block.fossil.amber_chunk_dominican": "Dominican Amber Chunk",
@@ -348,6 +356,7 @@
   "block.fossil.drum": "Drum",
   "block.fossil.fake_obsidian": "Fake Obsidian",
   "block.fossil.feeder": "Feeder",
+  "block.fossil.aoe_feeder": "AOE Feeder",
   "block.fossil.figurine_anu_destroyed": "Destroyed Anu Figurine",
   "block.fossil.figurine_anu_restored": "Restored Anu Figurine",
   "block.fossil.figurine_anu_pristine": "Pristine Anu Figurine",
