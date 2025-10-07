@@ -1,6 +1,12 @@
 {
   "items": [
     {
+      "tag": "c:foods/cooked_meat"
+    },
+    {
+      "tag": "c:foods/raw_meat"
+    },
+    {
       "item": "fossil:failuresaurus_flesh",
       "value": 15
     },

@@ -1,6 +1,12 @@
 {
   "items": [
     {
+      "tag": "c:foods/cooked_fish"
+    },
+    {
+      "tag": "c:foods/raw_fish"
+    },
+    {
       "item": "minecraft:cod"
     },
     {

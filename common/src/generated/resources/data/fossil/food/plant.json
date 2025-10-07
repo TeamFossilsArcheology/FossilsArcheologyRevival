@@ -1,6 +1,18 @@
 {
   "items": [
     {
+      "tag": "c:foods/berry"
+    },
+    {
+      "tag": "c:foods/bread"
+    },
+    {
+      "tag": "c:foods/fruit"
+    },
+    {
+      "tag": "c:foods/vegetable"
+    },
+    {
       "item": "fossil:fern_seed",
       "value": 10
     },
