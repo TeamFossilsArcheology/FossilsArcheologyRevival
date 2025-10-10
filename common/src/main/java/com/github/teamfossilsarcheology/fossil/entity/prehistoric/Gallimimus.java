@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlocking;
@@ -11,6 +12,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class Gallimimus extends PrehistoricFlocking {
 
@@ -50,6 +54,22 @@ public class Gallimimus extends PrehistoricFlocking {
 
     @Override
     public PrehistoricEntityInfoAI.Response aiResponseType() {
+        Set<PrehistoricFlocking> visited = new HashSet<>();
+        PrehistoricFlocking current = this;
+
+        // checking for looping chains, which would lead to a stack overflow
+        // like, if A's leader is B, B's leader is C, C's leader is A
+        // (could go on for longer chains)
+        // would be cleaner to do something similar in PrehistoricFlocking's startFollowing method instead
+        // but I'm worried about breaking stuff, I'm not yet used to this codebase.
+        while (current.hasGroupLeader()) {
+            if (!visited.add(current)) {
+                leaveGroup();
+                break;
+            }
+            current = current.groupLeader;
+        }
+
         if (hasGroupLeader()) {
             return groupLeader.aiResponseType();
         }

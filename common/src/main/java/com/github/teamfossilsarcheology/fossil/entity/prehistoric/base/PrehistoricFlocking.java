@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 public abstract class PrehistoricFlocking extends Prehistoric {
     protected int groupSize = 1;
-    protected PrehistoricFlocking groupLeader;
+    public PrehistoricFlocking groupLeader;
     protected long flockAttackedTick;
     protected LivingEntity flockAttackedTarget;
 
@@ -86,6 +86,7 @@ public abstract class PrehistoricFlocking extends Prehistoric {
         }
     }
 
+    // this probably needs to be fixed to prevent circular chains (e.g. A's leader is B, B's leader is C, C's leader is A)
     public PrehistoricFlocking startFollowing(PrehistoricFlocking groupLeader) {
         this.groupLeader = groupLeader;
         groupLeader.increaseGroupSize();
