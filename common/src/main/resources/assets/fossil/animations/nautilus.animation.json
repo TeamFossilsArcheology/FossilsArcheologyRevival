@@ -420,7 +420,7 @@
 						"vector": ["math.cos(query.anim_time*360)*5", 0, "math.cos(query.anim_time*180-60)*5"]
 					},
 					"position": {
-						"vector": [0, "1+math.cos(query.anim_time*360+30)*-1", "math.cos(query.anim_time*360-60)*3"]
+						"vector": [0, "math.cos(query.anim_time*360+30)*-1", "math.cos(query.anim_time*360-60)*3"]
 					}
 				},
 				"opercule": {

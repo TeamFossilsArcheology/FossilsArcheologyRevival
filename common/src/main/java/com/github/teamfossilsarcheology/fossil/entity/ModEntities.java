@@ -66,7 +66,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Megalograptus>> MEGALOGRAPTUS = registerDino("megalograptus", Megalograptus::new, 1.8f, 0.75f);
     public static final RegistrySupplier<EntityType<Meganeura>> MEGANEURA = registerDino("meganeura", Meganeura::new, 2.5f, 1.25f);
     public static final RegistrySupplier<EntityType<Mosasaurus>> MOSASAURUS = registerAquatic("mosasaurus", Mosasaurus::new, 1.3f, 0.6f);
-    public static final RegistrySupplier<EntityType<Nautilus>> NAUTILUS = registerFish("nautilus", Nautilus::new, 0.8f, 1);
+    public static final RegistrySupplier<EntityType<Nautilus>> NAUTILUS = registerFish("nautilus", Nautilus::new, 0.8f, 0.795f);
     public static final RegistrySupplier<EntityType<Ornitholestes>> ORNITHOLESTES = registerDino("ornitholestes", Ornitholestes::new, 2.25f, 1.9f);
     public static final RegistrySupplier<EntityType<Pachycephalosaurus>> PACHYCEPHALOSAURUS = registerDino("pachycephalosaurus", Pachycephalosaurus::new, 1, 1.5f);
     public static final RegistrySupplier<EntityType<Pachyrhinosaurus>> PACHYRHINOSAURUS = registerDino("pachyrhinosaurus", Pachyrhinosaurus::new, 1.4f, 1.5f);
