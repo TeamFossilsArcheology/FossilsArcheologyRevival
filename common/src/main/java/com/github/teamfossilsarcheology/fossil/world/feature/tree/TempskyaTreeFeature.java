@@ -31,7 +31,11 @@ public class TempskyaTreeFeature extends CustomTreeFeature {
             level.setBlock(pos.above(i), log, 3);
             for (Direction direction : Direction.Plane.HORIZONTAL) {
                 if (random.nextInt(3) == 0) {
-                    level.setBlock(pos.above(i).relative(direction), leaves.setValue(TempskyaLeafBlock.FACING, direction), 3);
+                    BlockPos leafPos = pos.above(i).relative(direction);
+                    BlockState stateAtPos = level.getBlockState(leafPos);
+                    if (stateAtPos.getMaterial().isReplaceable()) {
+                        level.setBlock(leafPos, leaves.setValue(TempskyaLeafBlock.FACING, direction), 3);
+                    }
                 }
             }
         }
