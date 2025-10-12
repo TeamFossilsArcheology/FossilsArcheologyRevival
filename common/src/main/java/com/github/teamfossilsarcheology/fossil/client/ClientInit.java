@@ -38,6 +38,7 @@ import dev.architectury.registry.client.particle.ParticleProviderRegistry;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
 import dev.architectury.registry.client.rendering.RenderTypeRegistry;
+import dev.architectury.registry.item.ItemPropertiesRegistry;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
@@ -47,6 +48,7 @@ import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LightningBoltRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
@@ -67,9 +69,9 @@ public class ClientInit {
     public static KeyMapping debugReverseKey;
     public static KeyMapping debugHelpKey;
 
-    public static KeyMapping flyUpKey = new KeyMapping("key.fossil.fly_up", InputConstants.Type.KEYSYM, InputConstants.KEY_SPACE,
+    public static final KeyMapping flyUpKey = new KeyMapping("key.fossil.fly_up", InputConstants.Type.KEYSYM, InputConstants.KEY_SPACE,
             "category.fossil.controls");
-    public static KeyMapping flyDownKey = new KeyMapping("key.fossil.fly_down", InputConstants.Type.KEYSYM, InputConstants.KEY_LALT,
+    public static final KeyMapping flyDownKey = new KeyMapping("key.fossil.fly_down", InputConstants.Type.KEYSYM, InputConstants.KEY_LALT,
             "category.fossil.controls");
 
     private static boolean jumpLastTick;
@@ -102,6 +104,7 @@ public class ClientInit {
         ParticleProviderRegistry.register(ModParticles.VOLCANO_VENT_ASH_EMITTER, new VolcanoVentAshEmitterParticle.Provider());
         ParticleProviderRegistry.register(ModParticles.BUBBLE, BubbleParticle.Provider::new);
         ParticleProviderRegistry.register(ModParticles.TAR_BUBBLE, TarBubbleParticle.Provider::new);
+        ParticleProviderRegistry.register(ModParticles.LASER_PARTICLE, LaserParticle.Provider::new);
     }
 
     public static void later() {
@@ -161,12 +164,18 @@ public class ClientInit {
         KeyMappingRegistry.register(flyDownKey);
         registerBlockRenderers();
         registerEventHandlers();
+        registerItemProperties();
         MenuScreens.register(ModMenus.FEEDER.get(), FeederScreen::new);
         MenuScreens.register(ModMenus.SIFTER.get(), SifterScreen::new);
         MenuScreens.register(ModMenus.CULTURE_VAT.get(), CultureVatScreen::new);
         MenuScreens.register(ModMenus.ANALYZER.get(), AnalyzerScreen::new);
         MenuScreens.register(ModMenus.WORKTABLE.get(), WorktableScreen::new);
         CreativeTabFilters.register();
+    }
+
+    private static void registerItemProperties() {
+        ItemPropertiesRegistry.register(ModItems.LASER_POINTER.get(),
+                new ResourceLocation("using"), (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0);
     }
 
     private static void registerEntityRenderers() {
@@ -236,6 +245,8 @@ public class ClientInit {
         registerTrilobite(ModEntities.WALLISEROPS);
         EntityRendererRegistry.register(ModEntities.DINOSAUR_EGG, DinosaurEggRenderer::new);
         EntityRendererRegistry.register(ModEntities.THROWN_BIRD_EGG, ThrownItemRenderer::new);
+
+        EntityRendererRegistry.register(ModEntities.LASER_POINT, LaserPointRenderer::new);
 
         EntityRendererRegistry.register(ModEntities.ANUBITE, AnubiteRenderer::new);
         EntityRendererRegistry.register(ModEntities.ANU_BOSS, AnuBossRenderer::new);

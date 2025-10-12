@@ -116,6 +116,8 @@ public class ModEntities {
 
     public static final RegistrySupplier<EntityType<StoneTablet>> STONE_TABLET = registerMisc("stone_tablet", StoneTablet::new, 0.5f, 0.5f, 10, Integer.MAX_VALUE);
 
+    public static final RegistrySupplier<EntityType<LaserPointEntity>> LASER_POINT = registerMisc("laser_point", LaserPointEntity::new, 0.2f, 0.2f, 10, 3);
+
     public static final RegistrySupplier<EntityType<Javelin>> JAVELIN = registerMisc("javelin", Javelin::new, 0.5f, 0.5f, 4, 20);
     public static final RegistrySupplier<EntityType<AncientLightningBolt>> ANCIENT_LIGHTNING_BOLT = ENTITIES.register("ancient_lightning_bolt",
             () -> EntityType.Builder.of(AncientLightningBolt::new, MobCategory.MISC).sized(0, 0)
@@ -205,6 +207,7 @@ public class ModEntities {
         EntityAttributeRegistry.register(SCOTOHARPES, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(WALLISEROPS, Prehistoric::createAttributes);
 
+        EntityAttributeRegistry.register(LASER_POINT, LaserPointEntity::createAttributes);
         EntityAttributeRegistry.register(ANUBITE, Anubite::createAttributes);
         EntityAttributeRegistry.register(ANU_BOSS, AnuBoss::createAttributes);
         EntityAttributeRegistry.register(ANU_DEAD, AnuDead::createAttributes);

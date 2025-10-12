@@ -11,9 +11,11 @@ import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import com.github.teamfossilsarcheology.fossil.util.TimePeriod;
 import dev.architectury.core.item.ArchitecturyBucketItem;
 import dev.architectury.core.item.ArchitecturySpawnEggItem;
+import dev.architectury.registry.item.ItemPropertiesRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
@@ -29,6 +31,8 @@ import java.util.stream.Collectors;
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(FossilMod.MOD_ID, Registry.ITEM_REGISTRY);
 
+    public static final RegistrySupplier<Item> LASER_POINTER = ITEMS.register("laser_pointer",
+            () -> new LaserPointerItem(new Item.Properties().stacksTo(1).tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<Item> TAR_BUCKET = ITEMS.register("tar_bucket",
             () -> new ArchitecturyBucketItem(ModFluids.TAR, new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET).tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<Item> TAR_DROP = ITEMS.register("tar_drop",
