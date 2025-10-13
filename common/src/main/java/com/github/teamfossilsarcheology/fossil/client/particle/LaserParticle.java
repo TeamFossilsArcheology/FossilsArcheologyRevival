@@ -12,6 +12,8 @@ public class LaserParticle extends TextureSheetParticle {
 
         this.lifetime = 2;
 
+        this.scale(0.5f);
+
         this.rCol = 1.0f;
         this.gCol = 0.0f;
         this.bCol = 0.0f;

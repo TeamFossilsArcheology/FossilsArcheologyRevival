@@ -7,8 +7,8 @@
     "ParticleAccessor", "ScreenEffectRendererMixin", "TerrainParticleMixin", "TitleScreenMixin"
   ],
   "mixins": [
-    "AbstractFishMixin", "AnimationControllerAccessor", "ExplosionMixin", "JigsawPlacementMixin", "LivingEntityMixin", "MidnightConfigMixin", "MobMixin", "NaturalSpawnerMixin",
-    "ServerEntityMixin", "ServerPlayerMixin", "WalkNodeEvaluatorMixin"
+    "AbstractFishMixin", "AnimationControllerAccessor", "CatMixin", "ExplosionMixin", "JigsawPlacementMixin", "LivingEntityMixin", "MidnightConfigMixin", "MobMixin",
+    "NaturalSpawnerMixin", "OcelotMixin", "ServerEntityMixin", "ServerPlayerMixin", "WalkNodeEvaluatorMixin"
   ],
   "plugin": "com.github.teamfossilsarcheology.fossil.fabric.FabricFossilMixinPlugin",
   "injectors": {

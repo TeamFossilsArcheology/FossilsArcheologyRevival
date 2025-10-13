@@ -83,6 +83,11 @@ public class LaserPointEntity extends LivingEntity {
 
 
     @Override
+    public boolean fireImmune() {
+        return true;
+    }
+
+    @Override
     public boolean isPickable() {
         return true;
     }
