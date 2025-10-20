@@ -230,6 +230,8 @@
   "item.fossil.stone_javelin": "Stone Javelin",
   "item.fossil.wooden_javelin": "Wooden Javelin",
   "item.fossil.laser_pointer": "Laser Pointer",
+  "block.fossil.large_chain_fence": "Large Chain Fence",
+  "block.fossil.small_chain_fence": "Small Chain Fence",
   "block.fossil.amber_block": "Amber Block",
   "block.fossil.amber_chunk": "Amber Chunk",
   "block.fossil.amber_chunk_dominican": "Dominican Amber Chunk",

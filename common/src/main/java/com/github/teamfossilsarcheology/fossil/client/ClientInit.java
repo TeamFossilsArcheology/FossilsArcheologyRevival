@@ -405,6 +405,8 @@ public class ClientInit {
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.AMBER_CHUNK_MOSQUITO.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.SHELL.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.COMFY_BED.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.LARGE_CHAIN_FENCE.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.SMALL_CHAIN_FENCE.get());
 
         BlockEntityRendererRegistry.register(ModBlockEntities.ANU_STATUE.get(), AnuStatueRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.ANUBITE_STATUE.get(), AnubiteStatueRenderer::new);
