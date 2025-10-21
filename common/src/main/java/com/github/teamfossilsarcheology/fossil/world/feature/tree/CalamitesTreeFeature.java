@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.world.feature.tree;
 
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
+import com.github.teamfossilsarcheology.fossil.block.custom_blocks.TempskyaLeafBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
@@ -9,73 +10,101 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CalamitesTreeFeature extends CustomTreeFeature {
 
-    @Override
-    protected boolean placeTree(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        //Redo this correctly after 1.18
+    boolean placeLargeVariant(FeaturePlaceContext<NoneFeatureConfiguration> context){
+        return true;
+    }
+
+    boolean placeMediumVariant(FeaturePlaceContext<NoneFeatureConfiguration> context){
         WorldGenLevel level = context.level();
         BlockPos pos = context.origin();
-        int treeHeight = context.random().nextInt(15) + 15;
+
+        BlockState log = ModBlocks.CALAMITES_LOG.get().defaultBlockState();
+        BlockState leaves = ModBlocks.CALAMITES_LEAVES.get().defaultBlockState();
+
+        int treeHeight = 14 + context.random().nextInt(9) - 4; // puts it in the range [10, 18]
+
         int m = getMaxFreeTreeHeight(level, treeHeight, pos);
         if (m < treeHeight) {
             return false;
         }
+
+        for (int i = 0; i < treeHeight; ++i) {
+            level.setBlock(pos.above(i), log, 19);
+        }
+
+        // TODO: leaves and shit
+
+        return true;
+    }
+
+    boolean placeSmallVariant(FeaturePlaceContext<NoneFeatureConfiguration> context){
+        WorldGenLevel level = context.level();
+        BlockPos pos = context.origin();
+
         BlockState log = ModBlocks.CALAMITES_LOG.get().defaultBlockState();
         BlockState leaves = ModBlocks.CALAMITES_LEAVES.get().defaultBlockState();
 
-        BlockPos canopyCenter = pos.above();
-        int minWidth = 2;
-        int maxWidth = 4;
-        float widthStep = (float) (maxWidth - minWidth) / treeHeight;
-        while (canopyCenter.getY() < pos.above(treeHeight - 1).getY()) {
-            int difference = pos.above(treeHeight).getY() - canopyCenter.getY();
-            float canopyWidth = minWidth + (widthStep * difference);
-            if (difference > 4) {
-                canopyCenter = canopyCenter.above(4);
-                genCircle(level, canopyCenter, canopyWidth - 2, false);
-                genCircle(level, canopyCenter.above(), canopyWidth - 1, false);
-                level.setBlock(canopyCenter.north(), log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.Z), 19);
-                level.setBlock(canopyCenter.west(), log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.X), 19);
-                level.setBlock(canopyCenter.east(), log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.X), 19);
-                level.setBlock(canopyCenter.south(), log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.Z), 19);
-                genCircle(level, canopyCenter.above(2), canopyWidth, true);
-                genCircle(level, canopyCenter.above(3), canopyWidth + 1, true);
-            } else {
-                BlockPos.MutableBlockPos topBlocks = canopyCenter.above(difference).mutable();
-                level.setBlock(topBlocks, log, 19);
-                level.setBlock(topBlocks.move(Direction.UP, 1), log, 19);
-                level.setBlock(topBlocks.move(Direction.UP, 1), log, 19);
-                placeLeaf(level, topBlocks.north(), leaves);
-                placeLeaf(level, topBlocks.west(), leaves);
-                placeLeaf(level, topBlocks.east(), leaves);
-                placeLeaf(level, topBlocks.south(), leaves);
-                placeLeaf(level, topBlocks.move(Direction.UP, 1), leaves);
-                canopyCenter = canopyCenter.above(4);
-            }
+        int treeHeight = 8 + context.random().nextInt(3) - 1; // puts it in the range [7, 9]
+
+
+        int m = getMaxFreeTreeHeight(level, treeHeight, pos);
+        if (m < treeHeight) {
+            return false;
         }
+
         for (int i = 0; i < treeHeight; ++i) {
             level.setBlock(pos.above(i), log, 19);
+        }
+
+        List<BlockPos> leafPositions = new ArrayList<>();
+
+        if (treeHeight <= 9) {
+            int variant = context.random().nextInt(3); // 0,1,2
+            switch (variant) {
+                case 0 -> leafPositions.addAll(TreeBranchLayouts.CALAMITES_SMALL_0);
+                case 1 -> leafPositions.addAll(TreeBranchLayouts.CALAMITES_SMALL_1);
+                case 2 -> leafPositions.addAll(TreeBranchLayouts.CALAMITES_SMALL_2);
+            }
+
+            // try to add one or two leaf blocks on top of the trunk, subtle variation :)
+            if(context.random().nextBoolean()){
+                leafPositions.add(new BlockPos(0, 0, 0));
+                if(context.random().nextBoolean()){
+                    leafPositions.add(new BlockPos(0, 1, 0));
+                }
+            }
+        }
+
+        for (int i = 0; i < leafPositions.size(); i++) {
+            BlockPos leafPos = leafPositions.get(i);
+            BlockPos worldPos = pos.above(treeHeight).offset(leafPos);  // Calculate world position
+            BlockState stateAtPos = level.getBlockState(worldPos);
+            if (stateAtPos.canBeReplaced()) {
+                placeLeaf(level, pos.above(treeHeight).offset(leafPos), leaves);
+            }
         }
         return true;
     }
 
-    private void genCircle(WorldGenLevel level, BlockPos pos, float size, boolean spikes) {
-        BlockState leaves = ModBlocks.CALAMITES_LEAVES.get().defaultBlockState();
-        for (BlockPos blockpos : BlockPos.betweenClosed(pos.offset(-size, 0, -size), pos.offset(size, 0, size))) {
-            int distanceX = Math.abs(blockpos.getX() - pos.getX());
-            int distanceZ = Math.abs(blockpos.getZ() - pos.getZ());
-            if (spikes) {
-                boolean corner = blockpos.getX() == pos.getX() || blockpos.getZ() == pos.getZ() || distanceX == distanceZ;
-                if (corner && blockpos.distSqr(pos) > (double) (size - 1) * (size - 1) && blockpos.distSqr(pos) <= size * size) {
-                    placeLeaf(level, blockpos, leaves);
-                }
-            } else {
-                if (blockpos.distSqr(pos) <= size * size) {
-                    placeLeaf(level, blockpos, leaves);
-                }
+    @Override
+    protected boolean placeTree(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        switch(context.random().nextInt(8)){
+            case 0, 1, 2, 3, 4 -> {
+                return placeSmallVariant(context); // 62%
             }
-
+            case 5, 6 -> {
+                return placeMediumVariant(context); // 25%
+            }
+            case 7 -> {
+                return placeLargeVariant(context); // 12%
+            }
         }
+
+        return true;
     }
 }
