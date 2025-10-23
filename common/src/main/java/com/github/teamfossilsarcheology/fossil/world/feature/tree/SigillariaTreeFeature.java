@@ -9,75 +9,322 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SigillariaTreeFeature extends CustomTreeFeature {
-    @Override
-    protected boolean placeTree(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        //Redo this correctly after 1.18
+
+    // TODO: this code is kinda ugly. too tired to clean it up right now though.
+    // some places could use the ternary operator and others could use for loops
+
+    boolean placeLargeVariant(FeaturePlaceContext<NoneFeatureConfiguration> context){
         WorldGenLevel level = context.level();
         BlockPos pos = context.origin();
-        Random random = context.random();
-        int treeHeight = random.nextInt(7) + 15;
+
+        BlockState log = ModBlocks.SIGILLARIA_LOG.get().defaultBlockState();
+        BlockState leaves = ModBlocks.SIGILLARIA_LEAVES.get().defaultBlockState();
+
+        int treeHeight = 21 + context.random().nextInt(9) - 4; // puts it in the range [17, 25]
+
+
         int m = getMaxFreeTreeHeight(level, treeHeight, pos);
         if (m < treeHeight) {
             return false;
         }
-        BlockState log = ModBlocks.SIGILLARIA_LOG.get().defaultBlockState();
 
-        for (Direction direction : Direction.Plane.HORIZONTAL) {
-            level.setBlock(pos.relative(direction, 2), log.setValue(RotatedPillarBlock.AXIS, direction.getAxis()), 19);
-        }
-        boolean twins = random.nextInt(4) != 0;
-        for (int i = 0; i < treeHeight; i++) {
+        int thickHeight = (int) Math.floor(treeHeight * 0.35);
+
+        for (int i = 0; i < treeHeight; ++i) {
             level.setBlock(pos.above(i), log, 19);
-            if (i < (treeHeight - (twins ? -2 : 4)) * 0.65) {
-                for (Direction direction : Direction.Plane.HORIZONTAL) {
-                    level.setBlock(pos.above(i).relative(direction), log, 19);
+
+            // make base thick
+            if (i < thickHeight) {
+                BlockPos eastPos = pos.offset(1, i, 0);
+                BlockState stateEast = level.getBlockState(eastPos);
+                if (stateEast.getMaterial().isReplaceable()) {
+                    level.setBlock(eastPos, log, 19);
+                }
+
+                BlockPos westPos = pos.offset(-1, i, 0);
+                BlockState stateWest = level.getBlockState(westPos);
+                if (stateWest.getMaterial().isReplaceable()) {
+                    level.setBlock(westPos, log, 19);
+                }
+
+                BlockPos southPos = pos.offset(0, i, 1);
+                BlockState stateSouth = level.getBlockState(southPos);
+                if (stateSouth.getMaterial().isReplaceable()) {
+                    level.setBlock(southPos, log, 19);
+                }
+
+                BlockPos northPos = pos.offset(0, i, -1);
+                BlockState stateNorth = level.getBlockState(northPos);
+                if (stateNorth.getMaterial().isReplaceable()) {
+                    level.setBlock(northPos, log, 19);
                 }
             }
         }
 
-        BlockPos top = pos.above(treeHeight);
-        if (twins) {
-            Direction direction = Direction.from2DDataValue(random.nextInt(4));
-            float bushWidth = random.nextInt(2) + 2;
-            int secondHeight = 3 + random.nextInt(2) + (int) bushWidth;
-            for (int i = 0; i <= secondHeight; i++) {
-                BlockPos offsetLeft = top.relative(direction, i).above(i);
-                BlockPos offsetRight = top.relative(direction.getOpposite(), i).above(i);
-                level.setBlock(offsetLeft, log, 19);
-                level.setBlock(offsetRight, log, 19);
-                if (i == secondHeight) {
-                    int bushHeight = random.nextInt(2) + 6;
-                    genCone(level, offsetLeft.above(bushHeight / 2).relative(direction, -1), bushWidth, bushHeight, random);
-                    genCone(level, offsetRight.above(bushHeight / 2).relative(direction.getOpposite(), -1), bushWidth, bushHeight, random);
+        BlockPos north = pos.north().north(); // hop two blocks because the trunk is thick
+        BlockPos south = pos.south().south();
+        BlockPos east  = pos.east().east();
+        BlockPos west  = pos.west().west();
+
+        level.setBlock(north, log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.Z), 19);
+        level.setBlock(south, log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.Z), 19);
+        level.setBlock(east,  log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.X), 19);
+        level.setBlock(west,  log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.X), 19);
+
+        List<BlockPos> leafPositions;
+
+        // no fork
+        if(context.random().nextBoolean() && false) {
+            if (context.random().nextBoolean()) {
+                leafPositions = TreeBranchLayouts.SIGILLARIA_LEAVES_A;
+            } else {
+                leafPositions = TreeBranchLayouts.SIGILLARIA_LEAVES_B;
+            }
+
+            for (int i = 0; i < leafPositions.size(); i++) {
+                BlockPos leafPos = leafPositions.get(i);
+                BlockPos worldPos = pos.above(treeHeight - 2).offset(leafPos);
+                BlockState stateAtPos = level.getBlockState(worldPos);
+                if (stateAtPos.getMaterial().isReplaceable()) {
+                    placeLeaf(level, pos.above(treeHeight - 2).offset(leafPos), leaves);
                 }
             }
-        } else {
-            genCone(level, top.below(2), random.nextInt(2) + 2, random.nextInt(2) + 6, random);
         }
+        else{ // yes fork
+            int branchLength = 4;
+            int branchTrunkHeight = 7;
+
+            boolean isZAligned = context.random().nextBoolean();
+
+            BlockPos branchTop1;
+            BlockPos branchTop2;
+
+            if (isZAligned) {
+                // north branch
+                for (int i = 0; i < branchLength; i++) {
+                    BlockPos forkPos = pos.above(treeHeight + i).offset(0, 0, -1 - i);
+                    BlockState stateAtFork = level.getBlockState(forkPos);
+                    if (stateAtFork.getMaterial().isReplaceable()) {
+                        level.setBlock(forkPos, log, 19);
+                    }
+                }
+
+                for (int i = 0; i < branchLength - 1; i++) {
+                    BlockPos forkPos = pos.above(treeHeight + i).offset(0, -1, -1 - i);
+                    BlockState stateAtFork = level.getBlockState(forkPos);
+                    if (stateAtFork.getMaterial().isReplaceable()) {
+                        level.setBlock(forkPos, log, 19);
+                    }
+                }
+
+                // south branch
+                for (int i = 0; i < branchLength; i++) {
+                    BlockPos forkPos = pos.above(treeHeight + i).offset(0, 0, 1 + i);
+                    BlockState stateAtFork = level.getBlockState(forkPos);
+                    if (stateAtFork.getMaterial().isReplaceable()) {
+                        level.setBlock(forkPos, log, 19);
+                    }
+                }
+
+                for (int i = 0; i < branchLength - 1; i++) {
+                    BlockPos forkPos = pos.above(treeHeight + i).offset(0, -1, 1 + i);
+                    BlockState stateAtFork = level.getBlockState(forkPos);
+                    if (stateAtFork.getMaterial().isReplaceable()) {
+                        level.setBlock(forkPos, log, 19);
+                    }
+                }
+
+                branchTop1 = pos.above(treeHeight + branchLength - 1).offset(0, branchTrunkHeight, -branchLength);
+                branchTop2 = pos.above(treeHeight + branchLength - 1).offset(0, branchTrunkHeight, branchLength);
+            } else {
+                // west branch
+                for (int i = 0; i < branchLength; i++) {
+                    BlockPos forkPos = pos.above(treeHeight + i).offset(-1 - i, 0, 0);
+                    BlockState stateAtFork = level.getBlockState(forkPos);
+                    if (stateAtFork.getMaterial().isReplaceable()) {
+                        level.setBlock(forkPos, log, 19);
+                    }
+                }
+
+                for (int i = 0; i < branchLength - 1; i++) {
+                    BlockPos forkPos = pos.above(treeHeight + i).offset(-1 - i, -1, 0);
+                    BlockState stateAtFork = level.getBlockState(forkPos);
+                    if (stateAtFork.getMaterial().isReplaceable()) {
+                        level.setBlock(forkPos, log, 19);
+                    }
+                }
+
+                // east branch
+                for (int i = 0; i < branchLength; i++) {
+                    BlockPos forkPos = pos.above(treeHeight + i).offset(1 + i, 0, 0);
+                    BlockState stateAtFork = level.getBlockState(forkPos);
+                    if (stateAtFork.getMaterial().isReplaceable()) {
+                        level.setBlock(forkPos, log, 19);
+                    }
+                }
+
+                for (int i = 0; i < branchLength - 1; i++) {
+                    BlockPos forkPos = pos.above(treeHeight + i).offset(1 + i, - 1, 0);
+                    BlockState stateAtFork = level.getBlockState(forkPos);
+                    if (stateAtFork.getMaterial().isReplaceable()) {
+                        level.setBlock(forkPos, log, 19);
+                    }
+                }
+
+                branchTop1 = pos.above(treeHeight + branchLength - 1).offset(-branchLength, branchTrunkHeight, 0);
+                branchTop2 = pos.above(treeHeight + branchLength - 1).offset(branchLength, branchTrunkHeight, 0);
+            }
+
+            for (int i = 0; i < branchTrunkHeight; i++) {
+                BlockState stateAtFork1 = level.getBlockState(branchTop1.offset(0, -i - 1, 0));
+                if (stateAtFork1.getMaterial().isReplaceable()) {
+                    level.setBlock(branchTop1.offset(0, -i - 1, 0), log, 19);
+                }
+
+                BlockState stateAtFork2 = level.getBlockState(branchTop2.offset(0, -i - 1, 0));
+                if (stateAtFork2.getMaterial().isReplaceable()) {
+                    level.setBlock(branchTop2.offset(0, -i - 1, 0), log, 19);
+                }
+            }
+
+            for (BlockPos leafOffset : TreeBranchLayouts.SIGILLARIA_LEAVES_B) {
+                BlockPos worldPos = branchTop1.offset(leafOffset).below().below();
+                BlockState stateAtPos = level.getBlockState(worldPos);
+                if (stateAtPos.getMaterial().isReplaceable()) {
+                    placeLeaf(level, worldPos, leaves);
+                }
+            }
+
+            for (BlockPos leafOffset : TreeBranchLayouts.SIGILLARIA_LEAVES_B) {
+                BlockPos worldPos = branchTop2.offset(leafOffset).below().below();
+                BlockState stateAtPos = level.getBlockState(worldPos);
+                if (stateAtPos.getMaterial().isReplaceable()) {
+                    placeLeaf(level, worldPos, leaves);
+                }
+            }
+        }
+
         return true;
     }
 
-    private void genCone(WorldGenLevel level, BlockPos pos, float size, float height, Random random) {
+    boolean placeMediumVariant(FeaturePlaceContext<NoneFeatureConfiguration> context){
+        WorldGenLevel level = context.level();
+        BlockPos pos = context.origin();
+
         BlockState log = ModBlocks.SIGILLARIA_LOG.get().defaultBlockState();
         BlockState leaves = ModBlocks.SIGILLARIA_LEAVES.get().defaultBlockState();
-        float f = (size + height + size) * 0.333f + 0.5f;
-        for (BlockPos blockpos : BlockPos.betweenClosed(pos.offset(-size, -height, -size), pos.offset(size, height, size))) {
-            int distanceX = Math.abs(blockpos.getX() - pos.getX());
-            int distanceZ = Math.abs(blockpos.getZ() - pos.getZ());
-            int distanceY = Math.abs(blockpos.getY() - pos.getY());
-            if (blockpos.distSqr(pos) <= (double) (f * f)) {
-                if (distanceX * distanceX + distanceZ * distanceZ < (f * f * (0.5f + random.nextFloat() * 0.5f)) * ((1 - distanceY % 2) + 0.25f)) {
-                    placeLeaf(level, blockpos, leaves);
-                }
+
+        int treeHeight = 16 + context.random().nextInt(7) - 3; // puts it in the range [13, 19]
+
+
+        int m = getMaxFreeTreeHeight(level, treeHeight, pos);
+        if (m < treeHeight) {
+            return false;
+        }
+
+        for (int i = 0; i < treeHeight; ++i) {
+            level.setBlock(pos.above(i), log, 19);
+        }
+
+        BlockPos north = pos.north();
+        BlockPos south = pos.south();
+        BlockPos east  = pos.east();
+        BlockPos west  = pos.west();
+
+        level.setBlock(north, log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.Z), 19);
+        level.setBlock(south, log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.Z), 19);
+        level.setBlock(east,  log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.X), 19);
+        level.setBlock(west,  log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.X), 19);
+
+        List<BlockPos> leafPositions;
+
+        if(context.random().nextBoolean()){
+            leafPositions = TreeBranchLayouts.SIGILLARIA_LEAVES_A;
+        }
+        else{
+            leafPositions = TreeBranchLayouts.SIGILLARIA_LEAVES_B;
+        }
+
+        for (int i = 0; i < leafPositions.size(); i++) {
+            BlockPos leafPos = leafPositions.get(i);
+            BlockPos worldPos = pos.above(treeHeight - 2).offset(leafPos);
+            BlockState stateAtPos = level.getBlockState(worldPos);
+            if (stateAtPos.getMaterial().isReplaceable()) {
+                placeLeaf(level, pos.above(treeHeight - 2).offset(leafPos), leaves);
             }
         }
-        for (BlockPos blockpos : BlockPos.betweenClosed(pos.below((int) height), pos.above((int) height - 4))) {
-            if (blockpos.distSqr(pos) <= (double) (f * f)) {
-                level.setBlock(blockpos, log, 19);
+
+        return true;
+    }
+
+    boolean placeSmallVariant(FeaturePlaceContext<NoneFeatureConfiguration> context){
+        WorldGenLevel level = context.level();
+        BlockPos pos = context.origin();
+
+        BlockState log = ModBlocks.SIGILLARIA_LOG.get().defaultBlockState();
+        BlockState leaves = ModBlocks.SIGILLARIA_LEAVES.get().defaultBlockState();
+
+        int treeHeight = 8 + context.random().nextInt(3) - 1; // puts it in the range [7, 9]
+
+
+        int m = getMaxFreeTreeHeight(level, treeHeight, pos);
+        if (m < treeHeight) {
+            return false;
+        }
+
+        for (int i = 0; i < treeHeight; ++i) {
+            level.setBlock(pos.above(i), log, 19);
+        }
+
+        BlockPos north = pos.north();
+        BlockPos south = pos.south();
+        BlockPos east  = pos.east();
+        BlockPos west  = pos.west();
+
+        level.setBlock(north, log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.Z), 19);
+        level.setBlock(south, log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.Z), 19);
+        level.setBlock(east,  log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.X), 19);
+        level.setBlock(west,  log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.X), 19);
+
+        List<BlockPos> leafPositions = new ArrayList<>();
+
+        if(context.random().nextBoolean()){
+            leafPositions = TreeBranchLayouts.SIGILLARIA_SMALL_VARIANT_A;
+        }
+        else{
+            leafPositions = TreeBranchLayouts.SIGILLARIA_SMALL_VARIANT_B;
+        }
+
+        for (int i = 0; i < leafPositions.size(); i++) {
+            BlockPos leafPos = leafPositions.get(i);
+            BlockPos worldPos = pos.above(treeHeight - 1).offset(leafPos);
+            BlockState stateAtPos = level.getBlockState(worldPos);
+            if (stateAtPos.getMaterial().isReplaceable()) {
+                placeLeaf(level, pos.above(treeHeight - 1).offset(leafPos), leaves);
             }
         }
+
+        return true;
+    }
+
+    @Override
+    protected boolean placeTree(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        switch(context.random().nextInt(8)){
+            case 0, 1 -> {
+                return placeSmallVariant(context); // 25% chance
+            }
+            case 2, 3, 4, 5, 6 -> {
+                return placeMediumVariant(context); // 62%
+            }
+            case 7 -> {
+                return placeLargeVariant(context); // 12%
+            }
+        }
+
+        return true;
     }
 }
