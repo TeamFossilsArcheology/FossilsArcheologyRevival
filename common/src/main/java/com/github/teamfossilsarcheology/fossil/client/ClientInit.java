@@ -222,6 +222,7 @@ public class ClientInit {
         registerDino(ModEntities.PHORUSRHACOS, "phorusrhacos");
         registerDino(ModEntities.PLATYBELODON, "platybelodon");
         registerDino(ModEntities.PLESIOSAURUS, "plesiosaurus", RenderType::entityCutout);
+        registerDino(ModEntities.POSTOSUCHUS, "postosuchus");
         registerDino(ModEntities.PROTOCERATOPS, "protoceratops", RenderType::entityCutout);
         registerDino(ModEntities.PSITTACOSAURUS, "psittacosaurus");
         registerDino(ModEntities.PTERANODON, "pteranodon");

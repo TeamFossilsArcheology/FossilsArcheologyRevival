@@ -74,6 +74,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Phorusrhacos>> PHORUSRHACOS = registerDino("phorusrhacos", Phorusrhacos::new, 1.2f, 2f);
     public static final RegistrySupplier<EntityType<Platybelodon>> PLATYBELODON = registerDino("platybelodon", Platybelodon::new, 1.5f, 1.9f);
     public static final RegistrySupplier<EntityType<Plesiosaurus>> PLESIOSAURUS = registerAquatic("plesiosaurus", Plesiosaurus::new, 1, 1);
+    public static final RegistrySupplier<EntityType<Postosuchus>> POSTOSUCHUS = registerDino("postosuchus", Postosuchus::new, 0.7f, 1f);
     public static final RegistrySupplier<EntityType<Protoceratops>> PROTOCERATOPS = registerDino("protoceratops", Protoceratops::new, 1.5f, 1.25f);
     public static final RegistrySupplier<EntityType<Psittacosaurus>> PSITTACOSAURUS = registerDino("psittacosaurus", Psittacosaurus::new, 1.5f, 1.25f);
     public static final RegistrySupplier<EntityType<Pteranodon>> PTERANODON = registerDino("pteranodon", Pteranodon::new, 0.7f, 1f);
@@ -186,6 +187,7 @@ public class ModEntities {
         EntityAttributeRegistry.register(PHORUSRHACOS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PLATYBELODON, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PLESIOSAURUS, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(POSTOSUCHUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PROTOCERATOPS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PSITTACOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PTERANODON, PrehistoricFlying::createAttributes);

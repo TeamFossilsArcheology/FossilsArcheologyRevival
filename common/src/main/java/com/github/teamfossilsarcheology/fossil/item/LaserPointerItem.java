@@ -21,11 +21,16 @@ import net.minecraft.world.phys.Vec3;
 import java.util.UUID;
 
 public class LaserPointerItem extends Item {
-    public double LASER_RANGE = 50;
+    private static final double LASER_RANGE = 50;
     private static final String TAG_LASER_ENTITY_UUID = "LaserEntityUUID";
+    private static final String TAG_USE_START_TIME = "UseStartTime";
+
+
+    private static final float LASER_ACTIVE_LIFESPAN_MINUTES = 15f;
+
 
     public LaserPointerItem(Properties properties) {
-        super(properties);
+        super(properties.durability((int)(LASER_ACTIVE_LIFESPAN_MINUTES * 60)));
     }
 
     @Override
@@ -48,6 +53,7 @@ public class LaserPointerItem extends Item {
             level.addFreshEntity(laserPoint);
 
             stack.getOrCreateTag().putUUID(TAG_LASER_ENTITY_UUID, laserPoint.getUUID());
+            stack.getOrCreateTag().putLong(TAG_USE_START_TIME, level.getGameTime());
         }
 
         player.startUsingItem(hand);
@@ -66,6 +72,21 @@ public class LaserPointerItem extends Item {
                 }
                 tag.remove(TAG_LASER_ENTITY_UUID);
             }
+
+            // apply durability
+            // we are only applying durability after release so that the item doesn't keep bobbing
+            // every time the durability decreases
+            if (tag != null && tag.contains(TAG_USE_START_TIME)) {
+                long startTime = tag.getLong(TAG_USE_START_TIME);
+                long useDuration = level.getGameTime() - startTime;
+                int damageToApply = (int) (useDuration / 20); // 1 damage per second
+
+                if (damageToApply > 0) {
+                    stack.hurtAndBreak(damageToApply, living, (p) -> p.broadcastBreakEvent(living.getUsedItemHand()));
+                }
+
+                tag.remove(TAG_USE_START_TIME);
+            }
         }
     }
 
@@ -73,6 +94,34 @@ public class LaserPointerItem extends Item {
     @Override
     public void onUseTick(Level level, LivingEntity living, ItemStack stack, int remainingUseDuration) {
         if (!(living instanceof Player player)) return;
+
+        // check if the laser should have broken by now (since we are only applying durability after release)
+        // this is to prevent players from cheating by just not releasing the laser
+        if (!level.isClientSide() && level.getGameTime() % 20 == 0) {
+            CompoundTag tag = stack.getTag();
+            if (tag != null && tag.contains(TAG_USE_START_TIME)) {
+                long startTime = tag.getLong(TAG_USE_START_TIME);
+                long useDuration = level.getGameTime() - startTime;
+                int damageToApply = (int) (useDuration / 20);
+
+                if (stack.getDamageValue() + damageToApply >= stack.getMaxDamage()) {
+                    player.stopUsingItem();
+                    player.broadcastBreakEvent(player.getUsedItemHand());
+                    stack.shrink(1);
+
+                    // Clean up laser entity
+                    if (tag.hasUUID(TAG_LASER_ENTITY_UUID)) {
+                        UUID entityUUID = tag.getUUID(TAG_LASER_ENTITY_UUID);
+                        Entity entity = ((ServerLevel) level).getEntity(entityUUID);
+                        if (entity instanceof LaserPointEntity) {
+                            entity.discard();
+                        }
+                    }
+                    return;
+                }
+            }
+        }
+
 
         Vec3 eyePos = player.getEyePosition(1.0F);
         Vec3 lookVec = player.getLookAngle();
@@ -116,7 +165,7 @@ public class LaserPointerItem extends Item {
             double z = pos.z + (level.random.nextDouble() - 0.5) * 0.05;
 
             level.addParticle(
-                    ModParticles.LASER_PARTICLE.get()       ,
+                    ModParticles.LASER_PARTICLE.get(),
                     true,
                     x, y, z,
                     0, 0, 0

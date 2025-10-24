@@ -78,7 +78,7 @@ public class SigillariaTreeFeature extends CustomTreeFeature {
         List<BlockPos> leafPositions;
 
         // no fork
-        if(context.random().nextBoolean() && false) {
+        if(context.random().nextBoolean()) {
             if (context.random().nextBoolean()) {
                 leafPositions = TreeBranchLayouts.SIGILLARIA_LEAVES_A;
             } else {
@@ -290,7 +290,7 @@ public class SigillariaTreeFeature extends CustomTreeFeature {
         level.setBlock(east,  log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.X), 19);
         level.setBlock(west,  log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.X), 19);
 
-        List<BlockPos> leafPositions = new ArrayList<>();
+        List<BlockPos> leafPositions;
 
         if(context.random().nextBoolean()){
             leafPositions = TreeBranchLayouts.SIGILLARIA_SMALL_VARIANT_A;
@@ -317,11 +317,11 @@ public class SigillariaTreeFeature extends CustomTreeFeature {
             case 0, 1 -> {
                 return placeSmallVariant(context); // 25% chance
             }
-            case 2, 3, 4, 5, 6 -> {
-                return placeMediumVariant(context); // 62%
+            case 2, 3, 4 -> {
+                return placeMediumVariant(context); // 37%
             }
-            case 7 -> {
-                return placeLargeVariant(context); // 12%
+            case 5, 6, 7 -> {
+                return placeLargeVariant(context); // 37%
             }
         }
 

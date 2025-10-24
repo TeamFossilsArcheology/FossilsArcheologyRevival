@@ -1,0 +1,10 @@
+{
+  "animations": {
+    "animation.postosuchus.walk": {
+      "blocks_per_second": 0.8
+    },
+    "animation.postosuchus.run": {
+      "blocks_per_second": 8
+    }
+  }
+}

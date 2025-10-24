@@ -105,7 +105,7 @@ public class CalamitesTreeFeature extends CustomTreeFeature {
 
                     // place log branches to support leaves
                     for (Direction dir : List.of(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST)) {
-                        for (int d = 1; d <= 2; d++) {
+                        for (int d = 1; d <= 4; d++) {
                             BlockPos logPos = pos.offset(dir.getStepX() * d, sectionBaseY, dir.getStepZ() * d);
                             BlockState stateAt = level.getBlockState(logPos);
                             if (stateAt.getMaterial().isReplaceable()) {
@@ -148,13 +148,13 @@ public class CalamitesTreeFeature extends CustomTreeFeature {
 
         // place one or two leaves on top
         if (context.random().nextBoolean()) {
-            BlockPos leafPos = pos.above(treeHeight + 1);
+            BlockPos leafPos = pos.above(treeHeight);
             BlockState stateAtPos = level.getBlockState(leafPos);
             if (stateAtPos.getMaterial().isReplaceable()) {
                 placeLeaf(level, leafPos, leaves);
             }
             if (context.random().nextBoolean()) {
-                leafPos = pos.above(treeHeight + 2);
+                leafPos = pos.above(treeHeight + 1);
                 stateAtPos = level.getBlockState(leafPos);
                 if (stateAtPos.getMaterial().isReplaceable()) {
                     placeLeaf(level, leafPos, leaves);
