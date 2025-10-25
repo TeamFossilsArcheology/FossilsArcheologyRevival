@@ -42,18 +42,18 @@ public class Postosuchus extends Prehistoric {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModSounds.SMILODON_AMBIENT.get();
+        return ModSounds.MEGALANIA_AMBIENT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return ModSounds.SMILODON_HURT.get();
+        return ModSounds.MEGALANIA_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return ModSounds.SMILODON_DEATH.get();
+        return ModSounds.MEGALANIA_DEATH.get();
     }
 }
