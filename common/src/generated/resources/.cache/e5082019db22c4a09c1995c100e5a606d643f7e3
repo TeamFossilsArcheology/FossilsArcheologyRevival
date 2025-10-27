@@ -1,4 +1,4 @@
-// 1.19.2	2025-10-28T00:45:02.9521794	Fossil Item Tags
+// 1.19.2	2025-10-28T00:30:30.9481144	Fossil Item Tags
 30ad71309b4c0300cbd8e097db1b57f469960c26 data/fossil/tags/items/all_eggs.json
 748289a71b4a14833170e105ad945e76cf90203b data/fossil/tags/items/ancient_wood_logs.json
 ef19dfc8354f2b11915f6a99b787a7735d2cbb84 data/fossil/tags/items/bird_eggs.json
@@ -32,7 +32,7 @@ cf3fa263a067b16adf655ae70aa2edd9541c82e8 data/fossil/tags/items/filter_building_
 3d72794036746f13b78277fc83d8538cee793b7e data/fossil/tags/items/filter_machines.json
 33ab24f2ef432986c87c380ce8a5262ace41f6e8 data/fossil/tags/items/filter_meat.json
 6bf94e15f6c2de9a43e0f798f905de8849c8ea62 data/fossil/tags/items/filter_other.json
-8811a882a85d37b9012c5f34225389de3b800a38 data/fossil/tags/items/filter_park.json
+1dfc62b8c7f2a48e4e4ee834351d261d203ca4ed data/fossil/tags/items/filter_park.json
 1dbb7b67a536de5f23badb7d361b2f8d73e52577 data/fossil/tags/items/filter_plants.json
 c696cb08280ce73f45f151f2a096a395a34ec745 data/fossil/tags/items/filter_tools.json
 54eefdba453a3739bd8af88a2f5b4055e8d28738 data/fossil/tags/items/filter_trees.json

@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Set;
 
 public abstract class ToyBase extends Entity {
-    private static final Set<WoodType> VANILLA_WOOD_TYPES = Set.of(WoodType.OAK, WoodType.SPRUCE, WoodType.BIRCH, WoodType.ACACIA, WoodType.JUNGLE, WoodType.DARK_OAK, WoodType.CRIMSON, WoodType.WARPED);
+    private static final Set<WoodType> VANILLA_WOOD_TYPES = Set.of(WoodType.OAK, WoodType.SPRUCE, WoodType.BIRCH, WoodType.ACACIA, WoodType.JUNGLE, WoodType.DARK_OAK, WoodType.CRIMSON, WoodType.WARPED, WoodType.MANGROVE);
 
     public final int moodBonus;
     protected final SoundEvent attackNoise;

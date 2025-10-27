@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "X": {
+      "item": "minecraft:mangrove_slab"
+    }
+  },
+  "pattern": [
+    "WWW",
+    "WSW",
+    " X "
+  ],
+  "result": {
+    "item": "fossil:toy_scratching_post_mangrove"
+  }
+}
