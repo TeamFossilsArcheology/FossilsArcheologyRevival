@@ -55,11 +55,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         addTag(BlockTags.SLABS, ANCIENT_STONE_SLAB, VOLCANIC_BRICK_SLAB, VOLCANIC_TILE_SLAB);
         addTag(BlockTags.WALLS, ANCIENT_STONE_WALL, VOLCANIC_BRICK_WALL, VOLCANIC_TILE_WALL);
         addTag(BlockTags.FENCES, LARGE_CHAIN_FENCE);
-        addTag(BlockTags.FENCE_GATES, LARGE_CHAIN_FENCE);
         addTag(BlockTags.WALLS, LARGE_CHAIN_FENCE);
         addTag(BlockTags.WOODEN_FENCES, LARGE_CHAIN_FENCE);
         addTag(BlockTags.FENCES, SMALL_CHAIN_FENCE);
-        addTag(BlockTags.FENCE_GATES, SMALL_CHAIN_FENCE);
         addTag(BlockTags.WALLS, SMALL_CHAIN_FENCE);
         addTag(BlockTags.WOODEN_FENCES, SMALL_CHAIN_FENCE);
         addTag(BlockTags.RAILS, SLIME_TRAIL);

@@ -6,6 +6,8 @@
     "fossil:mutant_tree_fence",
     "fossil:palm_fence",
     "fossil:sigillaria_fence",
-    "fossil:tempskya_fence"
+    "fossil:tempskya_fence",
+    "fossil:large_chain_fence",
+    "fossil:small_chain_fence"
   ]
 }

@@ -2176,6 +2176,7 @@ f59120468d16af21096f613b22843656c0d4d220 data/fossil/loot_tables/blocks/fossil_t
 533909b4ed86edc1f7082425a05eb3a798d519a8 data/fossil/loot_tables/blocks/horsetail_large.json
 3a6e6ff17f901cb1733f09d18c2057d0f74e958b data/fossil/loot_tables/blocks/horsetail_small.json
 6df66e0e01e00be2257de14927924725ced54e80 data/fossil/loot_tables/blocks/iced_dirt.json
+d4f9b5d31e23bf90d15990e3d00d90a7512d01ba data/fossil/loot_tables/blocks/large_chain_fence.json
 42b65bed880ce286df86a9e795fb74bda109d337 data/fossil/loot_tables/blocks/licopodiophyta.json
 7d52a4bcfdc77a6c0ddfb32c817cdc4ce86cba34 data/fossil/loot_tables/blocks/mutant_plant.json
 61791d9b3ffd80014af024f23a28ebf6ce86206a data/fossil/loot_tables/blocks/mutant_tree_button.json
@@ -2232,6 +2233,7 @@ ebfff52faa3e0b26a7a96112a8ef782469b3c325 data/fossil/loot_tables/blocks/sigillar
 643442b1e83565d7ac2635e281486e41a74840ae data/fossil/loot_tables/blocks/skull.json
 e15b7666729f850edbf005717caf8aaed620518f data/fossil/loot_tables/blocks/skull_lantern.json
 3e6c2b108b4ce0e95e32c5fc78dfd427b0e9bc32 data/fossil/loot_tables/blocks/slime_trail.json
+d188692ecb855e44e37e4dacb5ea04d34280e59d data/fossil/loot_tables/blocks/small_chain_fence.json
 464fb229a036c460f32798c6600ed311bab238a9 data/fossil/loot_tables/blocks/stripped_calamites_log.json
 ffef5ee05e407b59f611ab72ad2199387d2bb3d9 data/fossil/loot_tables/blocks/stripped_calamites_wood.json
 dc75d6ad4c813ea5bd57502d7fd42b68a3461f80 data/fossil/loot_tables/blocks/stripped_cordaites_log.json
@@ -3084,6 +3086,7 @@ f5091f335ef44cbfae9b3570a499c9dd3ba23c98 data/minecraft/tags/blocks/beds.json
 9f36f409e610ac2fc403d0c1f9240c8addf92421 data/minecraft/tags/blocks/climbable.json
 b1ced62e0f6341723907659b01d05e7acd126aa0 data/minecraft/tags/blocks/dirt.json
 d0e5c6d1657285a4b0969cb80e9b05d841b908ea data/minecraft/tags/blocks/fence_gates.json
+3ab051b0ae2d31d3e22cc0181f6733da561420bb data/minecraft/tags/blocks/fences.json
 5bfb811528237ccb2695d5a79d74c1cdbff7b65a data/minecraft/tags/blocks/leaves.json
 629beb169f945e980193dc4405b976f9251ff570 data/minecraft/tags/blocks/logs_that_burn.json
 da20b4e941729738bd5679e4e8e094833caf17f7 data/minecraft/tags/blocks/mineable/axe.json
@@ -3101,10 +3104,10 @@ d5e7a157d66fea4faa3c5278aa4a8ddac4183645 data/minecraft/tags/blocks/saplings.jso
 d7c4fb5ea261e4f03e2479b3c10203f4e820cb87 data/minecraft/tags/blocks/slabs.json
 bd0e62e331edc7ace28d07c11d933e985ff7d64f data/minecraft/tags/blocks/soul_speed_blocks.json
 d7a37d0dd6cd89bf0bd2632a99da5e4b35c37ebc data/minecraft/tags/blocks/stairs.json
-d77f64c764622979ccaf5aa4445d31ffa839f11f data/minecraft/tags/blocks/walls.json
+8d2531b3d03f984f034821083c67c37e732d5072 data/minecraft/tags/blocks/walls.json
 d3991e1c6d28ebf5a5ca740c7bca37514daa081a data/minecraft/tags/blocks/wooden_buttons.json
 05a23ad531c2ae259e33573ba8ecbc10f96c6eaf data/minecraft/tags/blocks/wooden_doors.json
-687269741bacb367af9fd745c48a77fc7a1ba9f6 data/minecraft/tags/blocks/wooden_fences.json
+36da83351554f7294b62f05ea469880ce51198e2 data/minecraft/tags/blocks/wooden_fences.json
 1967f679849a61968a1c008ce8e88b712cadb055 data/minecraft/tags/blocks/wooden_pressure_plates.json
 e85b1e87d8d56a65361912f7df623eb625cd36aa data/minecraft/tags/blocks/wooden_slabs.json
 36893d75dc20065c1d1002c9c3320269cc8f2f3b data/minecraft/tags/blocks/wooden_stairs.json
