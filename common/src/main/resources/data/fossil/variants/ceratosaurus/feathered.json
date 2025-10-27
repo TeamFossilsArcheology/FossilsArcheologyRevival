@@ -1,0 +1,11 @@
+{
+  "textureName": "feathered",
+  "conditions": [
+    {
+      "type": "config",
+      "configKey": "featheredCerato"
+    }
+  ],
+  "hasBabyTexture": true,
+  "hasGenderTextures": true
+}

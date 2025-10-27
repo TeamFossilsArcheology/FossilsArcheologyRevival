@@ -927,6 +927,8 @@
   "fossil.midnightconfig.blockBreakHardness.tooltip": "Minimum hardness that a block needs in order not to break. \nThe default is iron(5). \nA value of 0.4 would be enough to break leaves and glass but not dirt",
   "fossil.midnightconfig.featheredDilo": "Feathered Dilophosaurus",
   "fossil.midnightconfig.featheredDilo.tooltip": "True if Dilophosaurus should be feathered",
+  "fossil.midnightconfig.featheredCerato": "Feathered Ceratosaurus",
+  "fossil.midnightconfig.featheredCerato.tooltip": "True if Ceratosaurus should be feathered",
   "fossil.midnightconfig.featheredDryo": "Feathered Dryosaurus",
   "fossil.midnightconfig.featheredDryo.tooltip": "True if Dryosaurus should be feathered",
   "fossil.midnightconfig.dinosEatBlocks": "Dinos Eat Blocks",

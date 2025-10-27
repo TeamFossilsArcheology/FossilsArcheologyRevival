@@ -185,7 +185,7 @@ public class ClientInit {
         registerDino(ModEntities.AQUILOLAMNA, "aquilolamna", RenderType::entityCutout);
         registerDino(ModEntities.ARTHROPLEURA, "arthropleura");
         registerDino(ModEntities.BRACHIOSAURUS, "brachiosaurus", RenderType::entityCutout);
-        registerDino(ModEntities.CERATOSAURUS, "ceratosaurus");
+        registerDino(ModEntities.CERATOSAURUS, "ceratosaurus", RenderType::entityCutout);
         registerDino(ModEntities.CITIPATI, "citipati");
         registerFish(ModEntities.COELACANTH, "coelacanth");
         registerDino(ModEntities.COMPSOGNATHUS, "compsognathus");

@@ -41,6 +41,7 @@ public class ForgeConfig {
     public static final ForgeConfigSpec.IntValue TAR_SLIMES_SPAWN_RATE;
 
     public static final ForgeConfigSpec.BooleanValue FEATHERED_DILO;
+    public static final ForgeConfigSpec.BooleanValue FEATHERED_CERATO;
     public static final ForgeConfigSpec.BooleanValue FEATHERED_DRYO;
     public static final ForgeConfigSpec.BooleanValue HEALING_DINOS;
     public static final ForgeConfigSpec.BooleanValue ENABLE_HUNGER;
@@ -108,6 +109,7 @@ public class ForgeConfig {
         COMMON.builder.pop();
         COMMON.builder.push("Mob Config");
         FEATHERED_DILO = COMMON.boolEntry("True if Dilophosaurus should be feathered", FossilConfig.FEATHERED_DILO, false);
+        FEATHERED_CERATO = COMMON.boolEntry("True if Ceratosaurus should be feathered", FossilConfig.FEATHERED_CERATO, false);
         FEATHERED_DRYO = COMMON.boolEntry("True if Dryosaurus should be feathered", FossilConfig.FEATHERED_DRYO, false);
         HEALING_DINOS = COMMON.boolEntry("True if Dinosaurs can be healed by hand feeding it food", FossilConfig.HEALING_DINOS, true);
         ENABLE_HUNGER = COMMON.boolEntry("True if Dinosaurs have hunger", FossilConfig.ENABLE_HUNGER, true);
