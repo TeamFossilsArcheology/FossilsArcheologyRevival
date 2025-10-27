@@ -66,7 +66,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Megalograptus>> MEGALOGRAPTUS = registerDino("megalograptus", Megalograptus::new, 1.8f, 0.75f);
     public static final RegistrySupplier<EntityType<Meganeura>> MEGANEURA = registerDino("meganeura", Meganeura::new, 2.5f, 1.25f);
     public static final RegistrySupplier<EntityType<Mosasaurus>> MOSASAURUS = registerAquatic("mosasaurus", Mosasaurus::new, 1.3f, 0.6f);
-    public static final RegistrySupplier<EntityType<Nautilus>> NAUTILUS = registerFish("nautilus", Nautilus::new, 0.8f, 1);
+    public static final RegistrySupplier<EntityType<Nautilus>> NAUTILUS = registerFish("nautilus", Nautilus::new, 0.8f, 0.795f);
     public static final RegistrySupplier<EntityType<Ornitholestes>> ORNITHOLESTES = registerDino("ornitholestes", Ornitholestes::new, 2.25f, 1.9f);
     public static final RegistrySupplier<EntityType<Pachycephalosaurus>> PACHYCEPHALOSAURUS = registerDino("pachycephalosaurus", Pachycephalosaurus::new, 1, 1.5f);
     public static final RegistrySupplier<EntityType<Pachyrhinosaurus>> PACHYRHINOSAURUS = registerDino("pachyrhinosaurus", Pachyrhinosaurus::new, 1.4f, 1.5f);
@@ -74,6 +74,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Phorusrhacos>> PHORUSRHACOS = registerDino("phorusrhacos", Phorusrhacos::new, 1.2f, 2f);
     public static final RegistrySupplier<EntityType<Platybelodon>> PLATYBELODON = registerDino("platybelodon", Platybelodon::new, 1.5f, 1.9f);
     public static final RegistrySupplier<EntityType<Plesiosaurus>> PLESIOSAURUS = registerAquatic("plesiosaurus", Plesiosaurus::new, 1, 1);
+    public static final RegistrySupplier<EntityType<Postosuchus>> POSTOSUCHUS = registerDino("postosuchus", Postosuchus::new, 0.7f, 1f);
     public static final RegistrySupplier<EntityType<Protoceratops>> PROTOCERATOPS = registerDino("protoceratops", Protoceratops::new, 1.5f, 1.25f);
     public static final RegistrySupplier<EntityType<Psittacosaurus>> PSITTACOSAURUS = registerDino("psittacosaurus", Psittacosaurus::new, 1.5f, 1.25f);
     public static final RegistrySupplier<EntityType<Pteranodon>> PTERANODON = registerDino("pteranodon", Pteranodon::new, 0.7f, 1f);
@@ -115,6 +116,8 @@ public class ModEntities {
             () -> EntityType.Builder.of(SentryPiglin::new, MobCategory.MONSTER).sized(0.8f, 2).fireImmune().build("sentry_piglin"));
 
     public static final RegistrySupplier<EntityType<StoneTablet>> STONE_TABLET = registerMisc("stone_tablet", StoneTablet::new, 0.5f, 0.5f, 10, Integer.MAX_VALUE);
+
+    public static final RegistrySupplier<EntityType<LaserPointEntity>> LASER_POINT = registerMisc("laser_point", LaserPointEntity::new, 0.2f, 0.2f, 10, 3);
 
     public static final RegistrySupplier<EntityType<Javelin>> JAVELIN = registerMisc("javelin", Javelin::new, 0.5f, 0.5f, 4, 20);
     public static final RegistrySupplier<EntityType<AncientLightningBolt>> ANCIENT_LIGHTNING_BOLT = ENTITIES.register("ancient_lightning_bolt",
@@ -184,6 +187,7 @@ public class ModEntities {
         EntityAttributeRegistry.register(PHORUSRHACOS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PLATYBELODON, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PLESIOSAURUS, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(POSTOSUCHUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PROTOCERATOPS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PSITTACOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PTERANODON, PrehistoricFlying::createAttributes);
@@ -205,6 +209,7 @@ public class ModEntities {
         EntityAttributeRegistry.register(SCOTOHARPES, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(WALLISEROPS, Prehistoric::createAttributes);
 
+        EntityAttributeRegistry.register(LASER_POINT, LaserPointEntity::createAttributes);
         EntityAttributeRegistry.register(ANUBITE, Anubite::createAttributes);
         EntityAttributeRegistry.register(ANU_BOSS, AnuBoss::createAttributes);
         EntityAttributeRegistry.register(ANU_DEAD, AnuDead::createAttributes);

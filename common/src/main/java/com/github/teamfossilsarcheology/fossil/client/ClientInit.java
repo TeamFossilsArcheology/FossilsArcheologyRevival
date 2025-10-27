@@ -38,6 +38,7 @@ import dev.architectury.registry.client.particle.ParticleProviderRegistry;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
 import dev.architectury.registry.client.rendering.RenderTypeRegistry;
+import dev.architectury.registry.item.ItemPropertiesRegistry;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
@@ -108,6 +109,7 @@ public class ClientInit {
         ParticleProviderRegistry.register(ModParticles.VOLCANO_VENT_ASH_EMITTER, new VolcanoVentAshEmitterParticle.Provider());
         ParticleProviderRegistry.register(ModParticles.BUBBLE, BubbleParticle.Provider::new);
         ParticleProviderRegistry.register(ModParticles.TAR_BUBBLE, TarBubbleParticle.Provider::new);
+        ParticleProviderRegistry.register(ModParticles.LASER_PARTICLE, LaserParticle.Provider::new);
         KeyMappingRegistry.register(flyUpKey);
         KeyMappingRegistry.register(flyDownKey);
     }
@@ -166,12 +168,18 @@ public class ClientInit {
         }
         registerBlockRenderers();
         registerEventHandlers();
+        registerItemProperties();
         MenuScreens.register(ModMenus.FEEDER.get(), FeederScreen::new);
         MenuScreens.register(ModMenus.SIFTER.get(), SifterScreen::new);
         MenuScreens.register(ModMenus.CULTURE_VAT.get(), CultureVatScreen::new);
         MenuScreens.register(ModMenus.ANALYZER.get(), AnalyzerScreen::new);
         MenuScreens.register(ModMenus.WORKTABLE.get(), WorktableScreen::new);
         CreativeTabFilters.register();
+    }
+
+    private static void registerItemProperties() {
+        ItemPropertiesRegistry.register(ModItems.LASER_POINTER.get(),
+                new ResourceLocation("using"), (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0);
     }
 
     private static void registerEntityRenderers() {
@@ -181,7 +189,7 @@ public class ClientInit {
         registerDino(ModEntities.AQUILOLAMNA, "aquilolamna", RenderType::entityCutout);
         registerDino(ModEntities.ARTHROPLEURA, "arthropleura");
         registerDino(ModEntities.BRACHIOSAURUS, "brachiosaurus", RenderType::entityCutout);
-        registerDino(ModEntities.CERATOSAURUS, "ceratosaurus");
+        registerDino(ModEntities.CERATOSAURUS, "ceratosaurus", RenderType::entityCutout);
         registerDino(ModEntities.CITIPATI, "citipati");
         registerFish(ModEntities.COELACANTH, "coelacanth");
         registerDino(ModEntities.COMPSOGNATHUS, "compsognathus");
@@ -218,6 +226,7 @@ public class ClientInit {
         registerDino(ModEntities.PHORUSRHACOS, "phorusrhacos");
         registerDino(ModEntities.PLATYBELODON, "platybelodon");
         registerDino(ModEntities.PLESIOSAURUS, "plesiosaurus", RenderType::entityCutout);
+        registerDino(ModEntities.POSTOSUCHUS, "postosuchus");
         registerDino(ModEntities.PROTOCERATOPS, "protoceratops", RenderType::entityCutout);
         registerDino(ModEntities.PSITTACOSAURUS, "psittacosaurus");
         registerDino(ModEntities.PTERANODON, "pteranodon");
@@ -241,6 +250,8 @@ public class ClientInit {
         registerTrilobite(ModEntities.WALLISEROPS);
         EntityRendererRegistry.register(ModEntities.DINOSAUR_EGG, DinosaurEggRenderer::new);
         EntityRendererRegistry.register(ModEntities.THROWN_BIRD_EGG, ThrownItemRenderer::new);
+
+        EntityRendererRegistry.register(ModEntities.LASER_POINT, LaserPointRenderer::new);
 
         EntityRendererRegistry.register(ModEntities.ANUBITE, AnubiteRenderer::new);
         EntityRendererRegistry.register(ModEntities.ANU_BOSS, AnuBossRenderer::new);
@@ -399,6 +410,8 @@ public class ClientInit {
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.AMBER_CHUNK_MOSQUITO.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.SHELL.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.COMFY_BED.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.LARGE_CHAIN_FENCE.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.SMALL_CHAIN_FENCE.get());
 
         BlockEntityRendererRegistry.register(ModBlockEntities.ANU_STATUE.get(), AnuStatueRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.ANUBITE_STATUE.get(), AnubiteStatueRenderer::new);

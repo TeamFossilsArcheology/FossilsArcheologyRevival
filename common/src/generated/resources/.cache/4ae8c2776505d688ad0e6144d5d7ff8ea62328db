@@ -1,4 +1,4 @@
-// 1.19.2	2025-03-12T16:33:21.8971501	Fossil Block Tags
+// 1.19.2	2025-10-28T00:45:02.9566855	Fossil Block Tags
 748289a71b4a14833170e105ad945e76cf90203b data/fossil/tags/blocks/ancient_wood_logs.json
 24bcf1f9f4f02ad0bd3cd4561158d1ff2e9abbc6 data/fossil/tags/blocks/calamites_logs.json
 b057417db4a2d14befd1fd92bdee83e44deabd4c data/fossil/tags/blocks/cordaites_logs.json
@@ -14,6 +14,7 @@ d1c009d4e38b6b3a4df5c73a4516bf388cfe6f1e data/fossil/tags/blocks/tempskya_logs.j
 e814a1677220034b3098db241c4ac5be34d347de data/minecraft/tags/blocks/beds.json
 b073ead4e2979920491052056fbe5dcd66df529f data/minecraft/tags/blocks/climbable.json
 6eea4c0b436bcee131d04661adf48758b0cdf781 data/minecraft/tags/blocks/dirt.json
+ab1602db5665ac031b04d8997c144f033d09da8c data/minecraft/tags/blocks/fences.json
 1f61f94009fe6820f6145791125dd0c9fa1a5a22 data/minecraft/tags/blocks/fence_gates.json
 e118939ff14d26961ca9d0b3b53862c5cb9371dc data/minecraft/tags/blocks/leaves.json
 56207fd550ed838065cb05396162e04e658d6280 data/minecraft/tags/blocks/logs_that_burn.json
@@ -32,10 +33,10 @@ b073ead4e2979920491052056fbe5dcd66df529f data/minecraft/tags/blocks/replaceable_
 db57b916d6559534878a611a37df9c6ba4bc4e05 data/minecraft/tags/blocks/slabs.json
 97565e4d15d94e765e0a088c769229abef0a4534 data/minecraft/tags/blocks/soul_speed_blocks.json
 f601cbfdd43419935b9407f7203d25bdc16b4513 data/minecraft/tags/blocks/stairs.json
-463001e8d89e35f05f5680c7853a559ea4014288 data/minecraft/tags/blocks/walls.json
+16f02be8126afc4e26e5f95bc9d2591d21827257 data/minecraft/tags/blocks/walls.json
 1ba9bb776915fb1cf69f11e02a03faae96e38d21 data/minecraft/tags/blocks/wooden_buttons.json
 22a1e9ccaf1b589812475e519b2d7052f395a732 data/minecraft/tags/blocks/wooden_doors.json
-1544b2980023cda34bf9943cb33e45d7de2a4b48 data/minecraft/tags/blocks/wooden_fences.json
+48900d5c4a952dae2aab81c1b8a3b65d1d561a44 data/minecraft/tags/blocks/wooden_fences.json
 9851e300322b679fdef84527fe3e63e78b60e7c5 data/minecraft/tags/blocks/wooden_pressure_plates.json
 5f6d2a20a819711f37f6003c986f2a88374b1fb8 data/minecraft/tags/blocks/wooden_slabs.json
 475432a5fefb5c2e73b6f7b79929edb187a21e6b data/minecraft/tags/blocks/wooden_stairs.json

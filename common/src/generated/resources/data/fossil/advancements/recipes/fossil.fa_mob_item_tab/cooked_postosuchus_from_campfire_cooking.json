@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_log": {
+    "has_meat_postosuchus": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:mangrove_log"
+              "fossil:meat_postosuchus"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fossil:toy_tethered_log_mangrove"
+        "recipe": "fossil:cooked_postosuchus_from_campfire_cooking"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_log",
+      "has_meat_postosuchus",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "fossil:toy_tethered_log_mangrove"
+      "fossil:cooked_postosuchus_from_campfire_cooking"
     ]
   }
 }

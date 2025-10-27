@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_slab": {
+    "has_meat_postosuchus": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:mangrove_slab"
+              "fossil:meat_postosuchus"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fossil:toy_scratching_post_mangrove"
+        "recipe": "fossil:cooked_postosuchus"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_slab",
+      "has_meat_postosuchus",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "fossil:toy_scratching_post_mangrove"
+      "fossil:cooked_postosuchus"
     ]
   }
 }

@@ -1,5 +1,5 @@
-// 1.19.2	2025-09-27T03:08:54.0916536	Fossil Food Values
+// 1.19.2	2025-10-28T00:45:02.9521794	Fossil Food Values
 dde90983fec172d36cb43bed3f6d4f06e1def170 data/fossil/food/egg.json
-c880ee7519499bb2ce96436f670313181a8c33c6 data/fossil/food/fish.json
-dd886f14028edd5ac11fa826a039dbbedba41f37 data/fossil/food/meat.json
-7ba142b47547881c1bcfb11ee5518b310901d75f data/fossil/food/plant.json
+99db728b74e3994f2a8acc28bced8e4ce3f8b7b8 data/fossil/food/fish.json
+def306d94847b35215a24ca4a19338831fb35a29 data/fossil/food/meat.json
+8bf1348ed58cd55d4dbe0c0434544f4467fde95c data/fossil/food/plant.json

@@ -1,87 +1,93 @@
 {
   "entities": [
     {
-      "entry": "betteranimalsplus:crab",
+      "entity": "betteranimalsplus:crab",
       "value": 5
     },
     {
-      "entry": "betteranimalsplus:eel",
+      "entity": "betteranimalsplus:eel",
       "value": 20
     },
     {
-      "entry": "betteranimalsplus:flying_fish",
+      "entity": "betteranimalsplus:flying_fish",
       "value": 5
     },
     {
-      "entry": "betteranimalsplus:horseshoecrab",
+      "entity": "betteranimalsplus:horseshoecrab",
       "value": 7
     },
     {
-      "entry": "betteranimalsplus:lamprey",
+      "entity": "betteranimalsplus:lamprey",
       "value": 5
     },
     {
-      "entry": "betteranimalsplus:nautilus",
+      "entity": "betteranimalsplus:nautilus",
       "value": 10
     },
     {
-      "entry": "betteranimalsplus:shark",
+      "entity": "betteranimalsplus:shark",
       "value": 40
     },
     {
-      "entry": "betteranimalsplus:whale",
+      "entity": "betteranimalsplus:whale",
       "value": 60
     },
     {
-      "entry": "minecraft:cod",
+      "entity": "minecraft:cod",
       "value": 5
     },
     {
-      "entry": "minecraft:dolphin",
+      "entity": "minecraft:dolphin",
       "value": 17
     },
     {
-      "entry": "minecraft:glow_squid",
+      "entity": "minecraft:glow_squid",
       "value": 20
     },
     {
-      "entry": "minecraft:guardian",
+      "entity": "minecraft:guardian",
       "value": 65
     },
     {
-      "entry": "minecraft:pufferfish",
+      "entity": "minecraft:pufferfish",
       "value": 5
     },
     {
-      "entry": "minecraft:salmon",
+      "entity": "minecraft:salmon",
       "value": 5
     },
     {
-      "entry": "minecraft:squid",
+      "entity": "minecraft:squid",
       "value": 20
     },
     {
-      "entry": "minecraft:tropical_fish",
+      "entity": "minecraft:tropical_fish",
       "value": 5
     },
     {
-      "entry": "minecraft:turtle",
+      "entity": "minecraft:turtle",
       "value": 5
     },
     {
-      "entry": "naturalist:bass",
+      "entity": "naturalist:bass",
       "value": 10
     },
     {
-      "entry": "naturalist:catfish",
+      "entity": "naturalist:catfish",
       "value": 10
     },
     {
-      "entry": "naturalist:duck",
+      "entity": "naturalist:duck",
       "value": 10
     }
   ],
   "items": [
+    {
+      "tag": "c:foods/cooked_fish"
+    },
+    {
+      "tag": "c:foods/raw_fish"
+    },
     {
       "item": "minecraft:cod"
     },

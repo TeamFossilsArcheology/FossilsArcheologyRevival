@@ -67,6 +67,8 @@ public class FossilConfigImpl extends MidnightConfig {
     @MidnightConfig.Entry
     public static boolean featheredDilo = false;
     @MidnightConfig.Entry
+    public static boolean featheredCerato = false;
+    @MidnightConfig.Entry
     public static boolean featheredDryo = false;
     @MidnightConfig.Entry
     public static boolean healingDinos = true;

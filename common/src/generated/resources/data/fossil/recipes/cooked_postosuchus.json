@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.5,
+  "ingredient": {
+    "item": "fossil:meat_postosuchus"
+  },
+  "result": "fossil:cooked_postosuchus"
+}

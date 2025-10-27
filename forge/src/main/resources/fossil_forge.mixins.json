@@ -8,8 +8,8 @@
     "ParticleAccessor", "PlayerInfoMixin", "TerrainParticleMixin", "TitleScreenMixin"
   ],
   "mixins": [
-    "AbstractFishMixin", "AnimationControllerAccessor", "EnergyContainerBlockEntityMixin", "ExplosionMixin", "JigsawPlacementMixin", "MachineContainerBlockEntityMixin", "MobMixin", "NaturalSpawnerMixin", "PickupHandlerMixin", "ServerEntityMixin",
-    "WalkNodeEvaluatorMixin"
+    "AbstractFishMixin", "AnimationControllerAccessor", "CatMixin", "EnergyContainerBlockEntityMixin", "ExplosionMixin", "JigsawPlacementMixin", "MachineContainerBlockEntityMixin",
+    "MobMixin", "NaturalSpawnerMixin", "OcelotMixin", "PickupHandlerMixin", "ServerEntityMixin", "WalkNodeEvaluatorMixin"
   ],
   "plugin": "com.github.teamfossilsarcheology.fossil.forge.ForgeFossilMixinPlugin",
   "injectors": {

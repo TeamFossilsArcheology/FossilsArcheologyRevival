@@ -105,7 +105,7 @@ public abstract class FoodValueProvider implements DataProvider {
         }
 
         public void entity(ResourceLocation location, int value) {
-            entities.add(new Entry(location, value, "entry"));
+            entities.add(new Entry(location, value, "entity"));
         }
 
         public JsonObject serializeToJson() {
