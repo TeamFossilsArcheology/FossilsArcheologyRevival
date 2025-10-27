@@ -6,9 +6,7 @@
   "client": [
     "GeoEntityRendererMixin"
   ],
-  "mixins": [
-    "EnergyContainerBlockEntityMixin", "MachineContainerBlockEntityMixin", "PickupHandlerMixin", "WalkNodeEvaluatorMixin"
-  ],
+  "mixins": ["CatMixin", "EnergyContainerBlockEntityMixin", "MachineContainerBlockEntityMixin", "OcelotMixin", "PickupHandlerMixin", "WalkNodeEvaluatorMixin"],
   "plugin": "com.github.teamfossilsarcheology.fossil.forge.ForgeFossilMixinPlugin",
   "injectors": {
     "defaultRequire": 1

@@ -29,6 +29,8 @@ import java.util.stream.Collectors;
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(FossilMod.MOD_ID, Registries.ITEM);
 
+    public static final RegistrySupplier<Item> LASER_POINTER = ITEMS.register("laser_pointer",
+            () -> new LaserPointerItem(new Item.Properties().stacksTo(1).arch$tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<Item> TAR_BUCKET = ITEMS.register("tar_bucket",
             () -> new ArchitecturyBucketItem(ModFluids.TAR, new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET).arch$tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<Item> TAR_DROP = ITEMS.register("tar_drop",

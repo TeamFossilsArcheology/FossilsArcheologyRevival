@@ -15,7 +15,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Set;
+
 public abstract class ToyBase extends Entity {
+    private static final Set<WoodType> VANILLA_WOOD_TYPES = Set.of(WoodType.OAK, WoodType.SPRUCE, WoodType.BIRCH, WoodType.ACACIA, WoodType.JUNGLE, WoodType.DARK_OAK, WoodType.CRIMSON, WoodType.WARPED, WoodType.MANGROVE, WoodType.BAMBOO);
 
     public final int moodBonus;
     protected final SoundEvent attackNoise;
@@ -27,7 +30,7 @@ public abstract class ToyBase extends Entity {
     }
 
     public static boolean isVanillaWood(WoodType woodType) {
-        return !woodType.name().contains(":") && !woodType.name().contains(".");
+        return VANILLA_WOOD_TYPES.contains(woodType);
     }
 
 

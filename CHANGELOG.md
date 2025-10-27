@@ -1,2 +1,14 @@
+### Added
+- Laser pointer item
+- Small and large chain fence blocks
+- New name tag skin
+- Tree overhauls
+- Postosuchus mob
+- New model for ceratosaurus including a feathered variant
+- Changed some mob stats
+- Missing assets for mangrove toys and frog items
+
 ### Fixed
-- Crashing when using this mod on a server
+- Tempskya leaves replacing blocks when the tree is grown
+- Slime trails models looking like rails
+- Animation interpolation not always working correctly

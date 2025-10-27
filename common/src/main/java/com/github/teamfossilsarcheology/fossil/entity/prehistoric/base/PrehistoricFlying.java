@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
+import com.github.teamfossilsarcheology.fossil.entity.LaserPointEntity;
 import com.github.teamfossilsarcheology.fossil.entity.ai.*;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.CustomFlightBodyRotationControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.CustomFlightLookControl;
@@ -31,6 +32,7 @@ import net.minecraft.world.entity.ai.control.MoveControl.Operation;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
@@ -100,6 +102,8 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         goalSelector.addGoal(Util.LOOK, new LookAtPlayerGoal(this, Player.class, 8));
         goalSelector.addGoal(Util.LOOK + 1, new RandomLookAroundGoal(this));
         targetSelector.addGoal(5, new HuntingTargetGoal(this));
+
+        targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, LaserPointEntity.class, true));
     }
 
     @Override

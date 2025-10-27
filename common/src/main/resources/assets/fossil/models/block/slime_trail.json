@@ -1,6 +1,16 @@
 {
-  "parent": "minecraft:block/rail_flat",
+  "ambientocclusion": false,
   "textures": {
-    "rail": "fossil:block/slime_trail"
-  }
+    "particle": "fossil:block/slime_trail",
+    "line": "fossil:block/slime_trail"
+  },
+  "elements": [
+    {   "from": [ 0, 0.25, 0 ],
+      "to": [ 16, 0.25, 16 ],
+      "faces": {
+        "down":  { "uv": [ 0, 16, 16,  0 ], "texture": "#line" },
+        "up":    { "uv": [ 0,  0, 16, 16 ], "texture": "#line" }
+      }
+    }
+  ]
 }

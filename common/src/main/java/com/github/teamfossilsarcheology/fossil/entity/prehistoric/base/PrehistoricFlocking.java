@@ -45,7 +45,7 @@ public abstract class PrehistoricFlocking extends Prehistoric {
     }
 
     public boolean hasGroupLeader() {
-        return groupLeader != null && groupLeader.isAlive();
+        return groupLeader != null;
     }
 
     public void increaseGroupSize() {
@@ -101,10 +101,10 @@ public abstract class PrehistoricFlocking extends Prehistoric {
 
     @Override
     public void aiStep() {
-        super.aiStep();
-        if (groupLeader != null && !groupLeader.isAlive()) {
+        if (hasGroupLeader() && !groupLeader.isAlive()) {
             leaveGroup();
         }
+        super.aiStep();
         if (hasGroupLeader() && level.random.nextInt(200) == 1 && level.getEntitiesOfClass(getClass(), getBoundingBox().inflate(getFlockDistance()), flocking -> flocking == groupLeader).isEmpty()) {
             leaveGroup();
         }
