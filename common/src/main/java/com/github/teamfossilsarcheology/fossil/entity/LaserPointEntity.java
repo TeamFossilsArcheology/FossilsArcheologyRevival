@@ -9,8 +9,10 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collections;
 import java.util.UUID;
 
 public class LaserPointEntity extends LivingEntity {
@@ -67,20 +69,19 @@ public class LaserPointEntity extends LivingEntity {
     }
 
     @Override
-    public Iterable<ItemStack> getArmorSlots() {
-        return null;
+    public @NotNull Iterable<ItemStack> getArmorSlots() {
+        return Collections.emptyList();
     }
 
     @Override
-    public ItemStack getItemBySlot(EquipmentSlot slot) {
-        return null;
+    public @NotNull ItemStack getItemBySlot(EquipmentSlot slot) {
+        return ItemStack.EMPTY;
     }
 
     @Override
     public void setItemSlot(EquipmentSlot slot, ItemStack stack) {
 
     }
-
 
     @Override
     public boolean fireImmune() {
@@ -93,8 +94,8 @@ public class LaserPointEntity extends LivingEntity {
     }
 
     @Override
-    public HumanoidArm getMainArm() {
-        return null;
+    public @NotNull HumanoidArm getMainArm() {
+        return HumanoidArm.RIGHT;
     }
 
 

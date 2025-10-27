@@ -35,6 +35,7 @@ public class AnimationControllerOverride {
             }
         }
         for (String boneName : previousBones) {
+            //Current snapshot
             BoneSnapshot boneSnapshot = boneSnapshots.get(boneName);
             Optional<IBone> first = Optional.empty();
             for (IBone bone : modelRendererList) {
@@ -46,37 +47,33 @@ public class AnimationControllerOverride {
             if (first.isEmpty()) {
                 continue;
             }
+            //Model snapshot
             BoneSnapshot initialSnapshot = first.get().getInitialSnapshot();
             assert boneSnapshot != null : "Bone snapshot was null";
-            BoneSnapshot boneAnimation = boneSnapshots.get(boneName);
             BoneAnimationQueue boneAnimationQueue = boneAnimationQueues.get(boneName);
 
             KeyFrameLocation<KeyFrame<IValue>> location = new KeyFrameLocation<>(ZERO_KEYFRAME, 0);
             AnimationPoint point = new AnimationPoint(location.currentFrame, location.currentTick, 0, 0, 0);
-            if (boneAnimation.positionOffsetX != 0 || boneAnimation.positionOffsetY != 0 || boneAnimation.positionOffsetZ != 0) {
-                boneAnimationQueue.positionXQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
-                        boneSnapshot.positionOffsetX - initialSnapshot.positionOffsetX, point.animationStartValue));
-                boneAnimationQueue.positionYQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
-                        boneSnapshot.positionOffsetY - initialSnapshot.positionOffsetY, point.animationStartValue));
-                boneAnimationQueue.positionZQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
-                        boneSnapshot.positionOffsetZ - initialSnapshot.positionOffsetZ, point.animationStartValue));
-            }
-            if (boneAnimation.rotationValueX != 0 || boneAnimation.rotationValueY != 0 || boneAnimation.rotationValueZ != 0) {
-                boneAnimationQueue.rotationXQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
-                        boneSnapshot.rotationValueX - initialSnapshot.rotationValueX, point.animationStartValue));
-                boneAnimationQueue.rotationYQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
-                        boneSnapshot.rotationValueY - initialSnapshot.rotationValueY, point.animationStartValue));
-                boneAnimationQueue.rotationZQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
-                        boneSnapshot.rotationValueY - initialSnapshot.rotationValueY, point.animationStartValue));
-            }
-            if (boneAnimation.scaleValueX != 1 || boneAnimation.scaleValueY != 1 || boneAnimation.scaleValueZ != 1) {
-                boneAnimationQueue.scaleXQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
-                        boneSnapshot.scaleValueX - initialSnapshot.scaleValueX, point.animationStartValue));
-                boneAnimationQueue.scaleXQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
-                        boneSnapshot.scaleValueY - initialSnapshot.scaleValueY, point.animationStartValue));
-                boneAnimationQueue.scaleXQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
-                        boneSnapshot.scaleValueZ - initialSnapshot.scaleValueZ, point.animationStartValue));
-            }
+            boneAnimationQueue.positionXQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
+                    boneSnapshot.positionOffsetX - initialSnapshot.positionOffsetX, point.animationStartValue));
+            boneAnimationQueue.positionYQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
+                    boneSnapshot.positionOffsetY - initialSnapshot.positionOffsetY, point.animationStartValue));
+            boneAnimationQueue.positionZQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
+                    boneSnapshot.positionOffsetZ - initialSnapshot.positionOffsetZ, point.animationStartValue));
+
+            boneAnimationQueue.rotationXQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
+                    boneSnapshot.rotationValueX - initialSnapshot.rotationValueX, point.animationStartValue));
+            boneAnimationQueue.rotationYQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
+                    boneSnapshot.rotationValueY - initialSnapshot.rotationValueY, point.animationStartValue));
+            boneAnimationQueue.rotationZQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
+                    boneSnapshot.rotationValueY - initialSnapshot.rotationValueY, point.animationStartValue));
+
+            boneAnimationQueue.scaleXQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
+                    boneSnapshot.scaleValueX - initialSnapshot.scaleValueX, point.animationStartValue));
+            boneAnimationQueue.scaleXQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
+                    boneSnapshot.scaleValueY - initialSnapshot.scaleValueY, point.animationStartValue));
+            boneAnimationQueue.scaleXQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
+                    boneSnapshot.scaleValueZ - initialSnapshot.scaleValueZ, point.animationStartValue));
         }
     }
 }
