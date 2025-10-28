@@ -11,7 +11,7 @@
     "damageBase": 1.0,
     "damageMax": 6.0,
     "healthBase": 4.0,
-    "healthMax": 22.0,
+    "healthMax": 14.0,
     "speedBase": 0.14,
     "speedMax": 0.18,
     "sprintMod": 1.8,

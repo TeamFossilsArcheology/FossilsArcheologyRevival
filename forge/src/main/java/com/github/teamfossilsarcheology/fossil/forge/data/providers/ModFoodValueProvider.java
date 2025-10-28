@@ -4,8 +4,10 @@ import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.github.teamfossilsarcheology.fossil.food.FoodType;
 import com.github.teamfossilsarcheology.fossil.food.FoodValueProvider;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -26,6 +28,10 @@ public class ModFoodValueProvider extends FoodValueProvider {
 
         egg.item(Items.EGG, 7);
 
+        plant.itemTag(TagKey.create(Registries.ITEM, new ResourceLocation("c:foods/berry")));
+        plant.itemTag(TagKey.create(Registries.ITEM, new ResourceLocation("c:foods/bread")));
+        plant.itemTag(TagKey.create(Registries.ITEM, new ResourceLocation("c:foods/fruit")));
+        plant.itemTag(TagKey.create(Registries.ITEM, new ResourceLocation("c:foods/vegetable")));
         plant.item(Blocks.BROWN_MUSHROOM, 15);
         plant.item(Blocks.CAKE, 60);
         plant.item(Blocks.CARROTS, 20);
@@ -64,6 +70,8 @@ public class ModFoodValueProvider extends FoodValueProvider {
         plant.item(Items.WHEAT_SEEDS, 5);
         plant.item(ModBlocks.FERNS.get(), 10);
 
+        fish.itemTag(TagKey.create(Registries.ITEM, new ResourceLocation("c:foods/raw_fish")));
+        fish.itemTag(TagKey.create(Registries.ITEM, new ResourceLocation("c:foods/cooked_fish")));
         fish.item(Items.COD);
         fish.item(Items.PUFFERFISH);
         fish.item(Items.SALMON);
@@ -71,6 +79,8 @@ public class ModFoodValueProvider extends FoodValueProvider {
         fish.item(Items.COOKED_COD);
         fish.item(Items.COOKED_SALMON);
 
+        meat.itemTag(TagKey.create(Registries.ITEM, new ResourceLocation("c:foods/raw_meat")));
+        meat.itemTag(TagKey.create(Registries.ITEM, new ResourceLocation("c:foods/cooked_meat")));
         meat.item(Items.PORKCHOP);
         meat.item(Items.COOKED_PORKCHOP);
         meat.item(Items.BEEF);

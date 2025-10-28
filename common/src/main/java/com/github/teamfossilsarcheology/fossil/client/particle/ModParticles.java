@@ -17,6 +17,8 @@ public class ModParticles {
     public static final RegistrySupplier<Type> VOLCANO_VENT_ASH = register("volcano_vent_ash");
     public static final RegistrySupplier<Type> VOLCANO_VENT_ASH_EMITTER = register("volcano_vent_ash_emitter");
 
+    public static final RegistrySupplier<Type> LASER_PARTICLE = register("laser_particle");
+
     private static RegistrySupplier<Type> register(String key) {
         return PARTICLE_TYPES.register(key, Type::new);
     }

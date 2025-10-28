@@ -1,0 +1,26 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "fossil:item/laser_pointer"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [0, -90, -55],
+      "translation": [0, 3, 1],
+      "scale": [0.8, 0.8, 0.8]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [0, -90, 55],
+      "translation": [0, 3, 1],
+      "scale": [0.8, 0.8, 0.8]
+    }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "using": 1
+      },
+      "model": "fossil:item/laser_pointer_active"
+    }
+  ]
+}

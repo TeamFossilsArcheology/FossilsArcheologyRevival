@@ -9,9 +9,9 @@
   },
   "attributes": {
     "damageBase": 2.0,
-    "damageMax": 14.0,
+    "damageMax": 19.0,
     "healthBase": 15.0,
-    "healthMax": 86.0,
+    "healthMax": 60.0,
     "speedBase": 0.18,
     "speedMax": 0.25,
     "swimSpeedBase": 0.09,

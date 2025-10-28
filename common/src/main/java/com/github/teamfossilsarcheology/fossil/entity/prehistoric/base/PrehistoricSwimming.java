@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
+import com.github.teamfossilsarcheology.fossil.entity.LaserPointEntity;
 import com.github.teamfossilsarcheology.fossil.entity.ai.*;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.CustomSwimMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.PrehistoricLookControl;
@@ -25,6 +26,7 @@ import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
@@ -88,6 +90,8 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
         goalSelector.addGoal(Util.LOOK, new LookAtPlayerGoal(this, Player.class, 8.0f));
         goalSelector.addGoal(Util.LOOK + 1, new RandomLookAroundGoal(this));
         targetSelector.addGoal(5, new HuntingTargetGoal(this));
+
+        targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, LaserPointEntity.class, true));
     }
 
     public static boolean isOverWater(LivingEntity entity) {
@@ -265,6 +269,11 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
             getEntityHitboxData().getAnchorData().getAnchorPos("grab_pos").ifPresentOrElse(pos -> {
                 passenger.setPos(pos.x, pos.y + passenger.getMyRidingOffset(), pos.z);
             }, () -> {
+                // holy magic numbers. what is going on here?
+                // I'm guessing the numbers were tweaked until it looked good?
+                // can you add them as labeled constants?
+                // also, stuff like '0.35f * 0.7f * -3' is kinda crazy lol
+                // could just be -0.735 for instance
                 float t = 5 * Mth.sin(Mth.PI + tickCount * 0.275f);
                 float radius = 0.35f * 0.7f * getScale() * -3;
                 float angle = Mth.DEG_TO_RAD * yBodyRot + 3.15f + t * 1.75f * 0.05f;
