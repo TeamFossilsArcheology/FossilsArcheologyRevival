@@ -494,7 +494,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 if (info != null) {
                     additionalLogic.put(info, entity::onGround);
                 }
-            } else if (!entity.onGround() && !state.getAnimatable().isFlying() && (entity.getY() - entity.yo) < -0.05) {
+            } else if (!entity.onGround()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.FLY);
                 controller.transitionLength(10);
                 animationSpeed = 0.5;
