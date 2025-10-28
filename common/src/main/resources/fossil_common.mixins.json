@@ -7,8 +7,8 @@
     "CameraMixin", "DebugLevelRendererMixin", "DebugMinecraftMixin", "DebugMouseHandlerMixin", "ParticleAccessor", "PlayerInfoMixin", "TerrainParticleMixin", "TitleScreenMixin"
   ],
   "mixins": [
-    "AbstractFishMixin", "AnimatableManagerAccessor", "AnimationControllerAccessor", "AnimationControllerMixin", "AnimationProcessorMixin", "ChunkStatusMixin", "ExplosionMixin",
-    "JigsawPlacementMixin", "MobMixin", "NaturalSpawnerMixin", "ServerEntityMixin", "SyncedEntityDataMixin"
+    "AbstractFishMixin", "AnimatableManagerAccessor", "AnimationControllerAccessor", "AnimationControllerMixin", "AnimationProcessorMixin", "CatMixin", "ChunkStatusMixin",
+    "ExplosionMixin", "JigsawPlacementMixin", "MobMixin", "NaturalSpawnerMixin", "OcelotMixin", "ServerEntityMixin", "SyncedEntityDataMixin"
   ],
   "injectors": {
     "defaultRequire": 1
