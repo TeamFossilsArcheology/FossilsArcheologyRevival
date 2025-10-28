@@ -35,9 +35,9 @@ public class FlockBuildGoal extends Goal {
         BiConsumer<Predicate<PrehistoricFlocking>, Boolean> canAdd = (predicate, addSelf) -> {
             var newGroupLeader = potentialFlock.stream().filter(PrehistoricFlocking::canGroupGrow).filter(predicate).findAny();
             if (newGroupLeader.isPresent()) {
-                newGroupLeader.get().addFollowers(potentialFlock.stream().filter(flocking -> !flocking.hasGroupLeader()));
+                newGroupLeader.get().addFollowers(potentialFlock.stream().filter(flocking -> !flocking.hasGroupLeader() && !flocking.isGroupLeader()));
             } else if (Boolean.TRUE.equals(addSelf)) {
-                entity.addFollowers(potentialFlock.stream().filter(flocking -> !flocking.hasGroupLeader()));
+                entity.addFollowers(potentialFlock.stream().filter(flocking -> !flocking.hasGroupLeader() && !flocking.isGroupLeader()));
             }
         };
         if (entity.isAdult()) {

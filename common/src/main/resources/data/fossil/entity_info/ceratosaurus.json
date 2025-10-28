@@ -11,7 +11,7 @@
     "damageBase": 1.0,
     "damageMax": 10.0,
     "healthBase": 8.0,
-    "healthMax": 50.0,
+    "healthMax": 32.0,
     "speedBase": 0.2,
     "speedMax": 0.25,
     "armorBase": 0.0,
@@ -28,5 +28,5 @@
   "maxPopulation": 5,
   "eggScale": 0.6,
   "scaleBase": 0.2,
-  "scaleMax": 1.5
+  "scaleMax": 1.4
 }

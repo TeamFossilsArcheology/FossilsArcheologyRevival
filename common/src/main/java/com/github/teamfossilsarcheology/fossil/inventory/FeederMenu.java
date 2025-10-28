@@ -89,7 +89,7 @@ public class FeederMenu extends AbstractContainerMenu {
             ItemStack current = slot.getItem();
             itemStack = current.copy();
             final int inventorySlots = 36;
-            int feederSlots = 2;
+            int feederSlots = 3;
             int bottomRowEnd = inventorySlots + feederSlots;
             int bottomRowStart = bottomRowEnd - 9;
             if (index < feederSlots) {

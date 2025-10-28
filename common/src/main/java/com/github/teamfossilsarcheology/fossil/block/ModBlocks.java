@@ -120,7 +120,12 @@ public class ModBlocks {
             () -> new SkullBlock(Properties.of().mapColor(MapColor.SAND).instrument(XYLOPHONE).lightLevel(value -> 14).strength(2, 15f)
                     .requiresCorrectToolForDrops().sound(SoundType.BONE_BLOCK)));
     public static final RegistrySupplier<Block> SLIME_TRAIL = registerBlock("slime_trail",
-            () -> new RailBlock(Properties.copy(Blocks.SLIME_BLOCK)));
+            () -> new RailBlock(Properties.copy(Blocks.SLIME_BLOCK).noCollission()));
+
+    public static final RegistrySupplier<ChainFenceBlock> LARGE_CHAIN_FENCE = registerBlock("large_chain_fence",
+            () -> new ChainFenceBlock(Properties.copy(Blocks.IRON_BARS)));
+    public static final RegistrySupplier<ChainFenceBlock> SMALL_CHAIN_FENCE = registerBlock("small_chain_fence",
+            () -> new ChainFenceBlock(Properties.copy(Blocks.IRON_BARS)));
 
     public static final RegistrySupplier<Block> ANCIENT_STONE = registerBlock("ancient_stone",
             () -> new Block(Properties.of().mapColor(MapColor.STONE).instrument(BASEDRUM).strength(1.5f).requiresCorrectToolForDrops()));

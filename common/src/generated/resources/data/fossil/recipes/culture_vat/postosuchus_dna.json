@@ -1,0 +1,11 @@
+{
+  "type": "fossil:culture_vat",
+  "duration": 6000,
+  "fuel": {
+    "item": "fossil:bio_goo"
+  },
+  "input": {
+    "item": "fossil:postosuchus_dna"
+  },
+  "result": "fossil:egg_item_postosuchus"
+}

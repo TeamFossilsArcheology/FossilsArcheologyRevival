@@ -6,19 +6,19 @@
   "outputs": [
     {
       "item": "fossil:alligator_gar_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:allosaurus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:ankylosaurus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:aquilolamna_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "minecraft:bone_meal",
@@ -26,107 +26,111 @@
     },
     {
       "item": "fossil:brachiosaurus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:ceratosaurus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:citipati_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:coelacanth_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:compsognathus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:confuciusornis_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:deinonychus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:dilophosaurus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:dimorphodon_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:diplodocus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:dryosaurus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:gallimimus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:henodus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:ichthyosaurus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:liopleurodon_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:mosasaurus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:nautilus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:ornitholestes_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:pachycephalosaurus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:pachyrhinosaurus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:parasaurolophus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:plesiosaurus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
+    },
+    {
+      "item": "fossil:postosuchus_dna",
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:protoceratops_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:psittacosaurus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:pteranodon_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:quetzalcoatlus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "minecraft:sand",
@@ -134,35 +138,35 @@
     },
     {
       "item": "fossil:sarcosuchus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:spinosaurus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:stegosaurus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:sturgeon_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:therizinosaurus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:triceratops_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:tyrannosaurus_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     },
     {
       "item": "fossil:velociraptor_dna",
-      "weight": 0.39473684210526316
+      "weight": 0.38461538461538464
     }
   ]
 }

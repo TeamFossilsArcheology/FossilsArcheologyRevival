@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.system;
 import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricLeaping;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
+import com.github.teamfossilsarcheology.fossil.network.SyncedEntityDataHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
@@ -203,8 +204,8 @@ public class LeapSystem extends AISystem {
 
     public void setLeapTarget(LivingEntity target) {
         this.target = target;
-        entityData.set(LEAP_TARGET_ID, -2);
         entityData.set(LEAP_TARGET_ID, target == null ? -1 : target.getId());
+        ((SyncedEntityDataHelper) entityData).fossilsArcheologyRevival$markDirty(LEAP_TARGET_ID);
     }
 
     public boolean isLanding() {

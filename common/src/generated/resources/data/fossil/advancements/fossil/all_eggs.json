@@ -575,6 +575,20 @@
       },
       "trigger": "fossil:incubate_egg"
     },
+    "postosuchus": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "fossil:postosuchus"
+            }
+          }
+        ]
+      },
+      "trigger": "fossil:incubate_egg"
+    },
     "protoceratops": {
       "conditions": {
         "entity": [
@@ -938,6 +952,9 @@
     ],
     [
       "plesiosaurus"
+    ],
+    [
+      "postosuchus"
     ],
     [
       "protoceratops"

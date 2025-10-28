@@ -1,4 +1,4 @@
-// 1.20.1	2025-07-08T17:48:26.0290488	Loot Tables
+// 1.20.1	2025-10-28T01:23:52.1330495	Loot Tables
 2a31b88d6a117c5799d7f1da0a747da4fc3f32ae data/fossil/loot_tables/blocks/amber_block.json
 3df458908434e4d383d089e3e91d9789343c2f0f data/fossil/loot_tables/blocks/amber_chunk.json
 17c6882599637f4ee6350475dbfaf6852f78976e data/fossil/loot_tables/blocks/amber_chunk_dominican.json
@@ -96,6 +96,7 @@ d3961045f90c269665f085f2373bc1f37c51cc22 data/fossil/loot_tables/blocks/fossil_d
 1f908d9d8e7e90751cbc57b2ba02ec5705a06c58 data/fossil/loot_tables/blocks/horsetail_large.json
 ff57d1472cab43add73f82e9aab1b78704e1db44 data/fossil/loot_tables/blocks/horsetail_small.json
 c1aca1bd59be4f9c0ae8268b08805ebe0846cf95 data/fossil/loot_tables/blocks/iced_dirt.json
+1a2594d3acb197408261f1b6bfcf4fbc4075a7c7 data/fossil/loot_tables/blocks/large_chain_fence.json
 fe11f6fd5d5cc8b9ea40b26bcea95e6702a12229 data/fossil/loot_tables/blocks/licopodiophyta.json
 a48b2f98a8629e63aae2c16f88103b24d7cd7087 data/fossil/loot_tables/blocks/mutant_plant.json
 1a77e5e0c04bf85ee1c05dea70903e31ce219f05 data/fossil/loot_tables/blocks/mutant_tree_button.json
@@ -152,6 +153,7 @@ f6276f307332186ad4616fcc9a62c0c5288a7045 data/fossil/loot_tables/blocks/sigillar
 182dde1ed2823a8c6cc6ff304ff10a7b41cdef17 data/fossil/loot_tables/blocks/skull.json
 05caec2e13d0de56268dd72ae9f0b7106245e1ff data/fossil/loot_tables/blocks/skull_lantern.json
 842595f3f81a44625db204fcb28dda5163f30bb5 data/fossil/loot_tables/blocks/slime_trail.json
+b6c92c4c19a6dc0038dfcf69356befdaab229825 data/fossil/loot_tables/blocks/small_chain_fence.json
 9c0f6919f686abb1ed1e46e05192a2dc597b88d6 data/fossil/loot_tables/blocks/stripped_calamites_log.json
 b2766cc4aee148ffefdf9e02f3496d714031b6c4 data/fossil/loot_tables/blocks/stripped_calamites_wood.json
 e758bc6ac42dccd5dc37cdb0c035e62fb0c93b7f data/fossil/loot_tables/blocks/stripped_cordaites_log.json
@@ -306,6 +308,7 @@ d2151817f87733bb9d909323d270036f753adcd6 data/fossil/loot_tables/entities/pachyc
 41738e67a640e4b0c267bf7aecc1b8a294b6ab0f data/fossil/loot_tables/entities/phorusrhacos.json
 51722f0744310c7ec52cc22a8f1eca7b85f602de data/fossil/loot_tables/entities/platybelodon.json
 f043591e650a09b9f80de76210b605acad155e45 data/fossil/loot_tables/entities/plesiosaurus.json
+42e566aa4864e31cca31ad5260dd12fdab15ac18 data/fossil/loot_tables/entities/postosuchus.json
 c7572fd24aea6bad3ff413effa2d533fe78eac1e data/fossil/loot_tables/entities/protoceratops.json
 d2b92b6614d1f44392e3cb8578769a2e883c5d03 data/fossil/loot_tables/entities/psittacosaurus.json
 ea304f349cab3708bebee35b820e86f80c3a61f1 data/fossil/loot_tables/entities/pteranodon.json

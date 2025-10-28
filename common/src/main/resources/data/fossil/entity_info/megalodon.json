@@ -9,9 +9,9 @@
   },
   "attributes": {
     "damageBase": 4.0,
-    "damageMax": 15.0,
+    "damageMax": 30.0,
     "healthBase": 10.0,
-    "healthMax": 80.0,
+    "healthMax": 70.0,
     "speedBase": 0.1,
     "speedMax": 0.17,
     "armorBase": 2.0,

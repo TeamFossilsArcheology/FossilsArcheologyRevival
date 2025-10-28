@@ -8,6 +8,7 @@ import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.advancements.ModTriggers;
 import com.github.teamfossilsarcheology.fossil.client.OptionalTextureLoader;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
+import com.github.teamfossilsarcheology.fossil.entity.LaserPointEntity;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.ai.*;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.PrehistoricLookControl;
@@ -30,6 +31,7 @@ import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.network.C2SHitPlayerMessage;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
+import com.github.teamfossilsarcheology.fossil.network.SyncedEntityDataHelper;
 import com.github.teamfossilsarcheology.fossil.network.debug.C2SDisableAIMessage;
 import com.github.teamfossilsarcheology.fossil.network.debug.SyncDebugInfoMessage;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
@@ -37,6 +39,7 @@ import com.github.teamfossilsarcheology.fossil.util.Gender;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
+import dev.architectury.platform.Platform;
 import it.unimi.dsi.fastutil.Pair;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
@@ -74,6 +77,7 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
@@ -150,6 +154,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     protected double swimSpeed;
     private boolean useLowerFluidJumpThreshold;
     private final Map<VariantRegistry.RegistryObject<?>, VariantCondition.WithVariant<?>> allVariants = new HashMap<>();
+    private long synTime = -1;
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, ResourceLocation animationLocation) {
         super(entityType, level);
@@ -229,6 +234,9 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
         targetSelector.addGoal(5, new HuntingTargetGoal(this));
+
+        targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, LaserPointEntity.class, true));
+
     }
 
     @Override
@@ -719,6 +727,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         }
 
         if (!level().isClientSide) {
+            if (synTime > 0 && synTime >= level().getGameTime()) {
+                synTime = -1;
+                //TLDR: Idk why but on fabric if the entity gets loaded in, the ClientboundSetEntityDataPacket gets handled faster than the Architectury SpawnEntityPacket. To me: see trello for detailed reason
+                ((SyncedEntityDataHelper) getEntityData()).fossilsArcheologyRevival$markNonDefaultAsDirty();
+            }
             setSprinting(getDeltaMovement().horizontalDistance() > 0.1 && getMoveControl().getSpeedModifier() >= attributes().sprintMod());
             if (getHunger() > getMaxHunger()) {
                 setHunger(getMaxHunger());
@@ -1501,6 +1514,9 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
+        if (Platform.isFabric()) {
+            synTime = level().getGameTime() + 20;
+        }
         return NetworkManager.createAddEntityPacket(this);
     }
 
