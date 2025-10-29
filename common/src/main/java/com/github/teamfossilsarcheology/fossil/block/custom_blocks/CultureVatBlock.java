@@ -108,15 +108,15 @@ public class CultureVatBlock extends CustomEntityBlock {
                     level.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
                     level.neighborChanged(pos, Blocks.WATER, pos);
                 } else {
-                    level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 1, 1, false);
+                    level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 1, 1);
                 }
                 entity.moveTo(pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, level.random.nextFloat() * 360f, 0.0f);
                 level.addFreshEntity(entity);
+                level.destroyBlock(pos, false);
             }
             dropIron(level, pos);
             dropInventory(level, pos);
-            level.destroyBlock(pos, false);
-            level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1, 1, false);
+            level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1, 1);
             level.removeBlockEntity(pos);
         }
     }
