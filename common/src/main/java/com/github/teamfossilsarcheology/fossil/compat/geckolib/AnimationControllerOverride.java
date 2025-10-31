@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class AnimationControllerOverride {
     private static final Keyframe<IValue> ZERO_KEYFRAME = new Keyframe<>(0.0, new Constant(0), new Constant(0));
     private static final AnimationPoint POINT = new AnimationPoint(ZERO_KEYFRAME, 0, 0, 0, 0);
+    private static final AnimationPoint SCALE_POINT = new AnimationPoint(ZERO_KEYFRAME, 0, 0, 1, 1);
 
     /**
      * Adds transition logic to {@link AnimationController#process}
@@ -33,34 +34,21 @@ public class AnimationControllerOverride {
                 boneSnapshots.put(previousBone, BoneSnapshot.copy(snapshots.get(previousBone)));
             }
         }
-        Map<String, BoneAnimation> animations = Arrays.stream(currentAnimation.animation().boneAnimations()).collect(Collectors.toMap(BoneAnimation::boneName, boneAnimation -> boneAnimation));
         for (String boneName : previousBones) {
-            if (!bones.containsKey(boneName) || !animations.containsKey(boneName)) {
+            if (!bones.containsKey(boneName)) {
                 continue;
             }
             CoreGeoBone bone = bones.get(boneName);
-            BoneAnimation boneAnimation = animations.get(boneName);
 
             BoneAnimationQueue boneAnimationQueue = boneAnimationQueues.get(boneName);
 
-            KeyframeStack<Keyframe<IValue>> rotationKeyFrames = boneAnimation.rotationKeyFrames();
-            KeyframeStack<Keyframe<IValue>> positionKeyFrames = boneAnimation.positionKeyFrames();
-            KeyframeStack<Keyframe<IValue>> scaleKeyFrames = boneAnimation.scaleKeyFrames();
             BoneSnapshot boneSnapshot = boneSnapshots.get(boneName);
-            if (!rotationKeyFrames.xKeyframes().isEmpty()) {
-                boneAnimationQueue.addNextRotation(null, adjustedTick, transitionLength, boneSnapshot, bone.getInitialSnapshot(),
-                        POINT, POINT, POINT);
-            }
-
-            if (!positionKeyFrames.xKeyframes().isEmpty()) {
-                boneAnimationQueue.addNextPosition(null, adjustedTick, transitionLength, boneSnapshot,
-                        POINT, POINT, POINT);
-            }
-
-            if (!scaleKeyFrames.xKeyframes().isEmpty()) {
-                boneAnimationQueue.addNextScale(null, adjustedTick, transitionLength, boneSnapshot,
-                        POINT, POINT, POINT);
-            }
+            boneAnimationQueue.addNextRotation(null, adjustedTick, transitionLength, boneSnapshot, bone.getInitialSnapshot(),
+                    POINT, POINT, POINT);
+            boneAnimationQueue.addNextPosition(null, adjustedTick, transitionLength, boneSnapshot,
+                    POINT, POINT, POINT);
+            boneAnimationQueue.addNextScale(null, adjustedTick, transitionLength, boneSnapshot,
+                    SCALE_POINT, SCALE_POINT, SCALE_POINT);
         }
     }
 }
