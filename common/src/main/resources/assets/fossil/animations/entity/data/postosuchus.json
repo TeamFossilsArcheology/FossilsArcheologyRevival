@@ -4,7 +4,7 @@
       "blocks_per_second": 0.8
     },
     "animation.postosuchus.run": {
-      "blocks_per_second": 4
+      "blocks_per_second": 3.5
     }
   }
 }

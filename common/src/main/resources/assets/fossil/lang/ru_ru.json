@@ -841,6 +841,7 @@
   "subtitle.fossil.velociraptor_ambient": "Велоцираптор верещит",
   "subtitle.fossil.velociraptor_hurt": "Велоцираптор ранен",
   "subtitle.fossil.velociraptor_death": "Велоцираптор умирает",
+  "fossil.jade.fish": "Рыба: %s",
   "fossil.jade.meat": "Мясо: %s",
   "fossil.jade.plant": "Растения: %s",
   "fossil.midnightconfig.title": "Конфиг Fossils and Archeology: Revival",

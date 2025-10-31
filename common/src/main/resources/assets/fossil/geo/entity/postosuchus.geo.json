@@ -3,7 +3,7 @@
 	"minecraft:geometry": [
 		{
 			"description": {
-				"identifier": "geometry.Model",
+				"identifier": "geometry.postosuchus",
 				"texture_width": 128,
 				"texture_height": 128,
 				"visible_bounds_width": 7,
@@ -69,6 +69,17 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "lowerJaw",
+					"pivot": [0, 11, -20]
+				},
+				{
+					"name": "head_hitbox",
+					"parent": "head",
+					"pivot": [0, 6.75, -19.4],
+					"cubes": []
+				},
+				{
 					"name": "leftUpperArm",
 					"parent": "upperBody",
 					"pivot": [2.8, 9.3, -8.9],
@@ -103,6 +114,11 @@
 					"cubes": [
 						{"origin": [-3.7, 1.3, -9.9], "size": [2, 4, 2], "uv": [60, 20]}
 					]
+				},
+				{
+					"name": "rider_pos",
+					"parent": "upperBody",
+					"pivot": [0, 14.5, 0]
 				},
 				{
 					"name": "tail1",

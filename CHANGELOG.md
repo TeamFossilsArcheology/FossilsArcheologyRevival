@@ -6,6 +6,7 @@
 - Postosuchus mob
 - New model for ceratosaurus including a feathered variant
 - Changed some mob stats
+- Some translations for Ukrainian
 - Missing assets for mangrove toys and frog items
 - Missing assets for bamboo toys and camel items
 - Missing assets for cherry toys and sniffer items
