@@ -6,6 +6,7 @@
 - Postosuchus mob
 - New model for ceratosaurus including a feathered variant
 - Changed some mob stats
+- Some translations for Ukrainian
 
 ### Fixed
 - Tempskya leaves replacing blocks when the tree is grown
