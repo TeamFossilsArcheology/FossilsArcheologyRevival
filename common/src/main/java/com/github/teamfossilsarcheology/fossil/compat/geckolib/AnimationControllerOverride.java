@@ -17,7 +17,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class AnimationControllerOverride {
-    private static final KeyFrame<IValue> ZERO_KEYFRAME = new KeyFrame<>(0.0, new ConstantValue(0), new ConstantValue(0));
 
     /**
      * Adds transition logic to {@link software.bernie.geckolib3.core.controller.AnimationController#process(double, AnimationEvent, List, Map, MolangParser, boolean) AnimationController#process}
@@ -52,28 +51,26 @@ public class AnimationControllerOverride {
             assert boneSnapshot != null : "Bone snapshot was null";
             BoneAnimationQueue boneAnimationQueue = boneAnimationQueues.get(boneName);
 
-            KeyFrameLocation<KeyFrame<IValue>> location = new KeyFrameLocation<>(ZERO_KEYFRAME, 0);
-            AnimationPoint point = new AnimationPoint(location.currentFrame, location.currentTick, 0, 0, 0);
             boneAnimationQueue.positionXQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
-                    boneSnapshot.positionOffsetX - initialSnapshot.positionOffsetX, point.animationStartValue));
+                    boneSnapshot.positionOffsetX - initialSnapshot.positionOffsetX, 0));
             boneAnimationQueue.positionYQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
-                    boneSnapshot.positionOffsetY - initialSnapshot.positionOffsetY, point.animationStartValue));
+                    boneSnapshot.positionOffsetY - initialSnapshot.positionOffsetY, 0));
             boneAnimationQueue.positionZQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
-                    boneSnapshot.positionOffsetZ - initialSnapshot.positionOffsetZ, point.animationStartValue));
+                    boneSnapshot.positionOffsetZ - initialSnapshot.positionOffsetZ, 0));
 
             boneAnimationQueue.rotationXQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
-                    boneSnapshot.rotationValueX - initialSnapshot.rotationValueX, point.animationStartValue));
+                    boneSnapshot.rotationValueX - initialSnapshot.rotationValueX, 0));
             boneAnimationQueue.rotationYQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
-                    boneSnapshot.rotationValueY - initialSnapshot.rotationValueY, point.animationStartValue));
+                    boneSnapshot.rotationValueY - initialSnapshot.rotationValueY, 0));
             boneAnimationQueue.rotationZQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
-                    boneSnapshot.rotationValueY - initialSnapshot.rotationValueY, point.animationStartValue));
+                    boneSnapshot.rotationValueY - initialSnapshot.rotationValueY, 0));
 
             boneAnimationQueue.scaleXQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
-                    boneSnapshot.scaleValueX - initialSnapshot.scaleValueX, point.animationStartValue));
+                    boneSnapshot.scaleValueX - initialSnapshot.scaleValueX, 1));
             boneAnimationQueue.scaleXQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
-                    boneSnapshot.scaleValueY - initialSnapshot.scaleValueY, point.animationStartValue));
+                    boneSnapshot.scaleValueY - initialSnapshot.scaleValueY, 1));
             boneAnimationQueue.scaleXQueue().add(new AnimationPoint(null, adjustedTick, transitionLengthTicks,
-                    boneSnapshot.scaleValueZ - initialSnapshot.scaleValueZ, point.animationStartValue));
+                    boneSnapshot.scaleValueZ - initialSnapshot.scaleValueZ, 1));
         }
     }
 }

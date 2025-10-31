@@ -841,6 +841,7 @@
   "subtitle.fossil.velociraptor_ambient": "Velociraptor stride",
   "subtitle.fossil.velociraptor_hurt": "Velociraptor ferito",
   "subtitle.fossil.velociraptor_death": "Velociraptor muore",
+  "fossil.jade.fish": "Pesce: %s",
   "fossil.jade.meat": "Carne: %s",
   "fossil.jade.plant": "Piante: %s",
   "fossil.midnightconfig.title": "Configurazioni Fossili e Archeologia: Rinascita",
