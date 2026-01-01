@@ -5,9 +5,8 @@
   "client": [
     "GeoEntityRendererMixin", "ScreenEffectRendererMixin"
   ],
-  "mixins": [
-    "LivingEntityMixin", "MidnightConfigMixin", "PickupHandlerMixin", "ServerPlayerMixin", "WalkNodeEvaluatorMixin"
-  ],
+  "mixins": ["LivingEntityMixin", "MidnightConfigMixin", "MidnightConfigModernMixin", "PickupHandlerMixin", "ServerPlayerMixin", "WalkNodeEvaluatorMixin"],
+  "plugin": "com.github.teamfossilsarcheology.fossil.fabric.FossilMixinPluginImpl",
   "injectors": {
     "defaultRequire": 1
   }
