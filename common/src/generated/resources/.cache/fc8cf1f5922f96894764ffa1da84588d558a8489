@@ -1,4 +1,4 @@
-// 1.20.1	2025-10-28T01:23:52.1290505	Tags for minecraft:item mod id fossil
+// 1.19.4	2026-01-01T17:32:56.5703842	Tags for minecraft:item mod id fossil
 30ad71309b4c0300cbd8e097db1b57f469960c26 data/fossil/tags/items/all_eggs.json
 748289a71b4a14833170e105ad945e76cf90203b data/fossil/tags/items/ancient_wood_logs.json
 ef19dfc8354f2b11915f6a99b787a7735d2cbb84 data/fossil/tags/items/bird_eggs.json
@@ -51,15 +51,21 @@ a606b0b1fabfe3bbe939be231e3182d94688e677 data/fossil/tags/items/mutant_tree_logs
 85c759ec216c2d1e8bc33ab4567949e2af3d85f8 data/fossil/tags/items/sifter_inputs.json
 1981352ed6a126851eaabcf77b5b461a3f2ee9ad data/fossil/tags/items/sigillaria_logs.json
 d1c009d4e38b6b3a4df5c73a4516bf388cfe6f1e data/fossil/tags/items/tempskya_logs.json
+7a8c6e94e8ad2b59ed83171a301ca362b3acc662 data/minecraft/tags/items/axes.json
 e814a1677220034b3098db241c4ac5be34d347de data/minecraft/tags/items/beds.json
+150ad9987b2e0f726705936f06c513067fba4894 data/minecraft/tags/items/bookshelf_books.json
 73cc59ef6b7b8eefdf42ea10c5518f112962c3ac data/minecraft/tags/items/creeper_drop_music_discs.json
 6eea4c0b436bcee131d04661adf48758b0cdf781 data/minecraft/tags/items/dirt.json
+c6ce1001fada109c21fc78785c3188f19a84a1d7 data/minecraft/tags/items/hoes.json
 e118939ff14d26961ca9d0b3b53862c5cb9371dc data/minecraft/tags/items/leaves.json
+c2a80180757ea7dfcc5fcd9c2f61342cb7592da6 data/minecraft/tags/items/pickaxes.json
 84cd76fb442225ad890c86ddb9bd8763fa606ae7 data/minecraft/tags/items/planks.json
 276cfa5ab9dd6ab8715610a455bbf0ee05493592 data/minecraft/tags/items/rails.json
 09c44c6b8767019dca31e2357c986e13c6e50dc0 data/minecraft/tags/items/saplings.json
+91cf4cd3c62bdffbb414b7d8193d87cf6c2778dc data/minecraft/tags/items/shovels.json
 db57b916d6559534878a611a37df9c6ba4bc4e05 data/minecraft/tags/items/slabs.json
 f601cbfdd43419935b9407f7203d25bdc16b4513 data/minecraft/tags/items/stairs.json
+cc4bae062be7abc5ff4e6d621993456e1d8d29cb data/minecraft/tags/items/swords.json
 463001e8d89e35f05f5680c7853a559ea4014288 data/minecraft/tags/items/walls.json
 1ba9bb776915fb1cf69f11e02a03faae96e38d21 data/minecraft/tags/items/wooden_buttons.json
 22a1e9ccaf1b589812475e519b2d7052f395a732 data/minecraft/tags/items/wooden_doors.json
