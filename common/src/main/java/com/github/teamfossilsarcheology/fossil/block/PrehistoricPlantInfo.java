@@ -50,9 +50,9 @@ public enum PrehistoricPlantInfo {
     private final String resourceName;
     private final VoxelShape shape;
     private PrehistoricPlantInfo tallPlant;
-    public int berryAge;
-    public int maxAge;
-    public RegistrySupplier<Item> berryItem;
+    private int berryAge;
+    private int maxAge;
+    private RegistrySupplier<Item> berryItem;
     private String commonName;
     private RegistrySupplier<? extends BushBlock> plantBlock;
     private RegistrySupplier<Item> fossilizedPlantSeedItem;
@@ -139,6 +139,18 @@ public enum PrehistoricPlantInfo {
 
     public FlowerSeedsItem getPlantSeedItem() {
         return plantSeedItem.get();
+    }
+
+    public int berryAge() {
+        return berryAge;
+    }
+
+    public int maxAge() {
+        return maxAge;
+    }
+
+    public RegistrySupplier<Item> berryItem() {
+        return berryItem;
     }
 
     enum Size {

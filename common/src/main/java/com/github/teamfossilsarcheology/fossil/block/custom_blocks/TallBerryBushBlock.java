@@ -30,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public abstract class TallBerryBushBlock extends DoublePlantBlock implements BonemealableBlock {
+public abstract class TallBerryBushBlock extends DoublePlantBlock implements BerryBushBlock, BonemealableBlock {
     private final PrehistoricPlantInfo info;
 
     protected TallBerryBushBlock(PrehistoricPlantInfo info) {
@@ -38,8 +38,6 @@ public abstract class TallBerryBushBlock extends DoublePlantBlock implements Bon
         this.info = info;
         this.registerDefaultState(stateDefinition.any().setValue(ageProperty(), 0).setValue(HALF, DoubleBlockHalf.LOWER));
     }
-
-    public abstract IntegerProperty ageProperty();
 
     @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
@@ -75,13 +73,13 @@ public abstract class TallBerryBushBlock extends DoublePlantBlock implements Bon
 
     @Override
     public boolean isRandomlyTicking(BlockState state) {
-        return state.getValue(HALF) == DoubleBlockHalf.LOWER && state.getValue(ageProperty()) < info.maxAge;
+        return state.getValue(HALF) == DoubleBlockHalf.LOWER && state.getValue(ageProperty()) < info.maxAge();
     }
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
         int i = state.getValue(ageProperty());
-        if (i < info.maxAge && random.nextInt(5) == 0 && level.getRawBrightness(pos.above(), 0) >= 9) {
+        if (i < info.maxAge() && random.nextInt(5) == 0 && level.getRawBrightness(pos.above(), 0) >= 9) {
             updateAge(level, pos, state, i + 1);
         }
     }
@@ -106,19 +104,19 @@ public abstract class TallBerryBushBlock extends DoublePlantBlock implements Bon
     @Override
     public @NotNull InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         int i = state.getValue(ageProperty());
-        boolean isMaxAge = i == info.maxAge;
+        boolean isMaxAge = i == info.maxAge();
         if (!isMaxAge && player.getItemInHand(hand).is(Items.BONE_MEAL)) {
             return InteractionResult.PASS;
         }
-        if (i >= info.berryAge) {
+        if (i >= info.berryAge()) {
             if (level.isClientSide) {
                 return InteractionResult.SUCCESS;
             }
-            int dropAmount = 1 + level.random.nextInt(2) + i - info.berryAge;
+            int dropAmount = 1 + level.random.nextInt(2) + i - info.berryAge();
             BlockPos sourcePos = state.getValue(HALF) == DoubleBlockHalf.LOWER ? pos.above() : pos;
-            SweetBerryBushBlock.popResource(level, sourcePos, new ItemStack(info.berryItem.get(), dropAmount));
+            SweetBerryBushBlock.popResource(level, sourcePos, new ItemStack(info.berryItem().get(), dropAmount));
             level.playSound(null, sourcePos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1, 0.8f + level.random.nextFloat() * 0.4f);
-            updateAge(level, pos, state, info.berryAge - 1);
+            updateAge(level, pos, state, info.berryAge() - 1);
             return InteractionResult.CONSUME;
         }
         return super.use(state, level, pos, player, hand, hit);
@@ -132,7 +130,7 @@ public abstract class TallBerryBushBlock extends DoublePlantBlock implements Bon
 
     @Override
     public boolean isValidBonemealTarget(BlockGetter level, BlockPos pos, BlockState state, boolean isClient) {
-        return state.getValue(ageProperty()) < info.maxAge;
+        return state.getValue(ageProperty()) < info.maxAge();
     }
 
     @Override

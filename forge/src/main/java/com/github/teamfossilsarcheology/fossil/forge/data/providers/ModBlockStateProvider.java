@@ -385,25 +385,25 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
 
     private void shortBerryBlock(PrehistoricPlantInfo info, ShortBerryBushBlock block) {
-        itemModels().plantBlockItem(block, "_stage" + info.maxAge);
+        itemModels().plantBlockItem(block, "_stage" + info.maxAge());
         String name = key(block).getPath();
         var blockState = getVariantBuilder(block);
-        ResourceLocation[] textures = IntStream.rangeClosed(0, info.maxAge).mapToObj(age -> FossilMod.location("block/plants/plant_" + name + "_stage" + age)).toArray(ResourceLocation[]::new);
+        ResourceLocation[] textures = IntStream.rangeClosed(0, info.maxAge()).mapToObj(age -> FossilMod.location("block/plants/plant_" + name + "_stage" + age)).toArray(ResourceLocation[]::new);
         models().registerExistingTexture(textures);
-        for (int i = 0; i <= info.maxAge; i++) {
+        for (int i = 0; i <= info.maxAge(); i++) {
             blockState.partialState().with(block.ageProperty(), i).setModels(new ConfiguredModel(models().cross("block/plants/" + name + "_stage" + i, textures[i])));
         }
     }
 
     private void tallBerryBlock(PrehistoricPlantInfo info, TallBerryBushBlock block) {
-        itemModels().plantBlockItem(block, "_2_stage" + info.maxAge);
+        itemModels().plantBlockItem(block, "_2_stage" + info.maxAge());
         String name = key(block).getPath();
         var blockState = getVariantBuilder(block);
-        ResourceLocation[] lower = IntStream.rangeClosed(0, info.maxAge).mapToObj(age -> FossilMod.location("block/plants/plant_" + name + "_1_stage" + age)).toArray(ResourceLocation[]::new);
-        ResourceLocation[] upper = IntStream.rangeClosed(0, info.maxAge).mapToObj(age -> FossilMod.location("block/plants/plant_" + name + "_2_stage" + age)).toArray(ResourceLocation[]::new);
+        ResourceLocation[] lower = IntStream.rangeClosed(0, info.maxAge()).mapToObj(age -> FossilMod.location("block/plants/plant_" + name + "_1_stage" + age)).toArray(ResourceLocation[]::new);
+        ResourceLocation[] upper = IntStream.rangeClosed(0, info.maxAge()).mapToObj(age -> FossilMod.location("block/plants/plant_" + name + "_2_stage" + age)).toArray(ResourceLocation[]::new);
         models().registerExistingTexture(lower);
         models().registerExistingTexture(upper);
-        for (int i = 0; i <= info.maxAge; i++) {
+        for (int i = 0; i <= info.maxAge(); i++) {
             blockState.partialState().with(block.ageProperty(), i).with(TallBerryBushBlock.HALF, DoubleBlockHalf.LOWER).setModels(new ConfiguredModel(models().cross("block/plants/" + name + "_1_stage" + i, lower[i])))
                     .partialState().with(block.ageProperty(), i).with(TallBerryBushBlock.HALF, DoubleBlockHalf.UPPER).setModels(new ConfiguredModel(models().cross("block/plants/" + name + "_2_stage" + i, upper[i])));
         }
