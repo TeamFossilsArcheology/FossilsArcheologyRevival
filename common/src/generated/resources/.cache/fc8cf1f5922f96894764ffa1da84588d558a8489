@@ -1,4 +1,4 @@
-// 1.19.3	2025-10-28T00:58:17.2172965	Tags for minecraft:item mod id fossil
+// 1.19.3	2026-01-01T17:26:52.0517467	Tags for minecraft:item mod id fossil
 30ad71309b4c0300cbd8e097db1b57f469960c26 data/fossil/tags/items/all_eggs.json
 748289a71b4a14833170e105ad945e76cf90203b data/fossil/tags/items/ancient_wood_logs.json
 ef19dfc8354f2b11915f6a99b787a7735d2cbb84 data/fossil/tags/items/bird_eggs.json
@@ -52,6 +52,7 @@ a606b0b1fabfe3bbe939be231e3182d94688e677 data/fossil/tags/items/mutant_tree_logs
 1981352ed6a126851eaabcf77b5b461a3f2ee9ad data/fossil/tags/items/sigillaria_logs.json
 d1c009d4e38b6b3a4df5c73a4516bf388cfe6f1e data/fossil/tags/items/tempskya_logs.json
 e814a1677220034b3098db241c4ac5be34d347de data/minecraft/tags/items/beds.json
+150ad9987b2e0f726705936f06c513067fba4894 data/minecraft/tags/items/bookshelf_books.json
 73cc59ef6b7b8eefdf42ea10c5518f112962c3ac data/minecraft/tags/items/creeper_drop_music_discs.json
 6eea4c0b436bcee131d04661adf48758b0cdf781 data/minecraft/tags/items/dirt.json
 e118939ff14d26961ca9d0b3b53862c5cb9371dc data/minecraft/tags/items/leaves.json
