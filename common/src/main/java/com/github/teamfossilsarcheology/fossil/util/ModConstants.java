@@ -7,4 +7,5 @@ public class ModConstants {
     public static final String FARMERS = "farmersdelight";
     public static final String LITHOSTITCHED = "lithostitched";
     public static final String MIDNIGHT_LIB = "midnightlib";
+    public static final String PREHISTORIC_FAUNA = "prehistoricfauna";
 }

@@ -1,0 +1,29 @@
+{
+  "values": [
+    "fossil:egg_item_alligator_gar",
+    "fossil:egg_item_citipati",
+    "fossil:egg_item_coelacanth",
+    "fossil:egg_item_compsognathus",
+    "fossil:egg_item_confuciusornis",
+    "fossil:egg_item_deinonychus",
+    "fossil:egg_item_dilophosaurus",
+    "fossil:egg_item_dimorphodon",
+    "fossil:egg_item_dodo",
+    "fossil:egg_item_dryosaurus",
+    "fossil:egg_item_edaphosaurus",
+    "fossil:egg_item_gallimimus",
+    "fossil:egg_item_gastornis",
+    "fossil:egg_item_kelenken",
+    "fossil:egg_item_nautilus",
+    "fossil:egg_item_ornitholestes",
+    "fossil:egg_item_phorusrhacos",
+    "fossil:egg_item_protoceratops",
+    "fossil:egg_item_psittacosaurus",
+    "fossil:egg_item_pteranodon",
+    "fossil:egg_item_sturgeon",
+    "fossil:egg_item_titanis",
+    "fossil:egg_item_velociraptor",
+    "fossil:egg_item_chicken",
+    "fossil:egg_item_parrot"
+  ]
+}

@@ -1,4 +1,4 @@
-// 1.20.1	2025-10-28T01:23:52.1320489	Fossil Block Tags
+// 1.20.1	2026-01-05T23:51:06.4072468	Fossil Block Tags
 748289a71b4a14833170e105ad945e76cf90203b data/fossil/tags/blocks/ancient_wood_logs.json
 24bcf1f9f4f02ad0bd3cd4561158d1ff2e9abbc6 data/fossil/tags/blocks/calamites_logs.json
 b057417db4a2d14befd1fd92bdee83e44deabd4c data/fossil/tags/blocks/cordaites_logs.json
@@ -40,3 +40,8 @@ f601cbfdd43419935b9407f7203d25bdc16b4513 data/minecraft/tags/blocks/stairs.json
 5f6d2a20a819711f37f6003c986f2a88374b1fb8 data/minecraft/tags/blocks/wooden_slabs.json
 475432a5fefb5c2e73b6f7b79929edb187a21e6b data/minecraft/tags/blocks/wooden_stairs.json
 aef806cde14350f03e14488957217bfe412a448d data/minecraft/tags/blocks/wooden_trapdoors.json
+90ffc54bd97e1da15557dc5fc9bbe9a07d454ad9 data/prehistoricfauna/tags/blocks/eight_hunger_plants.json
+2155756a06a80ae050b3055808228ad847a4c4e8 data/prehistoricfauna/tags/blocks/six_hunger_plants.json
+b2a31478e8b616b09e62d16be55273699dbdc6c1 data/prehistoricfauna/tags/blocks/twelve_hunger_plants.json
+022513323732e673bb4693989b9d967508e8ad75 data/prehistoricfauna/tags/blocks/twenty_five_hunger_plants.json
+dc59abf114432632c90be07cbd3d6d3e1bb94ef8 data/prehistoricfauna/tags/blocks/two_hunger_plants.json

@@ -1,4 +1,4 @@
-// 1.19.4	2026-01-01T17:32:56.5703842	Tags for minecraft:item mod id fossil
+// 1.20.1	2026-01-05T23:51:06.4072468	Tags for minecraft:item mod id fossil
 30ad71309b4c0300cbd8e097db1b57f469960c26 data/fossil/tags/items/all_eggs.json
 748289a71b4a14833170e105ad945e76cf90203b data/fossil/tags/items/ancient_wood_logs.json
 ef19dfc8354f2b11915f6a99b787a7735d2cbb84 data/fossil/tags/items/bird_eggs.json
@@ -74,3 +74,13 @@ cc4bae062be7abc5ff4e6d621993456e1d8d29cb data/minecraft/tags/items/swords.json
 5f6d2a20a819711f37f6003c986f2a88374b1fb8 data/minecraft/tags/items/wooden_slabs.json
 475432a5fefb5c2e73b6f7b79929edb187a21e6b data/minecraft/tags/items/wooden_stairs.json
 aef806cde14350f03e14488957217bfe412a448d data/minecraft/tags/items/wooden_trapdoors.json
+e03290828eb1e04d522c8308ff50a96ed0ad31a7 data/prehistoricfauna/tags/items/fifteen_hunger_eggs.json
+29965a22af360d85b6da2512804cab885e540391 data/prehistoricfauna/tags/items/five_hunger_eggs.json
+1e87dca8268057a8f64dd76ffe531522bac096fe data/prehistoricfauna/tags/items/four_hunger_fish.json
+25d4251cff5370b78a92859d262d80135d08a771 data/prehistoricfauna/tags/items/four_hunger_plants.json
+294c6d44f871e39970b326bf77631dd944bd64c1 data/prehistoricfauna/tags/items/six_hunger_meats.json
+1e0869269630076e6206183ca46c8430a048c04c data/prehistoricfauna/tags/items/six_hunger_plants.json
+7f7f4cd528c9fee241709eb417886def3a4a041f data/prehistoricfauna/tags/items/ten_hunger_eggs.json
+b2a31478e8b616b09e62d16be55273699dbdc6c1 data/prehistoricfauna/tags/items/twelve_hunger_plants.json
+022513323732e673bb4693989b9d967508e8ad75 data/prehistoricfauna/tags/items/twenty_five_hunger_plants.json
+dc59abf114432632c90be07cbd3d6d3e1bb94ef8 data/prehistoricfauna/tags/items/two_hunger_plants.json

@@ -5,6 +5,7 @@ import com.github.teamfossilsarcheology.fossil.block.PrehistoricPlantInfo;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.FigurineBlock;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.VaseBlock;
 import com.github.teamfossilsarcheology.fossil.tags.ModBlockTags;
+import com.github.teamfossilsarcheology.fossil.util.ModConstants;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -100,19 +102,22 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                         Blocks.VINE, Blocks.GLOW_LICHEN, Blocks.SUNFLOWER, Blocks.LILAC, Blocks.ROSE_BUSH, Blocks.PEONY,
                         Blocks.TALL_GRASS, Blocks.LARGE_FERN, Blocks.HANGING_ROOTS);
         addTag(ModBlockTags.MOOD_BONUS, BlockTags.CROPS, BlockTags.LEAVES, BlockTags.SAPLINGS, BlockTags.SMALL_FLOWERS, ModBlockTags.PLANTS);
+        if (ModList.get().isLoaded(ModConstants.PREHISTORIC_FAUNA)) {
+            PFaunaTagsProvider.addBlockTags(this);
+        }
     }
 
     @SafeVarargs
-    private IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> addTag(TagKey<Block> key, TagKey<Block>... toAdd) {
+    protected final  IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> addTag(TagKey<Block> key, TagKey<Block>... toAdd) {
         return tag(key).addTags(toAdd);
     }
 
     @SafeVarargs
-    private IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> addTag(TagKey<Block> key, RegistrySupplier<? extends Block>... toAdd) {
+    protected final IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> addTag(TagKey<Block> key, RegistrySupplier<? extends Block>... toAdd) {
         return tag(key).add(Arrays.stream(toAdd).filter(RegistrySupplier::isPresent).map(Supplier::get).toArray(Block[]::new));
     }
 
-    private IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> addTag(TagKey<Block> key, Block... toAdd) {
+    protected IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> addTag(TagKey<Block> key, Block... toAdd) {
         return tag(key).add(Arrays.stream(toAdd).toArray(Block[]::new));
     }
 

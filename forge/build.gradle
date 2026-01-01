@@ -85,8 +85,11 @@ dependencies {
 
     modCompileOnly "maven.modrinth:alexs-mobs:$alex_mobs_version"
 
-    modCompileOnly("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive false }
-    modCompileOnly "dev.engine-room.flywheel:flywheel-forge-api-${minecraft_version}:${flywheel_version}"
+    modCompileOnly("com.simibubi.create:create-$minecraft_version:$create_version:slim") { transitive false }
+    modCompileOnly "dev.engine-room.flywheel:flywheel-forge-api-$minecraft_version:$flywheel_version"
+
+    modCompileOnly "maven.modrinth:prehistoric-fauna:$prehistoric_fauna_version"
+    modLocalRuntime "maven.modrinth:prehistoric-fauna:$prehistoric_fauna_version"
 
     //Create runtime
     //modLocalRuntime("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive false }

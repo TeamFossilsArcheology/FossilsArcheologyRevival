@@ -8,13 +8,13 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.VanillaEn
 import com.github.teamfossilsarcheology.fossil.item.*;
 import com.github.teamfossilsarcheology.fossil.tags.ModBlockTags;
 import com.github.teamfossilsarcheology.fossil.tags.ModItemTags;
+import com.github.teamfossilsarcheology.fossil.util.ModConstants;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
@@ -24,6 +24,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -254,19 +255,22 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         addTag(ItemTags.CREEPER_DROP_MUSIC_DISCS, MUSIC_DISC_ANU, MUSIC_DISC_BONES, MUSIC_DISC_DISCOVERY, MUSIC_DISC_SCARAB);
         addTag(ModItemTags.SIFTER_INPUTS, ItemTags.SAND, ItemTags.DIRT).add(DENSE_SAND.get().asItem(),
                 VOLCANIC_ASH.get().asItem(), Blocks.SOUL_SAND.asItem());
+        if (ModList.get().isLoaded(ModConstants.PREHISTORIC_FAUNA)) {
+            PFaunaTagsProvider.addItemTags(this);
+        }
     }
 
     @SafeVarargs
-    private IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item> addTag(TagKey<Item> key, TagKey<Item>... toAdd) {
+    protected final IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item> addTag(TagKey<Item> key, TagKey<Item>... toAdd) {
         return tag(key).addTags(toAdd);
     }
 
     @SafeVarargs
-    private IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item> addTag(TagKey<Item> key, RegistrySupplier<? extends ItemLike>... toAdd) {
+    protected final IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item> addTag(TagKey<Item> key, RegistrySupplier<? extends ItemLike>... toAdd) {
         return tag(key).add(Arrays.stream(toAdd).filter(RegistrySupplier::isPresent).map(Supplier::get).map(ItemLike::asItem).toArray(Item[]::new));
     }
 
-    private IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item> addTag(TagKey<Item> key, ItemLike... toAdd) {
+    protected IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item> addTag(TagKey<Item> key, ItemLike... toAdd) {
         return tag(key).add(Arrays.stream(toAdd).filter(Objects::nonNull).map(ItemLike::asItem).toArray(Item[]::new));
     }
 }

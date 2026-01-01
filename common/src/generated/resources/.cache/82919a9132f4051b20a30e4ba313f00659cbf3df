@@ -1,4 +1,13 @@
-// 1.20.1	2025-09-14T17:04:11.313459	Tags for minecraft:entity_type mod id fossil
+// 1.20.1	2026-01-05T23:51:06.4072468	Tags for minecraft:entity_type mod id fossil
 9c4ad0193b22528323e6211a1b122dc4485cf039 data/fossil/tags/entity_types/livestock.json
 d0fe09146211a3491724b1479bebd00c46d53b71 data/fossil/tags/entity_types/mammal.json
 c264051b1af8559765043cad31da846830f767f5 data/minecraft/tags/entity_types/freeze_immune_entity_types.json
+21ec5364af09561cf9a0f664dec10a1274287457 data/prehistoricfauna/tags/entity_types/eighty_hunger_animals.json
+ff5d006ec9b5715afd78e513677b1c850a1a826a data/prehistoricfauna/tags/entity_types/fifteen_hunger_animals.json
+9525602e76291dc482d68d964ccbe515b3c256c2 data/prehistoricfauna/tags/entity_types/forty_hunger_animals.json
+b9ab1856327152946c1351499bc958b2e70c22b7 data/prehistoricfauna/tags/entity_types/sixy_hunger_animals.json
+bca1c1b170566740e6be330ee907204f05d05341 data/prehistoricfauna/tags/entity_types/six_hunger_animals.json
+62984f2e04c92b020f255e71da445cf4dba72d0f data/prehistoricfauna/tags/entity_types/ten_hunger_animals.json
+77c38c6dc381b07f75b0812f71c414570cf43133 data/prehistoricfauna/tags/entity_types/thirty_hunger_animals.json
+0f9f59ceba156e4cb6fa3601d83a43b18fe21f46 data/prehistoricfauna/tags/entity_types/twenty_hunger_animals.json
+89ef7c18efad1151d26062ad7e69175f0e5ab85f data/prehistoricfauna/tags/entity_types/two_hundreed_hunger_animals.json
