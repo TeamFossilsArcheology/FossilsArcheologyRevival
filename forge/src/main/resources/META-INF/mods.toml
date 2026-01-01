@@ -227,7 +227,7 @@ side = "BOTH"
 [[dependencies.${mod_id}]]
 modId = "farmersrespite"
 mandatory = false
-versionRange = "[1.19-2.2.0,)"
+versionRange = "[1.19-2.0,)"
 ordering = "NONE"
 side = "BOTH"
 
