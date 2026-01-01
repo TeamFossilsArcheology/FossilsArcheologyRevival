@@ -72,6 +72,11 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         addTag(ItemTags.BEDS, COMFY_BED);
         addTag(ItemTags.DIRT, TARRED_DIRT, ICED_DIRT);
         addTag(ItemTags.BOOKSHELF_BOOKS, DINOPEDIA);
+        addTag(ItemTags.SWORDS, ANCIENT_SWORD, SCARAB_SWORD);
+        addTag(ItemTags.AXES, SCARAB_AXE);
+        addTag(ItemTags.HOES, SCARAB_HOE);
+        addTag(ItemTags.PICKAXES, SCARAB_PICKAXE);
+        addTag(ItemTags.SHOVELS, SCARAB_SHOVEL);
 
         //Creative Tab Filters
         addTag(ModItemTags.FOSSILS, BIO_FOSSIL, TAR_FOSSIL, SHALE_FOSSIL, PlANT_FOSSIL);
