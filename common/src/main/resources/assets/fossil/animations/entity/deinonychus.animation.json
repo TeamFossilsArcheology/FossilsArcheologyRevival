@@ -3595,12 +3595,7 @@
 						"vector": ["-5+math.sin(query.anim_time*1440/12)*-1", -5, -100]
 					},
 					"position": {
-						"0.0": {
-							"vector": [7, "4.5+math.sin(query.anim_time*1440/12+90)*0.25", 0]
-						},
-						"2.25": {
-							"vector": [9, "4.5+math.sin(query.anim_time*1440/12+90)*0.25", 0]
-						}
+						"vector": [9, "4.5+math.sin(query.anim_time*1440/12+90)*0.25", 0]
 					}
 				},
 				"head_hitbox": {

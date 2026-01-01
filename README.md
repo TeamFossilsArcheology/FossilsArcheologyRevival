@@ -47,19 +47,26 @@ Robberto08
 Thylaconical
 
 ###### Language Contributors
+Natalia_Bloom (Bulgarian)
 TillusoryZenos (Chinese Simplified),
 Roda (Chinese Traditional),
-Wietse Dekker (Dutch),
+Wietse Dekker, bananapowers01, Tim Versteeg (Dutch),
+BryanDev45 (French)
 DarkPred (German),
-EnderPro, Deter (Spanish),
-Aguu21, Luisito2 (Spanish Argentinia),
-Deter (Spanish Chile),
+Matyi (Hungarian),
+Aang (Icelandic),
+BlackstarKitty (Indonesian),
 Yamazaki (Japanese),
 SaitoYang (Korean),
+bananapowers01 (Pirate English),
 Kubar0207, AdrianBrzek (Polish),
 MiguelPinto (Portuguese),
-Capivara, Presinha, MiguelPinto, Kodii (Portuguese Brazilian),
-B0berchek, Eviort (Russian)
+Capivara, Presinha, Chrysocyon, MiguelPinto, Kodii (Portuguese Brazilian),
+Eviort, B0berchek (Russian)
+EnderPro, Deter, Aguu21 (Spanish),
+Thelgend92 (Swedish),
+Og-flyer (Turkish),
+jafarov.said90 (Ukrainian)
 
 ## Past Fossils and Archeology Revival Contributors
 
