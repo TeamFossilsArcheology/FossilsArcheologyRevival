@@ -1,9 +1,6 @@
 ### Added
-- Added Icelandic
-- More updates to languages
+- Updated food values for most plants
 
 ### Fixed
-- Ceratosaurus spine texture
-- Typos in various dinopedia entries
-- Deinonychus sleeping animation
-- The axolotl and tropical fish patterns when using the fish egg item
+- Berry bushes now also drop berries when destroyed
+- More accurate mob stats

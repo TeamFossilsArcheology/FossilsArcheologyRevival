@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.forge.data.providers;
 
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
+import com.github.teamfossilsarcheology.fossil.block.PrehistoricPlantInfo;
 import com.github.teamfossilsarcheology.fossil.food.FoodType;
 import com.github.teamfossilsarcheology.fossil.food.FoodValueProvider;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
@@ -9,6 +10,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
@@ -32,27 +34,56 @@ public class ModFoodValueProvider extends FoodValueProvider {
         plant.itemTag(TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("c:foods/bread")));
         plant.itemTag(TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("c:foods/fruit")));
         plant.itemTag(TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("c:foods/vegetable")));
-        plant.item(Blocks.BROWN_MUSHROOM, 15);
-        plant.item(Blocks.CAKE, 60);
-        plant.item(Blocks.CARROTS, 20);
-        plant.item(Blocks.CHORUS_FLOWER, 20);
-        plant.item(Blocks.CHORUS_PLANT, 10);
-        plant.item(Blocks.GRASS, 5);
-        plant.item(Blocks.HAY_BLOCK, 90);
-        plant.item(Blocks.LILY_PAD, 15);
-        plant.item(Blocks.MELON, 65);
-        plant.item(Blocks.POTATOES, 25);
-        plant.item(Blocks.PUMPKIN, 30);
-        plant.item(Blocks.RED_MUSHROOM, 15);
-        plant.item(Blocks.SUGAR_CANE, 15);
-        plant.item(Blocks.TALL_GRASS, 10);
-        plant.item(Blocks.WHEAT, 13);
+        //crop: nutrition * max drop
+        plant.block(Blocks.BEETROOTS, Foods.BEETROOT.getNutrition() + 2);
+        plant.block(Blocks.BROWN_MUSHROOM, 3);
+        plant.block(Blocks.CAKE, 14);
+        plant.block(Blocks.CARROTS, Foods.CARROT.getNutrition() * 5);
+        plant.block(Blocks.CHORUS_FLOWER, Foods.CHORUS_FRUIT.getNutrition() * 2);
+        plant.block(Blocks.CHORUS_PLANT, Foods.CHORUS_FRUIT.getNutrition());
+        plant.block(Blocks.GRASS, 1);
+        plant.block(Blocks.HAY_BLOCK, 15);
+        plant.block(Blocks.KELP, Foods.DRIED_KELP.getNutrition());
+        plant.block(Blocks.KELP_PLANT, Foods.DRIED_KELP.getNutrition());
+        plant.block(Blocks.LILY_PAD, 2);
+        plant.block(Blocks.MELON, Foods.MELON_SLICE.getNutrition() * 5);
+        plant.block(Blocks.POTATOES, Foods.POTATO.getNutrition() * 5);
+        plant.block(Blocks.PUMPKIN, Foods.MELON_SLICE.getNutrition() * 4);
+        plant.block(Blocks.RED_MUSHROOM, 3);
+        plant.block(Blocks.SUGAR_CANE, 3);
+        plant.block(Blocks.SWEET_BERRY_BUSH, Foods.SWEET_BERRIES.getNutrition() * 3);
+        plant.block(Blocks.TALL_GRASS, 2);
+        plant.block(Blocks.WHEAT, 3);
+
+        plant.block(PrehistoricPlantInfo.BENNETTITALES_LARGE.getPlantBlock(), 6);
+        plant.block(PrehistoricPlantInfo.BENNETTITALES_SMALL.getPlantBlock(), 3);
+        plant.block(PrehistoricPlantInfo.CEPHALOTAXUS.getPlantBlock(), 3);
+        plant.block(PrehistoricPlantInfo.CRATAEGUS.getPlantBlock(), Foods.SWEET_BERRIES.getNutrition() * 3 + 1);
+        plant.block(PrehistoricPlantInfo.CYATHEA.getPlantBlock(), 12);
+        plant.block(PrehistoricPlantInfo.DICTYOPHYLLUM.getPlantBlock(), 3);
+        plant.block(PrehistoricPlantInfo.DILLHOFFIA.getPlantBlock(), 3);
+        plant.block(PrehistoricPlantInfo.DIPTERIS.getPlantBlock(), 6);
+        plant.block(PrehistoricPlantInfo.DUISBERGIA.getPlantBlock(), 6);
+        plant.block(PrehistoricPlantInfo.EPHEDRA.getPlantBlock(), Foods.SWEET_BERRIES.getNutrition() * 2 + 1);
+        plant.block(PrehistoricPlantInfo.FLORISSANTIA.getPlantBlock(), 3);
+        plant.block(PrehistoricPlantInfo.FOOZIA.getPlantBlock(), 6);
+        plant.block(PrehistoricPlantInfo.HORSETAIL_LARGE.getPlantBlock(), 6);
+        plant.block(PrehistoricPlantInfo.HORSETAIL_SMALL.getPlantBlock(), 3);
+        plant.block(PrehistoricPlantInfo.LICOPODIOPHYTA.getPlantBlock(), 3);
+        plant.block(PrehistoricPlantInfo.OSMUNDA.getPlantBlock(), 3);
+        plant.block(PrehistoricPlantInfo.SAGENOPTERIS.getPlantBlock(), 3);
+        plant.block(PrehistoricPlantInfo.SARRACENIA.getPlantBlock(), 6);
+        plant.block(PrehistoricPlantInfo.VACCINIUM.getPlantBlock(), Foods.SWEET_BERRIES.getNutrition() * 3 + 1);
+        plant.block(PrehistoricPlantInfo.WELWITSCHIA.getPlantBlock(), 3);
+        plant.block(PrehistoricPlantInfo.ZAMITES.getPlantBlock(), 6);
+        plant.block(ModBlocks.FERNS.get(), 3);
+
         plant.item(Items.APPLE);
         plant.item(Items.BAKED_POTATO);
         plant.item(Items.BEETROOT);
         plant.item(Items.BEETROOT_SEEDS, 5);
         plant.item(Items.BREAD);
-        plant.item(Items.CAKE, 60);
+        plant.item(Items.CAKE, 14 * 5);
         plant.item(Items.CARROT);
         plant.item(Items.CHORUS_FRUIT);
         plant.item(Items.COOKIE);
@@ -68,7 +99,6 @@ public class ModFoodValueProvider extends FoodValueProvider {
         plant.item(Items.SWEET_BERRIES);
         plant.item(Items.WHEAT, 13);
         plant.item(Items.WHEAT_SEEDS, 5);
-        plant.item(ModBlocks.FERNS.get(), 10);
 
         fish.itemTag(TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("c:foods/raw_fish")));
         fish.itemTag(TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("c:foods/cooked_fish")));
@@ -93,7 +123,7 @@ public class ModFoodValueProvider extends FoodValueProvider {
         meat.item(Items.RABBIT);
         meat.item(Items.COOKED_RABBIT);
         meat.item(Items.RABBIT_FOOT, 7);
-        
+
         meat.entity(EntityType.AXOLOTL, 5);
         meat.entity(EntityType.BAT, 5);
         meat.entity(EntityType.CAT, 10);
