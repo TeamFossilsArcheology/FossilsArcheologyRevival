@@ -24,6 +24,8 @@ public class FishEggItem extends EggItem {
             entity.moveTo(x, y + 0.5, z, level.random.nextFloat() * 360, 0);
             if (mob instanceof Prehistoric) {
                 mob.finalizeSpawn(level, level.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(-1), null);
+            } else {
+                mob.finalizeSpawn(level, level.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.BREEDING, null, null);
             }
             if (FossilConfig.isEnabled(FossilConfig.FISH_ARE_PERSISTENT)) {
                 mob.setPersistenceRequired();
