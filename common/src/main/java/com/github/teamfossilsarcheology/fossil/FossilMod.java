@@ -88,6 +88,7 @@ public class FossilMod {
         MessageHandler.SYNC_CHANNEL.register(S2CSyncEntityInfoMessage.class, S2CSyncEntityInfoMessage::write, S2CSyncEntityInfoMessage::new, S2CSyncEntityInfoMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(S2CSyncFoodMappingsMessage.class, S2CSyncFoodMappingsMessage::write, S2CSyncFoodMappingsMessage::new, S2CSyncFoodMappingsMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(S2CSyncEntityVariantsMessage.class, S2CSyncEntityVariantsMessage::write, S2CSyncEntityVariantsMessage::new, S2CSyncEntityVariantsMessage::apply);
+        MessageHandler.SYNC_CHANNEL.register(S2CSyncConfigMessage.class, S2CSyncConfigMessage::write, S2CSyncConfigMessage::new, S2CSyncConfigMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(S2CSyncActiveAnimationMessage.class, S2CSyncActiveAnimationMessage::write, S2CSyncActiveAnimationMessage::new, S2CSyncActiveAnimationMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(S2CSyncToyAnimationMessage.class, S2CSyncToyAnimationMessage::write, S2CSyncToyAnimationMessage::new, S2CSyncToyAnimationMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(C2SHitPlayerMessage.class, C2SHitPlayerMessage::write, C2SHitPlayerMessage::new, C2SHitPlayerMessage::apply);
@@ -100,5 +101,6 @@ public class FossilMod {
         MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new S2CSyncEntityInfoMessage(EntityDataLoader.INSTANCE.getEntities()));
         MessageHandler.SYNC_CHANNEL.sendToPlayer(player, FoodMappingsManager.INSTANCE.message());
         MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new S2CSyncEntityVariantsMessage(EntityVariantLoader.INSTANCE.getVariants()));
+        MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new S2CSyncConfigMessage());
     }
 }
