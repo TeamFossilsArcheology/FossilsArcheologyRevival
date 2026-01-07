@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.network.debug;
 
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.DebugScreen;
 import com.github.teamfossilsarcheology.fossil.util.Version;
+import dev.architectury.networking.NetworkChannel;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -17,7 +18,7 @@ public class S2CMarkMessage {
     private final List<BlockState> blocks;
     private final boolean below;
 
-    public S2CMarkMessage(FriendlyByteBuf buf) {
+    private S2CMarkMessage(FriendlyByteBuf buf) {
         this(buf.readVarIntArray(), buf.readBoolean());
     }
 
@@ -41,7 +42,7 @@ public class S2CMarkMessage {
         this.below = below;
     }
 
-    public void write(FriendlyByteBuf buf) {
+    private void write(FriendlyByteBuf buf) {
         int[] targetsOut = new int[targets.size() * 4];
         for (int i = 0; i < targets.size(); i++) {
             targetsOut[4 * i] = targets.get(i).getX();
@@ -53,11 +54,15 @@ public class S2CMarkMessage {
         buf.writeBoolean(below);
     }
 
-    public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
+    private void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> {
             if (Version.debugEnabled()) {
                 DebugScreen.showPath(contextSupplier.get().getPlayer(), targets, blocks, below);
             }
         });
+    }
+
+    public static void register(NetworkChannel channel) {
+        channel.register(S2CMarkMessage.class, S2CMarkMessage::write, S2CMarkMessage::new, S2CMarkMessage::apply);
     }
 }

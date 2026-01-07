@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.network;
 
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
+import dev.architectury.networking.NetworkChannel;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.utils.Env;
 import net.minecraft.network.FriendlyByteBuf;
@@ -16,7 +17,7 @@ public class C2SHitPlayerMessage {
     private final int entityId;
     private final int targetId;
 
-    public C2SHitPlayerMessage(FriendlyByteBuf buf) {
+    private C2SHitPlayerMessage(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
         this.targetId = buf.readInt();
     }
@@ -26,12 +27,12 @@ public class C2SHitPlayerMessage {
         this.targetId = target.getId();
     }
 
-    public void write(FriendlyByteBuf buf) {
+    private void write(FriendlyByteBuf buf) {
         buf.writeInt(entityId);
         buf.writeInt(targetId);
     }
 
-    public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
+    private void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         if (contextSupplier.get().getEnvironment() == Env.CLIENT) return;
         contextSupplier.get().queue(() -> {
             Player player = contextSupplier.get().getPlayer();
@@ -40,5 +41,9 @@ public class C2SHitPlayerMessage {
                 prehistoric.attackTarget(player);
             }
         });
+    }
+
+    public static void register(NetworkChannel channel) {
+        channel.register(C2SHitPlayerMessage.class, C2SHitPlayerMessage::write, C2SHitPlayerMessage::new, C2SHitPlayerMessage::apply);
     }
 }

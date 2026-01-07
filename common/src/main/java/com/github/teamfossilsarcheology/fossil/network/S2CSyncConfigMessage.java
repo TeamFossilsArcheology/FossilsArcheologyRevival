@@ -19,7 +19,7 @@ public class S2CSyncConfigMessage {
     private final Map<String, Integer> ints;
     private final Map<String, Boolean> bools;
 
-    public S2CSyncConfigMessage(FriendlyByteBuf buf) {
+    private S2CSyncConfigMessage(FriendlyByteBuf buf) {
         ints = buf.readMap(HashMap::new, FriendlyByteBuf::readUtf, FriendlyByteBuf::readInt);
         bools = buf.readMap(HashMap::new, FriendlyByteBuf::readUtf, FriendlyByteBuf::readBoolean);
     }
@@ -35,15 +35,19 @@ public class S2CSyncConfigMessage {
         bools.put(FossilConfig.MACHINES_REQUIRE_ENERGY, FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY));
     }
 
-    public void write(FriendlyByteBuf buf) {
+    private void write(FriendlyByteBuf buf) {
         buf.writeMap(ints, FriendlyByteBuf::writeUtf, FriendlyByteBuf::writeInt);
         buf.writeMap(bools, FriendlyByteBuf::writeUtf, FriendlyByteBuf::writeBoolean);
     }
 
-    public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
+    private void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         if (contextSupplier.get().getEnvironment() == Env.SERVER) return;
         FossilMod.LOGGER.info("Received config from the server: {}", ints.entrySet().stream().map(entry -> entry.getKey() + ": " + entry.getValue()).collect(Collectors.joining(", ", "{", "}")));
         FossilMod.LOGGER.info("Received config from the server: {}", bools.entrySet().stream().map(entry -> entry.getKey() + ": " + entry.getValue()).collect(Collectors.joining(", ", "{", "}")));
         FossilConfig.overrideEntries(ints, bools);
+    }
+
+    public static void register(NetworkChannel channel) {
+        channel.register(S2CSyncConfigMessage.class, S2CSyncConfigMessage::write, S2CSyncConfigMessage::new, S2CSyncConfigMessage::apply);
     }
 }

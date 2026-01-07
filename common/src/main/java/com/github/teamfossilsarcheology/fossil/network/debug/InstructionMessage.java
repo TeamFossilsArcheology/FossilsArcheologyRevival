@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.client.gui.debug.InstructionTab;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.Instruction;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.util.Version;
+import dev.architectury.networking.NetworkChannel;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
@@ -17,7 +18,7 @@ public class InstructionMessage {
     private final boolean loop;
     private final List<Instruction> instructions;
 
-    public InstructionMessage(FriendlyByteBuf buf) {
+    private InstructionMessage(FriendlyByteBuf buf) {
         this(buf.readInt(), buf.readBoolean(), Instruction.decodeBuffer(buf));
     }
 
@@ -27,13 +28,13 @@ public class InstructionMessage {
         this.instructions = instructions;
     }
 
-    public void write(FriendlyByteBuf buf) {
+    private void write(FriendlyByteBuf buf) {
         buf.writeInt(entityId);
         buf.writeBoolean(loop);
         Instruction.encodeBuffer(instructions, buf);
     }
 
-    public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
+    private void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> {
             if (Version.debugEnabled()) {
                 Level level = contextSupplier.get().getPlayer().level;
@@ -49,5 +50,9 @@ public class InstructionMessage {
                 }
             }
         });
+    }
+
+    public static void register(NetworkChannel channel) {
+        channel.register(InstructionMessage.class, InstructionMessage::write, InstructionMessage::new, InstructionMessage::apply);
     }
 }

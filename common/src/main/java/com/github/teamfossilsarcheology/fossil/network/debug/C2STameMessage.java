@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.network.debug;
 
 import com.github.teamfossilsarcheology.fossil.util.Version;
+import dev.architectury.networking.NetworkChannel;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
@@ -12,7 +13,7 @@ import java.util.function.Supplier;
 public class C2STameMessage {
     private final int id;
 
-    public C2STameMessage(FriendlyByteBuf buf) {
+    private C2STameMessage(FriendlyByteBuf buf) {
         this(buf.readInt());
     }
 
@@ -20,11 +21,11 @@ public class C2STameMessage {
         this.id = id;
     }
 
-    public void write(FriendlyByteBuf buf) {
+    private void write(FriendlyByteBuf buf) {
         buf.writeInt(id);
     }
 
-    public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
+    private void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> {
             if (Version.debugEnabled()) {
                 Entity entity = contextSupplier.get().getPlayer().level.getEntity(id);
@@ -35,5 +36,9 @@ public class C2STameMessage {
                 }
             }
         });
+    }
+
+    public static void register(NetworkChannel channel) {
+        channel.register(C2STameMessage.class, C2STameMessage::write, C2STameMessage::new, C2STameMessage::apply);
     }
 }
