@@ -1,4 +1,6 @@
 ### Added
+- Added initial translations for Greek, Latin and Serbo-Croatian
+- More updates to languages
 
 ### Fixed
 
