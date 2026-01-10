@@ -22,9 +22,16 @@ public class ModFluids {
     }
 
     public static final ArchitecturyFluidAttributes TAR_ATTRIBUTES =
-            SimpleArchitecturyFluidAttributes.ofSupplier(() -> ModFluids.TAR_FLOWING, () -> ModFluids.TAR).blockSupplier(() -> ModBlocks.TAR)
-                    .bucketItemSupplier(() -> ModItems.TAR_BUCKET).sourceTexture(FossilMod.location("block/tar_still"))
-                    .flowingTexture(FossilMod.location("block/tar_flowing")).temperature(400).density(3000).viscosity(8000).tickDelay(40);
+            SimpleArchitecturyFluidAttributes.ofSupplier(() -> ModFluids.TAR_FLOWING, () -> ModFluids.TAR)
+                    .blockSupplier(() -> ModBlocks.TAR)
+                    .bucketItemSupplier(() -> ModItems.TAR_BUCKET)
+                    .sourceTexture(FossilMod.location("block/tar_still"))
+                    .flowingTexture(FossilMod.location("block/tar_flowing"))
+                    .overlayTexture(FossilMod.location("block/tar_still"))
+                    .temperature(400)
+                    .density(3000)
+                    .viscosity(8000)
+                    .tickDelay(40);
     public static final RegistrySupplier<FlowingFluid> TAR = FLUIDS.register("tar", () -> new TarFluid.Source(TAR_ATTRIBUTES));
     public static final RegistrySupplier<FlowingFluid> TAR_FLOWING = FLUIDS.register("tar_flowing",
             () -> new TarFluid.Flowing(TAR_ATTRIBUTES));

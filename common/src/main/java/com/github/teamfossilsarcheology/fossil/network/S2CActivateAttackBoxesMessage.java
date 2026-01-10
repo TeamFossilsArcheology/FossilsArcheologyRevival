@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.network;
 
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
+import dev.architectury.networking.NetworkChannel;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.utils.Env;
 import net.minecraft.network.FriendlyByteBuf;
@@ -15,7 +16,7 @@ public class S2CActivateAttackBoxesMessage {
     private final int entityId;
     private final double attackDuration;
 
-    public S2CActivateAttackBoxesMessage(FriendlyByteBuf buf) {
+    private S2CActivateAttackBoxesMessage(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
         this.attackDuration = buf.readDouble();
     }
@@ -25,12 +26,12 @@ public class S2CActivateAttackBoxesMessage {
         this.attackDuration = attackDuration;
     }
 
-    public void write(FriendlyByteBuf buf) {
+    private void write(FriendlyByteBuf buf) {
         buf.writeInt(entityId);
         buf.writeDouble(attackDuration);
     }
 
-    public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
+    private void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         if (contextSupplier.get().getEnvironment() == Env.SERVER) return;
         contextSupplier.get().queue(() -> {
             Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
@@ -38,5 +39,9 @@ public class S2CActivateAttackBoxesMessage {
                 prehistoric.getEntityHitboxData().getAttackBoxData().activateAttackBoxes(contextSupplier.get().getPlayer().level, attackDuration);
             }
         });
+    }
+
+    public static void register(NetworkChannel channel) {
+        channel.register(S2CActivateAttackBoxesMessage.class, S2CActivateAttackBoxesMessage::write, S2CActivateAttackBoxesMessage::new, S2CActivateAttackBoxesMessage::apply);
     }
 }

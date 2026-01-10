@@ -13,6 +13,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
@@ -29,7 +30,7 @@ public abstract class FoodValueProvider implements DataProvider {
     protected FoodValueProvider(PackOutput output) {
         this.output = output;
         this.basePath = output.getOutputFolder().resolve("data/" + FossilMod.MOD_ID + "/food");
-        builders = Arrays.stream(FoodType.values()).collect(Collectors.toMap(Function.identity(), type -> new FoodAppender()));
+        builders = Arrays.stream(FoodType.values()).collect(Collectors.toMap(Function.identity(), FoodAppender::new));
     }
 
     private Path getPath(FoodType type) {
@@ -57,36 +58,60 @@ public abstract class FoodValueProvider implements DataProvider {
     }
 
     protected static class FoodAppender {
+        private final FoodType type;
         private final List<Entry> items = new ObjectArrayList<>();
         private final List<Entry> entities = new ObjectArrayList<>();
 
-        public FoodAppender() {
+        public FoodAppender(FoodType type) {
+            this.type = type;
         }
 
         public void itemTag(TagKey<Item> tag) {
             items.add(new Entry(tag.location(), -1, "tag"));
         }
 
+        /**
+         * Adds the given item to the list without a fixed value. At runtime either the food property of the item or the {@link FoodType#fallback()} value will be used
+         */
         public void item(ItemLike item) {
             item(item, -1);
         }
 
+        /**
+         * Adds the given item to the list with the given value
+         */
         public void item(ItemLike item, int value) {
             items.add(new Entry(BuiltInRegistries.ITEM.getKey(item.asItem()), value, "item"));
+        }
+
+        /**
+         * Adds the given block to the list with the given value multiplied by the {@link FoodType#multiplier()}
+         */
+        public void block(Block block, int value) {
+            items.add(new Entry(BuiltInRegistries.ITEM.getKey(block.asItem()), value * type.multiplier(), "item"));
         }
 
         public void entityTag(TagKey<EntityType<?>> tag) {
             entities.add(new Entry(tag.location(), -1, "tag"));
         }
 
+        /**
+         * Adds the given entity to the list without a fixed value. At runtime this value will be calculated based on mob size
+         */
         public void entity(EntityType<?> entityType) {
             entity(entityType, -1);
         }
 
+        /**
+         * Adds the given entity to the list with the given value
+         */
         public void entity(EntityType<?> entityType, int value) {
             entity(BuiltInRegistries.ENTITY_TYPE.getKey(entityType), value);
         }
 
+        /**
+         * Adds the given entity to the list with the given value
+         */
         public void entity(ResourceLocation location, int value) {
             entities.add(new Entry(location, value, "entity"));
         }

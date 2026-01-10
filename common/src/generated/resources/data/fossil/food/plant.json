@@ -14,8 +14,96 @@
       "tag": "c:foods/vegetable"
     },
     {
+      "item": "fossil:bennettitales_large",
+      "value": 30
+    },
+    {
+      "item": "fossil:bennettitales_small",
+      "value": 15
+    },
+    {
+      "item": "fossil:cephalotaxus",
+      "value": 15
+    },
+    {
+      "item": "fossil:crataegus",
+      "value": 35
+    },
+    {
+      "item": "fossil:cyathea",
+      "value": 60
+    },
+    {
+      "item": "fossil:dictyophyllum",
+      "value": 15
+    },
+    {
+      "item": "fossil:dillhoffia",
+      "value": 15
+    },
+    {
+      "item": "fossil:dipteris",
+      "value": 30
+    },
+    {
+      "item": "fossil:duisbergia",
+      "value": 30
+    },
+    {
+      "item": "fossil:ephedra",
+      "value": 25
+    },
+    {
       "item": "fossil:fern_seed",
-      "value": 10
+      "value": 15
+    },
+    {
+      "item": "fossil:florissantia",
+      "value": 15
+    },
+    {
+      "item": "fossil:foozia",
+      "value": 30
+    },
+    {
+      "item": "fossil:horsetail_large",
+      "value": 30
+    },
+    {
+      "item": "fossil:horsetail_small",
+      "value": 15
+    },
+    {
+      "item": "fossil:licopodiophyta",
+      "value": 15
+    },
+    {
+      "item": "fossil:osmunda",
+      "value": 15
+    },
+    {
+      "item": "fossil:sagenopteris",
+      "value": 15
+    },
+    {
+      "item": "fossil:sarracenia",
+      "value": 30
+    },
+    {
+      "item": "fossil:vaccinium",
+      "value": 35
+    },
+    {
+      "item": "fossil:welwitschia",
+      "value": 15
+    },
+    {
+      "item": "fossil:zamites",
+      "value": 30
+    },
+    {
+      "item": "minecraft:air",
+      "value": 5
     },
     {
       "item": "minecraft:apple"
@@ -25,6 +113,10 @@
     },
     {
       "item": "minecraft:beetroot"
+    },
+    {
+      "item": "minecraft:beetroot_seeds",
+      "value": 15
     },
     {
       "item": "minecraft:beetroot_seeds",
@@ -39,29 +131,29 @@
     },
     {
       "item": "minecraft:cake",
-      "value": 60
+      "value": 70
     },
     {
       "item": "minecraft:cake",
-      "value": 60
+      "value": 70
     },
     {
       "item": "minecraft:carrot",
-      "value": 20
+      "value": 75
     },
     {
       "item": "minecraft:carrot"
     },
     {
       "item": "minecraft:chorus_flower",
-      "value": 20
+      "value": 40
     },
     {
       "item": "minecraft:chorus_fruit"
     },
     {
       "item": "minecraft:chorus_plant",
-      "value": 10
+      "value": 20
     },
     {
       "item": "minecraft:cookie"
@@ -78,15 +170,19 @@
     },
     {
       "item": "minecraft:hay_block",
-      "value": 90
+      "value": 75
+    },
+    {
+      "item": "minecraft:kelp",
+      "value": 5
     },
     {
       "item": "minecraft:lily_pad",
-      "value": 15
+      "value": 10
     },
     {
       "item": "minecraft:melon",
-      "value": 65
+      "value": 50
     },
     {
       "item": "minecraft:melon_seeds",
@@ -104,7 +200,7 @@
     },
     {
       "item": "minecraft:pumpkin",
-      "value": 30
+      "value": 40
     },
     {
       "item": "minecraft:pumpkin_pie"
@@ -130,6 +226,10 @@
       "value": 15
     },
     {
+      "item": "minecraft:sweet_berries",
+      "value": 30
+    },
+    {
       "item": "minecraft:sweet_berries"
     },
     {
@@ -142,7 +242,7 @@
     },
     {
       "item": "minecraft:wheat_seeds",
-      "value": 13
+      "value": 15
     },
     {
       "item": "minecraft:wheat_seeds",

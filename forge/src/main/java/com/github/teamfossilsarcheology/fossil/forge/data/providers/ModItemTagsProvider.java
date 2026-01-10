@@ -73,6 +73,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         addTag(ItemTags.DIRT, TARRED_DIRT, ICED_DIRT);
         addTag(ItemTags.BOOKSHELF_BOOKS, DINOPEDIA);
 
+        //https://minecraft.wiki/w/Item_tag_(Java_Edition)
         //Creative Tab Filters
         addTag(ModItemTags.FOSSILS, BIO_FOSSIL, TAR_FOSSIL, SHALE_FOSSIL, PlANT_FOSSIL);
         addTag(ModItemTags.FILTER_BONES, ModItemTags.ALL_BONES);
