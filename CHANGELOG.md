@@ -7,3 +7,4 @@
 
 ### Mod Compatibility
 - Fixed Pineapple Delight compat for newer versions
+- Fixed crash with sodium due to missing tar texture
