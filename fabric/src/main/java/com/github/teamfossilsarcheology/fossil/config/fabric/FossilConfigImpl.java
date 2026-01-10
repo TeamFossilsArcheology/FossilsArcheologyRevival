@@ -2,6 +2,8 @@ package com.github.teamfossilsarcheology.fossil.config.fabric;
 
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import eu.midnightdust.lib.config.MidnightConfig;
+import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
 import java.lang.reflect.Field;
@@ -125,8 +127,13 @@ public class FossilConfigImpl extends MidnightConfig {
     @MidnightConfig.Entry(min = 1, max = FossilConfig.VERSION_VALUE)
     public static int version = 0;
     public static final Map<String, Field> MAPPED_ENTRIES = new Object2ObjectOpenHashMap<>();
+    private static final Map<String, Integer> INTEGER_OVERRIDES = new Object2IntOpenHashMap<>();
+    private static final Map<String, Boolean> BOOLEAN_OVERRIDES = new Object2BooleanOpenHashMap<>();
 
     public static boolean isEnabled(String field) {
+        if (BOOLEAN_OVERRIDES.containsKey(field)) {
+            return BOOLEAN_OVERRIDES.get(field);
+        }
         try {
             return (boolean) MAPPED_ENTRIES.get(field).get(null);
         } catch (IllegalAccessException e) {
@@ -135,6 +142,9 @@ public class FossilConfigImpl extends MidnightConfig {
     }
 
     public static int getInt(String field) {
+        if (INTEGER_OVERRIDES.containsKey(field)) {
+            return INTEGER_OVERRIDES.get(field);
+        }
         try {
             return (int) MAPPED_ENTRIES.get(field).get(null);
         } catch (IllegalAccessException e) {
@@ -148,5 +158,10 @@ public class FossilConfigImpl extends MidnightConfig {
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void overrideEntries(Map<String, Integer> ints, Map<String, Boolean> bools) {
+        INTEGER_OVERRIDES.putAll(ints);
+        BOOLEAN_OVERRIDES.putAll(bools);
     }
 }

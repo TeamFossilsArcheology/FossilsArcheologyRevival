@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.network;
 
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
+import dev.architectury.networking.NetworkChannel;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.utils.Env;
 import net.minecraft.network.FriendlyByteBuf;
@@ -15,7 +16,7 @@ public class C2SRiderForceFlyingMessage {
     private final int entityId;
     private final boolean flying;
 
-    public C2SRiderForceFlyingMessage(FriendlyByteBuf buf) {
+    private C2SRiderForceFlyingMessage(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
         this.flying = buf.readBoolean();
     }
@@ -25,12 +26,12 @@ public class C2SRiderForceFlyingMessage {
         this.flying = flying;
     }
 
-    public void write(FriendlyByteBuf buf) {
+    private void write(FriendlyByteBuf buf) {
         buf.writeInt(entityId);
         buf.writeBoolean(flying);
     }
 
-    public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
+    private void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         if (contextSupplier.get().getEnvironment() == Env.CLIENT) return;
         contextSupplier.get().queue(() -> {
             Player player = contextSupplier.get().getPlayer();
@@ -53,5 +54,9 @@ public class C2SRiderForceFlyingMessage {
                 }
             }
         });
+    }
+
+    public static void register(NetworkChannel channel) {
+        channel.register(C2SRiderForceFlyingMessage.class, C2SRiderForceFlyingMessage::write, C2SRiderForceFlyingMessage::new, C2SRiderForceFlyingMessage::apply);
     }
 }

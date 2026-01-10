@@ -65,7 +65,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         addTag(ItemTags.LEAVES, CALAMITES_LEAVES, CORDAITES_LEAVES, MUTANT_TREE_LEAVES, PALM_LEAVES, SIGILLARIA_LEAVES, TEMPSKYA_LEAF);
         addTag(ItemTags.BEDS, COMFY_BED);
         addTag(ItemTags.DIRT, TARRED_DIRT, ICED_DIRT);
-
+        //https://minecraft.wiki/w/Item_tag_(Java_Edition)
         //Creative Tab Filters
         addTag(ModItemTags.FOSSILS, BIO_FOSSIL, TAR_FOSSIL, SHALE_FOSSIL, PlANT_FOSSIL);
         addTag(ModItemTags.FILTER_BONES, ModItemTags.ALL_BONES);

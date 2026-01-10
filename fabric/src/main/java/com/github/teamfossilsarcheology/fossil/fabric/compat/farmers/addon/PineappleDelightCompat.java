@@ -1,20 +1,31 @@
 package com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.addon;
 
-import club.someoneice.pineapple_delight.BlockInit;
-import club.someoneice.pineapple_delight.ItemInit;
 import com.github.teamfossilsarcheology.fossil.food.FoodMappingsManager;
+import com.github.teamfossilsarcheology.fossil.food.FoodType;
 import com.nhoryzon.mc.farmersdelight.block.PieBlock;
-
-import static com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.FarmersDelightCompat.getPieValue;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 
 public class PineappleDelightCompat {
     public static void registerFoodMappings(FoodMappingsManager manager) {
-        manager.addPlant(ItemInit.PINEAPPLE_ITEM);
-        manager.addPlant(ItemInit.PINEAPPLE_FRIED_RICE);
-        manager.addPlant(ItemInit.PINEAPPLE_PIE_SIDE);
-        manager.addPlant(ItemInit.PINEAPPLE_SIDE);
-        manager.addPlant(BlockInit.PINEAPPLE_PIE, getPieValue((PieBlock) BlockInit.PINEAPPLE_PIE));
-        manager.addPlant(BlockInit.PINEAPPLE_CROP, 5);
-        //6/6 added
+        String modId = "pineapple_delight";
+        Registry.ITEM.getOptional(new ResourceLocation(modId, "pineapple")).ifPresent(manager::addPlant);
+        Registry.ITEM.getOptional(new ResourceLocation(modId, "pineapple_fried_rice")).ifPresent(manager::addPlant);
+        Registry.ITEM.getOptional(new ResourceLocation(modId, "pineapple_pie_side")).ifPresent(manager::addPlant);
+        Registry.ITEM.getOptional(new ResourceLocation(modId, "pineapple_side")).ifPresent(manager::addPlant);
+        Registry.ITEM.getOptional(new ResourceLocation(modId, "pineapple_pie")).ifPresent(manager::addPlant);
+        Registry.ITEM.getOptional(new ResourceLocation(modId, "pineapple_cake_slice")).ifPresent(manager::addPlant);
+        Registry.BLOCK.getOptional(new ResourceLocation(modId, "pineapple_pie")).ifPresent(block -> {
+            manager.addPlant(block.asItem(), PieBlock.MAX_BITES * FoodType.PLANT.multiplier());
+        });
+        Registry.BLOCK.getOptional(new ResourceLocation(modId, "pineapple_cake")).ifPresent(block -> {
+            manager.addPlant(block.asItem(), 3 * PieBlock.MAX_BITES * FoodType.PLANT.multiplier());
+        });
+        Registry.BLOCK.getOptional(new ResourceLocation(modId, "pineapple_crop")).ifPresent(block -> {
+            manager.addPlant(block.asItem(), FoodType.PLANT.multiplier());
+        });
+        Registry.BLOCK.getOptional(new ResourceLocation(modId, "pineapple_wild_crop")).ifPresent(block -> {
+            manager.addPlant(block.asItem(), FoodType.PLANT.multiplier());
+        });
     }
 }

@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.network;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricAnimatable;
+import dev.architectury.networking.NetworkChannel;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.utils.Env;
 import net.minecraft.network.FriendlyByteBuf;
@@ -11,7 +12,7 @@ import net.minecraft.world.entity.Entity;
 import java.util.function.Supplier;
 
 /**
- * Sync active animation from server to clients
+ * Sync currently active animation from server to clients
  */
 public class S2CSyncActiveAnimationMessage {
     private final int entityId;
@@ -22,7 +23,7 @@ public class S2CSyncActiveAnimationMessage {
     private final double speed;
     private final boolean loop;
 
-    public S2CSyncActiveAnimationMessage(FriendlyByteBuf buf) {
+    private S2CSyncActiveAnimationMessage(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
         this.controller = buf.readUtf();
         this.animationName = buf.readUtf();
@@ -43,7 +44,7 @@ public class S2CSyncActiveAnimationMessage {
         this.loop = activeAnimationInfo.loop();
     }
 
-    public void write(FriendlyByteBuf buf) {
+    private void write(FriendlyByteBuf buf) {
         buf.writeInt(entityId);
         buf.writeUtf(controller);
         buf.writeUtf(animationName);
@@ -53,7 +54,7 @@ public class S2CSyncActiveAnimationMessage {
         buf.writeBoolean(loop);
     }
 
-    public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
+    private void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         if (contextSupplier.get().getEnvironment() == Env.SERVER) return;
         contextSupplier.get().queue(() -> {
             if (contextSupplier.get().getPlayer() == null) {//Can happen on world load
@@ -69,5 +70,9 @@ public class S2CSyncActiveAnimationMessage {
                 }
             }
         });
+    }
+
+    public static void register(NetworkChannel channel) {
+        channel.register(S2CSyncActiveAnimationMessage.class, S2CSyncActiveAnimationMessage::write, S2CSyncActiveAnimationMessage::new, S2CSyncActiveAnimationMessage::apply);
     }
 }

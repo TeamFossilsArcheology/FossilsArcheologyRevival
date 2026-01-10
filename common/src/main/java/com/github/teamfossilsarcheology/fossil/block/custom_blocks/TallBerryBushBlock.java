@@ -29,7 +29,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class TallBerryBushBlock extends DoublePlantBlock implements BonemealableBlock {
+public abstract class TallBerryBushBlock extends DoublePlantBlock implements BerryBushBlock, BonemealableBlock {
     private final PrehistoricPlantInfo info;
 
     protected TallBerryBushBlock(PrehistoricPlantInfo info) {
@@ -37,8 +37,6 @@ public abstract class TallBerryBushBlock extends DoublePlantBlock implements Bon
         this.info = info;
         this.registerDefaultState(stateDefinition.any().setValue(ageProperty(), 0).setValue(HALF, DoubleBlockHalf.LOWER));
     }
-
-    public abstract IntegerProperty ageProperty();
 
     @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

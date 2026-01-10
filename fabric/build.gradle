@@ -68,7 +68,7 @@ dependencies {
     modCompileOnly "maven.modrinth:biomesyougo:b3yqYAnG" //1.19.2-2.0.1.6
     modCompileOnly "maven.modrinth:ends-delight:VQxr0ozB" //1.19.2-2.0
     modCompileOnly "maven.modrinth:cultural-delights-fabric:0.14.12+1.19.2"
-    modCompileOnly "maven.modrinth:pineapple-delight:1.0.9"
+    //modCompileOnly "maven.modrinth:pineapple-delight:1.0.9"
     modCompileOnly "maven.modrinth:festive-delight:pJ5h6NXI" //1.19.2-1.1.0
     modCompileOnly "maven.modrinth:coffee-delight:IOftAwJN" //1.19.2 1.4
     modCompileOnly "maven.modrinth:casualness-delight:1.19.2-0.4"
