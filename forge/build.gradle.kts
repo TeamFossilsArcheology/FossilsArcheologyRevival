@@ -86,7 +86,7 @@ dependencies {
     modCompileOnly("maven.modrinth:corn-delight:1.0.6-1.18.2")
     modCompileOnly("maven.modrinth:mmlib:1.4.7-1.18.2") //For corn delight
     modCompileOnly("curse.maven:cultural-delights-574622:4000179") //1.18.2 0.14 modrinth 1.19+
-    modCompileOnly("maven.modrinth:pineapple-delight:D2xKVjKq") //1.18.2 1.0.13
+    //modCompileOnly("maven.modrinth:pineapple-delight:1.1.2-1.18.2-forge")
     modCompileOnly("curse.maven:large-meals-an-add-on-for-farmers-delight-625110:4032025") //1.18.2 1.2.0
     modCompileOnly("maven.modrinth:festive-delight:1.1.0")
     modCompileOnly("maven.modrinth:butchers-delight:1.18.22.1.0") //1.18.2 2.1.0

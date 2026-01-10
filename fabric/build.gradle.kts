@@ -123,7 +123,7 @@ dependencies {
     modCompileOnly("maven.modrinth:biomesyougo:1.5.1")
     modCompileOnly("maven.modrinth:ends-delight:1.18.2-beta-1.0")
     modCompileOnly("curse.maven:farmers-respite-fabric-811003:4344002") //1.18.2 1.0.0
-    modCompileOnly("maven.modrinth:pineapple-delight:o28puzf2") //1.18.2 1.0.13
+    //modCompileOnly("maven.modrinth:pineapple-delight:1.1.2-1.18.2-fabric")
     modCompileOnly("curse.maven:cultural-delights-fabric-807107:4329072") //1.18.2 0.14.7
     modCompileOnly("curse.maven:coffee-delight-835597:4626094") //1.18.2 1.3
     modCompileOnly("maven.modrinth:casualness-delight:1.18.2-0.4")
