@@ -47,11 +47,12 @@ Robberto08
 Thylaconical
 
 ###### Language Contributors
-Natalia_Bloom (Bulgarian)
+Natalia_Bloom (Bulgarian),
 TillusoryZenos (Chinese Simplified),
 Roda (Chinese Traditional),
 Wietse Dekker, bananapowers01, Tim Versteeg (Dutch),
-BryanDev45 (French)
+BryanDev45 (French),
+legoaggelos (Greek),
 DarkPred (German),
 Matyi (Hungarian),
 Aang (Icelandic),
@@ -62,7 +63,8 @@ bananapowers01 (Pirate English),
 Kubar0207, AdrianBrzek (Polish),
 MiguelPinto (Portuguese),
 Capivara, Presinha, Chrysocyon, MiguelPinto, Kodii (Portuguese Brazilian),
-Eviort, B0berchek (Russian)
+Eviort, B0berchek (Russian),
+Stefan Makrin (Serbo-Croatian),
 EnderPro, Deter, Aguu21 (Spanish),
 Thelgend92 (Swedish),
 Og-flyer (Turkish),

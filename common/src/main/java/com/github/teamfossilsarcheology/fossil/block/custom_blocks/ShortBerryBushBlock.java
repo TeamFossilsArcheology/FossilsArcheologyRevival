@@ -25,7 +25,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class ShortBerryBushBlock extends BushBlock implements BonemealableBlock {
+public abstract class ShortBerryBushBlock extends BushBlock implements BerryBushBlock, BonemealableBlock {
     private final VoxelShape shape;
     private final PrehistoricPlantInfo info;
 
@@ -34,8 +34,6 @@ public abstract class ShortBerryBushBlock extends BushBlock implements Bonemeala
         this.shape = shape;
         this.info = info;
     }
-
-    public abstract IntegerProperty ageProperty();
 
     @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

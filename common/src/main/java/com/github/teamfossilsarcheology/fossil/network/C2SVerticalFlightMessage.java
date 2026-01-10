@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.network;
 
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
+import dev.architectury.networking.NetworkChannel;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.utils.Env;
 import net.minecraft.network.FriendlyByteBuf;
@@ -28,22 +29,22 @@ public class C2SVerticalFlightMessage {
         return new C2SVerticalFlightMessage(entityId, STOP);
     }
 
-    public C2SVerticalFlightMessage(FriendlyByteBuf buf) {
+    private C2SVerticalFlightMessage(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
         this.code = buf.readInt();
     }
 
-    public C2SVerticalFlightMessage(int entityId, int code) {
+    private C2SVerticalFlightMessage(int entityId, int code) {
         this.entityId = entityId;
         this.code = code;
     }
 
-    public void write(FriendlyByteBuf buf) {
+    private void write(FriendlyByteBuf buf) {
         buf.writeInt(entityId);
         buf.writeInt(code);
     }
 
-    public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
+    private void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         if (contextSupplier.get().getEnvironment() == Env.CLIENT) return;
         contextSupplier.get().queue(() -> {
             Player player = contextSupplier.get().getPlayer();
@@ -64,5 +65,9 @@ public class C2SVerticalFlightMessage {
                 }
             }
         });
+    }
+
+    public static void register(NetworkChannel channel) {
+        channel.register(C2SVerticalFlightMessage.class, C2SVerticalFlightMessage::write, C2SVerticalFlightMessage::new, C2SVerticalFlightMessage::apply);
     }
 }

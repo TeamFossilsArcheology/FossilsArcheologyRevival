@@ -599,7 +599,7 @@
   "container.fossil.culture_vat": "Култиватор",
   "container.fossil.sifter": "Сито",
   "container.fossil.analyzer": "Анализатор",
-  "container.fossil.worktable": "Археологическа Маса",
+  "container.fossil.worktable": "Археологическа маса",
   "death.attack.fossil.aquatic_suffocate": "%1$s се задуши на суша",
   "death.attack.fossil.aquatic_suffocate.player": "%1$s се задуши на суша, докато се измакваше на %2$s",
   "pedia.fossil.activity": "Активност: %s",

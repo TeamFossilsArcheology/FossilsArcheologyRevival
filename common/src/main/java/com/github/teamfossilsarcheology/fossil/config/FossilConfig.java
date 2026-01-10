@@ -1,6 +1,9 @@
 package com.github.teamfossilsarcheology.fossil.config;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import org.apache.commons.lang3.NotImplementedException;
+
+import java.util.Map;
 
 public class FossilConfig {
     public static final String GENERATE_HELL_SHIPS = "generateHellShips";
@@ -59,5 +62,10 @@ public class FossilConfig {
     @ExpectPlatform
     public static double getDouble(String field) {
         return 0;
+    }
+
+    @ExpectPlatform
+    public static void overrideEntries(Map<String, Integer> ints, Map<String, Boolean> bools) {
+        throw new NotImplementedException();
     }
 }

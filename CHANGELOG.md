@@ -1,10 +1,10 @@
 ### Added
-- Added Icelandic
+- Added initial translations for Greek, Latin and Serbo-Croatian
 - More updates to languages
 
 ### Fixed
-- Ceratosaurus spine texture
-- Typos in various dinopedia entries
-- Deinonychus sleeping animation
-- The axolotl and tropical fish patterns when using the fish egg item
-- Dinopedia not being a bookshelf book
+- Certain config options are now properly synced when joining a server
+
+### Mod Compatibility
+- Fixed Pineapple Delight compat for newer versions
+- Fixed crash with sodium due to missing tar texture

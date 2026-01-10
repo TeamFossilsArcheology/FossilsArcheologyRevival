@@ -8,6 +8,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.util.Gender;
 import com.github.teamfossilsarcheology.fossil.util.Version;
+import dev.architectury.networking.NetworkChannel;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
@@ -26,7 +27,7 @@ public class SyncDebugInfoMessage {
     private final int hunger;
     private final int mood;
 
-    public SyncDebugInfoMessage(FriendlyByteBuf buf) {
+    private SyncDebugInfoMessage(FriendlyByteBuf buf) {
         this(buf.readInt(), buf.readUtf(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt());
     }
 
@@ -41,7 +42,7 @@ public class SyncDebugInfoMessage {
         this.mood = mood;
     }
 
-    public void write(FriendlyByteBuf buf) {
+    private void write(FriendlyByteBuf buf) {
         buf.writeInt(entityId);
         buf.writeUtf(enumString);
         buf.writeInt(age);
@@ -52,7 +53,7 @@ public class SyncDebugInfoMessage {
         buf.writeInt(mood);
     }
 
-    public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
+    private void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> {
             Player player = contextSupplier.get().getPlayer();
             if (Version.debugEnabled() && player != null) {
@@ -89,5 +90,9 @@ public class SyncDebugInfoMessage {
                 }
             }
         });
+    }
+
+    public static void register(NetworkChannel channel) {
+        channel.register(SyncDebugInfoMessage.class, SyncDebugInfoMessage::write, SyncDebugInfoMessage::new, SyncDebugInfoMessage::apply);
     }
 }
