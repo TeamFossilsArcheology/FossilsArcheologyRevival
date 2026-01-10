@@ -3,6 +3,7 @@
 - More updates to languages
 
 ### Fixed
+- Certain config options are now properly synced when joining a server
 
 ### Mod Compatibility
 - Fixed Pineapple Delight compat for newer versions
