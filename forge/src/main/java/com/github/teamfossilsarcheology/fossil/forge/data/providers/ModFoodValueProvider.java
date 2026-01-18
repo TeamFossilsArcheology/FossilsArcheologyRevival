@@ -83,7 +83,7 @@ public class ModFoodValueProvider extends FoodValueProvider {
         plant.item(Items.BEETROOT);
         plant.item(Items.BEETROOT_SEEDS, 1);
         plant.item(Items.BREAD);
-        plant.item(Items.CAKE, 14);
+        plant.item(Items.CAKE, 14 * 5);
         plant.item(Items.CARROT);
         plant.item(Items.CHORUS_FRUIT);
         plant.item(Items.COOKIE);

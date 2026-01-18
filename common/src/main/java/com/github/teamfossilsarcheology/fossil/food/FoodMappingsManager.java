@@ -125,7 +125,6 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
         entities = mapPair.allEntities;
         itemTags = mapPair.itemTags;
         entityTags = mapPair.entityTags;
-        Function<Map<?, Map<?, ?>>, Integer> f = map -> map.values().stream().map(m -> m.keySet().size()).reduce(Integer::sum).orElse(0);
         FossilMod.LOGGER.info("Loaded food values: (items: {}) (entities: {}, {}) (Tags: {}, {})",
                 itemValues.values().stream().mapToInt(m -> m.keySet().size()).sum(),
                 entityValues.values().stream().mapToInt(m -> m.keySet().size()).sum(),

@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.network;
 
 import com.github.teamfossilsarcheology.fossil.capabilities.ModCapabilities;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.EntityInfo;
+import dev.architectury.networking.NetworkChannel;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.utils.Env;
 import net.minecraft.network.FriendlyByteBuf;
@@ -12,14 +13,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Supplier;
 
 /**
- * Only used by the forge side
+ * Only used by the forge side. Sends the current embryo status from server to client
  */
 public class S2CMammalCapMessage {
     private final int entityId;
     private final int embryoProgress;
     private final EntityInfo embryo;
 
-    public S2CMammalCapMessage(FriendlyByteBuf buf) {
+    private S2CMammalCapMessage(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
         this.embryoProgress = buf.readInt();
         EntityInfo temp;
@@ -37,7 +38,7 @@ public class S2CMammalCapMessage {
         this.embryo = embryo;
     }
 
-    public void write(FriendlyByteBuf buf) {
+    private void write(FriendlyByteBuf buf) {
         buf.writeInt(entityId);
         buf.writeInt(embryoProgress);
         if (embryo != null) {
@@ -47,7 +48,7 @@ public class S2CMammalCapMessage {
         }
     }
 
-    public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
+    private void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         if (contextSupplier.get().getEnvironment() == Env.SERVER) return;
         contextSupplier.get().queue(() -> {
             Entity entity = contextSupplier.get().getPlayer().level().getEntity(entityId);
@@ -56,5 +57,9 @@ public class S2CMammalCapMessage {
                 ModCapabilities.setEmbryo(animal, embryo);
             }
         });
+    }
+
+    public static void register(NetworkChannel channel) {
+        channel.register(S2CMammalCapMessage.class, S2CMammalCapMessage::write, S2CMammalCapMessage::new, S2CMammalCapMessage::apply);
     }
 }

@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.network.debug;
 
+import dev.architectury.networking.NetworkChannel;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
@@ -12,7 +13,7 @@ import java.util.stream.StreamSupport;
 public class C2SDiscardMessage {
     private final int entityId;
 
-    public C2SDiscardMessage(FriendlyByteBuf buf) {
+    private C2SDiscardMessage(FriendlyByteBuf buf) {
         this(buf.readInt());
     }
 
@@ -20,11 +21,11 @@ public class C2SDiscardMessage {
         this.entityId = entityId;
     }
 
-    public void write(FriendlyByteBuf buf) {
+    private void write(FriendlyByteBuf buf) {
         buf.writeInt(entityId);
     }
 
-    public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
+    private void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> {
             Player player = contextSupplier.get().getPlayer();
             if (player.level() instanceof ServerLevel serverLevel) {
@@ -38,5 +39,9 @@ public class C2SDiscardMessage {
                 }
             }
         });
+    }
+
+    public static void register(NetworkChannel channel) {
+        channel.register(C2SDiscardMessage.class, C2SDiscardMessage::write, C2SDiscardMessage::new, C2SDiscardMessage::apply);
     }
 }

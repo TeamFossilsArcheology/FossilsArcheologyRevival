@@ -79,6 +79,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         addTag(ItemTags.PICKAXES, SCARAB_PICKAXE);
         addTag(ItemTags.SHOVELS, SCARAB_SHOVEL);
 
+        //https://minecraft.wiki/w/Item_tag_(Java_Edition)
         //Creative Tab Filters
         addTag(ModItemTags.FOSSILS, BIO_FOSSIL, TAR_FOSSIL, SHALE_FOSSIL, PlANT_FOSSIL);
         addTag(ModItemTags.FILTER_BONES, ModItemTags.ALL_BONES);

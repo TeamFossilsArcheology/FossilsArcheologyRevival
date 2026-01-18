@@ -6,6 +6,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.github.teamfossilsarcheology.fossil.util.Version;
+import dev.architectury.networking.NetworkChannel;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -22,7 +23,7 @@ import java.util.function.Supplier;
 public class C2SStructureMessage {
     private final boolean onlyStructure;
 
-    public C2SStructureMessage(FriendlyByteBuf buf) {
+    private C2SStructureMessage(FriendlyByteBuf buf) {
         this(buf.readBoolean());
     }
 
@@ -30,11 +31,11 @@ public class C2SStructureMessage {
         this.onlyStructure = onlyStructure;
     }
 
-    public void write(FriendlyByteBuf buf) {
+    private void write(FriendlyByteBuf buf) {
         buf.writeBoolean(onlyStructure);
     }
 
-    public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
+    private void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> {
             if (Version.debugEnabled() && contextSupplier.get().getPlayer().level() instanceof ServerLevel serverLevel) {
                 spawnTestStructure(serverLevel, onlyStructure);
@@ -84,5 +85,9 @@ public class C2SStructureMessage {
             level.addFreshEntity(velociraptor);
             */
         }
+    }
+
+    public static void register(NetworkChannel channel) {
+        channel.register(C2SStructureMessage.class, C2SStructureMessage::write, C2SStructureMessage::new, C2SStructureMessage::apply);
     }
 }

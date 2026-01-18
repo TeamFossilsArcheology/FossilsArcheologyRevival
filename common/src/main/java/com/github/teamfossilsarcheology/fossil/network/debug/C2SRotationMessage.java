@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.network.debug;
 
 import com.github.teamfossilsarcheology.fossil.util.Version;
+import dev.architectury.networking.NetworkChannel;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
@@ -15,7 +16,7 @@ public class C2SRotationMessage {
     private final double rotation;
     private final byte flag;
 
-    public C2SRotationMessage(FriendlyByteBuf buf) {
+    private C2SRotationMessage(FriendlyByteBuf buf) {
         this(buf.readInt(), buf.readDouble(), buf.readByte());
     }
 
@@ -25,13 +26,13 @@ public class C2SRotationMessage {
         this.flag = flag;
     }
 
-    public void write(FriendlyByteBuf buf) {
+    private void write(FriendlyByteBuf buf) {
         buf.writeInt(entityId);
         buf.writeDouble(rotation);
         buf.writeByte(flag);
     }
 
-    public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
+    private void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> {
             if (Version.debugEnabled()) {
                 Entity entity = contextSupplier.get().getPlayer().level().getEntity(entityId);
@@ -52,5 +53,9 @@ public class C2SRotationMessage {
                 }
             }
         });
+    }
+
+    public static void register(NetworkChannel channel) {
+        channel.register(C2SRotationMessage.class, C2SRotationMessage::write, C2SRotationMessage::new, C2SRotationMessage::apply);
     }
 }

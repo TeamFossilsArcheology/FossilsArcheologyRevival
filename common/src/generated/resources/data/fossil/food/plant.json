@@ -120,7 +120,7 @@
     },
     {
       "item": "minecraft:beetroot_seeds",
-      "value": 1
+      "value": 5
     },
     {
       "item": "minecraft:bread"
@@ -135,7 +135,7 @@
     },
     {
       "item": "minecraft:cake",
-      "value": 14
+      "value": 70
     },
     {
       "item": "minecraft:carrot",

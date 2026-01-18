@@ -23,9 +23,11 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.*;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -81,19 +83,20 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         });
         for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
             BushBlock flower = info.getPlantBlock();
-            var condition = LootItem.lootTableItem(flower);
-            if (flower instanceof TallFlowerBlock) {
-                condition.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(flower).setProperties(
-                        StatePropertiesPredicate.Builder.properties().hasProperty(TallFlowerBlock.HALF, DoubleBlockHalf.LOWER)));
-            } else if (flower instanceof FourTallFlowerBlock) {
-                condition.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(flower).setProperties(
-                        StatePropertiesPredicate.Builder.properties().hasProperty(FourTallFlowerBlock.LAYER, 0)));
-            } else if (flower instanceof TallBerryBushBlock) {
-                condition.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(flower).setProperties(
-                        StatePropertiesPredicate.Builder.properties().hasProperty(TallBerryBushBlock.HALF, DoubleBlockHalf.LOWER)));
+            if (info.berryAge() != 0 && info.maxAge() != 0) {
+                addCustom(flower, berryBlock(info));
+            } else {
+                var condition = LootItem.lootTableItem(flower);
+                if (flower instanceof TallFlowerBlock) {
+                    condition.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(flower).setProperties(
+                            StatePropertiesPredicate.Builder.properties().hasProperty(TallFlowerBlock.HALF, DoubleBlockHalf.LOWER)));
+                } else if (flower instanceof FourTallFlowerBlock) {
+                    condition.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(flower).setProperties(
+                            StatePropertiesPredicate.Builder.properties().hasProperty(FourTallFlowerBlock.LAYER, 0)));
+                }
+                addCustom(flower, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(condition)
+                        .when(ExplosionCondition.survivesExplosion())).setParamSet(LootContextParamSets.BLOCK));
             }
-            addCustom(flower, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(condition)
-                    .when(ExplosionCondition.survivesExplosion())).setParamSet(LootContextParamSets.BLOCK));
         }
         var fossils = AlternativesEntry.alternatives(
                 fossilReference("regular_fossil_arch_1", enchant(ARCHEOLOGY.get(), 1)),
@@ -163,6 +166,24 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
     private LootItemCondition.Builder enchant(Enchantment enchantment, int value) {
         return MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(enchantment, MinMaxBounds.Ints.exactly(value))));
+    }
+
+    private LootTable.Builder berryBlock(PrehistoricPlantInfo info) {
+        if (info.getPlantBlock() instanceof BerryBushBlock block) {
+            var lootTable = LootTable.lootTable();
+            for (int i = info.berryAge(); i <= info.maxAge() ; i++) {
+                lootTable = lootTable.withPool(
+                        LootPool.lootPool()
+                                .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(info.getPlantBlock())
+                                        .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(block.ageProperty(), i)))
+                                .add(LootItem.lootTableItem(info.berryItem().get()))
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1 + (i - info.berryAge()), 2 + (i - info.berryAge()))))
+                                .apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE))
+                );
+            }
+            return applyExplosionDecay(info.getPlantBlock(), lootTable);
+        }
+        return LootTable.lootTable();
     }
 
     @Override
