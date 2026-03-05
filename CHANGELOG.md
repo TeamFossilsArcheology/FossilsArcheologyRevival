@@ -1,10 +1,11 @@
 ### Added
-- Added initial translations for Greek, Latin and Serbo-Croatian
 - More updates to languages
 
 ### Fixed
-- Certain config options are now properly synced when joining a server
+- Missing festive variant for megaloceros
+- Crash when cultivating a quagga dna
+- Performance when dinosEatBlocks is active
+- Config option generateVolcanoBiome not working on forge
 
 ### Mod Compatibility
-- Fixed Pineapple Delight compat for newer versions
-- Fixed crash with sodium due to missing tar texture
+- Fixed crash when Minecolonies is installed
