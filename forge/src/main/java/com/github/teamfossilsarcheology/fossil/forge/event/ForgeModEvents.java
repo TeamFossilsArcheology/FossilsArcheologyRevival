@@ -100,7 +100,8 @@ public class ForgeModEvents {
 
     @SubscribeEvent
     public static void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
-        if (event.getObject() instanceof Animal animal && PrehistoricEntityInfo.isMammal(animal)) {
+        //Fix crash when Minecolonies is installed https://github.com/ldtteam/minecolonies/pull/11498
+        if (event.getObject() instanceof Animal animal && animal.getType() != null && PrehistoricEntityInfo.isMammal(animal)) {
             MammalCapProvider mammalProvider = new MammalCapProvider();
             event.addListener(mammalProvider::invalidate);
             event.addCapability(MammalCapProvider.IDENTIFIER, mammalProvider);
