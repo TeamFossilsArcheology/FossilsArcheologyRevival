@@ -1,9 +1,9 @@
 ### Added
-- Added initial translations for Greek, Latin and Serbo-Croatian
 - More updates to languages
 
 ### Fixed
-- Certain config options are now properly synced when joining a server
+- Missing festive variant for megaloceros
+- Crash when cultivating a quagga dna
+- Performance when dinosEatBlocks is active
 
 ### Mod Compatibility
-- Fixed Pineapple Delight compat for newer versions

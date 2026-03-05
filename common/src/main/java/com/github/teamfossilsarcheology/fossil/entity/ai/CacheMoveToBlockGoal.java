@@ -235,11 +235,12 @@ public abstract class CacheMoveToBlockGoal extends Goal {
         BlockPos pos = entity.blockPosition();
         AABB searchArea = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ())
                 .inflate(searchRange, verticalSearchRange, searchRange);
-        //Maybe somewhat inefficient but I'm too lazy to write a proper 3d spiral algorithm
         var target = BlockPos.betweenClosedStream(searchArea)
                 .map(BlockPos::immutable)
                 .filter(pos1 -> isValidTarget(entity.level, pos1))
-                .min(Comparator.comparingInt(value -> value.distManhattan(pos)));
+                .sorted(Comparator.comparingInt(value -> value.distManhattan(pos)))
+                .filter(this::canSeeTarget)
+                .findFirst();
         if (target.isPresent()) {
             setTargetPos(target.get());
             return true;
@@ -249,12 +250,21 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     }
 
     /**
-     * Return true to set given position as destination
+     * Return true to set given position as potential destination
      *
      * @implNote Returns false if the cache contains the block position
      */
     protected boolean isValidTarget(LevelReader level, BlockPos pos) {
         return !avoidCache.contains(pos.asLong());
+    }
+
+    /**
+     * Return true to set given position as destination
+     *
+     * @implNote Returns false if the cache contains the block position
+     */
+    protected boolean canSeeTarget(BlockPos pos) {
+        return true;
     }
 
     protected void setTargetPos(BlockPos targetPos) {
