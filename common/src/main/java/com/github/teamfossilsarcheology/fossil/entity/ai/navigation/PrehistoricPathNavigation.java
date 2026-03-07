@@ -51,10 +51,24 @@ public class PrehistoricPathNavigation extends GroundPathNavigation {
         Path path = Objects.requireNonNull(this.path);
         Vec3 entityPos = getTempMobPos();
         int pathLength = path.getNodeCount();
+
         final Vec3 base = entityPos.add(-mob.getBbWidth() * 0.5F, 0, -mob.getBbWidth() * 0.5F);
         final Vec3 max = base.add(mob.getBbWidth(), mob.getBbHeight(), mob.getBbWidth());
-        if (!tryShortcut(path, new Vec3(mob.getX(), mob.getY(), mob.getZ()), pathLength, base, max)) {
-            if (NavUtil.isAt(mob, path, 0.5F, 1) || NavUtil.atElevationChange(mob, path) && NavUtil.isAt(mob, path, mob.getBbWidth() * 0.75F, 1)) {
+
+        boolean shortcut = tryShortcut(path, new Vec3(mob.getX(), mob.getY(), mob.getZ()), pathLength, base, max);
+
+        if (!shortcut) {
+            // hThreshold: half bbWidth, min 1.0.
+            float hThreshold = Math.max(1.0F, mob.getBbWidth() * 0.5F);
+            // hThresholdElev: wider threshold for elevation changes and general
+            // proximity check. Min 2.5 covers diagonal approach angles where a
+            // single axis component can reach ~2.4 blocks.
+            float hThresholdElev = Math.max(2.5F, mob.getBbWidth() * 0.5F);
+
+            boolean isAtNormal = NavUtil.isAt(mob, path, hThreshold, 4);
+            boolean isAtElevation = NavUtil.isAt(mob, path, hThresholdElev, 4);
+
+            if (isAtNormal || isAtElevation) {
                 mob.getLookControl().setLookAt(path.getNextEntityPos(mob));
                 path.advance();
             }
