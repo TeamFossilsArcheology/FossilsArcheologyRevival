@@ -66,12 +66,10 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
         if (avoidCache.contains(pos.asLong())) {
             return false;
         }
-        return blockEntity instanceof FeederBlockEntity feeder && !feeder.isEmpty(entity.data().diet());
-    }
-
-    @Override
-    protected boolean canSeeTarget(BlockPos pos) {
-        return Util.canSeeFood(entity, pos) || entity.getHunger() < entity.getMaxHunger() * 0.5;
+        if (!(blockEntity instanceof FeederBlockEntity feeder) || feeder.isEmpty(entity.data().diet())) {
+            return false;
+        }
+        return (Util.canSeeFood(entity, pos) || entity.getHunger() < entity.getMaxHunger() * 0.5);
     }
 
     @Override

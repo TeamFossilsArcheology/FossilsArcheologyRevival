@@ -88,21 +88,18 @@ public class CultureVatBlock extends CustomEntityBlock {
                     entity = ModEntities.FAILURESAURUS.get().create(level);
                     Item dnaItem = container.getItem(CultureVatMenu.INPUT_SLOT_ID).getItem();
                     PrehistoricEntityInfo inputEntity = Arrays.stream(PrehistoricEntityInfo.values()).filter(info -> info.dnaItem == dnaItem).findFirst().orElse(null);
-                    if (inputEntity != null && entity instanceof Failuresaurus failuresaurus) {
+                    if (inputEntity != null) {
                         if (inputEntity == PrehistoricEntityInfo.DODO) {
-                            failuresaurus.setVariant(Failuresaurus.Variant.DODO.name());
+                            ((Failuresaurus) entity).setVariant(Failuresaurus.Variant.DODO.name());
                         } else if (inputEntity.mobType == PrehistoricMobType.BIRD) {
-                            failuresaurus.setVariant(Failuresaurus.Variant.FLYING.name());
+                            ((Failuresaurus) entity).setVariant(Failuresaurus.Variant.FLYING.name());
                         } else if (inputEntity.mobType == PrehistoricMobType.FISH || inputEntity.mobType == PrehistoricMobType.DINOSAUR_FISH) {
-                            failuresaurus.setVariant(Failuresaurus.Variant.FISH.name());
-                        } else {
-                            var data = EntityDataLoader.INSTANCE.getData(inputEntity.resourceName);
+                            ((Failuresaurus) entity).setVariant(Failuresaurus.Variant.FISH.name());
+                        } else if (EntityDataLoader.INSTANCE.getData(inputEntity.resourceName).diet().canEat(FoodType.MEAT)) {
                             //Let's ignore that this probably isn't scientifically accurate
-                            if (data != null && data.diet().canEat(FoodType.MEAT)) {
-                                failuresaurus.setVariant(Failuresaurus.Variant.THEROPOD.name());
-                            } else {
-                                failuresaurus.setVariant(Failuresaurus.Variant.SAUROPOD.name());
-                            }
+                            ((Failuresaurus) entity).setVariant(Failuresaurus.Variant.THEROPOD.name());
+                        } else {
+                            ((Failuresaurus) entity).setVariant(Failuresaurus.Variant.SAUROPOD.name());
                         }
                     }
                 }

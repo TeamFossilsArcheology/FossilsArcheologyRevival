@@ -55,11 +55,6 @@ public class EatBlockGoal extends MoveToFoodGoal {
         if (!super.isValidTarget(level, pos)) {
             return false;
         }
-        return FoodMappings.getFoodAmount(level.getBlockState(pos).getBlock(), entity.data().diet()) > 0;
-    }
-
-    @Override
-    protected boolean canSeeTarget(BlockPos pos) {
-        return Util.canSeeFood(entity, pos);
+        return FoodMappings.getFoodAmount(level.getBlockState(pos).getBlock(), entity.data().diet()) > 0 && Util.canSeeFood(entity, pos);
     }
 }
