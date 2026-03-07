@@ -34,14 +34,16 @@ public class PrehistoricPathNavigation extends GroundPathNavigation {
     @Override
     protected double getGroundY(Vec3 vec) {
         BlockPos blockPos = BlockPos.containing(vec);
-        BlockPos entityPos = mob.blockPosition();
+        if (Math.abs(blockPos.getY() - mob.getBlockY()) > 4) {
+            return vec.y;
+        }
         if (level.getBlockState(blockPos.below()).isPathfindable(level, blockPos, PathComputationType.LAND)) {
             if (blockPos.getY() >= mob.getY() + 2) {
                 return vec.y - 1;
             }
             return vec.y;
         }
-        return  WalkNodeEvaluator.getFloorLevel(this.level, blockPos);
+        return WalkNodeEvaluator.getFloorLevel(this.level, blockPos);
     }
 
     @Override
@@ -49,12 +51,6 @@ public class PrehistoricPathNavigation extends GroundPathNavigation {
         Path path = Objects.requireNonNull(this.path);
         Vec3 entityPos = getTempMobPos();
         int pathLength = path.getNodeCount();
-        for (int i = path.getNextNodeIndex(); i < path.getNodeCount(); i++) {
-            if (path.getNode(i).y != Math.floor(entityPos.y)) {
-                pathLength = i;
-                break;
-            }
-        }
         final Vec3 base = entityPos.add(-mob.getBbWidth() * 0.5F, 0, -mob.getBbWidth() * 0.5F);
         final Vec3 max = base.add(mob.getBbWidth(), mob.getBbHeight(), mob.getBbWidth());
         if (!tryShortcut(path, new Vec3(mob.getX(), mob.getY(), mob.getZ()), pathLength, base, max)) {

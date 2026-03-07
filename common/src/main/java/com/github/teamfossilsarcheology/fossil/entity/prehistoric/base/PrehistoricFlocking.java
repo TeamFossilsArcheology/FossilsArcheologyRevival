@@ -5,7 +5,6 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.FlockWanderGoal;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -16,6 +15,11 @@ public abstract class PrehistoricFlocking extends Prehistoric {
     protected PrehistoricFlocking groupLeader;
     protected long flockAttackedTick;
     protected LivingEntity flockAttackedTarget;
+
+    // Lévy flight parameters for flock movement
+    private static final float LEVY_MU = 2.0f;
+    private static final float MIN_DIST = 2.0f;
+    private static final float MAX_DIST = 16.0f;
 
     protected PrehistoricFlocking(EntityType<? extends Prehistoric> entityType, Level level) {
         super(entityType, level);
@@ -73,16 +77,26 @@ public abstract class PrehistoricFlocking extends Prehistoric {
     }
 
     public void pathToGroupLeader(double speed) {
-        if (hasGroupLeader()) {
-            Vec3 vec;
-            if (distanceTo(groupLeader) < 7) {
-                vec = LandRandomPos.getPos(this, 5, 7);
-            } else {
-                vec = LandRandomPos.getPos(groupLeader, 5, 7);
-            }
-            if (vec != null) {
-                getNavigation().moveTo(vec.x, vec.y, vec.z, speed);
-            }
+        if (!hasGroupLeader()) return;
+
+        // Lévy flight step size
+        float u = Math.max(getRandom().nextFloat(), 1e-6f);
+        float dist = MIN_DIST * (float) Math.pow(u, 1.0f / (1.0f - LEVY_MU));
+        dist = Math.min(dist, MAX_DIST);
+
+        float angle = getRandom().nextFloat() * (float)(Math.PI * 2);
+
+        Vec3 vec;
+        if (distanceTo(groupLeader) < 7) {
+            // Close to leader: Lévy wander around self
+            double x = getX() + Math.cos(angle) * dist;
+            double z = getZ() + Math.sin(angle) * dist;
+            vec = new Vec3(x, getY(), z);
+        } else {
+            // Far from leader: Lévy wander toward leader's position
+            double x = groupLeader.getX() + Math.cos(angle) * dist;
+            double z = groupLeader.getZ() + Math.sin(angle) * dist;
+            vec = new Vec3(x, groupLeader.getY(), z);
         }
     }
 

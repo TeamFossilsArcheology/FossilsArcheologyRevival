@@ -3,9 +3,6 @@ package com.github.teamfossilsarcheology.fossil.entity.ai.navigation;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
-import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.util.profiling.metrics.MetricCategory;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.PathNavigationRegion;
@@ -17,6 +14,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.util.profiling.metrics.MetricCategory;
 
 public class PrehistoricPathFinder extends PathFinder {
     private static final float FUDGING = 1.5f;
@@ -35,9 +35,6 @@ public class PrehistoricPathFinder extends PathFinder {
         this.mob = mob;
     }
 
-    /**
-     * Finds a path to one of the specified positions and post-processes it or returns null if no path could be found within given accuracy
-     */
     @Override
     @Nullable
     public Path findPath(PathNavigationRegion region, Mob mob, Set<BlockPos> targetPositions, float maxRange, int accuracy, float searchDepthMultiplier) {
@@ -65,7 +62,6 @@ public class PrehistoricPathFinder extends PathFinder {
         while (!openSet.isEmpty() && i < maxNodes) {
             Node node = openSet.pop();
             closedSet.add(node);
-
             node.closed = true;
             for (Target target : set) {
                 if (node.distanceManhattan(target) > accuracy) continue;
@@ -108,9 +104,6 @@ public class PrehistoricPathFinder extends PathFinder {
         return f * (fudge ? FUDGING : 1);
     }
 
-    /**
-     * Converts a recursive path point structure into a path
-     */
     private PatchedPath reconstructPath(Target target, BlockPos targetPos, boolean reachesTarget) {
         Node end = target.getBestNode();
         ArrayList<Node> list = Lists.newArrayList();
@@ -120,7 +113,6 @@ public class PrehistoricPathFinder extends PathFinder {
             node = node.cameFrom;
             list.add(0, node);
         }
-        //This should help some of the smaller mobs reach their target
         if (mob.getBbWidth() < 1 && reachesTarget) {
             list.add(target);
         }
@@ -135,10 +127,10 @@ public class PrehistoricPathFinder extends PathFinder {
         @Override
         public @NotNull Vec3 getEntityPosAtNode(Entity entity, int index) {
             Node point = getNode(index);
-            double d0 = point.x + Mth.floor(entity.getBbWidth() + 1) * 0.5;
-            double d1 = point.y;
-            double d2 = point.z + Mth.floor(entity.getBbWidth() + 1) * 0.5;
-            return new Vec3(d0, d1, d2);
+            // Add 0.5 to center on the block which prevents corner-targeting bias
+            // The original code added Mth.floor(getBbWidth() + 1) * 0.5 which caused
+            // large positive XZ offsets for big mobs, resulting in South East corner clustering
+            return new Vec3(point.x + 0.5, point.y, point.z + 0.5);
         }
     }
 }

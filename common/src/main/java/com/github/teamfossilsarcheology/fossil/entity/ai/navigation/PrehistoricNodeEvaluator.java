@@ -2,12 +2,14 @@ package com.github.teamfossilsarcheology.fossil.entity.ai.navigation;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import org.jetbrains.annotations.Nullable;
 
 public class PrehistoricNodeEvaluator extends WalkNodeEvaluator {
+
     @Nullable
     @Override
     protected Node findAcceptedNode(int x, int y, int z, int i, double d, Direction direction, BlockPathTypes blockPathTypes) {
@@ -16,5 +18,19 @@ public class PrehistoricNodeEvaluator extends WalkNodeEvaluator {
             return null;
         }
         return super.findAcceptedNode(x, y, z, i, e, direction, blockPathTypes);
+    }
+
+    @Override
+    public BlockPathTypes getBlockPathType(BlockGetter level, int x, int y, int z) {
+        BlockPathTypes type = super.getBlockPathType(level, x, y, z);
+        // FENCE type is assigned by vanilla's WalkNodeEvaluator to fences, walls,
+        // and fence gates which includes those added by other mods, as long as they extend
+        // BlockPathTypes correctly. Treating these as BLOCKED prevents dinos from
+        // pathfinding into barriers they cannot cross or jump and therefore they wont always
+        // hang around fences.
+        if (type == BlockPathTypes.FENCE) {
+            return BlockPathTypes.BLOCKED;
+        }
+        return type;
     }
 }
