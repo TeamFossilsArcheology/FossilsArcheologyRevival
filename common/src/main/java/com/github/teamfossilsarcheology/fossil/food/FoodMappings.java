@@ -13,16 +13,31 @@ import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.Set;
 
 public abstract class FoodMappings {
 
-    public static int getFoodAmount(ItemLike itemLike, FoodType diet) {
-        return FoodMappingsManager.INSTANCE.getItemValues(diet).getOrDefault(itemLike.asItem(), 0);
+    public static int getFoodAmount(Item item, FoodType diet) {
+        Block block = Block.byItem(item);
+        if (block != Blocks.AIR && FoodMappingsManager.INSTANCE.getBlockValues(diet).containsKey(block)) {
+            return FoodMappingsManager.INSTANCE.getBlockValues(diet).get(block);
+        }
+        return FoodMappingsManager.INSTANCE.getItemValues(diet).getOrDefault(item.asItem(), 0);
     }
 
-    public static int getFoodAmount(ItemLike itemLike, Diet diet) {
+    public static int getFoodAmount(Block block, Diet diet) {
+        Set<FoodType> valid = diet.flags();
+        for (FoodType type : valid) {
+            if (FoodMappingsManager.INSTANCE.getBlockValues(type).containsKey(block)) {
+                return FoodMappingsManager.INSTANCE.getBlockValues(type).get(block);
+            }
+        }
+        return 0;
+    }
+
+    public static int getFoodAmount(Item itemLike, Diet diet) {
         Set<FoodType> valid = diet.flags();
         for (FoodType type : valid) {
             if (FoodMappingsManager.INSTANCE.getItemValues(type).containsKey(itemLike.asItem())) {

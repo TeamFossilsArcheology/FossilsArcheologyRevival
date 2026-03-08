@@ -2091,10 +2091,10 @@ eef8ca123dfb50f09499d026d3aa52f3369bf48e data/fossil/advancements/recipes/fossil
 412bc49bb948a0e964c6d6f4749f90489d9df8c9 data/fossil/advancements/recipes/fossil.fa_other_item_tab/whip.json
 5d03f23af069219611dd66726ff56fa3109988c5 data/fossil/advancements/recipes/misc/bone_meal_from_ash.json
 1f802f322d2344809dea045090d80bbe11ee8f58 data/fossil/advancements/recipes/misc/bone_meal_from_bone.json
-91d494895ea9301b769ecab97e8f0bf137c650a7 data/fossil/food/egg.json
-d9c62df4f332533b21ba3200302f31bef097fc08 data/fossil/food/fish.json
-7daf372fffbd10614f583538667f5ac6e7ce8762 data/fossil/food/meat.json
-b2bc2188ef57efe34d513a4415ecf36eb748feee data/fossil/food/plant.json
+b469d8e02b6f52ab094ba90039c9cd6f9d9e22ea data/fossil/food/egg.json
+74dacdd1ae10eaa898d8c5dd1b807b4554b3b2c6 data/fossil/food/fish.json
+3e89f56bd4d92312db173d13d112d2527536caf9 data/fossil/food/meat.json
+3c35ef26b11d6e8b52dc3e955e735605d1dd222f data/fossil/food/plant.json
 43f51d1d24cd8d7966a04a682146602dcb8a1084 data/fossil/loot_tables/blocks/amber_block.json
 36db59d5cc026825636ee9dd736f8eed8bf1e099 data/fossil/loot_tables/blocks/amber_chunk.json
 d3e49f6e730ac490f51c88a8edec1361af07056c data/fossil/loot_tables/blocks/amber_chunk_dominican.json
