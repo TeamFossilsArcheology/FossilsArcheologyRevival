@@ -3,12 +3,10 @@ package com.github.teamfossilsarcheology.fossil.entity.ai.navigation;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.PathNavigationRegion;
 import net.minecraft.world.level.pathfinder.*;
-import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -42,14 +40,17 @@ public class PrehistoricPathFinder extends PathFinder {
         closedSet.clear();
         this.nodeEvaluator.prepare(region, mob);
         Node node = nodeEvaluator.getStart();
-        Map<Target, BlockPos> map = targetPositions.stream().collect(Collectors.toMap(blockPos -> nodeEvaluator.getGoal(blockPos.getX(), blockPos.getY(), blockPos.getZ()), Function.identity()));
-        PatchedPath path = findPatchedPath(region.getProfiler(), node, map, maxRange, accuracy, searchDepthMultiplier);
+        Map<Target, BlockPos> map = targetPositions.stream().collect(Collectors.toMap(
+                blockPos -> nodeEvaluator.getGoal(blockPos.getX(), blockPos.getY(), blockPos.getZ()),
+                Function.identity()
+        ));
+        CenteredPath path = findCenteredPath(region.getProfiler(), node, map, maxRange, accuracy, searchDepthMultiplier);
         if (DEBUG && path != null) path.setDebug(openSet.getHeap(), closedSet.toArray(Node[]::new), map.keySet());
         this.nodeEvaluator.done();
         return path;
     }
 
-    protected PatchedPath findPatchedPath(ProfilerFiller profiler, Node start, Map<Target, BlockPos> targetPos, float maxRange, int accuracy, float searchDepthMultiplier) {
+    protected CenteredPath findCenteredPath(ProfilerFiller profiler, Node start, Map<Target, BlockPos> targetPos, float maxRange, int accuracy, float searchDepthMultiplier) {
         profiler.push("find_path");
         profiler.markForCharting(MetricCategory.PATH_FINDING);
         Set<Target> set = targetPos.keySet();
@@ -88,8 +89,9 @@ public class PrehistoricPathFinder extends PathFinder {
             }
             i++;
         }
-        Optional<PatchedPath> path = set.stream().map(target -> reconstructPath(target, targetPos.get(target), false))
-                .min(Comparator.comparingDouble(PatchedPath::getDistToTarget).thenComparingInt(PatchedPath::getNodeCount));
+        Optional<CenteredPath> path = set.stream()
+                .map(target -> reconstructPath(target, targetPos.get(target), false))
+                .min(Comparator.comparingDouble(CenteredPath::getDistToTarget).thenComparingInt(CenteredPath::getNodeCount));
         profiler.pop();
         return path.orElse(null);
     }
@@ -104,7 +106,7 @@ public class PrehistoricPathFinder extends PathFinder {
         return f * (fudge ? FUDGING : 1);
     }
 
-    private PatchedPath reconstructPath(Target target, BlockPos targetPos, boolean reachesTarget) {
+    private CenteredPath reconstructPath(Target target, BlockPos targetPos, boolean reachesTarget) {
         Node end = target.getBestNode();
         ArrayList<Node> list = Lists.newArrayList();
         Node node = end;
@@ -116,21 +118,6 @@ public class PrehistoricPathFinder extends PathFinder {
         if (mob.getBbWidth() < 1 && reachesTarget) {
             list.add(target);
         }
-        return new PatchedPath(list, targetPos, reachesTarget);
-    }
-
-    public static class PatchedPath extends Path {
-        public PatchedPath(List<Node> list, BlockPos blockPos, boolean bl) {
-            super(list, blockPos, bl);
-        }
-
-        @Override
-        public @NotNull Vec3 getEntityPosAtNode(Entity entity, int index) {
-            Node point = getNode(index);
-            // Add 0.5 to center on the block which prevents corner-targeting bias
-            // The original code added Mth.floor(getBbWidth() + 1) * 0.5 which caused
-            // large positive XZ offsets for big mobs, resulting in South East corner clustering
-            return new Vec3(point.x + 0.5, point.y, point.z + 0.5);
-        }
+        return new CenteredPath(list, targetPos, reachesTarget);
     }
 }
