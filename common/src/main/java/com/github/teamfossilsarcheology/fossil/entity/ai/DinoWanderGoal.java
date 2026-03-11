@@ -112,15 +112,19 @@ public class DinoWanderGoal extends RandomStrollGoal {
 
         BlockPos targetBlock = BlockPos.containing(targetX, mob.getY(), targetZ);
         BlockPos groundPos = findGround(targetBlock, verticalDistance);
-        BlockPos finalPos = groundPos != null ? groundPos : targetBlock;
+        if (groundPos == null) return null;
 
-        return Vec3.atBottomCenterOf(finalPos);
+        return Vec3.atBottomCenterOf(groundPos);
     }
 
     private BlockPos findGround(BlockPos pos, int searchRange) {
         LevelReader level = mob.level();
+        int mobY = mob.getBlockY();
         for (int dy = 0; dy >= -searchRange; dy--) {
             BlockPos check = pos.offset(0, dy, 0);
+            // Don't return ground more than 4 blocks below the mob's current Y —
+            // prevents routing to ground beneath a platform the mob is standing on.
+            if (mobY - check.getY() > 4) break;
             BlockPos below = check.below();
             if (level.getBlockState(below).isSolid() &&
                     level.getBlockState(check).isPathfindable(level, check, PathComputationType.LAND)) {

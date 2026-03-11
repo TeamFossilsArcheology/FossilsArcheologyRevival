@@ -104,6 +104,32 @@ public class PrehistoricPathNavigation extends GroundPathNavigation {
         return Math.abs(targetPos.x - rawX) > 0.01 || Math.abs(targetPos.z - rawZ) > 0.01;
     }
 
+    private boolean isGroundedAlongPath(Vec3 start, Vec3 vec) {
+        int steps = Math.max(2, (int) Math.ceil(vec.length()));
+        float halfWidth = mob.getBbWidth() / 2.0f;
+
+        double len = Math.sqrt(vec.x * vec.x + vec.z * vec.z);
+        double perpX = len > 1e-6 ? -vec.z / len : 1.0;
+        double perpZ = len > 1e-6 ?  vec.x / len : 0.0;
+
+        for (int s = 1; s <= steps; s++) {
+            double t = (double) s / steps;
+            double cx = start.x + vec.x * t;
+            double cy = start.y + vec.y * t;
+            double cz = start.z + vec.z * t;
+
+            for (float w : new float[]{0f, -halfWidth, halfWidth}) {
+                double checkX = cx + perpX * w;
+                double checkZ = cz + perpZ * w;
+                BlockPos below = BlockPos.containing(checkX, cy - 1, checkZ);
+                if (!level.getBlockState(below).isSolid()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     private boolean tryShortcut(Path path, Vec3 entityPos, int pathLength, Vec3 base, Vec3 max) {
         int currentIndex = path.getNextNodeIndex();
 
@@ -127,12 +153,13 @@ public class PrehistoricPathNavigation extends GroundPathNavigation {
 
             int currentNodeY = path.getNode(currentIndex).y;
             int candidateNodeY = path.getNode(i).y;
-            if (currentNodeY - candidateNodeY > 2) {
-                continue;
-            }
+            if (currentNodeY - candidateNodeY > 2) continue;
 
             final Vec3 targetPos = path.getEntityPosAtNode(mob, i);
             final Vec3 vec = targetPos.subtract(entityPos);
+
+            if (!isGroundedAlongPath(entityPos, vec)) continue;
+
             if (NavUtil.isNoCollisionOnPath(vec, base, max, PathComputationType.LAND, mob, nodeEvaluator)) {
                 path.setNextNodeIndex(i);
                 return true;
