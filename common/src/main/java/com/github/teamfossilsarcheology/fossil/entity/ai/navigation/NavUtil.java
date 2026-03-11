@@ -19,7 +19,6 @@ import net.minecraft.world.phys.Vec3;
  */
 public class NavUtil {
 
-    //TODO: Could probably move all this to a parent Navigation class/interface as long as its only needed in the Navigators
     static final float EPSILON = 1.0E-8F;
 
     // Based off of https://github.com/andyhall/voxel-aabb-sweep/blob/d3ef85b19c10e4c9d2395c186f9661b052c50dc7/index.js
@@ -29,12 +28,12 @@ public class NavUtil {
             return true;
         }
         final float[] trailingPositions = new float[3];
-        final int[] leadingEdges = new int[3];//the leading edge/block for each axis
-        final int[] trailingEdges = new int[3];//the trailing edge/block for each axis
-        final int[] stepDirections = new int[3];//direction for each axis should be stepped represented as -1 or 1
-        final float[] stepDelta = new float[3];//how much should be added to the next step. Path length divided by axis length
-        final float[] stepLength = new float[3];//how long the next step should be (always starting from the beginning)
-        final float[] normedAxis = new float[3];//axis length divided by Path length
+        final int[] leadingEdges = new int[3];
+        final int[] trailingEdges = new int[3];
+        final int[] stepDirections = new int[3];
+        final float[] stepDelta = new float[3];
+        final float[] stepLength = new float[3];
+        final float[] normedAxis = new float[3];
         for (Direction.Axis axis : Direction.Axis.values()) {
             float axisLength = chooseLengthForAxis(axis, pathVec);
             boolean stepDirection = axisLength >= 0.0F;
@@ -52,7 +51,6 @@ public class NavUtil {
         final BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
         float previousStepLength = 0;
         do {
-            //stepForward: pick axis with the shortest step
             Direction.Axis axis = (stepLength[0] < stepLength[1]) ? ((stepLength[0] < stepLength[2]) ? Direction.Axis.X : Direction.Axis.Z) : ((stepLength[1] < stepLength[2]) ? Direction.Axis.Y : Direction.Axis.Z);
             int idx = axis.ordinal();
             float dt = stepLength[idx] - previousStepLength;
@@ -64,7 +62,6 @@ public class NavUtil {
                 trailingPositions[i] += dt * normedAxis[i];
                 trailingEdges[i] = trailEdgeToInt(trailingPositions[i], stepDirections[i]);
             }
-            // checkCollision
             int stepX = stepDirections[0];
             int minX = (axis == Direction.Axis.X) ? leadingEdges[0] : trailingEdges[0];
             int maxX = leadingEdges[0] + stepX;
@@ -87,7 +84,6 @@ public class NavUtil {
 
     private static boolean isCollisionAtColumn(int x, int minY, int z, int maxY, int stepY, PathComputationType type, Mob mob, BlockPos.MutableBlockPos pos, NodeEvaluator nodeEvaluator) {
         if (type == PathComputationType.WATER) {
-            //This should help when the column is partially outside the water
             boolean anyWater = false;
             for (int y = minY; y != maxY; y += stepY) {
                 BlockState block = mob.level().getBlockState(pos.set(x, y, z));
@@ -150,7 +146,12 @@ public class NavUtil {
 
     public static boolean atElevationChange(Entity mob, Path path) {
         final int curr = path.getNextNodeIndex();
-        final int end = Math.min(path.getNodeCount(), curr + Mth.ceil(mob.getBbWidth() * 0.5F) + 1);
+        // Only look 2 nodes ahead regardless of mob size.
+        // Previously used ceil(getBbWidth() * 0.5) + 1 which for large mobs like
+        // diplodocus meant 4-5 nodes ahead. This caused elevation changes to be
+        // detected too early, requiring the mob to be within getBbWidth()*0.75
+        // horizontally before advancing this would eventually cause issues
+        final int end = Math.min(path.getNodeCount(), curr + 2);
         final int currY = path.getNode(curr).y;
         for (int i = curr + 1; i < end; i++) {
             if (path.getNode(i).y != currY) {

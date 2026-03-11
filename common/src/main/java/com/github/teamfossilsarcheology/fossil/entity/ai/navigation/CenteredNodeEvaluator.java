@@ -17,6 +17,12 @@ import java.util.EnumSet;
 
 /**
  * Overwrites the vanilla {@link WalkNodeEvaluator} to make entities move in the middle of the path instead of the edges.
+ * Collision checks are done symmetrically around the node center (±halfWidth on X and Z) so they
+ * match where {@link CenteredPath} actually sends the mob (node.x + 0.5, node.z + 0.5).
+ *
+ * We use mob.getBbWidth() directly instead of vanilla's entityWidth (which is Mth.floor(getBbWidth() + 1))
+ * to avoid over-inflating the pathfinding width, which caused the pathfinder to reject gaps the mob
+ * can physically walk through.
  *
  * @see CenteredPath
  */
@@ -27,7 +33,6 @@ public class CenteredNodeEvaluator extends WalkNodeEvaluator {
      */
     @Override
     public Node getStart() {
-        //Unchanged original code
         BlockPos blockPos;
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
         int i = this.mob.getBlockY();
@@ -54,7 +59,6 @@ public class CenteredNodeEvaluator extends WalkNodeEvaluator {
         }
         blockPos = this.mob.blockPosition();
         BlockPathTypes blockPathTypes = getCachedBlockType(this.mob, blockPos.getX(), i, blockPos.getZ());
-        //Changed code
         if (this.mob.getPathfindingMalus(blockPathTypes) < 0.0f) {
             AABB aABB = this.mob.getBoundingBox();
             Vec3 center = aABB.setMinY(i).setMaxY(i).getCenter();
@@ -77,29 +81,31 @@ public class CenteredNodeEvaluator extends WalkNodeEvaluator {
     }
 
     /**
-     * @implNote This implementation checks neighbours around the target instead of shifted to a positive x and z
+     * Uses mob.getBbWidth() directly instead of vanilla's entityWidth (Mth.floor(getBbWidth() + 1))
+     * to get accurate collision checks that match the mob's actual size.
+     * Checks symmetrically around the node center (±halfWidth on X and Z) so checks align with
+     * where CenteredPath walks the mob (node.x + 0.5, node.z + 0.5).
      */
     @Override
     public BlockPathTypes getBlockPathTypes(BlockGetter level, int x, int y, int z, EnumSet<BlockPathTypes> nodeTypeEnum, BlockPathTypes nodeType, BlockPos pos) {
-        float width = Math.max(0, entityWidth - 2);
-        int widthEachSide = Mth.ceil(width / 2.0f) + 1;
-        for (int i = 0; i < widthEachSide; ++i) {
-            for (int j = 0; j < entityHeight; ++j) {
-                for (int k = 0; k < widthEachSide; ++k) {
+        // Use actual bounding box dimensions instead of vanilla's over-inflated entityWidth.
+        // Example: mob with getBbWidth()=2.0 → halfWidth=1 → checks 3x3 (accurate)
+        // Vanilla would give entityWidth=3 → halfWidth=2 → checks 5x5 (rejects passable gaps)
+        int halfWidth = Mth.ceil(mob.getBbWidth() / 2.0f);
+        int height = Mth.ceil(mob.getBbHeight());
+
+        for (int i = -halfWidth; i <= halfWidth; i++) {
+            for (int j = 0; j < height; j++) {
+                for (int k = -halfWidth; k <= halfWidth; k++) {
                     BlockPathTypes blockPathType = this.getBlockPathType(level, x + i, y + j, z + k);
                     blockPathType = this.evaluateBlockPathType(level, pos, blockPathType);
                     nodeTypeEnum.add(blockPathType);
                     if (i == 0 && j == 0 && k == 0) {
                         nodeType = blockPathType;
-                    } else if (i != 0 || k != 0) {
-                        blockPathType = this.getBlockPathType(level, x - i, y + j, z - k);
-                        blockPathType = this.evaluateBlockPathType(level, pos, blockPathType);
-                        nodeTypeEnum.add(blockPathType);
                     }
                 }
             }
         }
         return nodeType;
     }
-
 }

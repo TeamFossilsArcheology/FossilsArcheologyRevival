@@ -3,20 +3,18 @@ package com.github.teamfossilsarcheology.fossil.entity.ai.navigation;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
-import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.util.profiling.metrics.MetricCategory;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.PathNavigationRegion;
 import net.minecraft.world.level.pathfinder.*;
-import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.util.profiling.metrics.MetricCategory;
 
 public class PrehistoricPathFinder extends PathFinder {
     private static final float FUDGING = 1.5f;
@@ -35,9 +33,6 @@ public class PrehistoricPathFinder extends PathFinder {
         this.mob = mob;
     }
 
-    /**
-     * Finds a path to one of the specified positions and post-processes it or returns null if no path could be found within given accuracy
-     */
     @Override
     @Nullable
     public Path findPath(PathNavigationRegion region, Mob mob, Set<BlockPos> targetPositions, float maxRange, int accuracy, float searchDepthMultiplier) {
@@ -45,14 +40,17 @@ public class PrehistoricPathFinder extends PathFinder {
         closedSet.clear();
         this.nodeEvaluator.prepare(region, mob);
         Node node = nodeEvaluator.getStart();
-        Map<Target, BlockPos> map = targetPositions.stream().collect(Collectors.toMap(blockPos -> nodeEvaluator.getGoal(blockPos.getX(), blockPos.getY(), blockPos.getZ()), Function.identity()));
-        PatchedPath path = findPatchedPath(region.getProfiler(), node, map, maxRange, accuracy, searchDepthMultiplier);
+        Map<Target, BlockPos> map = targetPositions.stream().collect(Collectors.toMap(
+                blockPos -> nodeEvaluator.getGoal(blockPos.getX(), blockPos.getY(), blockPos.getZ()),
+                Function.identity()
+        ));
+        CenteredPath path = findCenteredPath(region.getProfiler(), node, map, maxRange, accuracy, searchDepthMultiplier);
         if (DEBUG && path != null) path.setDebug(openSet.getHeap(), closedSet.toArray(Node[]::new), map.keySet());
         this.nodeEvaluator.done();
         return path;
     }
 
-    protected PatchedPath findPatchedPath(ProfilerFiller profiler, Node start, Map<Target, BlockPos> targetPos, float maxRange, int accuracy, float searchDepthMultiplier) {
+    protected CenteredPath findCenteredPath(ProfilerFiller profiler, Node start, Map<Target, BlockPos> targetPos, float maxRange, int accuracy, float searchDepthMultiplier) {
         profiler.push("find_path");
         profiler.markForCharting(MetricCategory.PATH_FINDING);
         Set<Target> set = targetPos.keySet();
@@ -65,7 +63,6 @@ public class PrehistoricPathFinder extends PathFinder {
         while (!openSet.isEmpty() && i < maxNodes) {
             Node node = openSet.pop();
             closedSet.add(node);
-
             node.closed = true;
             for (Target target : set) {
                 if (node.distanceManhattan(target) > accuracy) continue;
@@ -92,8 +89,9 @@ public class PrehistoricPathFinder extends PathFinder {
             }
             i++;
         }
-        Optional<PatchedPath> path = set.stream().map(target -> reconstructPath(target, targetPos.get(target), false))
-                .min(Comparator.comparingDouble(PatchedPath::getDistToTarget).thenComparingInt(PatchedPath::getNodeCount));
+        Optional<CenteredPath> path = set.stream()
+                .map(target -> reconstructPath(target, targetPos.get(target), false))
+                .min(Comparator.comparingDouble(CenteredPath::getDistToTarget).thenComparingInt(CenteredPath::getNodeCount));
         profiler.pop();
         return path.orElse(null);
     }
@@ -108,10 +106,7 @@ public class PrehistoricPathFinder extends PathFinder {
         return f * (fudge ? FUDGING : 1);
     }
 
-    /**
-     * Converts a recursive path point structure into a path
-     */
-    private PatchedPath reconstructPath(Target target, BlockPos targetPos, boolean reachesTarget) {
+    private CenteredPath reconstructPath(Target target, BlockPos targetPos, boolean reachesTarget) {
         Node end = target.getBestNode();
         ArrayList<Node> list = Lists.newArrayList();
         Node node = end;
@@ -120,25 +115,9 @@ public class PrehistoricPathFinder extends PathFinder {
             node = node.cameFrom;
             list.add(0, node);
         }
-        //This should help some of the smaller mobs reach their target
         if (mob.getBbWidth() < 1 && reachesTarget) {
             list.add(target);
         }
-        return new PatchedPath(list, targetPos, reachesTarget);
-    }
-
-    public static class PatchedPath extends Path {
-        public PatchedPath(List<Node> list, BlockPos blockPos, boolean bl) {
-            super(list, blockPos, bl);
-        }
-
-        @Override
-        public @NotNull Vec3 getEntityPosAtNode(Entity entity, int index) {
-            Node point = getNode(index);
-            double d0 = point.x + Mth.floor(entity.getBbWidth() + 1) * 0.5;
-            double d1 = point.y;
-            double d2 = point.z + Mth.floor(entity.getBbWidth() + 1) * 0.5;
-            return new Vec3(d0, d1, d2);
-        }
+        return new CenteredPath(list, targetPos, reachesTarget);
     }
 }
