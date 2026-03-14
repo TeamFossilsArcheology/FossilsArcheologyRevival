@@ -25,7 +25,7 @@ public class AnalyzerRecipeBuilder extends MultiOutputAndSlotsRecipeBuilder<Anal
 
     @Override
     public void save(Consumer<FinishedRecipe> consumer, @NotNull ResourceLocation recipeId) {
-        consumer.accept(new Result(recipeId, itemInput != null ? Ingredient.of(itemInput) : Ingredient.of(tagInput), weightedOutputs));
+        consumer.accept(new Result(recipeId, itemInput != null ? Ingredient.of(itemInput) : Ingredient.of(tagInput), weightedOutputs, total, nothingWeight));
     }
 
     @Override
@@ -40,8 +40,8 @@ public class AnalyzerRecipeBuilder extends MultiOutputAndSlotsRecipeBuilder<Anal
 
     public static class Result extends MultiOutputAndSlotsRecipeBuilder.Result {
 
-        public Result(ResourceLocation recipeLocation, Ingredient input, NavigableMap<ItemHolder, Double> weightedOutputs) {
-            super(recipeLocation, input, weightedOutputs);
+        public Result(ResourceLocation recipeLocation, Ingredient input, NavigableMap<ItemHolder, Double> weightedOutputs, double total, double nothingWeight) {
+            super(recipeLocation, input, weightedOutputs, total, nothingWeight);
         }
 
         @Override

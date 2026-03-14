@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.recipe;
 
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -10,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.ShapedRecipe;
@@ -117,6 +119,13 @@ public abstract class MultiOutputAndSlotsRecipe implements Recipe<Container> {
                     "input") : GsonHelper.getAsJsonObject(json, "input");
             Ingredient input = Ingredient.fromJson(jsonelement);
             NavigableMap<Double, ItemStack> outputs = weightedItemsFromJson(GsonHelper.getAsJsonArray(json, "outputs"));
+            double total = GsonHelper.getAsDouble(json, "total", outputs.lastKey());
+            double sumOfWeights = outputs.lastKey();
+            if (total > sumOfWeights) {
+                outputs.put(total, new ItemStack(Items.AIR));
+            } else if (total < sumOfWeights) {
+                FossilMod.LOGGER.warn("Recipe {} has total smaller than sum of weights {} < {}", recipeId, total, sumOfWeights);
+            }
             return constructor.construct(recipeId, input, outputs);
         }
 

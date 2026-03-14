@@ -256,7 +256,7 @@ public class ModRecipeProvider extends RecipeProvider {
                     .addOutput(SIGILLARIA_FOSSIL_SAPLING.get(), 2)
                     .addOutput(TEMPSKYA_FOSSIL_SAPLING.get(), 2);
 
-            double seedWeight = (100F - plantFossil.total) / (double) PrehistoricPlantInfo.plantsWithSeeds().size();
+            double seedWeight = (100F - plantFossil.getTotal()) / (double) PrehistoricPlantInfo.plantsWithSeeds().size();
             for (PrehistoricPlantInfo info : PrehistoricPlantInfo.plantsWithSeeds()) {
                 plantFossil.addOutput(info.getFossilizedPlantSeedItem(), seedWeight);
             }
@@ -428,7 +428,7 @@ public class ModRecipeProvider extends RecipeProvider {
             worktable(ModItems.DIAMOND_JAVELIN, ModItems.DIAMOND_JAVELIN, ModItems.RELIC_SCRAP, consumer);
             worktable(ModItems.ANCIENT_JAVELIN, ModItems.ANCIENT_JAVELIN, ModItems.RELIC_SCRAP, consumer);
 
-            sifter(ModItemTags.SIFTER_INPUTS).addOutput(Blocks.SAND, 5d).addOutput(Items.POTATO, 15d).
+            sifter(ModItemTags.SIFTER_INPUTS).nothing(5d).addOutput(Items.POTATO, 15d).
                     addOutput(Items.CARROT, 15d).addOutput(Items.BEETROOT_SEEDS, 5d).addOutput(Items.PUMPKIN_SEEDS, 4d).
                     addOutput(Items.MELON_SEEDS, 4d).addOutput(Items.BONE_MEAL, 20d).
                     addOutput(Items.IRON_NUGGET, 3d).addOutput(Items.GOLD_NUGGET, 3d).
@@ -437,7 +437,7 @@ public class ModRecipeProvider extends RecipeProvider {
                     addOutput(ModItems.PlANT_FOSSIL.get(), 2d).addOutput(ModItems.BIO_FOSSIL.get(), 2d).
                     addOutput(ModItems.POTTERY_SHARD.get(), 5d).addOutput(Items.CLAY_BALL, 10d).save(consumer);
 
-            sifter(Blocks.GRAVEL).addOutput(Blocks.SAND, 5d).addOutput(Items.POTATO, 15d).
+            sifter(Blocks.GRAVEL).nothing(5d).addOutput(Items.POTATO, 15d).
                     addOutput(Items.CARROT, 10d).addOutput(Items.BEETROOT_SEEDS, 3d).addOutput(Items.PUMPKIN_SEEDS, 2d).
                     addOutput(Items.MELON_SEEDS, 2d).addOutput(Items.FLINT, 5d).addOutput(Items.BONE_MEAL, 20d).
                     addOutput(Items.IRON_NUGGET, 4d).addOutput(Items.GOLD_NUGGET, 4d).
