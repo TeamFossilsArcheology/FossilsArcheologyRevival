@@ -53,89 +53,103 @@ public class CustomFlightMoveControl extends SmoothTurningMoveControl {
         this.operation = operation;
     }
 
+    public boolean isShouldLandAtTarget() {
+        return shouldLandAtTarget;
+    }
+
     @Override
     public void tick() {
         if (!mob.isFlying()) {
+            mob.setXRot(0);
             mob.setNoGravity(false);
             super.tick();
-        } else if (operation == Operation.MOVE_TO) {
+            return;
+        }
+
+        if (mob.isVehicle()) {
             mob.setNoGravity(true);
-            Vec3 offset = flyingWanted.subtract(mob.position());
-            double dist = offset.length();
-            if (dist > Math.min(1.5, mob.getBbWidth())) {
-                float initialYRot = mob.getYRot();
-                float initialXRot = mob.getXRot();
-                float initialYaw = Util.yRotToYaw(initialYRot);
+            return;
+        }
 
-                float targetYaw = (float) Mth.atan2(offset.z, offset.x) * Mth.RAD_TO_DEG;//atan2 always returns between -180 and 180 so no wrapdegrees needed
-                float targetPitch = (float) Mth.atan2(-offset.y, offset.horizontalDistance()) * Mth.RAD_TO_DEG;
+        if (operation != Operation.MOVE_TO) {
+            mob.setNoGravity(!shouldLandAtTarget);
+            return;
+        }
 
-                float newYaw = Mth.approachDegrees(initialYaw, targetYaw, 4);
-                float newPitch = Mth.approachDegrees(initialXRot, targetPitch, 4);
+        mob.setNoGravity(!shouldLandAtTarget);
+        Vec3 offset = flyingWanted.subtract(mob.position());
+        double dist = offset.length();
 
-                mob.setYRot(Util.yawToYRot(newYaw));
-                mob.yBodyRot = mob.getYRot();
-                mob.setXRot(newPitch);
-                if (Mth.degreesDifferenceAbs(initialYRot, mob.getYRot()) < 3) {
-                    //Slows down before reaching the target to prevent overshooting
-                    float limit = 1.2f;
-                    if (dist > 15) {
-                        limit = 2.2f;
-                    } else if (dist > 5) {
-                        limit = 1.8f;
-                    }
-                    limit = shouldLandAtTarget ? limit * 0.8f : limit;
-                    speedModifier = Mth.approach((float) speedModifier, limit, (float) (0.05 * (1.8 / speedModifier)));
-                } else {
-                    speedModifier = Mth.approach((float) speedModifier, 0.2f, 0.025f);
-                }
+        if (dist > Math.min(1.5, mob.getBbWidth())) {
 
-                double targetXMove = speedModifier * Mth.cos(newYaw * Mth.DEG_TO_RAD) * Math.abs(offset.x / dist);
-                double targetYMove = speedModifier * Mth.sin(-targetPitch * Mth.DEG_TO_RAD) * Math.abs(offset.y / dist);
-                double targetZMove = speedModifier * Mth.sin(newYaw * Mth.DEG_TO_RAD) * Math.abs(offset.z / dist);
-                Vec3 move = mob.getDeltaMovement();
-                double newX = Mth.approach((float) move.x, (float) targetXMove, 0.01f);
-                double newY = Mth.approach((float) move.y, (float) targetYMove, 0.01f);
-                double newZ = Mth.approach((float) move.z, (float) targetZMove, 0.01f);
-                mob.setDeltaMovement(newX, newY, newZ);
+            float currentYaw = Util.yRotToYaw(mob.getYRot());
+            float targetYaw  = (float) Mth.atan2(offset.z, offset.x) * Mth.RAD_TO_DEG;
+
+            // Fly straight toward the target.
+            float newYaw = targetYaw;
+
+            mob.setYRot(Util.yawToYRot(newYaw));
+            mob.yBodyRot = mob.getYRot();
+
+            float targetPitch = (float) Mth.atan2(-offset.y, offset.horizontalDistance()) * Mth.RAD_TO_DEG;
+            float newPitch    = Mth.approachDegrees(mob.getXRot(), targetPitch, 4);
+            mob.setXRot(newPitch);
+
+            if (Mth.degreesDifferenceAbs(Util.yRotToYaw(mob.getYRot()), newYaw) < 3) {
+                float limit = 1.2f;
+                if (dist > 15)     limit = 2.2f;
+                else if (dist > 5) limit = 1.8f;
+                limit = shouldLandAtTarget ? limit * 0.8f : limit;
+                speedModifier = Mth.approach((float) speedModifier, limit, (float) (0.05 * (1.8 / speedModifier)));
             } else {
-                if (mob.isUsingStuckNavigation()) {
-                    mob.switchNavigator(false);
-                }
-                if (shouldLandAtTarget) {
-                    if (!mob.level().isEmptyBlock(mob.blockPosition().below())) {
-                        mob.onReachAirTarget(BlockPos.containing(flyingWanted));//TODO: Maybe onReachGroundTarget?
-                        mob.setFlying(false);
-                        operation = Operation.WAIT;
-                    }
-                } else {
+                speedModifier = Mth.approach((float) speedModifier, 0.2f, 0.025f);
+            }
+
+            double targetXMove = speedModifier * Mth.cos(newYaw * Mth.DEG_TO_RAD) * Math.abs(offset.x / dist);
+            double targetYMove = speedModifier * Mth.sin(-targetPitch * Mth.DEG_TO_RAD) * Math.abs(offset.y / dist);
+            double targetZMove = speedModifier * Mth.sin(newYaw * Mth.DEG_TO_RAD) * Math.abs(offset.z / dist);
+            Vec3 move = mob.getDeltaMovement();
+            mob.setDeltaMovement(
+                    Mth.approach((float) move.x, (float) targetXMove, 0.01f),
+                    Mth.approach((float) move.y, (float) targetYMove, 0.01f),
+                    Mth.approach((float) move.z, (float) targetZMove, 0.01f));
+
+        } else {
+            if (mob.isUsingStuckNavigation()) {
+                mob.switchNavigator(false);
+            }
+            if (shouldLandAtTarget) {
+                if (!mob.level().isEmptyBlock(mob.blockPosition().below())) {
                     mob.onReachAirTarget(BlockPos.containing(flyingWanted));
+                    mob.setFlying(false);
+                    mob.setXRot(0);
                     operation = Operation.WAIT;
                 }
+            } else {
+                mob.onReachAirTarget(BlockPos.containing(flyingWanted));
+                operation = Operation.WAIT;
             }
-            if (mob.verticalCollisionBelow && offset.y < 0) {
-                if (!mob.isUsingStuckNavigation()) {
-                    if (offset.horizontalDistance() < 6 && offset.y > -3) {
-                        //Just walk if close enough
-                        mob.setFlying(false);
-                        operation = Operation.WAIT;
-                        mob.moveTo(flyingWanted, true, false);
-                        //TODO: Maybe onReachGroundTarget?
-                    } else {
-                        mob.doStuckNavigation(flyingWanted);
-                    }
+        }
+
+        Vec3 offset2 = flyingWanted.subtract(mob.position());
+        if (mob.verticalCollisionBelow && offset2.y < 0) {
+            if (!mob.isUsingStuckNavigation()) {
+                if (offset2.horizontalDistance() < 6 && offset2.y > -3) {
+                    mob.setFlying(false);
+                    operation = Operation.WAIT;
+                    mob.moveTo(flyingWanted, true, false);
+                } else {
+                    mob.doStuckNavigation(flyingWanted);
                 }
-            } else if (mob.horizontalCollision || mob.verticalCollision) {
-                doStuckDetection(mob.position());
             }
-        } else {
-            mob.setNoGravity(false);
+        } else if (mob.horizontalCollision || mob.verticalCollision) {
+            doStuckDetection(mob.position());
         }
     }
 
     private void doStuckDetection(Vec3 pos) {
         tick++;
-        if (tick - lastStuckCheck > 100) {
+        if (tick - lastStuckCheck > 10) {
             if (pos.distanceToSqr(lastStuckCheckPos) < 2.25) {
                 if (mob.isUsingStuckNavigation()) {
                     mob.getNavigation().recomputePath();
