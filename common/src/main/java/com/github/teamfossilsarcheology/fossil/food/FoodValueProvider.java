@@ -13,7 +13,9 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
@@ -59,6 +61,7 @@ public abstract class FoodValueProvider implements DataProvider {
 
     protected static class FoodAppender {
         private final FoodType type;
+        private final List<Entry> blocks = new ObjectArrayList<>();
         private final List<Entry> items = new ObjectArrayList<>();
         private final List<Entry> entities = new ObjectArrayList<>();
 
@@ -66,8 +69,16 @@ public abstract class FoodValueProvider implements DataProvider {
             this.type = type;
         }
 
+        public void blockTag(TagKey<Block> tag, int value) {
+            blocks.add(new Entry(tag.location(), value, "tag"));
+        }
+
         public void itemTag(TagKey<Item> tag) {
-            items.add(new Entry(tag.location(), -1, "tag"));
+            itemTag(tag, -1);
+        }
+
+        public void itemTag(TagKey<Item> tag, int value) {
+            items.add(new Entry(tag.location(), value, "tag"));
         }
 
         /**
@@ -81,14 +92,18 @@ public abstract class FoodValueProvider implements DataProvider {
          * Adds the given item to the list with the given value
          */
         public void item(Item item, int value) {
-            items.add(new Entry(BuiltInRegistries.ITEM.getKey(item.asItem()), value, "item"));
+            if (item != Items.AIR) {
+                items.add(new Entry(BuiltInRegistries.ITEM.getKey(item.asItem()), value, "item"));
+            }
         }
 
         /**
          * Adds the given block to the list with the given value multiplied by the {@link FoodType#multiplier()}
          */
         public void block(Block block, int value) {
-            items.add(new Entry(BuiltInRegistries.ITEM.getKey(block.asItem()), value * type.multiplier(), "item"));
+            if (block != Blocks.AIR) {
+                blocks.add(new Entry(BuiltInRegistries.BLOCK.getKey(block), value * type.multiplier(), "block"));
+            }
         }
 
         public void entityTag(TagKey<EntityType<?>> tag) {
@@ -118,10 +133,15 @@ public abstract class FoodValueProvider implements DataProvider {
 
         public JsonObject serializeToJson() {
             JsonObject root = new JsonObject();
+            JsonArray blockArray = new JsonArray();
             JsonArray itemArray = new JsonArray();
             JsonArray entityArray = new JsonArray();
+            root.add("blocks", blockArray);
             root.add("items", itemArray);
             root.add("entities", entityArray);
+            blocks.stream().sorted(FoodAppender::compare).forEach(entry -> {
+                blockArray.add(entry.serialize());
+            });
             items.stream().sorted(FoodAppender::compare).forEach(entry -> {
                 itemArray.add(entry.serialize());
             });

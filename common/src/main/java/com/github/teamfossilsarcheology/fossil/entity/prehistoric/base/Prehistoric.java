@@ -128,6 +128,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     public static final EntityDataAccessor<CompoundTag> DIMENSION_VER = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
     private static final EntityDataAccessor<String> DATA_VARIANT = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Byte> GENDER = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Byte> CURRENT_ORDER = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BYTE);
     private static final int GROW_UP_INTERVAL = 120;
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private final List<AISystem> aiSystems = new ArrayList<>();
@@ -265,6 +266,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         entityData.define(DATA_VARIANT, "");
         //TODO: Is this not synced to client?
         entityData.define(GENDER, random.nextBoolean() ? (byte) 1 : 0);
+        entityData.define(CURRENT_ORDER, (byte) OrderType.WANDER.ordinal());
 
         CompoundTag tag = new CompoundTag();
         tag.putBoolean("disableGoalAI", false);
@@ -501,11 +503,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     public OrderType getCurrentOrder() {
-        return this.currentOrder;
+        return OrderType.values()[entityData.get(CURRENT_ORDER)];
     }
 
-    public void setCurrentOrder(OrderType newOrder) {
-        currentOrder = newOrder;
+    public void setCurrentOrder(@NotNull OrderType orderType) {
+        entityData.set(CURRENT_ORDER, (byte) orderType.ordinal());
     }
 
     @Override

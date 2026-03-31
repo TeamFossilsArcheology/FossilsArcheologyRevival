@@ -8,6 +8,7 @@ import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.food.Foods;
@@ -34,6 +35,9 @@ public class ModFoodValueProvider extends FoodValueProvider {
         plant.itemTag(TagKey.create(Registries.ITEM, new ResourceLocation("c:foods/bread")));
         plant.itemTag(TagKey.create(Registries.ITEM, new ResourceLocation("c:foods/fruit")));
         plant.itemTag(TagKey.create(Registries.ITEM, new ResourceLocation("c:foods/vegetable")));
+        plant.blockTag(BlockTags.LEAVES, 20);
+        plant.blockTag(BlockTags.FLOWERS, 5);
+        plant.blockTag(BlockTags.SAPLINGS, 15);
         //crop: nutrition * max drop
         plant.block(Blocks.BEETROOTS, Foods.BEETROOT.getNutrition() + 2);
         plant.block(Blocks.BROWN_MUSHROOM, 3);
@@ -77,11 +81,12 @@ public class ModFoodValueProvider extends FoodValueProvider {
         plant.block(PrehistoricPlantInfo.WELWITSCHIA.getPlantBlock(), 3);
         plant.block(PrehistoricPlantInfo.ZAMITES.getPlantBlock(), 6);
         plant.block(ModBlocks.FERNS.get(), 3);
+        plant.item(ModItems.FERN_SEED.get(), 5);
 
         plant.item(Items.APPLE);
         plant.item(Items.BAKED_POTATO);
         plant.item(Items.BEETROOT);
-        plant.item(Items.BEETROOT_SEEDS, 1);
+        plant.item(Items.BEETROOT_SEEDS, 5);
         plant.item(Items.BREAD);
         plant.item(Items.CAKE, 14 * 5);
         plant.item(Items.CARROT);

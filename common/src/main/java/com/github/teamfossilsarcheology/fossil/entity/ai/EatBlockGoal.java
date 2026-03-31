@@ -36,6 +36,14 @@ public class EatBlockGoal extends MoveToFoodGoal {
     }
 
     @Override
+    public boolean canContinueToUse() {
+        if (animEndTick != 0) {
+            return entity.level().getGameTime() < animEndTick;
+        }
+        return super.canContinueToUse();
+    }
+
+    @Override
     public void tick() {
         super.tick();
         if (isReachedTarget() && !done) {

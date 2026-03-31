@@ -1,12 +1,13 @@
 {
   "type": "fossil:analyzer",
   "input": {
-    "item": "minecraft:frog_spawn_egg"
+    "item": "minecraft:lily_pad"
   },
   "outputs": [
     {
       "item": "fossil:frog_dna",
-      "weight": 100.0
+      "weight": 5.0
     }
-  ]
+  ],
+  "total": 100.0
 }

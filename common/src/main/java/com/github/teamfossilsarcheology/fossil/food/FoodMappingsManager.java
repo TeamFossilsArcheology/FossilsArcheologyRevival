@@ -5,6 +5,7 @@ import com.github.teamfossilsarcheology.fossil.client.ResourceLoader;
 import com.github.teamfossilsarcheology.fossil.network.S2CSyncFoodMappingsMessage;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
 import com.google.gson.*;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
@@ -38,11 +39,13 @@ import java.util.stream.Collectors;
 public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapPair> {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     public static final FoodMappingsManager INSTANCE = new FoodMappingsManager();
-    private Map<FoodType, Set<TagKey<Item>>> itemTags = ImmutableMap.of();
+    private Map<FoodType, Map<TagKey<Block>, Integer>> blockTags = ImmutableMap.of();
+    private Map<FoodType, Map<TagKey<Item>, Integer>> itemTags = ImmutableMap.of();
     private Map<FoodType, Set<TagKey<EntityType<?>>>> entityTags = ImmutableMap.of();
+    private Map<FoodType, Map<Block, Integer>> blockValues = ImmutableMap.of();
     private Map<FoodType, Map<Item, Integer>> itemValues = ImmutableMap.of();
     private Map<FoodType, Map<EntityType<?>, Integer>> entityValues = ImmutableMap.of();
-    private Map<Diet, TreeSet<Item>> items;
+    private Map<Diet, TreeSet<ItemLike>> items;
     private Set<EntityType<?>> entities = ImmutableSet.of();
     private final List<Consumer<FoodMappingsManager>> listeners = new ArrayList<>();
 
@@ -52,14 +55,18 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
 
     @Override
     protected @NotNull MapPair prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
-        ImmutableMap.Builder<FoodType, Set<TagKey<Item>>> itemTagsBuilder = new ImmutableMap.Builder<>();
+        ImmutableMap.Builder<FoodType, Map<TagKey<Block>, Integer>> blockTagsBuilder = new ImmutableMap.Builder<>();
+        ImmutableMap.Builder<FoodType, Map<TagKey<Item>, Integer>> itemTagsBuilder = new ImmutableMap.Builder<>();
         ImmutableMap.Builder<FoodType, Set<TagKey<EntityType<?>>>> entityTagsBuilder = new ImmutableMap.Builder<>();
+        ImmutableMap.Builder<FoodType, Map<Block, Integer>> blockBuilder = new ImmutableMap.Builder<>();
         ImmutableMap.Builder<FoodType, Map<Item, Integer>> itemBuilder = new ImmutableMap.Builder<>();
         ImmutableMap.Builder<FoodType, Map<EntityType<?>, Integer>> entityBuilder = new ImmutableMap.Builder<>();
         ImmutableSet.Builder<EntityType<?>> setBuilder = new ImmutableSet.Builder<>();
         for (FoodType type : FoodType.values()) {
-            Set<TagKey<Item>> itemTags = new ObjectOpenHashSet<>();
+            Map<TagKey<Block>, Integer> blockTags = new Object2IntOpenHashMap<>();
+            Map<TagKey<Item>, Integer> itemTags = new Object2IntOpenHashMap<>();
             Set<TagKey<EntityType<?>>> entityTags = new ObjectOpenHashSet<>();
+            Map<Block, Integer> innerBlockBuilder = new Object2IntOpenHashMap<>();
             Map<Item, Integer> innerItemBuilder = new Object2IntOpenHashMap<>();
             Map<EntityType<?>, Integer> innerEntityBuilder = new Object2IntOpenHashMap<>();
 
@@ -67,6 +74,27 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
                 try (InputStream inputStream = fileEntry.getValue().open(); BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
                     JsonElement jsonElement = GsonHelper.fromJson(GSON, reader, JsonElement.class);
                     JsonObject root = jsonElement.getAsJsonObject();
+                    if (root.has("blocks")) {
+                        JsonArray entries = root.get("blocks").getAsJsonArray();
+                        for (JsonElement entry : entries) {
+                            JsonObject object = entry.getAsJsonObject();
+                            if (object.has("block")) {
+                                BuiltInRegistries.BLOCK.getOptional(new ResourceLocation(object.get("block").getAsString())).ifPresent(block -> {
+                                    if (object.has("value")) {
+                                        innerBlockBuilder.put(block, object.get("value").getAsInt());
+                                    } else {
+                                        innerBlockBuilder.put(block, type.fallback());
+                                    }
+                                });
+                            } else if (object.has("tag")) {
+                                if (object.has("value")) {
+                                    blockTags.put(TagKey.create(Registries.BLOCK, new ResourceLocation(object.get("tag").getAsString())), object.get("value").getAsInt());
+                                } else {
+                                    blockTags.put(TagKey.create(Registries.BLOCK, new ResourceLocation(object.get("tag").getAsString())), -1);
+                                }
+                            }
+                        }
+                    }
                     if (root.has("items")) {
                         JsonArray entries = root.get("items").getAsJsonArray();
                         for (JsonElement entry : entries) {
@@ -82,7 +110,11 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
                                     }
                                 });
                             } else if (object.has("tag")) {
-                                itemTags.add(TagKey.create(Registries.ITEM, new ResourceLocation(object.get("tag").getAsString())));
+                                if (object.has("value")) {
+                                    itemTags.put(TagKey.create(Registries.ITEM, new ResourceLocation(object.get("tag").getAsString())), object.get("value").getAsInt());
+                                } else {
+                                    itemTags.put(TagKey.create(Registries.ITEM, new ResourceLocation(object.get("tag").getAsString())), -1);
+                                }
                             }
                         }
                     }
@@ -110,26 +142,32 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
                     throw new RuntimeException(e);
                 }
             }
+            blockTagsBuilder.put(type, blockTags);
             itemTagsBuilder.put(type, itemTags);
             entityTagsBuilder.put(type, entityTags);
+            blockBuilder.put(type, innerBlockBuilder);
             itemBuilder.put(type, innerItemBuilder);
             entityBuilder.put(type, innerEntityBuilder);
         }
-        return new MapPair(itemBuilder.build(), entityBuilder.build(), setBuilder.build(), itemTagsBuilder.build(), entityTagsBuilder.build());
+        return new MapPair(blockBuilder.build(), itemBuilder.build(), entityBuilder.build(), setBuilder.build(), blockTagsBuilder.build(), itemTagsBuilder.build(), entityTagsBuilder.build());
     }
 
     @Override
     protected void apply(MapPair mapPair, ResourceManager resourceManager, ProfilerFiller profiler) {
+        blockValues = mapPair.blocks;
         itemValues = mapPair.items;
         entityValues = mapPair.entities;
         entities = mapPair.allEntities;
+        blockTags = mapPair.blockTags;
         itemTags = mapPair.itemTags;
         entityTags = mapPair.entityTags;
-        FossilMod.LOGGER.info("Loaded food values: (items: {}) (entities: {}, {}) (Tags: {}, {})",
+        FossilMod.LOGGER.info("Loaded food values: (blocks: {}) (items: {}) (entities: {}, {}) (Tags: {}, {}, {})",
+                blockValues.values().stream().mapToInt(m -> m.keySet().size()).sum(),
                 itemValues.values().stream().mapToInt(m -> m.keySet().size()).sum(),
                 entityValues.values().stream().mapToInt(m -> m.keySet().size()).sum(),
                 entities.size(),
-                itemTags.values().stream().mapToInt(Collection::size).sum(),
+                blockTags.values().stream().mapToInt(m -> m.keySet().size()).sum(),
+                itemTags.values().stream().mapToInt(m -> m.keySet().size()).sum(),
                 entityTags.values().stream().mapToInt(Collection::size).sum());
         listeners.forEach(listener -> listener.accept(this));
         generateCache();
@@ -139,11 +177,14 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
         listeners.add(listener);
     }
 
-    public void replaceValues(Map<FoodType, Map<Item, Integer>> itemValues, Map<FoodType, Map<EntityType<?>, Integer>> entityValues, Set<EntityType<?>> entities) {
-        FossilMod.LOGGER.info("Replacing client food values: (items: {}) (entities: {}, {})",
+    public void replaceValues(Map<FoodType, Map<Block, Integer>> blockValues, Map<FoodType, Map<Item, Integer>> itemValues,
+                              Map<FoodType, Map<EntityType<?>, Integer>> entityValues, Set<EntityType<?>> entities) {
+        FossilMod.LOGGER.info("Replacing client food values: (blocks: {}) (items: {}) (entities: {}, {})",
+                blockValues.values().stream().mapToInt(m -> m.keySet().size()).sum(),
                 itemValues.values().stream().mapToInt(m -> m.keySet().size()).sum(),
                 entityValues.values().stream().mapToInt(m -> m.keySet().size()).sum(),
                 entities.size());
+        this.blockValues = blockValues;
         this.itemValues = itemValues;
         this.entityValues = entityValues;
         this.entities = entities;
@@ -151,9 +192,20 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
     }
 
     private void generateCache() {
-        Comparator<Item> byId = Comparator.comparingInt(item -> Item.getId(item.asItem()));
-        Supplier<TreeSet<Item>> set = () -> new TreeSet<>(byId);
-        items = Arrays.stream(Diet.values()).collect(Collectors.toMap(Function.identity(), diet -> diet.flags().stream().flatMap(type -> itemValues.get(type).keySet().stream()).collect(Collectors.toCollection(set))));
+        Comparator<ItemLike> byId = Comparator.comparingInt(item -> {
+            if (item instanceof Block block) {
+                return BuiltInRegistries.BLOCK.getId(block);
+            } else {
+                return Item.getId(item.asItem());
+            }
+        });
+        Supplier<TreeSet<ItemLike>> set = () -> new TreeSet<>(byId);
+        items = Arrays.stream(Diet.values()).collect(Collectors.toMap(Function.identity(), diet -> diet.flags().stream()
+                .flatMap(type -> Sets.union(itemValues.get(type).keySet(), blockValues.get(type).keySet()).stream()).collect(Collectors.toCollection(set))));
+    }
+
+    public Map<Block, Integer> getBlockValues(FoodType type) {
+        return blockValues.get(type);
     }
 
     public Map<Item, Integer> getItemValues(FoodType type) {
@@ -168,6 +220,10 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
         return entities.contains(entityType);
     }
 
+    public void addBlock(FoodType type, Block block, int value) {
+        blockValues.get(type).put(block, value);
+    }
+
     public void addItem(FoodType type, Item item, int value) {
         itemValues.get(type).put(item, value);
     }
@@ -176,7 +232,7 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
         entityValues.get(type).put(entityType, value);
     }
 
-    public Map<Diet, TreeSet<Item>> getItemCache() {
+    public Map<Diet, TreeSet<ItemLike>> getItemCache() {
         if (items == null) {
             generateCache();
         }
@@ -219,7 +275,7 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
     }
 
     public void addPlant(Block block, int food) {
-        addItem(FoodType.PLANT, block.asItem(), food);
+        addBlock(FoodType.PLANT, block, food);
     }
 
     public void addPlant(Item item) {
@@ -235,20 +291,35 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
      * Load items from tags. Tags have lower priority than direct references
      */
     private void loadTags() {
+        ImmutableMap.Builder<FoodType, Map<Block, Integer>> blockBuilder = new ImmutableMap.Builder<>();
         ImmutableMap.Builder<FoodType, Map<Item, Integer>> itemBuilder = new ImmutableMap.Builder<>();
         ImmutableMap.Builder<FoodType, Map<EntityType<?>, Integer>> entityBuilder = new ImmutableMap.Builder<>();
         ImmutableSet.Builder<EntityType<?>> setBuilder = new ImmutableSet.Builder<>();
         setBuilder.addAll(entities);
         for (FoodType type : FoodType.values()) {
+            Map<Block, Integer> innerBlockBuilder = new Object2IntOpenHashMap<>();
             Map<Item, Integer> innerItemBuilder = new Object2IntOpenHashMap<>();
             Map<EntityType<?>, Integer> innerEntityBuilder = new Object2IntOpenHashMap<>();
+            innerBlockBuilder.putAll(blockValues.get(type));
             innerItemBuilder.putAll(itemValues.get(type));
             innerEntityBuilder.putAll(entityValues.get(type));
-            for (TagKey<Item> tagKey : itemTags.get(type)) {
-                for (Holder<Item> itemHolder : BuiltInRegistries.ITEM.getTagOrEmpty(tagKey)) {
+            for (Map.Entry<TagKey<Block>, Integer> entry : blockTags.get(type).entrySet()) {
+                for (Holder<Block> itemHolder : BuiltInRegistries.BLOCK.getTagOrEmpty(entry.getKey())) {
+                    Block block = itemHolder.value();
+                    if (entry.getValue() != -1) {
+                        innerBlockBuilder.put(block, entry.getValue());
+                    } else {
+                        innerBlockBuilder.put(block, type.fallback());
+                    }
+                }
+            }
+            for (Map.Entry<TagKey<Item>, Integer> entry : itemTags.get(type).entrySet()) {
+                for (Holder<Item> itemHolder : BuiltInRegistries.ITEM.getTagOrEmpty(entry.getKey())) {
                     Item item = itemHolder.value();
                     if (item.getFoodProperties() != null) {
                         innerItemBuilder.put(item, item.getFoodProperties().getNutrition() * type.multiplier());
+                    } else if (entry.getValue() != -1) {
+                        innerItemBuilder.put(item, entry.getValue());
                     } else {
                         innerItemBuilder.put(item, type.fallback());
                     }
@@ -262,9 +333,11 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
                     innerEntityBuilder.put(entityType, 0);
                 }
             }
+            blockBuilder.put(type, innerBlockBuilder);
             itemBuilder.put(type, innerItemBuilder);
             entityBuilder.put(type, innerEntityBuilder);
         }
+        blockValues = blockBuilder.build();
         itemValues = itemBuilder.build();
         entityValues = entityBuilder.build();
         entities = setBuilder.build();
@@ -273,11 +346,14 @@ public class FoodMappingsManager extends ResourceLoader<FoodMappingsManager.MapP
 
     public S2CSyncFoodMappingsMessage message() {
         loadTags();
-        return new S2CSyncFoodMappingsMessage(itemValues, entityValues, entities);
+        return new S2CSyncFoodMappingsMessage(blockValues, itemValues, entityValues, entities);
     }
 
-    protected record MapPair(Map<FoodType, Map<Item, Integer>> items, Map<FoodType, Map<EntityType<?>, Integer>> entities, Set<EntityType<?>> allEntities,
-                             Map<FoodType, Set<TagKey<Item>>> itemTags, Map<FoodType, Set<TagKey<EntityType<?>>>> entityTags) {
+    protected record MapPair(Map<FoodType, Map<Block, Integer>> blocks, Map<FoodType, Map<Item, Integer>> items,
+                             Map<FoodType, Map<EntityType<?>, Integer>> entities,
+                             Set<EntityType<?>> allEntities, Map<FoodType, Map<TagKey<Block>, Integer>> blockTags,
+                             Map<FoodType, Map<TagKey<Item>, Integer>> itemTags,
+                             Map<FoodType, Set<TagKey<EntityType<?>>>> entityTags) {
 
     }
 }
