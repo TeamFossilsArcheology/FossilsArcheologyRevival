@@ -85,7 +85,7 @@ public class PathingRenderer {
             } else {
                 InstructionRenderUtil.renderWholeBox(poseStack, targetPos, Color.ofRGBA(0, 1, 0, 0.5f), finishNanoTime);
             }
-            InstructionRenderUtil.renderFloatingText(poseStack, Minecraft.getInstance(), String.valueOf(PathingDebug.pickBlockOffset), Vec3.atCenterOf(targetPos).add(0, 0.5, 0));
+            InstructionRenderUtil.renderFloatingText(poseStack, Minecraft.getInstance(), String.valueOf(PathingDebug.pickBlockOffset), Vec3.atCenterOf(targetPos).add(0, 0.65, 0));
         }
     }
 

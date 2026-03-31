@@ -1,4 +1,4 @@
-// 1.19.2	2025-10-28T00:30:30.938393	Recipes
+// 1.19.2	2026-03-31T20:54:14.151809	Recipes
 678b39195f6b730c7171f03ec91c99079964d1eb data/fossil/advancements/recipes/fossil.fa_block_tab/analyzer.json
 4fe9cf431ec9b75860bab8350528908c82080fdb data/fossil/advancements/recipes/fossil.fa_block_tab/ancient_stone_bricks_from_ancient_stone_stonecutting.json
 55fe0eff14f0389a4c070642655586265afe7903 data/fossil/advancements/recipes/fossil.fa_block_tab/ancient_stone_slab_from_ancient_stone_bricks_stonecutting.json
@@ -848,8 +848,8 @@ ebe8d83c5795de8c5c2c2c85b5e6664db9e16404 data/fossil/recipes/reinforced_glass_fr
 bebfa4b5149f331bcf8f16b2533c2905f5c089fb data/fossil/recipes/scarab_shovel.json
 5f87350ef1064f318fa278df69778d996946d704 data/fossil/recipes/scarab_sword.json
 38cc1a8ffecde9c8b36a841fe90b929308da77a6 data/fossil/recipes/sifter.json
-8dc694640e8f13fe2f9a94daf5ef190f6a82f88a data/fossil/recipes/sifter/gravel.json
-bc84cec4482411c3d5e8f4250278653871b96d45 data/fossil/recipes/sifter/sifter_inputs.json
+0c3867bfdb1f89da74ff08f4881b3283ca529cec data/fossil/recipes/sifter/gravel.json
+d729bf1aab94cb80e2d89e65ca814ad89a606c7f data/fossil/recipes/sifter/sifter_inputs.json
 70d5581c44b295d94c82559cd22ee4611042772a data/fossil/recipes/sigillaria_button.json
 c260220fed4c2ad9319baea726117304acf8127c data/fossil/recipes/sigillaria_door.json
 97a87d37b7b6dbaea9cbba9ecd763f7ae39555aa data/fossil/recipes/sigillaria_fence.json

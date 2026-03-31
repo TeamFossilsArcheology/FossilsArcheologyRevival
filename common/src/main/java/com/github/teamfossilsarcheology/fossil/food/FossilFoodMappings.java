@@ -10,15 +10,6 @@ import net.minecraft.tags.BlockTags;
 public class FossilFoodMappings {
     public static void register() {
         FoodMappingsManager.INSTANCE.listen(manager -> {
-            Registry.BLOCK.getOrCreateTag(BlockTags.LEAVES).stream().map(Holder::value).forEach(block -> {
-                manager.addPlant(block, 20);
-            });
-            Registry.BLOCK.getOrCreateTag(BlockTags.FLOWERS).stream().map(Holder::value).forEach(block -> {
-                manager.addPlant(block, 5);
-            });
-            Registry.BLOCK.getOrCreateTag(BlockTags.SAPLINGS).stream().map(Holder::value).forEach(block -> {
-                manager.addPlant(block, 15);
-            });
             for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
                 if (info.mobType == PrehistoricMobType.FISH) {
                     if (info.eggItem != null) manager.addFish(info.eggItem, 20);
