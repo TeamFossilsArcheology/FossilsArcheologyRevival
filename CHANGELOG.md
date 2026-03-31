@@ -1,6 +1,8 @@
 ### Added
 - Sifting no longer has a small chance of returning sand
 - More translations
+- Analyzing lily pads now has a low chance of returning frog dna
+- Cultivating frog dna now returns frogspawn
 
 ### Fixed
 - Missing festive variant for megaloceros
