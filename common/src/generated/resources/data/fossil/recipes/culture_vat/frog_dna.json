@@ -7,5 +7,5 @@
   "input": {
     "item": "fossil:frog_dna"
   },
-  "result": "minecraft:frog_spawn_egg"
+  "result": "minecraft:frogspawn"
 }

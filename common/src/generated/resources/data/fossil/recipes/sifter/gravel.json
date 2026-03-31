@@ -63,10 +63,7 @@
     {
       "item": "minecraft:pumpkin_seeds",
       "weight": 2.0
-    },
-    {
-      "item": "minecraft:sand",
-      "weight": 5.0
     }
-  ]
+  ],
+  "total": 100.0
 }
