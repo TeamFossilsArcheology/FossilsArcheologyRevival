@@ -1,5 +1,6 @@
 ### Added
 - Sifting no longer has a small chance of returning sand
+- More translations
 
 ### Fixed
 - Missing festive variant for megaloceros
