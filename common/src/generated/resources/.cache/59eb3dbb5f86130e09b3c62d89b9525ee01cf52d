@@ -1,4 +1,4 @@
-// 1.19.4	2025-10-28T01:10:56.3329802	Loot Tables
+// 1.19.4	2026-03-31T21:09:22.483314	Loot Tables
 81d8243872cf46bb521badac8b14dfdf86d330d2 data/fossil/loot_tables/blocks/amber_block.json
 080a2ab6562c0dad8a54c6d3d8cf6284b3a4b174 data/fossil/loot_tables/blocks/amber_chunk.json
 93862ca35ef49215baf60885cc962a393d1bca70 data/fossil/loot_tables/blocks/amber_chunk_dominican.json
@@ -53,7 +53,7 @@ e32b7f17885326c9505d2c9e4f57d1540d6b69f8 data/fossil/loot_tables/blocks/cordaite
 18ce589d6c84dc7197c5a5fb69ce9ad7ae74efb3 data/fossil/loot_tables/blocks/cordaites_stairs.json
 8a17192c5944e959b2db79431d8086f0942e6f3c data/fossil/loot_tables/blocks/cordaites_trapdoor.json
 3b1854752173710179b31488fe061fb072a9660a data/fossil/loot_tables/blocks/cordaites_wood.json
-c9917065538aedd1a6f9772c46ef7e8b1e68a8dc data/fossil/loot_tables/blocks/crataegus.json
+37867bffdb1ac109e58314961065b1dd6275a80d data/fossil/loot_tables/blocks/crataegus.json
 c94df6f5e75c0411f208907201cf2d0f5b90e91d data/fossil/loot_tables/blocks/culture_vat.json
 d96305cfe26dd385d8eab5cdc3ace22df13631c5 data/fossil/loot_tables/blocks/cyathea.json
 ebe9e2cd6197aa86053269d22e58070dc20e9a6f data/fossil/loot_tables/blocks/dense_sand.json
@@ -62,7 +62,7 @@ d63398db84c971d22207b3ef8a0ca7f252a6a2b8 data/fossil/loot_tables/blocks/dillhoff
 885cc3394247f368d8fc23747eb4a0d2868979b7 data/fossil/loot_tables/blocks/dipteris.json
 abe6540f531a17e11b14bf398a28aacc60bf5fcd data/fossil/loot_tables/blocks/drum.json
 2979e3276be6a6c342891bca0ba095430371d214 data/fossil/loot_tables/blocks/duisbergia.json
-bd5d606ddc15977b1b7253c29205dc870e533ca8 data/fossil/loot_tables/blocks/ephedra.json
+409f1272e1e7034fa0013fe6f1b479f3267f7860 data/fossil/loot_tables/blocks/ephedra.json
 f719fbbdcd58629d0beee505f9b77b993e53934d data/fossil/loot_tables/blocks/fake_obsidian.json
 c6d5580e502b0666e9d8d1c206389b65facd2b33 data/fossil/loot_tables/blocks/feeder.json
 e76e8e3d04baf656865512565f69f066cc1a265e data/fossil/loot_tables/blocks/figurine_anu_destroyed.json
@@ -182,7 +182,7 @@ cec7ab8b22e5d19c3ffce1efabf3c287d8d56d63 data/fossil/loot_tables/blocks/tempskya
 b0c3f3de0e4a355a8078b74fbea1aaad06e29d5e data/fossil/loot_tables/blocks/tempskya_top.json
 ffc4740c69208dd02a2ad1df399507a2cb2feb0b data/fossil/loot_tables/blocks/tempskya_trapdoor.json
 b7059da72e66a3bf2a80bac64c6debf1af928d13 data/fossil/loot_tables/blocks/tempskya_wood.json
-131fb07ad20fa0a95b8903ae42893e348cf853c0 data/fossil/loot_tables/blocks/vaccinium.json
+b01ad58187bd531486a2ea5b9823fb85b6f31413 data/fossil/loot_tables/blocks/vaccinium.json
 cabec07af368cde335a18d91dee5837d4543812d data/fossil/loot_tables/blocks/vase_amphora_black.json
 74bc4af0a97087376418551657a6fb79989526b0 data/fossil/loot_tables/blocks/vase_amphora_blue.json
 645c6c9809dc9c124107c8f22523771b432031e9 data/fossil/loot_tables/blocks/vase_amphora_brown.json

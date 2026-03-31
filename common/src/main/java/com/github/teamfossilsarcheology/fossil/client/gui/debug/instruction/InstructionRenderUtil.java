@@ -8,6 +8,7 @@ import com.mojang.math.Axis;
 import it.unimi.dsi.fastutil.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -83,6 +84,7 @@ public class InstructionRenderUtil {
         //Man how does axiom make their pulsing box look so good?
         poseStack.pushPose();
         RenderSystem.enableBlend();
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         poseStack.translate(pos.getX(), pos.getY(), pos.getZ());
         Matrix4f matrix4f = poseStack.last().pose();
@@ -109,6 +111,7 @@ public class InstructionRenderUtil {
         tesselator.end();
         RenderSystem.disableBlend();
         RenderSystem.defaultBlendFunc();
+        RenderSystem.setShader(GameRenderer::getRendertypeLinesShader);
 
         poseStack.popPose();
     }
@@ -135,6 +138,7 @@ public class InstructionRenderUtil {
             poseStack.scale(0.5f, 0.5f, 0.5f);
             poseStack.translate(0, -i, -o);
         }
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
         Matrix4f matrix4f = poseStack.last().pose();
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferBuilder = tesselator.getBuilder();

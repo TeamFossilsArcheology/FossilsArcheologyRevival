@@ -25,7 +25,8 @@ public abstract class MultiOutputAndSlotsRecipeBuilder<T extends MultiOutputAndS
     protected final ItemLike itemInput;
     protected final TagKey<Item> tagInput;
     protected final NavigableMap<ItemHolder, Double> weightedOutputs = new TreeMap<>();
-    public double total;
+    protected double total;
+    protected double nothingWeight;
 
     protected MultiOutputAndSlotsRecipeBuilder(String modId, ItemLike itemInput) {
         this.modId = modId;
@@ -47,6 +48,15 @@ public abstract class MultiOutputAndSlotsRecipeBuilder<T extends MultiOutputAndS
         total += weight;
         weightedOutputs.put(new ItemHolder(BuiltInRegistries.ITEM.getKey(itemLike.asItem()), count), weight);
         return this;
+    }
+
+    public MultiOutputAndSlotsRecipeBuilder<T> nothing(double weight) {
+        nothingWeight = weight;
+        return this;
+    }
+
+    public double getTotal() {
+        return total + nothingWeight;
     }
 
     @Override
@@ -87,11 +97,15 @@ public abstract class MultiOutputAndSlotsRecipeBuilder<T extends MultiOutputAndS
         private final ResourceLocation recipeLocation;
         private final Ingredient ingredient;
         private final NavigableMap<ItemHolder, Double> weightedOutputs;
+        private final double total;
+        private final double nothingWeight;
 
-        protected Result(ResourceLocation recipeLocation, Ingredient ingredient, NavigableMap<ItemHolder, Double> weightedOutputs) {
+        protected Result(ResourceLocation recipeLocation, Ingredient ingredient, NavigableMap<ItemHolder, Double> weightedOutputs, double total, double nothingWeight) {
             this.recipeLocation = recipeLocation;
             this.ingredient = ingredient;
             this.weightedOutputs = weightedOutputs;
+            this.total = total;
+            this.nothingWeight = nothingWeight;
         }
 
         @Override
@@ -110,6 +124,9 @@ public abstract class MultiOutputAndSlotsRecipeBuilder<T extends MultiOutputAndS
                 outputs.add(outputObject);
             }
             json.add("outputs", outputs);
+            if (nothingWeight > 0) {
+                json.addProperty("total", total + nothingWeight);
+            }
         }
 
         @Override
