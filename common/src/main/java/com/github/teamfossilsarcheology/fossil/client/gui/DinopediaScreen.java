@@ -27,10 +27,13 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
@@ -476,6 +479,11 @@ public class DinopediaScreen extends Screen {
         @Override
         public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
             guiGraphics.blit(DINOPEDIA_BACKGROUND, getX(), getY(), isForward ? 0 : 34, 223, 34, 30);
+        }
+
+        @Override
+        public void playDownSound(SoundManager handler) {
+            handler.play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
         }
     }
 }

@@ -71,9 +71,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         CALAMITES_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, CALAMITES_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
         CORDAITES_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, CORDAITES_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
         MUTANT_TREE_LEAVES.ifPresent(block -> addCustom(block, createSilkTouchOrShearsDispatchTable(block, applyExplosionCondition(block, LootItem.lootTableItem(Items.STICK)))));
-        PALM_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, PALM_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
+        PALM_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, PALM_SAPLING.get(), 0.075f, 0.09375f, 0.125f, 0.15f)));
         SIGILLARIA_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, SIGILLARIA_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
-        TEMPSKYA_LEAF.ifPresent(block -> addCustom(block, createLeavesDrops(block, TEMPSKYA_SAPLING.get(), 0.3f, 0.375f, 0.5f, 0.6f)));
+        TEMPSKYA_LEAF.ifPresent(block -> addCustom(block, createLeavesDrops(block, TEMPSKYA_SAPLING.get(), 0.35f, 0.4f, 0.58f, 0.7f)));
 
         TEMPSKYA_TOP.ifPresent(block -> {
             var condition = LootItem.lootTableItem(block).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)

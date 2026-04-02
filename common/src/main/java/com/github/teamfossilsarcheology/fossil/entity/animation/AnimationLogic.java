@@ -12,6 +12,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.core.animation.Animation;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.AnimationState;
@@ -289,6 +290,9 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         //the deltaMovement of the animation should match the mobs deltaMovement
         double f = entity.onGround() ? entity.level().getBlockState(entity.blockPosition().below()).getBlock().getFriction() * 0.91F : 0.91F;
         double mobSpeed = entity.getDeltaMovement().horizontalDistance() / f * 20;
+        if (entity.isVehicle() && !entity.isControlledByLocalInstance()) {
+            mobSpeed = entity.position().subtract(new Vec3(entity.xOld, entity.yOld, entity.zOld)).horizontalDistance() / f * 12;
+        }
         //Limit mobSpeed to the mobs maximum natural movement speed
         mobSpeed = Math.min(Util.attributeToSpeed(entity.getAttributeValue(Attributes.MOVEMENT_SPEED), state.getAnimatable().attributes().sprintMod(), entity.isSprinting()), mobSpeed);
         //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed

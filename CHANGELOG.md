@@ -1,18 +1,12 @@
 ### Added
-- Sifting no longer has a small chance of returning sand
-- More translations
-- Analyzing lily pads now has a low chance of returning frog dna
-- Cultivating frog dna now returns frogspawn
+- Slightly improved drop rates for Tempskya and Palm saplings
 
 ### Fixed
-- Missing festive variant for megaloceros
-- Crash when cultivating a quagga dna
-- Performance when dinosEatBlocks is active
-- Config option generateVolcanoBiome not working on forge
-- Herbivores being able to eat air
-- Dinopedia not showing the current order correctly
-- Ichthyosaurus not eating fish
+- Ordering a dino not working
+- A typo in the stegosaurus dinopedia bio
+- Crash when dinos get hurt while attack riding some mobs
+- Added correct sound to the dinopedia page button
+- Walking animations not playing in multiplayer when a mob is being ridden
 
 ### Mod Compatibility
-- Sifter and Analyzer recipes can now return nothing with a custom probability
-- Fixed crash when Minecolonies is installed
+- Fixed crash when Ender's Delight is installed
