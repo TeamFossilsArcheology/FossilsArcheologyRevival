@@ -1,15 +1,10 @@
 ### Added
-- Sifting no longer has a small chance of returning sand
-- More translations
+- Slightly improved drop rates for Tempskya and Palm saplings
 
 ### Fixed
-- Missing festive variant for megaloceros
-- Crash when cultivating a quagga dna
-- Performance when dinosEatBlocks is active
-- Config option generateVolcanoBiome not working on forge
-- Herbivores being able to eat air
-- Dinopedia not showing the current order correctly
-- Ichthyosaurus not eating fish
+- Ordering a dino not working
+- A typo in the stegosaurus dinopedia bio
+- Crash when dinos get hurt while attack riding some mobs
+- Added correct sound to the dinopedia page button
 
 ### Mod Compatibility
-- Sifter and Analyzer recipes can now return nothing with a custom probability
