@@ -1,4 +1,4 @@
-// 1.19.3	2026-01-10T16:36:28.225082	Loot Tables
+// 1.19.3	2026-04-03T01:01:21.8620926	Loot Tables
 81d8243872cf46bb521badac8b14dfdf86d330d2 data/fossil/loot_tables/blocks/amber_block.json
 080a2ab6562c0dad8a54c6d3d8cf6284b3a4b174 data/fossil/loot_tables/blocks/amber_chunk.json
 93862ca35ef49215baf60885cc962a393d1bca70 data/fossil/loot_tables/blocks/amber_chunk_dominican.json
@@ -120,7 +120,7 @@ d5e1ba4cde1d12dc957137883745050deeb64219 data/fossil/loot_tables/blocks/obsidian
 f52fb3def0fbe7c1f9d02c19d637b1fb3b9922d3 data/fossil/loot_tables/blocks/palm_door.json
 62c259528da3168da747aa6a60d2d08648bc21d0 data/fossil/loot_tables/blocks/palm_fence.json
 71ae3cc662d2dffb7fc0c31a43c07a5b541f6a14 data/fossil/loot_tables/blocks/palm_fence_gate.json
-e9b41ded68206406c492c4ff82b38294ef828be4 data/fossil/loot_tables/blocks/palm_leaves.json
+a469cf44bae9f987409619d8a365784b21f2c8c7 data/fossil/loot_tables/blocks/palm_leaves.json
 640fbee23d4134223bc533eeef84176518f8efaf data/fossil/loot_tables/blocks/palm_log.json
 523129e2c05750c2c815c1cec38b4d9899e2518a data/fossil/loot_tables/blocks/palm_planks.json
 dcec66582d7fee9b16e33a1c9af9a4bdba66d11c data/fossil/loot_tables/blocks/palm_pressure_plate.json
@@ -172,7 +172,7 @@ b0f16fcf6730d87748f35ad323557755e9ae4103 data/fossil/loot_tables/blocks/stripped
 b9789a60975af72dcaa4ec817c9ee5810aa1c218 data/fossil/loot_tables/blocks/tempskya_door.json
 0ab9cb3a35c05cbb7b9dcba3daa38e6d7cc76c8f data/fossil/loot_tables/blocks/tempskya_fence.json
 301b04bdc970723c15bdfd505ac38dde5e5b5feb data/fossil/loot_tables/blocks/tempskya_fence_gate.json
-316cb3fa4b7526a6afb9ae4d5c784eeb922811a5 data/fossil/loot_tables/blocks/tempskya_leaf.json
+bda62f85d9740e2b3cb9363146aa81de2ecfc721 data/fossil/loot_tables/blocks/tempskya_leaf.json
 005d8dda5ab1a284f1e3c38715592eefb11a3fcf data/fossil/loot_tables/blocks/tempskya_log.json
 819b052e6196a0ae081181c23e4dbcb96b01f65d data/fossil/loot_tables/blocks/tempskya_planks.json
 4da3eef68dc1b40e2e1288f061f624a946bf50b2 data/fossil/loot_tables/blocks/tempskya_pressure_plate.json

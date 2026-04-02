@@ -20,7 +20,11 @@ public class EnderDelightCompat {
 //        manager.addMeat(ModItems.UNCANNY_COOKIES.get()); //Has endermite skin in it, I will count that as meat.
 //        manager.addMeat(ModItems.CRISPY_SKEWER.get());
 //        manager.addPlant(ModItems.CHORUS_PIE_SLICE.get());
-//        manager.addPlant(ModItems.CHORUS_PIE.get(), getPieValue((PieBlock) com.axedgaming.endersdelight.block.ModBlocks.CHORUS_PIE.get()));
+//        manager.addPlant(ModItems.CHORUS_PIE.get(), getPieValue((PieBlock) ModBlocks.CHORUS_PIE.get()));
         //18/21 added, Excluded 3 items because they cause nausea.
     }
+
+    //private static int getPieValue(PieBlock block) {
+    //    return block.getPieSliceItem().getItem().getFoodProperties().getNutrition() * block.getMaxBites() * 5;
+    //}
 }
