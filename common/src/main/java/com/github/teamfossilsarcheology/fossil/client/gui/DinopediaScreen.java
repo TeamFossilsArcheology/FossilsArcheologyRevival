@@ -27,9 +27,12 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
@@ -485,6 +488,11 @@ public class DinopediaScreen extends Screen {
             RenderSystem.setShaderColor(1, 1, 1, 1);
             RenderSystem.setShaderTexture(0, DINOPEDIA_BACKGROUND);
             blit(poseStack, x, y, isForward ? 0 : 34, 223, 34, 30);
+        }
+
+        @Override
+        public void playDownSound(SoundManager handler) {
+            handler.play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
         }
     }
 }

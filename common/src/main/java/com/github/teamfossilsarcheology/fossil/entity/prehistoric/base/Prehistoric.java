@@ -28,7 +28,6 @@ import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.entity.variant.*;
 import com.github.teamfossilsarcheology.fossil.food.Diet;
 import com.github.teamfossilsarcheology.fossil.food.FoodMappings;
-import com.github.teamfossilsarcheology.fossil.item.LaserPointerItem;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.network.C2SHitPlayerMessage;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
@@ -137,7 +136,6 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     private final AnimationLogic<Prehistoric> animationLogic = new AnimationLogic<>(this);
     private final InstructionSystem instructionSystem = registerSystem(new InstructionSystem(this));
     public final ResourceLocation animationLocation;
-    private OrderType currentOrder = OrderType.WANDER;
     public ResourceLocation textureLocation;
     public int climbTick;
     public int prevClimbTick;
@@ -334,7 +332,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         compound.putBoolean("Climbing", isClimbing());
         compound.putInt("TicksClimbing", ticksClimbing);
         compound.putInt("ClimbingCooldown", climbingCooldown);
-        compound.putByte("CurrentOrder", (byte) currentOrder.ordinal());
+        compound.putByte("CurrentOrder", (byte) getCurrentOrder().ordinal());
         compound.putFloat("YBodyRot", yBodyRot);
         compound.putFloat("YHeadRot", yHeadRot);
         compound.putBoolean("AgingDisabled", isAgingDisabled());
@@ -1297,8 +1295,8 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             if (!level.isClientSide) {
                 jumping = false;
                 getNavigation().stop();
-                setCurrentOrder(OrderType.values()[(currentOrder.ordinal() + 1) % 3]);
-                sendOrderMessage(currentOrder);
+                setCurrentOrder(OrderType.values()[(getCurrentOrder().ordinal() + 1) % 3]);
+                sendOrderMessage(getCurrentOrder());
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
