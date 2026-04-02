@@ -125,8 +125,9 @@ public class LeapSystem extends AISystem {
             if (isAttackRiding() && target != null) {
                 if (mob.tickCount % 20 == 0) {
                     target.hurt(mob.level.damageSources().mobAttack(mob), (float) mob.getAttributeValue(Attributes.ATTACK_DAMAGE));
+                    //target can be set to null during hurt
                 }
-                if (target.isDeadOrDying()) {
+                if (target != null && target.isDeadOrDying()) {
                     stopAttackRiding();
                 }
             }
