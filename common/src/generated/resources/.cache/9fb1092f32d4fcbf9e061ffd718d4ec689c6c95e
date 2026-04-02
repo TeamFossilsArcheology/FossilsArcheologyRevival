@@ -1,4 +1,4 @@
-// 1.20.1	2026-03-31T21:14:13.5667242	Recipes
+// 1.20.1	2026-04-03T01:11:26.6993545	Recipes
 17860219dec57e479d1808cf8475b00d56e60d04 data/fossil/advancements/recipes/building_blocks/ancient_stone_bricks_from_ancient_stone_stonecutting.json
 92fe9ca08bef3f909f5904f4eec5575fc765bf99 data/fossil/advancements/recipes/building_blocks/ancient_stone_slab_from_ancient_stone_bricks_stonecutting.json
 d8b883debb0f6c0f79f5869a55991ae87b95b3c4 data/fossil/advancements/recipes/building_blocks/ancient_stone_slab_from_ancient_stone_stonecutting.json
@@ -456,6 +456,7 @@ b1547382a4e7f14513b28e4301bea0f6fc16e161 data/fossil/recipes/analyzer/rabbit_foo
 f21bb86ecc97b173c3822eefccb2a033c1681fbc data/fossil/recipes/analyzer/relic_scrap.json
 c9bb72f27328dad04ff86aad991affe34feb770a data/fossil/recipes/analyzer/salmon.json
 3dac01304819475eefe5eddd9ab6c3f6a855cdaf data/fossil/recipes/analyzer/scute.json
+e939bee0974fae4bc577e2b5597da351a12e658e data/fossil/recipes/analyzer/sniffer_egg.json
 6d3ad48ab9d97365e6bd6dca34fd27739212a2ca data/fossil/recipes/analyzer/string.json
 642c42485b717a13e87dedd722f026263f12f869 data/fossil/recipes/analyzer/tar_drop.json
 69556890bdd559b9b0a287070b5b41f4ad7999ff data/fossil/recipes/analyzer/tropical_fish.json
@@ -797,6 +798,7 @@ c9e5ca3800e71ae784c9c2d86eb7405bfa70a363 data/fossil/recipes/culture_vat/rabbit_
 6640d2f6064d5b3b76420b8d847de98c523b74f6 data/fossil/recipes/culture_vat/scotoharpes_dna.json
 648052891c12aaa96fcb6c2ee7fc5c11f0db550c data/fossil/recipes/culture_vat/sheep_dna.json
 38f50b98dcf3dbe0ce84ddf74183780e16f614ca data/fossil/recipes/culture_vat/smilodon_dna.json
+733b1e4e6d864fcc3d9c68c64fdd68898df8e7fb data/fossil/recipes/culture_vat/sniffer_dna.json
 34aec79198a95ef7a38360f638d50ee6f9f4b8fa data/fossil/recipes/culture_vat/spinosaurus_dna.json
 45729c491456a2f1ea3048605cceaf54d6a6d69a data/fossil/recipes/culture_vat/squid_dna.json
 2355d8051113b9e6ca6cd7103fb09edde112d893 data/fossil/recipes/culture_vat/stegosaurus_dna.json

@@ -1,5 +1,6 @@
 ### Added
 - Slightly improved drop rates for Tempskya and Palm saplings
+- Missing analyzer and cultivator recipes for sniffer eggs and dna
 
 ### Fixed
 - Ordering a dino not working

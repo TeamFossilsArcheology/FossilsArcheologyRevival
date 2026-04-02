@@ -392,8 +392,9 @@ public class ModRecipeProvider extends RecipeProvider {
             analyzed(Items.INK_SAC).addOutput(SQUID.dnaItem, 100).save(consumer);
             analyzed(Items.STRING).addOutput(STRIDER.dnaItem, 100).save(consumer);
             analyzed(Items.TROPICAL_FISH).addOutput(TROPICAL_FISH.dnaItem, 90).addOutput(POLAR_BEAR.dnaItem, 10).save(consumer);
+            analyzed(Items.SNIFFER_EGG).addOutput(SNIFFER.dnaItem, 100).save(consumer);
             analyzed(Items.SCUTE).addOutput(TURTLE.dnaItem, 100).save(consumer);
-            analyzed(Blocks.TURTLE_EGG).addOutput(TURTLE.dnaItem, 100).save(consumer);
+            analyzed(Items.TURTLE_EGG).addOutput(TURTLE.dnaItem, 100).save(consumer);
             analyzed(Items.LILY_PAD).addOutput(FROG.dnaItem, 5).nothing(95).save(consumer);
 
             analyzed(RELIC_SCRAP.get()).addOutput(Blocks.GRAVEL, 30).addOutput(Items.FLINT, 18).addOutput(POTTERY_SHARD.get(), 4).addOutput(BROKEN_HELMET.get(), 4).addOutput(BROKEN_SWORD.get(), 4).addOutput(STONE_TABLET.get(), 30)
@@ -463,6 +464,7 @@ public class ModRecipeProvider extends RecipeProvider {
             }
             analyzed(Items.NAUTILUS_SHELL).addOutput(PrehistoricEntityInfo.NAUTILUS.dnaItem, 100).save(consumer);
             cultureVat(BEE.dnaItem, ARTIFICIAL_HONEYCOMB.get(), consumer);
+            cultureVat(SNIFFER.dnaItem, Items.SNIFFER_EGG, consumer);
             cultureVat(TURTLE.dnaItem, Items.TURTLE_EGG, consumer);
             cultureVat(FROG.dnaItem, Items.FROGSPAWN, consumer);
             cultureVat(ModItems.FERN_SEED_FOSSIL, ModItems.FERN_SEED, consumer);
