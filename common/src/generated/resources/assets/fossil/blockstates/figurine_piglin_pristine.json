@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "fossil:block/figurine_piglin_pristine"
+    },
+    "facing=south": {
+      "model": "fossil:block/figurine_piglin_pristine",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "fossil:block/figurine_piglin_pristine",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "fossil:block/figurine_piglin_pristine",
+      "y": 90
+    }
+  }
+}

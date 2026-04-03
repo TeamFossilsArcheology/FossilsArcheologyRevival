@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "fossil:block/figurine_skeleton_destroyed"
+    },
+    "facing=south": {
+      "model": "fossil:block/figurine_skeleton_destroyed",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "fossil:block/figurine_skeleton_destroyed",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "fossil:block/figurine_skeleton_destroyed",
+      "y": 90
+    }
+  }
+}
