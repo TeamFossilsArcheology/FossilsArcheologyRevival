@@ -13,6 +13,7 @@ import net.minecraft.data.BlockFamily;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
@@ -49,22 +50,23 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         copy(ModBlockTags.FIGURINES, ModItemTags.FIGURINES);
         copy(ModBlockTags.UNBREAKABLE, ModItemTags.FILTER_UNBREAKABLE);
         //Vanilla item tags
-        addTag(ItemTags.PLANKS, ANCIENT_WOOD_PLANKS, CALAMITES_PLANKS, CORDAITES_PLANKS, MUTANT_TREE_PLANKS, PALM_PLANKS, SIGILLARIA_PLANKS, TEMPSKYA_PLANKS);
-        addTag(ItemTags.WOODEN_BUTTONS, CALAMITES_BUTTON, CORDAITES_BUTTON, MUTANT_TREE_BUTTON, PALM_BUTTON, SIGILLARIA_BUTTON, TEMPSKYA_BUTTON);
-        addTag(ItemTags.WOODEN_DOORS, CALAMITES_DOOR, CORDAITES_DOOR, MUTANT_TREE_DOOR, PALM_DOOR, SIGILLARIA_DOOR, TEMPSKYA_DOOR);
-        addTag(ItemTags.WOODEN_STAIRS, ANCIENT_WOOD_STAIRS, CALAMITES_STAIRS, CORDAITES_STAIRS, MUTANT_TREE_STAIRS, PALM_STAIRS, SIGILLARIA_STAIRS, TEMPSKYA_STAIRS);
-        addTag(ItemTags.WOODEN_SLABS, ANCIENT_WOOD_SLAB, CALAMITES_SLAB, CORDAITES_SLAB, MUTANT_TREE_SLAB, PALM_SLAB, SIGILLARIA_SLAB, TEMPSKYA_SLAB);
-        addTag(ItemTags.WOODEN_FENCES, CALAMITES_FENCE, CORDAITES_FENCE, MUTANT_TREE_FENCE, PALM_FENCE, SIGILLARIA_FENCE, TEMPSKYA_FENCE);
-        addTag(ItemTags.WOODEN_PRESSURE_PLATES, CALAMITES_PRESSURE_PLATE, CORDAITES_PRESSURE_PLATE, MUTANT_TREE_PRESSURE_PLATE, PALM_PRESSURE_PLATE, SIGILLARIA_PRESSURE_PLATE, TEMPSKYA_PRESSURE_PLATE);
-        addTag(ItemTags.WOODEN_TRAPDOORS, CALAMITES_TRAPDOOR, CORDAITES_TRAPDOOR, MUTANT_TREE_TRAPDOOR, PALM_TRAPDOOR, SIGILLARIA_TRAPDOOR, TEMPSKYA_TRAPDOOR);
-        addTag(ItemTags.SAPLINGS, CALAMITES_SAPLING, CORDAITES_SAPLING, MUTANT_TREE_SAPLING, PALM_SAPLING, SIGILLARIA_SAPLING, TEMPSKYA_SAPLING);
-        addTag(ItemTags.STAIRS, ANCIENT_STONE_STAIRS, VOLCANIC_BRICK_STAIRS, VOLCANIC_TILE_STAIRS);
-        addTag(ItemTags.SLABS, ANCIENT_STONE_SLAB, VOLCANIC_BRICK_SLAB, VOLCANIC_TILE_SLAB);
-        addTag(ItemTags.WALLS, ANCIENT_STONE_WALL, VOLCANIC_BRICK_WALL, VOLCANIC_TILE_WALL);
-        addTag(ItemTags.RAILS, SLIME_TRAIL);
-        addTag(ItemTags.LEAVES, CALAMITES_LEAVES, CORDAITES_LEAVES, MUTANT_TREE_LEAVES, PALM_LEAVES, SIGILLARIA_LEAVES, TEMPSKYA_LEAF);
-        addTag(ItemTags.BEDS, COMFY_BED);
-        addTag(ItemTags.DIRT, TARRED_DIRT, ICED_DIRT);
+        copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN);
+        copy(BlockTags.PLANKS, ItemTags.PLANKS);
+        copy(BlockTags.WOODEN_BUTTONS, ItemTags.WOODEN_BUTTONS);
+        copy(BlockTags.WOODEN_DOORS, ItemTags.WOODEN_DOORS);
+        copy(BlockTags.WOODEN_STAIRS, ItemTags.WOODEN_STAIRS);
+        copy(BlockTags.WOODEN_SLABS, ItemTags.WOODEN_SLABS);
+        copy(BlockTags.WOODEN_FENCES, ItemTags.WOODEN_FENCES);
+        copy(BlockTags.WOODEN_PRESSURE_PLATES, ItemTags.WOODEN_PRESSURE_PLATES);
+        copy(BlockTags.WOODEN_TRAPDOORS, ItemTags.WOODEN_TRAPDOORS);
+        copy(BlockTags.SAPLINGS, ItemTags.SAPLINGS);
+        copy(BlockTags.STAIRS, ItemTags.STAIRS);
+        copy(BlockTags.SLABS, ItemTags.SLABS);
+        copy(BlockTags.WALLS, ItemTags.WALLS);
+        copy(BlockTags.RAILS, ItemTags.RAILS);
+        copy(BlockTags.LEAVES, ItemTags.LEAVES);
+        copy(BlockTags.BEDS, ItemTags.BEDS);
+        copy(BlockTags.DIRT, ItemTags.DIRT);
         //https://minecraft.wiki/w/Item_tag_(Java_Edition)
         //Creative Tab Filters
         addTag(ModItemTags.FOSSILS, BIO_FOSSIL, TAR_FOSSIL, SHALE_FOSSIL, PlANT_FOSSIL);
