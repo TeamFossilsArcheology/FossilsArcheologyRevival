@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fossil:tooth_dagger"
+    ]
+  },
+  "criteria": {
+    "has_tooth": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:bone_unique_tyrannosaurus"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fossil:tooth_dagger"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_tooth",
+      "has_the_recipe"
+    ]
+  ]
+}

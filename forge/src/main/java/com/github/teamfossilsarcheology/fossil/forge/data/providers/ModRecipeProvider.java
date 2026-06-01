@@ -162,7 +162,7 @@ public class ModRecipeProvider extends RecipeProvider {
 
             ShapelessRecipeBuilder.shapeless(RAW_CHICKEN_SOUP.get()).requires(Items.BUCKET).requires(Items.CHICKEN).unlockedBy("has_chicken", RecipeProvider.has(Items.CHICKEN)).save(consumer);
             ShapelessRecipeBuilder.shapeless(SKULL_STICK.get()).requires(Items.STICK).requires(SKULL_BLOCK.get()).unlockedBy("has_skull_block", RecipeProvider.has(SKULL_BLOCK.get())).save(consumer);
-            ShapelessRecipeBuilder.shapeless(TOOTH_DAGGER.get()).requires(Items.STICK).requires(PrehistoricEntityInfo.TYRANNOSAURUS.uniqueBoneItem);
+            ShapelessRecipeBuilder.shapeless(TOOTH_DAGGER.get()).requires(Items.STICK).requires(PrehistoricEntityInfo.TYRANNOSAURUS.uniqueBoneItem).unlockedBy("has_tooth", RecipeProvider.has(PrehistoricEntityInfo.TYRANNOSAURUS.uniqueBoneItem)).save(consumer);
             ShapedRecipeBuilder.shaped(WHIP.get()).define('S', Items.STRING).define('T', Items.STICK).pattern("  S").pattern(" TS").pattern("T S").unlockedBy("has_dinopedia", RecipeProvider.has(DINOPEDIA.get())).save(consumer);
 
             ShapedRecipeBuilder.shaped(AMPHORA_VASE_DAMAGED.get()).define('P', POTTERY_SHARD.get()).pattern("PP").pattern("PP").pattern("PP").unlockedBy("has_pottery_shard", RecipeProvider.has(POTTERY_SHARD.get())).save(consumer);
