@@ -384,7 +384,10 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         allVariants.clear();
         for (Tag savedTag : saved) {
             VariantRegistry.RegistryObject<? extends VariantCondition> type = VariantRegistry.RegistryObject.parse((CompoundTag) savedTag);
-            allVariants.put(type, VariantCondition.WithVariant.of(type.serializer().load((CompoundTag) savedTag), variants().get(compound.getString("VariantId"))));
+            String variantId = compound.getString("VariantId");
+            if (variants().containsKey(variantId)) {
+                allVariants.put(type, VariantCondition.WithVariant.of(type.serializer().load((CompoundTag) savedTag), variants().get(variantId)));
+            }
         }
     }
 
