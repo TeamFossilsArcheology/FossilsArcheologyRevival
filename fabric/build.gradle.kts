@@ -118,7 +118,7 @@ dependencies {
     modCompileOnly("mezz.jei:jei-$minecraftVersion-fabric-api:${jeiVersion}")
     //modLocalRuntime("mezz.jei:jei-$minecraftVersion-fabric:${jeiVersion}")
     modCompileOnly("dev.emi:emi:$emiVersion+$minecraftVersion:api")
-    //modImplementation("dev.emi:emi:$emiVersion+$minecraftVersion")
+    modCompileOnly("dev.emi:emi:$emiVersion+$minecraftVersion")
     modCompileOnly("maven.modrinth:farmers-delight-fabric:$farmersDelightVersion")
 
     //FD addons

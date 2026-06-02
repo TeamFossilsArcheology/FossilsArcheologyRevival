@@ -4,11 +4,11 @@ import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.entity.CultureVatBlockEntity;
 import com.github.teamfossilsarcheology.fossil.inventory.CultureVatMenu;
 import com.github.teamfossilsarcheology.fossil.recipe.CultureVatRecipe;
-import dev.emi.emi.EmiPort;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiTexture;
 import dev.emi.emi.api.widget.WidgetHolder;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
@@ -37,12 +37,12 @@ public class CultureVatEmiRecipe extends WithFuelEmiRecipe<CultureVatRecipe> {
         final int duration = CultureVatBlockEntity.getItemFuelTime(fuel.getEmiStacks().get(0).getItemStack());
         widgets.addTexture(EMPTY_FUEL, 41, 20);
         widgets.addAnimatedTexture(FULL_FUEL, 42, 21, duration, false, true, true).tooltip((mx, my) -> {
-            return List.of(ClientTooltipComponent.create(EmiPort.ordered(EmiPort.translatable("emi.cooking.time", duration / 20f))));
+            return List.of(ClientTooltipComponent.create(new TranslatableComponent("emi.cooking.time", duration / 20f).getVisualOrderText()));
         });
 
         widgets.addTexture(EMPTY_PROGRESS, 38, 6);
         widgets.addAnimatedTexture(FULL_PROGRESS, 38, 6, CultureVatMenu.CULTIVATION_DURATION, true, false, false).tooltip((mx, my) -> {
-            return List.of(ClientTooltipComponent.create(EmiPort.ordered(EmiPort.translatable("emi.cooking.time", CultureVatMenu.CULTIVATION_DURATION / 20f))));
+            return List.of(ClientTooltipComponent.create(new TranslatableComponent("emi.cooking.time", CultureVatMenu.CULTIVATION_DURATION / 20f).getVisualOrderText()));
         });
     }
 }
