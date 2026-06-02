@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.FossilMod;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
@@ -21,4 +22,7 @@ public class ModBlockTags {
     public static final TagKey<Block> MOOD_BONUS = TagKey.create(key, FossilMod.location("mood_bonus"));
     public static final TagKey<Block> PLANTS = TagKey.create(key, FossilMod.location("plants"));
     public static final TagKey<Block> PLANTABLE_ON_SAND = TagKey.create(key, FossilMod.location("plantable_on_sand"));
+
+    //Fabric
+    public static final TagKey<Block> C_GLASS_BLOCKS = TagKey.create(key, new ResourceLocation("c", "glass_blocks"));
 }

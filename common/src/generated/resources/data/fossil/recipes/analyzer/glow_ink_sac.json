@@ -6,7 +6,8 @@
   "outputs": [
     {
       "item": "fossil:glow_squid_dna",
-      "weight": 100.0
+      "weight": 40.0
     }
-  ]
+  ],
+  "total": 100.0
 }

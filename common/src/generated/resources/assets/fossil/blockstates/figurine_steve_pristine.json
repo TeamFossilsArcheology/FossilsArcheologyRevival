@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "fossil:block/figurine_steve_pristine",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "fossil:block/figurine_steve_pristine"
+    },
+    "facing=south": {
+      "model": "fossil:block/figurine_steve_pristine",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "fossil:block/figurine_steve_pristine",
+      "y": 270
+    }
+  }
+}

@@ -7,7 +7,7 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.anu.AnuMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.anu.AnuPhase;
 import com.github.teamfossilsarcheology.fossil.entity.ai.anu.AnuPhaseSystem;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
-import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
+import com.github.teamfossilsarcheology.fossil.sounds.ModMusic;
 import com.github.teamfossilsarcheology.fossil.sounds.MusicHandler;
 import com.github.teamfossilsarcheology.fossil.world.dimension.ModDimensions;
 import net.minecraft.core.BlockPos;
@@ -131,13 +131,13 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
                 songTick = 0;
             }
             if (songTick == 1) {
-                MusicHandler.startMusic(ModSounds.MUSIC_ANU.get());
+                MusicHandler.startMusic(ModMusic.ANU);
             }
             if (!isAlive()) {
-                MusicHandler.stopMusic(ModSounds.MUSIC_ANU.get());
+                MusicHandler.stopMusic(ModMusic.ANU);
             }
             if (lastHurtByPlayer != null && !lastHurtByPlayer.isAlive()) {
-                MusicHandler.stopMusic(ModSounds.MUSIC_ANU.get());
+                MusicHandler.stopMusic(ModMusic.ANU);
             }
         }
     }
@@ -223,7 +223,7 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
             level.addFreshEntity(anuDead);
             removeBarriers();
         } else {
-            MusicHandler.stopMusic(ModSounds.MUSIC_ANU.get());
+            MusicHandler.stopMusic(ModMusic.ANU);
             List<Player> players = level.getNearbyPlayers(TargetingConditions.forCombat(), this, getBoundingBox().inflate(30, 15, 30));
             for (Player player : players) {
                 player.displayClientMessage(ANU_DEATH, false);

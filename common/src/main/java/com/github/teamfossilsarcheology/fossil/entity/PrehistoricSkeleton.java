@@ -44,7 +44,7 @@ import static com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Pr
 
 public class PrehistoricSkeleton extends Entity implements GeoEntity {
     private static final EntityDataAccessor<Integer> AGE = SynchedEntityData.defineId(PrehistoricSkeleton.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<String> TYPE = SynchedEntityData.defineId(PrehistoricSkeleton.class, EntityDataSerializers.STRING);
+    private static final EntityDataAccessor<String> INFO_TYPE = SynchedEntityData.defineId(PrehistoricSkeleton.class, EntityDataSerializers.STRING);
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private boolean droppedBiofossil;
     private float frustumWidthRadius;
@@ -61,19 +61,19 @@ public class PrehistoricSkeleton extends Entity implements GeoEntity {
     @Override
     protected void defineSynchedData() {
         entityData.define(AGE, 0);
-        entityData.define(TYPE, TRICERATOPS.name());
+        entityData.define(INFO_TYPE, TRICERATOPS.name());
     }
 
     @Override
     protected void readAdditionalSaveData(CompoundTag compound) {
         setAge(compound.getInt("Age"));
-        entityData.set(TYPE, compound.getString("Type"));
+        setInfoType(compound.getString("Type"));
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag compound) {
         compound.putInt("Age", getAge());
-        compound.putString("Type", entityData.get(TYPE));
+        compound.putString("Type", getInfoType());
     }
 
     @Override
@@ -148,11 +148,11 @@ public class PrehistoricSkeleton extends Entity implements GeoEntity {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         super.onSyncedDataUpdated(key);
-        if (AGE.equals(key) || TYPE.equals(key)) {
+        if (AGE.equals(key) || INFO_TYPE.equals(key)) {
             refreshDimensions();
             refreshTexturePath();
         }
-        if (TYPE.equals(key) && level.isClientSide) {
+        if (INFO_TYPE.equals(key) && level.isClientSide) {
             List<HitboxData> hitboxesData = HitboxDataLoader.HITBOX_DATA.getHitboxes(FossilMod.location(info().resourceName));
             if (hitboxesData != null) {
                 float maxFrustumWidthRadius = 0;
@@ -233,12 +233,20 @@ public class PrehistoricSkeleton extends Entity implements GeoEntity {
         entityData.set(AGE, age);
     }
 
-    public void setType(PrehistoricEntityInfo info) {
-        entityData.set(TYPE, info.name());
+    public void setInfoType(String type) {
+        entityData.set(INFO_TYPE, type);
+    }
+
+    public String getInfoType() {
+        return entityData.get(INFO_TYPE);
+    }
+
+    public void setInfoType(PrehistoricEntityInfo info) {
+        entityData.set(INFO_TYPE, info.name());
     }
 
     public PrehistoricEntityInfo info() {
-        return valueOf(entityData.get(TYPE));
+        return valueOf(getInfoType());
     }
 
 
