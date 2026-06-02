@@ -231,5 +231,12 @@ versionRange = "[1.19-2.0,)"
 ordering = "NONE"
 side = "BOTH"
 
+[[dependencies.${mod_id}]]
+modId = "emi"
+mandatory = false
+versionRange = "[1.1.24,)"
+ordering = "NONE"
+side = "BOTH"
+
 [modproperties.${mod_id}]
 catalogueImageIcon="fossils.png"
