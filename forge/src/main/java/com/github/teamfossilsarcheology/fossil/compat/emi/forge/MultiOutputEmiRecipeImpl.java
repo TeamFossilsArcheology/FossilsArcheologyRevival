@@ -1,9 +1,9 @@
 package com.github.teamfossilsarcheology.fossil.compat.emi.forge;
 
 import com.github.teamfossilsarcheology.fossil.compat.emi.MultiOutputEmiRecipe;
+import dev.emi.emi.EmiUtil;
 import dev.emi.emi.api.stack.*;
 import dev.emi.emi.registry.EmiTags;
-import dev.emi.emi.runtime.EmiTagKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -28,7 +28,7 @@ public class MultiOutputEmiRecipeImpl {
                 return EmiStack.of(weightedItem.stack()).setChance((float) weightedItem.probability());
             } else {
                 //For custom recipe display. Probability is the probability of getting anything from the tag
-                return new ListEmiIngredient(EmiTagKey.of(weightedItem.tagKey()).stream().map(itemHolder -> EmiStack.of(new ItemStack(itemHolder)).setChance((float) (weightedItem.probability()))).toList(), 1);
+                return new ListEmiIngredient(EmiUtil.values(weightedItem.tagKey()).map(itemHolder -> EmiStack.of(new ItemStack(itemHolder)).setChance((float) (weightedItem.probability()))).toList(), 1);
             }
         } else {
             return new ListEmiIngredient(toStack(list), 1);
@@ -46,6 +46,6 @@ public class MultiOutputEmiRecipeImpl {
     }
 
     public static List<EmiStack> values(TagKey<Item> key) {
-        return EmiTags.getRawValues(EmiTagKey.of(key));
+        return EmiTags.getRawValues(key);
     }
 }

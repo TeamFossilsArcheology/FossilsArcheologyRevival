@@ -58,7 +58,7 @@
   "suggests": {
     "cloth_config": ">=9",
     "roughlyenoughitems": ">=10",
-    "emi": ">=1.1.24"
+    "emi": ">=1.1.22"
   },
   "custom": {
     "cardinal-components": [
