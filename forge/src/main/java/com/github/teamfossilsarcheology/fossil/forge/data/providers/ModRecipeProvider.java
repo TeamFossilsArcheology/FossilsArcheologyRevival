@@ -22,7 +22,6 @@ import com.mojang.datafixers.util.Pair;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.Util;
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
@@ -329,6 +328,7 @@ public class ModRecipeProvider extends RecipeProvider {
             tarFossilEntityList.add(PANDA);
             tarFossilEntityList.add(WOLF);
             tarFossilEntityList.add(TURTLE);
+            tarFossilEntityList.add(CAMEL);
             double tarFossilDNAChance = 25 / (double) tarFossilEntityList.size();
             for (EntityInfo info : tarFossilEntityList) {
                 tarFossil.addOutput(info.dnaItem(), tarFossilDNAChance);
