@@ -41,7 +41,6 @@ public class DelightfulCompat {
         //manager.addPlant(DelightfulItems.SMORE.get()); Same as marshmallow(this is made from marshmallow+some other excluded stuf)
         manager.addMeat(DelightfulItems.VENISON_CHOPS.get());
         manager.addPlant(DelightfulItems.SALMONBERRY_PIE.get(), getPieValue((PieBlock) DelightfulBlocks.SALMONBERRY_PIE.get()));
-        manager.addPlant(DelightfulItems.PUMPKIN_PIE_SLICE.get());
         //24/33 added, 9 excluded
         if (ModList.get().isLoaded("byg")) {//Biomes you'll go
             BYGAndDelightfuLCompat.registerFoodMappings(manager);

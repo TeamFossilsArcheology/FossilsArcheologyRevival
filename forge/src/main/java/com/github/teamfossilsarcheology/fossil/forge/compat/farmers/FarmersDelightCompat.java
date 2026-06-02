@@ -23,6 +23,7 @@ public class FarmersDelightCompat {
         manager.addPlant(ModItems.APPLE_PIE_SLICE.get());
         manager.addPlant(ModItems.SWEET_BERRY_CHEESECAKE_SLICE.get());
         manager.addPlant(ModItems.CHOCOLATE_PIE_SLICE.get());
+        manager.addPlant(ModItems.PUMPKIN_PIE_SLICE.get());
         manager.addPlant(ModItems.SWEET_BERRY_COOKIE.get());
         manager.addPlant(ModItems.HONEY_COOKIE.get());
         manager.addPlant(ModItems.MELON_POPSICLE.get());
@@ -30,12 +31,14 @@ public class FarmersDelightCompat {
         manager.addPlant(ModItems.FRUIT_SALAD.get());
         manager.addPlant(ModItems.MIXED_SALAD.get());
         manager.addPlant(ModItems.NETHER_SALAD.get());
+        manager.addPlant(ModItems.GLEAMING_SALAD.get());
         manager.addPlant(ModItems.KELP_ROLL.get());
         manager.addPlant(ModItems.KELP_ROLL_SLICE.get());
         manager.addPlant(ModItems.COOKED_RICE.get());
         manager.addPlant(ModItems.VEGETABLE_SOUP.get());
         manager.addPlant(ModItems.FRIED_RICE.get());
         manager.addPlant(ModItems.PUMPKIN_SOUP.get());
+        manager.addPlant(ModItems.ONION_SOUP.get());
         manager.addPlant(ModItems.MUSHROOM_RICE.get());
         manager.addPlant(ModItems.VEGETABLE_NOODLES.get());
         manager.addPlant(ModItems.VEGETABLE_NOODLES.get());
