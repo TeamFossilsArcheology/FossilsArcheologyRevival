@@ -72,8 +72,8 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         addTag(ModItemTags.FILTER_DNA, ModItemTags.DNA, ModItemTags.EMBRYOS);
         addTag(ModItemTags.FILTER_EGGS, ModItemTags.ALL_EGGS);
         var filterEggs = addTag(ModItemTags.FILTER_EGGS, ANU_BOSS_SPAWN_EGG, FAILURESAURUS_SPAWN_EGG, SENTRY_PIGLIN_SPAWN_EGG, TAR_SLIME_SPAWN_EGG, ARTIFICIAL_HONEYCOMB);
-        addTag(ModItemTags.FILTER_MEAT, ModItemTags.UNCOOKED_MEAT);
-        var filterMeat = addTag(ModItemTags.FILTER_MEAT, FAILURESAURUS_FLESH, COOKED_CHICKEN_SOUP, RAW_CHICKEN_SOUP, COOKED_EGG);
+        addTag(ModItemTags.FILTER_MEAT, ModItemTags.UNCOOKED_MEAT, ModItemTags.COOKED_MEAT);
+        addTag(ModItemTags.FILTER_MEAT, FAILURESAURUS_FLESH, COOKED_CHICKEN_SOUP, RAW_CHICKEN_SOUP, COOKED_EGG);
         var filterPlants = addTag(ModItemTags.FILTER_PLANTS, ModItemTags.FOSSIL_SEEDS, ModItemTags.RESTORED_SEEDS);
         addTag(ModItemTags.FILTER_PLANTS, CALAMITES_FOSSIL_SAPLING, CORDAITES_FOSSIL_SAPLING, PALM_FOSSIL_SAPLING, SIGILLARIA_FOSSIL_SAPLING, TEMPSKYA_FOSSIL_SAPLING);
         addTag(ModItemTags.FILTER_OTHER, ELASMOTHERIUM_FUR, MAMMOTH_FUR, THERIZINOSAURUS_DOWN, MAGIC_CONCH);
@@ -124,7 +124,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                     ModRecipeProvider.SIGILLARIA_PLANKS.get(variant),
                     ModRecipeProvider.TEMPSKYA_PLANKS.get(variant));
         }
-        addTag(ModItemTags.FILTER_BUCKETS, Arrays.stream(values()).filter(info -> info.bucketItem != null).map(info -> info.bucketItem).toArray(Item[]::new));
+        addTag(ModItemTags.FILTER_BUCKETS, ModItemTags.C_WATER_BUCKETS);
         var fossilSeeds = addTag(ModItemTags.FOSSIL_SEEDS, FERN_SEED_FOSSIL);
         var restoredSeeds = addTag(ModItemTags.RESTORED_SEEDS, FERN_SEED);
         for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
@@ -160,6 +160,8 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         var allUnique = tag(ModItemTags.UNIQUE_BONES);
         var allVertebrae = tag(ModItemTags.VERTEBRAE_BONES);
         var uncookedMeat = tag(ModItemTags.UNCOOKED_MEAT);
+        var cookedMeat = tag(ModItemTags.COOKED_MEAT);
+        var waterBuckets = tag(ModItemTags.C_WATER_BUCKETS);
         for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
             boolean hasDNA = info.dnaItem != null;
             if (hasDNA) {
@@ -213,10 +215,13 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                 if (hasDNA) meatDNA.add(info.dnaItem);
             }
             if (info.cookedFoodItem != null) {
-                filterMeat.add(info.cookedFoodItem);
+                cookedMeat.add(info.cookedFoodItem);
             }
             if (info.spawnEggItem != null) {
                 filterEggs.add(info.spawnEggItem);
+            }
+            if (info.bucketItem != null) {
+                waterBuckets.add(info.bucketItem);
             }
         }
         for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
@@ -242,6 +247,15 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         addTag(ItemTags.CREEPER_DROP_MUSIC_DISCS, MUSIC_DISC_ANU, MUSIC_DISC_BONES, MUSIC_DISC_DISCOVERY, MUSIC_DISC_SCARAB);
         addTag(ModItemTags.SIFTER_INPUTS, ItemTags.SAND, ItemTags.DIRT).add(DENSE_SAND.get().asItem(),
                 VOLCANIC_ASH.get().asItem(), Blocks.SOUL_SAND.asItem());
+
+        copy(ModBlockTags.C_GLASS_BLOCKS, ModItemTags.C_GLASS_BLOCKS);
+        addTag(ModItemTags.C_FOODS, ModItemTags.UNCOOKED_MEAT, ModItemTags.COOKED_MEAT);
+        addTag(ModItemTags.C_FOODS, COOKED_CHICKEN_SOUP, RAW_CHICKEN_SOUP, COOKED_EGG);
+        addTag(ModItemTags.C_SWORDS, ANCIENT_SWORD, SCARAB_SWORD);
+        addTag(ModItemTags.C_PICKAXES, SCARAB_PICKAXE);
+        addTag(ModItemTags.C_AXES, SCARAB_AXE);
+        addTag(ModItemTags.C_SHOVELS, SCARAB_SHOVEL);
+        addTag(ModItemTags.C_HOES, SCARAB_HOE);
     }
 
     @SafeVarargs
