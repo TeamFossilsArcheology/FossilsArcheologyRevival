@@ -38,7 +38,7 @@ public class WorktableCategory extends WithFuelCategory<WorktableRecipe> {
 
     @Override
     public @NotNull Component getTitle() {
-        return new TranslatableComponent("category.fossil.rei.worktable");
+        return new TranslatableComponent("emi.category.fossil.worktable");
     }
 
     @Override

@@ -34,7 +34,7 @@ public class WorktableCategory implements DisplayCategory<WorktableDisplay> {
 
     @Override
     public Component getTitle() {
-        return new TranslatableComponent("category.fossil.rei.worktable");
+        return new TranslatableComponent("emi.category.fossil.worktable");
     }
 
     @Override

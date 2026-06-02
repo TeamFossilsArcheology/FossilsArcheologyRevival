@@ -34,7 +34,7 @@ public class CultureVatCategory implements DisplayCategory<CultureVatDisplay> {
 
     @Override
     public Component getTitle() {
-        return new TranslatableComponent("category.fossil.rei.culture_vat");
+        return new TranslatableComponent("emi.category.fossil.culture_vat");
     }
 
     @Override

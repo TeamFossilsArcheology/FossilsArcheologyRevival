@@ -16,7 +16,7 @@ public class SifterCategory extends MultiOutputCategory {
 
     @Override
     public Component getTitle() {
-        return new TranslatableComponent("category.fossil.rei.sifter");
+        return new TranslatableComponent("emi.category.fossil.sifter");
     }
 
     @Override

@@ -36,6 +36,9 @@
     ],
     "jade": [
       "com.github.teamfossilsarcheology.fossil.fabric.compat.jade.FossilJadePluginFabric"
+    ],
+    "emi": [
+      "com.github.teamfossilsarcheology.fossil.fabric.compat.emi.FossilEmiPlugin"
     ]
   },
   "mixins": [
@@ -61,7 +64,8 @@
     "coffee_delight": ">=1.3",
     "nethersdelight": ">=2.0.0",
     "casualness_delight": ">=0.4",
-    "expandeddelight": ">=0.1.9.2"
+    "expandeddelight": ">=0.1.9.2",
+    "emi": ">=0.7.3"
   },
   "custom": {
     "cardinal-components": [
