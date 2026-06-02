@@ -1,4 +1,4 @@
-package com.github.teamfossilsarcheology.fossil.fabric.compat.emi;
+package com.github.teamfossilsarcheology.fossil.compat.emi;
 
 import com.github.teamfossilsarcheology.fossil.recipe.AnalyzerRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;

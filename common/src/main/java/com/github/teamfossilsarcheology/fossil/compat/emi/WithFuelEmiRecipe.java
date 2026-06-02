@@ -1,4 +1,4 @@
-package com.github.teamfossilsarcheology.fossil.fabric.compat.emi;
+package com.github.teamfossilsarcheology.fossil.compat.emi;
 
 import com.github.teamfossilsarcheology.fossil.recipe.WithFuelRecipe;
 import dev.emi.emi.api.recipe.EmiRecipe;
@@ -52,9 +52,9 @@ public abstract class WithFuelEmiRecipe<T extends WithFuelRecipe> implements Emi
 
     @Override
     public void addWidgets(WidgetHolder widgets) {
-        widgets.addSlot(input, 0, 0).output(true);
+        widgets.addSlot(input, 0, 0).large(true);
         widgets.addSlot(fuel, 39, 37);
-        widgets.addSlot(output, 70, 0).output(true).recipeContext(this);
+        widgets.addSlot(output, 70, 0).large(true).recipeContext(this);
     }
 
     @Override

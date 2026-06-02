@@ -2,6 +2,7 @@
 - Missing recipe for Tyrannosaurus tooth dagger
 - Analyzing frozen meat or tar fossils can now return turtle dna
 - Reduced dna rates when analyzing ink sac, string or chicken eggs
+- Analyzing goat horns now gives goat dna
 
 ### Fixed
 - Deinonychus model jaw clipping

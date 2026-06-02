@@ -1,4 +1,4 @@
-package com.github.teamfossilsarcheology.fossil.fabric.compat.emi;
+package com.github.teamfossilsarcheology.fossil.compat.emi;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;

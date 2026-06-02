@@ -1,4 +1,4 @@
-package com.github.teamfossilsarcheology.fossil.fabric.compat.emi;
+package com.github.teamfossilsarcheology.fossil.compat.emi;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.entity.WorktableBlockEntity;
@@ -7,7 +7,7 @@ import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiTexture;
 import dev.emi.emi.api.widget.WidgetHolder;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
@@ -36,12 +36,12 @@ public class WorktableEmiRecipe extends WithFuelEmiRecipe<WorktableRecipe> {
         final int progress = WorktableBlockEntity.getItemFuelTime(fuel.getEmiStacks().get(0).getItemStack());
         widgets.addTexture(EMPTY_FUEL, 41, 20);
         widgets.addAnimatedTexture(FULL_FUEL, 41, 20, progress * 20, false, true, true).tooltip((mx, my) -> {
-            return List.of(ClientTooltipComponent.create(new TranslatableComponent("emi.cooking.time", progress / 20f).getVisualOrderText()));
+            return List.of(ClientTooltipComponent.create(Component.translatable("emi.cooking.time", progress / 20f).getVisualOrderText()));
         });
 
         widgets.addTexture(EMPTY_PROGRESS, 35, 3);
         widgets.addAnimatedTexture(FULL_PROGRESS, 36, 4, recipe.getDuration() * 20, true, false, false).tooltip((mx, my) -> {
-            return List.of(ClientTooltipComponent.create(new TranslatableComponent("emi.cooking.time", recipe.getDuration() / 20f).getVisualOrderText()));
+            return List.of(ClientTooltipComponent.create(Component.translatable("emi.cooking.time", recipe.getDuration() / 20f).getVisualOrderText()));
         });
     }
 }

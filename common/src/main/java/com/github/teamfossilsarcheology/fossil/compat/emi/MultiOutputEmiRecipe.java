@@ -1,11 +1,12 @@
-package com.github.teamfossilsarcheology.fossil.fabric.compat.emi;
+package com.github.teamfossilsarcheology.fossil.compat.emi;
 
 import com.github.teamfossilsarcheology.fossil.recipe.MultiOutputAndSlotsRecipe;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
-import dev.emi.emi.EmiUtil;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import dev.emi.emi.api.recipe.EmiRecipe;
-import dev.emi.emi.api.stack.*;
+import dev.emi.emi.api.stack.EmiIngredient;
+import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.Bounds;
 import dev.emi.emi.api.widget.SlotWidget;
 import dev.emi.emi.api.widget.WidgetHolder;
@@ -18,6 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Nullable;
 
 import java.text.DecimalFormat;
@@ -44,7 +46,7 @@ public abstract class MultiOutputEmiRecipe<T extends MultiOutputAndSlotsRecipe> 
     protected MultiOutputEmiRecipe(ResourceLocation id, TagKey<Item> input, NavigableMap<Double, Pair<ItemStack, TagKey<Item>>> map) {
         this.id = id;
         this.input = List.of(EmiIngredient.of(input));
-        this.output = EmiUtil.values(input).map(ItemStack::new).map(EmiStack::of).toList();
+        this.output = values(input);
         this.slots = createOutputSlots(map);
     }
 
@@ -98,7 +100,7 @@ public abstract class MultiOutputEmiRecipe<T extends MultiOutputAndSlotsRecipe> 
 
     private static List<SlotItem> createOutputSlots(NavigableMap<Double, Pair<ItemStack, TagKey<Item>>> map) {
         var iterator = map.entrySet().iterator();
-        List<MultiOutputEmiRecipe.WeightedItem> sortedOutputs = new ArrayList<>();
+        List<WeightedItem> sortedOutputs = new ArrayList<>();
         if (iterator.hasNext()) {
             double total = map.lastKey();
             var entry = iterator.next();
@@ -123,34 +125,14 @@ public abstract class MultiOutputEmiRecipe<T extends MultiOutputAndSlotsRecipe> 
         return newOutputs;
     }
 
-    private static List<EmiIngredient> toStack(List<WeightedItem> list) {
-        return list.stream().map(weightedItem -> {
-            if (weightedItem.tagKey == null) {
-                return EmiStack.of(weightedItem.stack).setChance((float) weightedItem.probability);
-            } else {
-                return new TagEmiIngredient(weightedItem.tagKey, 1).setChance((float) weightedItem.probability);
-            }
-        }).toList();
+    @ExpectPlatform
+    private static List<EmiStack> values(TagKey<Item> list) {
+        throw new NotImplementedException();
     }
 
+    @ExpectPlatform
     private static EmiIngredient toIngredient(List<WeightedItem> list) {
-        if (list.isEmpty()) {
-            return EmiStack.EMPTY;
-        } else if (list.size() == 1) {
-            WeightedItem weightedItem = list.get(0);
-            if (weightedItem.tagKey == null) {
-                if (weightedItem.stack.isEmpty()) {
-                    //Air is a valid output
-                    return new ItemEmiStack(weightedItem.stack, 1).setChance((float) weightedItem.probability);
-                }
-                return EmiStack.of(weightedItem.stack).setChance((float) weightedItem.probability);
-            } else {
-                //For custom recipe display. Probability is the probability of getting anything from the tag
-                return new ListEmiIngredient(EmiUtil.values(weightedItem.tagKey).map(itemHolder -> EmiStack.of(new ItemStack(itemHolder)).setChance((float) (weightedItem.probability))).toList(), 1);
-            }
-        } else {
-            return new ListEmiIngredient(toStack(list), 1);
-        }
+        throw new NotImplementedException();
     }
 
     private static class MultiOutputSlotWidget extends SlotWidget {
