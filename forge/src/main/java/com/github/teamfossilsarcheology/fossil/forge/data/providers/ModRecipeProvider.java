@@ -326,6 +326,7 @@ public class ModRecipeProvider extends RecipeProvider {
             tarFossilEntityList.add(OCELOT);
             tarFossilEntityList.add(PANDA);
             tarFossilEntityList.add(WOLF);
+            tarFossilEntityList.add(TURTLE);
             double tarFossilDNAChance = 25 / (double) tarFossilEntityList.size();
             for (EntityInfo info : tarFossilEntityList) {
                 tarFossil.addOutput(info.dnaItem(), tarFossilDNAChance);
@@ -373,13 +374,12 @@ public class ModRecipeProvider extends RecipeProvider {
                     .addOutput(CALAMITES_FOSSIL_SAPLING.get(), 1).addOutput(CORDAITES_FOSSIL_SAPLING.get(), 1).addOutput(PALM_FOSSIL_SAPLING.get(), 1).addOutput(SIGILLARIA_FOSSIL_SAPLING.get(), 1).addOutput(TEMPSKYA_FOSSIL_SAPLING.get(), 1).save(consumer);
             analyzed(Items.HONEYCOMB).addOutput(BEE.dnaItem, 100).save(consumer);
             analyzed(Items.CHICKEN).addOutput(CHICKEN.dnaItem, 100).save(consumer);
-            analyzed(Items.EGG).addOutput(CHICKEN.dnaItem, 100).save(consumer);
+            analyzed(Items.EGG).addOutput(CHICKEN.dnaItem, 25).nothing(75).save(consumer);
             analyzed(Items.FEATHER).addOutput(CHICKEN.dnaItem, 95).addOutput(PARROT.dnaItem, 5).save(consumer);
             analyzed(Items.COD).addOutput(COD.dnaItem, 90).addOutput(POLAR_BEAR.dnaItem, 10).save(consumer);
             analyzed(Items.BEEF).addOutput(COW.dnaItem, 99).addOutput(MOOSHROOM.dnaItem, 1).save(consumer);
             analyzed(Items.LEATHER).addOutput(COW.dnaItem, 57).addOutput(DONKEY.dnaItem, 10).addOutput(HORSE.dnaItem, 27).addOutput(HOGLIN.dnaItem, 5).addOutput(MOOSHROOM.dnaItem, 1).save(consumer);
-            analyzed(Items.GLOW_INK_SAC).addOutput(GLOW_SQUID.dnaItem, 100).save(consumer);
-            //TODO: 1.19 adds goat horns analyzed(Items.GOAT_HORN).addOutput(GOAT.dnaItem, 100).save(consumer);
+            analyzed(Items.GLOW_INK_SAC).addOutput(GLOW_SQUID.dnaItem, 40).nothing(60).save(consumer);
             analyzed(Items.PORKCHOP).addOutput(PIG.dnaItem, 95).addOutput(HOGLIN.dnaItem, 5).save(consumer);
             analyzed(Items.PUFFERFISH).addOutput(PUFFERFISH.dnaItem, 90).addOutput(POLAR_BEAR.dnaItem, 10).save(consumer);
             analyzed(Items.RABBIT).addOutput(RABBIT.dnaItem, 100).save(consumer);
@@ -388,8 +388,8 @@ public class ModRecipeProvider extends RecipeProvider {
             analyzed(Items.SALMON).addOutput(SALMON.dnaItem, 90).addOutput(POLAR_BEAR.dnaItem, 10).save(consumer);
             analyzed(Items.MUTTON).addOutput(SHEEP.dnaItem, 100).save(consumer);
             analyzed(ItemTags.WOOL).addOutput(Items.STRING, 3, 50).addOutput(SHEEP.dnaItem, 27).addOutput(LLAMA.dnaItem, 13).addOutput(GOAT.dnaItem, 10).save(consumer);
-            analyzed(Items.INK_SAC).addOutput(SQUID.dnaItem, 100).save(consumer);
-            analyzed(Items.STRING).addOutput(STRIDER.dnaItem, 100).save(consumer);
+            analyzed(Items.INK_SAC).addOutput(SQUID.dnaItem, 20).nothing(80).save(consumer);
+            analyzed(Items.STRING).addOutput(STRIDER.dnaItem, 5).nothing(95).save(consumer);
             analyzed(Items.TROPICAL_FISH).addOutput(TROPICAL_FISH.dnaItem, 90).addOutput(POLAR_BEAR.dnaItem, 10).save(consumer);
             analyzed(Items.SCUTE).addOutput(TURTLE.dnaItem, 100).save(consumer);
             analyzed(Blocks.TURTLE_EGG).addOutput(TURTLE.dnaItem, 100).save(consumer);

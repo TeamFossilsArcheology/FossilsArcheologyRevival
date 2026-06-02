@@ -2576,7 +2576,7 @@ c4bbf71beb092c1fb590b7d2e4146b5ad2a7b4fd data/fossil/recipes/analyzer/amber_chun
 82786308a9723d481b9dba77a4a38b05a2106609 data/fossil/recipes/analyzer/beef.json
 b0a93f98708d8c83c31c1579cdb404dfa3ebb6b3 data/fossil/recipes/analyzer/chicken.json
 363f3bfb841c61fe405a85a452f033f7673a7249 data/fossil/recipes/analyzer/cod.json
-13a6995b922a6a2cdddc2eadb09ec3081a12264c data/fossil/recipes/analyzer/egg.json
+50210dd159573e8a27e0e1dd01bc380d7bc3a444 data/fossil/recipes/analyzer/egg.json
 e22181c9c705f71e32ee9ba937957d67c1b4b624 data/fossil/recipes/analyzer/egg_item_chicken.json
 90c3a259de8390f5aaa23e422d29286babea0a9b data/fossil/recipes/analyzer/egg_item_parrot.json
 88fcbc2d4ae493524ce7d3a5a6291e8175b23f99 data/fossil/recipes/analyzer/failuresaurus_flesh.json
@@ -2584,11 +2584,11 @@ e22181c9c705f71e32ee9ba937957d67c1b4b624 data/fossil/recipes/analyzer/egg_item_c
 cb4f897961ef7af4241d6b6008583d945b2ad9ce data/fossil/recipes/analyzer/fossil_bio.json
 4a8ae40ff1e3ea6a487f2785450d83f3275cf612 data/fossil/recipes/analyzer/fossil_plant.json
 ce5516d9a0f35599f48389b22fab748308a76bdc data/fossil/recipes/analyzer/fossil_shale.json
-30c1c2b925f638257bebea62fa2015e006ff8290 data/fossil/recipes/analyzer/fossil_tar.json
-db655352afcc016fefd94bfe944b5795b13257a1 data/fossil/recipes/analyzer/frozen_meat.json
-dac69bd11af1132b4a8908a465f62e95dbe0dea5 data/fossil/recipes/analyzer/glow_ink_sac.json
+7eafa0f0ca42a64863632d046e626519728f1e80 data/fossil/recipes/analyzer/fossil_tar.json
+1ea371eb7bcb923e45fb0605dbdf5cb375c77da1 data/fossil/recipes/analyzer/frozen_meat.json
+7ddbad5ec61effe912211e3b0d38e65331c0020f data/fossil/recipes/analyzer/glow_ink_sac.json
 1421bf9c4136bb481233dfae85cb28b7b5b0da15 data/fossil/recipes/analyzer/honeycomb.json
-8cf90b4af0fa2d9c439e1d705598a9550870d387 data/fossil/recipes/analyzer/ink_sac.json
+b373eee32a0d35e4e4f4c3fa5721a23503f0a78d data/fossil/recipes/analyzer/ink_sac.json
 a3720e168c6d78817efd1f2e884f5d23bb91c217 data/fossil/recipes/analyzer/leather.json
 53a94ad2add4b4cfba90c2b90653d7a3d5871cae data/fossil/recipes/analyzer/mutton.json
 73f511b7e760f1a14712ae232e4186e14b3a04b0 data/fossil/recipes/analyzer/nautilus_shell.json
@@ -2600,7 +2600,7 @@ a47ad72f6ffa02134b857efd3e7348093f60701b data/fossil/recipes/analyzer/porkchop.j
 0445c79c6900bcc7d9445dd4325252894879cb4d data/fossil/recipes/analyzer/relic_scrap.json
 1670ce662d0ec8185dc341e074acfb052929370f data/fossil/recipes/analyzer/salmon.json
 dbeb7311d560121469f8bd065979b09ffdf7802c data/fossil/recipes/analyzer/scute.json
-797c79a33a8ae4b27277c6ac32970a73d788d3e7 data/fossil/recipes/analyzer/string.json
+f5d6217f47cda138ab53b9d122541952b0551085 data/fossil/recipes/analyzer/string.json
 2d03d76aa5907f3f3a2ec8630d9f75b69a142d54 data/fossil/recipes/analyzer/tar_drop.json
 0f43ce4d4e6c18da055c426764fa3b765ed8d345 data/fossil/recipes/analyzer/tropical_fish.json
 a95c4042cd3961259243b4e80e0a277bd6bd94f2 data/fossil/recipes/analyzer/turtle_egg.json
