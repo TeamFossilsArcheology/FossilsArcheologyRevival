@@ -1,4 +1,12 @@
-// 1.19.2	2025-10-28T00:30:30.9481144	Fossil Item Tags
+// 1.19.2	2026-06-02T23:30:01.2564337	Fossil Item Tags
+7a8c6e94e8ad2b59ed83171a301ca362b3acc662 data/c/tags/items/axes.json
+cc70ff45928d437297851e5d67ebd56fcaea5a7d data/c/tags/items/foods.json
+5577d5d63db3b6e3f2dcc9cb41e56407369c7fb2 data/c/tags/items/glass_blocks.json
+c6ce1001fada109c21fc78785c3188f19a84a1d7 data/c/tags/items/hoes.json
+c2a80180757ea7dfcc5fcd9c2f61342cb7592da6 data/c/tags/items/pickaxes.json
+91cf4cd3c62bdffbb414b7d8193d87cf6c2778dc data/c/tags/items/shovels.json
+cc4bae062be7abc5ff4e6d621993456e1d8d29cb data/c/tags/items/swords.json
+7ced0e6361ca75a09749043fc10919a1fc5510f9 data/c/tags/items/water_buckets.json
 30ad71309b4c0300cbd8e097db1b57f469960c26 data/fossil/tags/items/all_eggs.json
 748289a71b4a14833170e105ad945e76cf90203b data/fossil/tags/items/ancient_wood_logs.json
 ef19dfc8354f2b11915f6a99b787a7735d2cbb84 data/fossil/tags/items/bird_eggs.json
@@ -25,12 +33,12 @@ a57911012b82cd78cde0c9f0033bdd92afed6d39 data/fossil/tags/items/embryos.json
 177cfa677844a6fc9077a06fa7a9e0938f435de3 data/fossil/tags/items/embryo_dna.json
 4019d04ea898ff5015af2c9c44c981a4460850a5 data/fossil/tags/items/figurines.json
 0571151e8980ac5cbfe1b13b7a86ac2d1e2c3947 data/fossil/tags/items/filter_bones.json
-7ced0e6361ca75a09749043fc10919a1fc5510f9 data/fossil/tags/items/filter_buckets.json
+7988de58005e126777fffc6ba8117b511b7ba044 data/fossil/tags/items/filter_buckets.json
 cf3fa263a067b16adf655ae70aa2edd9541c82e8 data/fossil/tags/items/filter_building_blocks.json
 182fc1455ca82ddf7d297fc4455a29698069e0ee data/fossil/tags/items/filter_dna.json
 44a8c8615a9f6f5c6659611a4cc5f3de6b5eb248 data/fossil/tags/items/filter_eggs.json
 3d72794036746f13b78277fc83d8538cee793b7e data/fossil/tags/items/filter_machines.json
-33ab24f2ef432986c87c380ce8a5262ace41f6e8 data/fossil/tags/items/filter_meat.json
+f1baf5ecc6970b94f1de29136a4b8c50feb4a8a4 data/fossil/tags/items/filter_meat.json
 6bf94e15f6c2de9a43e0f798f905de8849c8ea62 data/fossil/tags/items/filter_other.json
 1dfc62b8c7f2a48e4e4ee834351d261d203ca4ed data/fossil/tags/items/filter_park.json
 1dbb7b67a536de5f23badb7d361b2f8d73e52577 data/fossil/tags/items/filter_plants.json
@@ -44,7 +52,7 @@ c696cb08280ce73f45f151f2a096a395a34ec745 data/fossil/tags/items/filter_tools.jso
 db413a2c67f848eb6ec96eb8cca0ae1e99de4360 data/fossil/tags/items/fossil_saplings.json
 2211394c43cb2538482c652931f8adf6adc1b793 data/fossil/tags/items/fossil_seeds.json
 d95ca31e7139b651388d76be6fd3dcc3c7707574 data/fossil/tags/items/meat_dna.json
-6761e54d0e307dfd8cd69e913f917c952cfa55f5 data/fossil/tags/items/meat_uncooked.json
+4d13f0108d794d74d88c981b348634bbbbd30d7d data/fossil/tags/items/meat_uncooked.json
 a606b0b1fabfe3bbe939be231e3182d94688e677 data/fossil/tags/items/mutant_tree_logs.json
 6244c9241306e580abbd2f51acc63ab0d0eb427d data/fossil/tags/items/palm_logs.json
 65db1fe46fb37ffe99dff351d022e92aa6fe6dff data/fossil/tags/items/restored_seeds.json
@@ -55,15 +63,16 @@ e814a1677220034b3098db241c4ac5be34d347de data/minecraft/tags/items/beds.json
 73cc59ef6b7b8eefdf42ea10c5518f112962c3ac data/minecraft/tags/items/creeper_drop_music_discs.json
 6eea4c0b436bcee131d04661adf48758b0cdf781 data/minecraft/tags/items/dirt.json
 e118939ff14d26961ca9d0b3b53862c5cb9371dc data/minecraft/tags/items/leaves.json
+56207fd550ed838065cb05396162e04e658d6280 data/minecraft/tags/items/logs_that_burn.json
 84cd76fb442225ad890c86ddb9bd8763fa606ae7 data/minecraft/tags/items/planks.json
 276cfa5ab9dd6ab8715610a455bbf0ee05493592 data/minecraft/tags/items/rails.json
 09c44c6b8767019dca31e2357c986e13c6e50dc0 data/minecraft/tags/items/saplings.json
 db57b916d6559534878a611a37df9c6ba4bc4e05 data/minecraft/tags/items/slabs.json
 f601cbfdd43419935b9407f7203d25bdc16b4513 data/minecraft/tags/items/stairs.json
-463001e8d89e35f05f5680c7853a559ea4014288 data/minecraft/tags/items/walls.json
+16f02be8126afc4e26e5f95bc9d2591d21827257 data/minecraft/tags/items/walls.json
 1ba9bb776915fb1cf69f11e02a03faae96e38d21 data/minecraft/tags/items/wooden_buttons.json
 22a1e9ccaf1b589812475e519b2d7052f395a732 data/minecraft/tags/items/wooden_doors.json
-1544b2980023cda34bf9943cb33e45d7de2a4b48 data/minecraft/tags/items/wooden_fences.json
+48900d5c4a952dae2aab81c1b8a3b65d1d561a44 data/minecraft/tags/items/wooden_fences.json
 9851e300322b679fdef84527fe3e63e78b60e7c5 data/minecraft/tags/items/wooden_pressure_plates.json
 5f6d2a20a819711f37f6003c986f2a88374b1fb8 data/minecraft/tags/items/wooden_slabs.json
 475432a5fefb5c2e73b6f7b79929edb187a21e6b data/minecraft/tags/items/wooden_stairs.json

@@ -79,9 +79,8 @@
 					"name": "lowerJaw",
 					"parent": "head",
 					"pivot": [0.5, 13.75961, -19.09917],
-					"rotation": [0, 0, 0],
 					"cubes": [
-						{"origin": [-1.49, 11.75961, -27.39917], "size": [3, 2, 8], "uv": [49, 0]}
+						{"origin": [-1.5, 11.75961, -27.39917], "size": [3, 2, 8], "inflate": -0.03, "uv": [49, 0]}
 					]
 				},
 				{
@@ -228,6 +227,11 @@
 					"cubes": []
 				},
 				{
+					"name": "rider_pos",
+					"parent": "lowerBody",
+					"pivot": [0, 19, -1]
+				},
+				{
 					"name": "rightThigh",
 					"parent": "bone",
 					"pivot": [-2, 14, 2.7],
@@ -267,7 +271,6 @@
 					"name": "rightToeClaw2",
 					"parent": "rightToeClaw1",
 					"pivot": [-2.6, 7.8, -5.55],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-3.1, 6.8, -6.05], "size": [1, 1, 1], "uv": [0, 40]}
 					]
@@ -312,7 +315,6 @@
 					"name": "leftToeClaw2",
 					"parent": "leftToeClaw1",
 					"pivot": [2.6, 7.81748, -5.59009],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [2.1, 6.81748, -6.09009], "size": [1, 1, 1], "uv": [0, 40]}
 					]

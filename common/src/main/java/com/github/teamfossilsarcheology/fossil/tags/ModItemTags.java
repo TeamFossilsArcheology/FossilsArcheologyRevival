@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
@@ -42,6 +43,7 @@ public class ModItemTags {
     public static final TagKey<Item> VERTEBRAE_BONES = TagKey.create(key, FossilMod.location("bones_vertebrae"));
     public static final TagKey<Item> ALL_BONES = TagKey.create(key, FossilMod.location("bones_all"));
     public static final TagKey<Item> UNCOOKED_MEAT = TagKey.create(key, FossilMod.location("meat_uncooked"));
+    public static final TagKey<Item> COOKED_MEAT = TagKey.create(key, FossilMod.location("meat_uncooked"));
 
     public static final TagKey<Item> FILTER_BONES = TagKey.create(key, FossilMod.location("filter_bones"));
     public static final TagKey<Item> FILTER_DNA = TagKey.create(key, FossilMod.location("filter_dna"));
@@ -67,4 +69,14 @@ public class ModItemTags {
     public static final TagKey<Item> DINO_DNA = TagKey.create(key, FossilMod.location("dino_dna"));
     public static final TagKey<Item> FISH_DNA = TagKey.create(key, FossilMod.location("fish_dna"));
     public static final TagKey<Item> EMBRYO_DNA = TagKey.create(key, FossilMod.location("embryo_dna"));
+    
+    //Fabric
+    public static final TagKey<Item> C_FOODS = TagKey.create(key, new ResourceLocation("c", "foods"));
+    public static final TagKey<Item> C_GLASS_BLOCKS = TagKey.create(key, new ResourceLocation("c", "glass_blocks"));
+    public static final TagKey<Item> C_SWORDS = TagKey.create(key, new ResourceLocation("c", "swords"));
+    public static final TagKey<Item> C_PICKAXES = TagKey.create(key, new ResourceLocation("c", "pickaxes"));
+    public static final TagKey<Item> C_AXES = TagKey.create(key, new ResourceLocation("c", "axes"));
+    public static final TagKey<Item> C_SHOVELS = TagKey.create(key, new ResourceLocation("c", "shovels"));
+    public static final TagKey<Item> C_HOES = TagKey.create(key, new ResourceLocation("c", "hoes"));
+    public static final TagKey<Item> C_WATER_BUCKETS = TagKey.create(key, new ResourceLocation("c", "water_buckets"));
 }

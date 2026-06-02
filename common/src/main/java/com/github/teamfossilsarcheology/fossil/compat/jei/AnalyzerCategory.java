@@ -14,7 +14,7 @@ public class AnalyzerCategory extends MultiOutputCategory<AnalyzerRecipe> {
 
     @Override
     public @NotNull Component getTitle() {
-        return Component.translatable("category.fossil.rei.analyzer");
+        return Component.translatable("emi.category.fossil.analyzer");
     }
 
     @Override

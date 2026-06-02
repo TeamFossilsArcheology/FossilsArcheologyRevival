@@ -80,7 +80,7 @@ public class SyncDebugInfoMessage {
                     prehistoric.refreshDimensions();
                     prehistoric.updateAbilities();
                 } else if (player.level.getEntity(entityId) instanceof PrehistoricSkeleton fossil) {
-                    fossil.setType(PrehistoricEntityInfo.valueOf(enumString));
+                    fossil.setInfoType(PrehistoricEntityInfo.valueOf(enumString));
                     fossil.setAge(age);
                 } else if (player.level.getEntity(entityId) instanceof DinosaurEgg egg) {
                     egg.setHatchingTime(age);

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "fossil:bone_unique_tyrannosaurus"
+    }
+  ],
+  "result": {
+    "item": "fossil:tooth_dagger"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "fossil:analyzer",
+  "input": {
+    "item": "minecraft:goat_horn"
+  },
+  "outputs": [
+    {
+      "item": "fossil:goat_dna",
+      "weight": 100.0
+    }
+  ]
+}

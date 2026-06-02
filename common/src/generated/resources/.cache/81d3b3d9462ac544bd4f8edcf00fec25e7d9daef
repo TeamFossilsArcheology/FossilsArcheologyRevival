@@ -1,6 +1,11 @@
-// 1.19.2	2025-10-28T00:30:30.9481144	Item Models: fossil
+// 1.19.2	2026-06-02T23:30:01.2574331	Item Models: fossil
 85278cf934a028444f8b185c2c311b061e0ea0bd assets/fossil/models/item/alligator_gar_dna.json
 51ab511af360e56776aeb0c4922c7c04017afa87 assets/fossil/models/item/allosaurus_dna.json
+b458ee5f9ac82ed2ec7bae00192d422e4c39a3a5 assets/fossil/models/item/ancient_clock.json
+11e0085845eeabd52bbd6ed9d27f844d4e059544 assets/fossil/models/item/ancient_helmet.json
+364f4fae363febf46be27ab895c978169a1542aa assets/fossil/models/item/ancient_javelin.json
+440d4ffbd4252c49b225277bb9bbafa105aa7cd7 assets/fossil/models/item/ancient_key.json
+b1f0e3a41962fe924527dd819665c4e407a3cc30 assets/fossil/models/item/ancient_sword.json
 7479d6547547a6569fb486a85a75cd7fd3a2c826 assets/fossil/models/item/ankylosaurus_dna.json
 d5377ddca021719792e0f76cf17549bff4b0a50f assets/fossil/models/item/aquilolamna_dna.json
 7dc4a6a0de3feaa408465847818a5eb472605167 assets/fossil/models/item/arthropleura_dna.json
@@ -11,6 +16,7 @@ ec39f588dd4484c1eaa3f5867b39b561337e84f8 assets/fossil/models/item/bat_dna.json
 7a2592f753f56badef0f1e0db334a895f7a5b149 assets/fossil/models/item/berry_crataegus.json
 1ce62fc99be99a47d4848e379eda9b8ebdc4247f assets/fossil/models/item/berry_ephedra.json
 64705640cc039cc46128078645a4eea0cfccf693 assets/fossil/models/item/berry_vaccinium.json
+48cf06b45b74eae7e391656cebb2518f7d1e55b0 assets/fossil/models/item/bio_goo.json
 ba3943bb4f1a80200b8e09d5ca109d71badc96c9 assets/fossil/models/item/bone_arm_allosaurus.json
 a0367a57846b543c5b4697bcef35b9e172094045 assets/fossil/models/item/bone_arm_ankylosaurus.json
 a4361543bc5aa9480a0a8cfdf95f0842a795f7e1 assets/fossil/models/item/bone_arm_brachiosaurus.json
@@ -62,6 +68,8 @@ b271ada4dfc40ae15d47441a9dd4d2e91c30965f assets/fossil/models/item/bone_arm_tikt
 08721598f86d3b68ecd3d480dd7fde02bfc10891 assets/fossil/models/item/bone_arm_triceratops.json
 0f0c97ad6d90c50ed7fce1ea5e11edf41415f2ef assets/fossil/models/item/bone_arm_tyrannosaurus.json
 fc7d68a25fddccc342eee1e8b9eb6ec4c0ce5ba4 assets/fossil/models/item/bone_arm_velociraptor.json
+1862c52a22c00e7c942da8d161aa7aa7f4517fd5 assets/fossil/models/item/bone_boots.json
+b86db19ce3b00fa73fabd22c579253fb60e70b80 assets/fossil/models/item/bone_chestplate.json
 82a4eaa313c73bc6981344ee87745115ec9101b2 assets/fossil/models/item/bone_foot_allosaurus.json
 ca0c4ddba7995dea1709a0c4da21ac1e9580569f assets/fossil/models/item/bone_foot_ankylosaurus.json
 f293cfd1ee2b17c93b1c2ea5aeed572f2e1420e8 assets/fossil/models/item/bone_foot_brachiosaurus.json
@@ -113,6 +121,8 @@ ceafaae169df64c2cb47ab643249436b6437ee65 assets/fossil/models/item/bone_foot_ste
 3d9c3c45dad82ce89d8dd8a1924be35c13167545 assets/fossil/models/item/bone_foot_triceratops.json
 ce82457913101ed0b2668833506ddfcc52566785 assets/fossil/models/item/bone_foot_tyrannosaurus.json
 9ef7d2a13c0cfb173ce7fdf7e0f3f0d5377cdae5 assets/fossil/models/item/bone_foot_velociraptor.json
+43789a7c84bb7ba6f89d05ec40fd0fe7d50484bf assets/fossil/models/item/bone_helmet.json
+c138ed6ad9ba7b9f362fc413d2d1bdd4c016ab4e assets/fossil/models/item/bone_leggings.json
 4fa9844ab6f2efae477ebbea0caf397444305913 assets/fossil/models/item/bone_leg_allosaurus.json
 0021cb024a79d021758e1c089f10b0429599297c assets/fossil/models/item/bone_leg_ankylosaurus.json
 c01c6594c58cf9d9cfaa2d64526d9f843e322014 assets/fossil/models/item/bone_leg_brachiosaurus.json
@@ -421,6 +431,8 @@ a0dc50a3f459c10d279b650038347d90ef89d6a5 assets/fossil/models/item/bone_vertebra
 61e80b49a361e9e57c8e318a306a83fca86497c5 assets/fossil/models/item/bone_vertebrae_tyrannosaurus.json
 3043d212e13fccb4c52784ae29b2faa80f331746 assets/fossil/models/item/bone_vertebrae_velociraptor.json
 c9edf68f735f0e4d2d34ca203891cb5d71f8dca2 assets/fossil/models/item/brachiosaurus_dna.json
+ae0a3ff5b759765774de56b3b9bc9995194a8482 assets/fossil/models/item/broken_helmet.json
+ececb441923c7cc42194ae8c14511821c1e3e93c assets/fossil/models/item/broken_sword.json
 e0c6313a07e04d62edff6a07da852146a562bc81 assets/fossil/models/item/bucket_item_alligator_gar.json
 06904addc54a640a24e0f610110a9eb16780dc6d assets/fossil/models/item/bucket_item_aquilolamna.json
 0f1ca29239964bb4fcf1f86d661a767eba1629eb assets/fossil/models/item/bucket_item_coelacanth.json
@@ -440,6 +452,8 @@ c44d85d9c9205d35c86d29929dea9777f9dafe99 assets/fossil/models/item/bucket_item_s
 3361a05c4aa8cfc1d434104c656c7cf681e14d3a assets/fossil/models/item/cat_dna.json
 d159ca3ff7ee1aaf72af863f8c9e3e87961bf524 assets/fossil/models/item/ceratosaurus_dna.json
 ea96a938f4459416d5be1c89b958b112fc4f2277 assets/fossil/models/item/chicken_dna.json
+b0cbed6c76c39319b60980888774d1bfc394cd27 assets/fossil/models/item/chicken_soup_cooked.json
+8c2f62cfed4feac274c4e4e39c74b56021bbfab7 assets/fossil/models/item/chicken_soup_raw.json
 9502a622c4d7859f688dc7c2d0c149e2d33baa52 assets/fossil/models/item/citipati_dna.json
 f629ac6ec67f1781f10f95e1f9168b8f16bf9836 assets/fossil/models/item/cod_dna.json
 e08c3ac547aa950d6f6b7033cb32cb558c1819ed assets/fossil/models/item/coelacanth_dna.json
@@ -467,6 +481,7 @@ d7f560669a3e26d09cdb995fec3c1fd3187c6d52 assets/fossil/models/item/cooked_dicran
 68b9635dbe4b2203e1004e84579cf13afaa41bd2 assets/fossil/models/item/cooked_dodo.json
 68b347308ce2d597b99164e2947d832c8ea65d08 assets/fossil/models/item/cooked_dryosaurus.json
 a8ec46a2185a49bed1a3e13871b466b3973edac9 assets/fossil/models/item/cooked_edaphosaurus.json
+fd61c1518e9682355ad7ebb399f2984ccd3160b9 assets/fossil/models/item/cooked_egg.json
 b98c3a0c8defc1eb20994ebeb829695b350ca6ef assets/fossil/models/item/cooked_elasmotherium.json
 226a73220f8129a673638359dabb4f2e893074fa assets/fossil/models/item/cooked_gallimimus.json
 5fac049eacf942ba1e43bc7763067f08cef95a07 assets/fossil/models/item/cooked_gastornis.json
@@ -512,10 +527,12 @@ d5330a7064f8c9ae884ec9f0388c860221279aa1 assets/fossil/models/item/cooked_wallis
 dd11c85cb3d62bff38dbb017ccc32064aebbad37 assets/fossil/models/item/cow_dna.json
 f704d5e60bf61e7bdc383af4b519fe106d0d7986 assets/fossil/models/item/crassigyrinus_dna.json
 636fa5a1d8307aa6173241e43d388c4953ae782f assets/fossil/models/item/deinonychus_dna.json
+d2482b739b3de637acc6a587b36d7060567dec8a assets/fossil/models/item/diamond_javelin.json
 66677a4e3d3f65a1c692d32a81b95bf16bd70a88 assets/fossil/models/item/dicranurus_dna.json
 6c28451403243c467e88b1a45927fd6db564f962 assets/fossil/models/item/dilophosaurus_dna.json
 55500531c8281f9500fa345fc035e8f78dd0774a assets/fossil/models/item/dimetrodon_dna.json
 57d6e7f39b74e6ab9a39f548e043e1c3f550406d assets/fossil/models/item/dimorphodon_dna.json
+d000d3a98f08dd18bc8e136f2539e4934ee365f4 assets/fossil/models/item/dinopedia.json
 e94af2a999d95ebb5e3605aeb365ef83f664720b assets/fossil/models/item/diplocaulus_dna.json
 ff854679a2136b422a30ad2caf37ab3aaac5ad68 assets/fossil/models/item/diplodocus_dna.json
 136776158e48b5da9af224b965c28c8589dd0f49 assets/fossil/models/item/dodo_dna.json
@@ -597,6 +614,11 @@ b27870023d0b7e249560cd488269a36b74c3ebf4 assets/fossil/models/item/egg_kelenken.
 c9b061bed356359ba922e4e227c7a58826aeb28f assets/fossil/models/item/egg_phorusrhacos.json
 d9e6282eb7d7fca318044d76006e631ee026e87f assets/fossil/models/item/egg_titanis.json
 aba440e38108d1ee05849f3a2910527317ad756c assets/fossil/models/item/elasmotherium_dna.json
+39a66443d53367312c04bf8973a1f30b06bc8f0b assets/fossil/models/item/essence_chicken.json
+4b04a1623b655ec088d2547dc452e7ab23c27f42 assets/fossil/models/item/essence_stunted.json
+2500f19cadff7ae31c150c2b9bf502a08b485b29 assets/fossil/models/item/failuresaurus_flesh.json
+26fd2de1f555821b7436ef57c895e507ce4c385c assets/fossil/models/item/fossil_bio.json
+b0e97ba990602b5dd4e50148f6482c5984fa7575 assets/fossil/models/item/fossil_plant.json
 d7c28eb608add8869eaf6b4efde8cb64668707eb assets/fossil/models/item/fossil_sapling_calamites.json
 b935d16a8f8309865b0317768e33939f8defc3bd assets/fossil/models/item/fossil_sapling_cordaites.json
 4d86b906588290fee77e2519644e4ab46dbe42cb assets/fossil/models/item/fossil_sapling_palm.json
@@ -621,8 +643,11 @@ a0f9a16d2da3e9cedc528e78032c879a4548e6fd assets/fossil/models/item/fossil_seed_e
 b7975c1b1a79e05ac187dae70bf04b9a07f935ca assets/fossil/models/item/fossil_seed_vaccinium.json
 aad5a71cfbf618bdefd747655938021d2192b511 assets/fossil/models/item/fossil_seed_welwitschia.json
 88af79a0f2f926c246ee29270cbd0151fff74060 assets/fossil/models/item/fossil_seed_zamites.json
+b91e21148ec041193b5eb7ff57de78a2dd92a45f assets/fossil/models/item/fossil_shale.json
+3215c421b0efe6a26a0e0add4b771c2697bc782d assets/fossil/models/item/fossil_tar.json
 4de34cab365eb162826110a66c2c9d9bdc9efa95 assets/fossil/models/item/fox_dna.json
 5ee56719c825fd24b5b5b1f0ef82c378ebd8b940 assets/fossil/models/item/frog_dna.json
+a2ab18662a119e83cbb74da415367e862db7fd81 assets/fossil/models/item/frozen_meat.json
 b0321f0aed702e14971337a16a2a7eba4029c14d assets/fossil/models/item/fur_elasmotherium.json
 50bc53b7bc00da4adb89cdaa8b92f256f8ed4c8f assets/fossil/models/item/fur_mammoth.json
 e860baecb266dbbfc3f6bb3927c3078d483ccf26 assets/fossil/models/item/fur_therizinosaurus.json
@@ -630,10 +655,12 @@ e860baecb266dbbfc3f6bb3927c3078d483ccf26 assets/fossil/models/item/fur_therizino
 90d686a254f178e80fcf0cba77b55d8d1b99f3dc assets/fossil/models/item/gastornis_dna.json
 6a26cca4c01bbd79d7fd18a0208af57414790e09 assets/fossil/models/item/glow_squid_dna.json
 87bf8549242fa26e9ed548a0b3907fdc5106aa08 assets/fossil/models/item/goat_dna.json
+f79e0d6e2c5d744436d30889663a817655520c58 assets/fossil/models/item/gold_javelin.json
 b9d2c72b034169250cdb4bd40fb0a2a55d03e5c4 assets/fossil/models/item/henodus_dna.json
 acafe73a05f24941b59f215e366266517644230e assets/fossil/models/item/hoglin_dna.json
 e6a4f8d371e628bafecdfa24aae6c7cbf1df6024 assets/fossil/models/item/horse_dna.json
 1d306ddf7bce027cf874169255fac6b9facc2e41 assets/fossil/models/item/ichthyosaurus_dna.json
+bb438c9e13b58a00ef60b4d9874dabc83295dfcf assets/fossil/models/item/iron_javelin.json
 63912859c6fa1532fc36ebe3ba3f18331bc6cd9a assets/fossil/models/item/kelenken_dna.json
 1921c3dc4f50f8cba2dff6ffd33484b2e4f39600 assets/fossil/models/item/liopleurodon_dna.json
 ae66cca10d5dffe0f56ac3769339fc60ba6f382f assets/fossil/models/item/llama_dna.json
@@ -729,6 +756,7 @@ ea3fd686fd1060ab0f037d0570cf65188f0b8e27 assets/fossil/models/item/phorusrhacos_
 da1923fab696551e234e540c244d11c0c8897fa1 assets/fossil/models/item/plesiosaurus_dna.json
 09e597c63a7e1c555084ce450a8511e557e7044a assets/fossil/models/item/polar_bear_dna.json
 ad796d70fea5fad4a07f987f8ea1937fb94c21c4 assets/fossil/models/item/postosuchus_dna.json
+8b18a5e740772388d09aeac95e2047f9c73ba989 assets/fossil/models/item/pottery_shard.json
 3991254c6566742752a5e277f27217c667a1cf62 assets/fossil/models/item/protoceratops_dna.json
 6250ed9c8bc4c2f51494ea8177a5213cecfd3084 assets/fossil/models/item/psittacosaurus_dna.json
 86dac61c473ad4ada8cc018429cc7bc7ad2d3b8b assets/fossil/models/item/pteranodon_dna.json
@@ -736,8 +764,16 @@ ca94eaf831604c284a2a4e0647b9e014805d4bfb assets/fossil/models/item/pufferfish_dn
 72e315b5f955b676734ba225735e5655830d0cc8 assets/fossil/models/item/quagga_dna.json
 76c237fc210118a74a00cbc96ca848fb6a4e4763 assets/fossil/models/item/quetzalcoatlus_dna.json
 5b62b5e351b9dd54136c62970c99f14855a5953c assets/fossil/models/item/rabbit_dna.json
+15b5900e7d32c4cffba83338e015d6f3dc918bbf assets/fossil/models/item/relic_scrap.json
 7a13d594dd46ed9f6ee8640d1ed923bbed8bc10c assets/fossil/models/item/salmon_dna.json
 5c20dc84ee4236407239c9eb184a9dbafb5bed92 assets/fossil/models/item/sarcosuchus_dna.json
+8b224a76242d11fa003bd7ecf721388f37e7d210 assets/fossil/models/item/scarab_axe.json
+1bf7de5b10d35a00cec267a527065a10172fb348 assets/fossil/models/item/scarab_gem.json
+385133be31dba06b31819b2ed7744af7f0c8d2e5 assets/fossil/models/item/scarab_gem_aquatic.json
+e6f73b7b47e7f36bc8e17839444afaa2ebbb1961 assets/fossil/models/item/scarab_hoe.json
+ee6f7b77d0a6361dacfd46f075b9a7a1a6c329a5 assets/fossil/models/item/scarab_pickaxe.json
+e3aee10e37caa1538b8cbb45afcf7fef4587e8ad assets/fossil/models/item/scarab_shovel.json
+60527d5404a9ac1ea879a0e08e81723606e06c2a assets/fossil/models/item/scarab_sword.json
 27b360296f9130f6a99aa64a588fd47faa57e09c assets/fossil/models/item/scotoharpes_dna.json
 1947bb97344c3d35847fe24fc88c3fffe52b273b assets/fossil/models/item/seed_bennettitales.json
 6699002e50156ee2c87f56a7e9331738404f4924 assets/fossil/models/item/seed_cephalotaxus.json
@@ -759,6 +795,7 @@ e290a1603e740022bfc635ce3c66461ae8f08c89 assets/fossil/models/item/seed_vacciniu
 2a3d831439a1deae6bc5a177e61f8fef68308d96 assets/fossil/models/item/seed_welwitschia.json
 09964429ac9c25413c1878edc72744e59c0f30af assets/fossil/models/item/seed_zamites.json
 223d2b9da721d66ce74be02edfd7d27c2c6580cc assets/fossil/models/item/sheep_dna.json
+f66d157b3f24bd6933c08e7ff01c8121c6668bde assets/fossil/models/item/skull_stick.json
 58a7a745ab64b75654cd33d757867ddd3722c126 assets/fossil/models/item/smilodon_dna.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/fossil/models/item/spawn_egg_alligator_gar.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/fossil/models/item/spawn_egg_allosaurus.json
@@ -831,6 +868,8 @@ e290a1603e740022bfc635ce3c66461ae8f08c89 assets/fossil/models/item/seed_vacciniu
 45a962a34c9ecab06fcec059074992fd75f8ccc2 assets/fossil/models/item/spinosaurus_dna.json
 1afae0dd0c507e4be3626f5077591978ddb4f54d assets/fossil/models/item/squid_dna.json
 26000a776fef8421d17538c509c627b127160cec assets/fossil/models/item/stegosaurus_dna.json
+1261f7796677a186d40480c549cc1af25a5dd8c5 assets/fossil/models/item/stone_javelin.json
+6a0cc0c0d2eabd91f65d3353875cbd1fbb292dc4 assets/fossil/models/item/stone_tablet.json
 f1896d771bdee266c38e169ccd678076c09eaea0 assets/fossil/models/item/strider_dna.json
 2eb73483cc88c54ebb4d4a44cf45ad16e74c7022 assets/fossil/models/item/sturgeon_dna.json
 f616c608c9af0fc0113cfadb60fa04f415ca9484 assets/fossil/models/item/syringe_bat.json
@@ -858,9 +897,12 @@ fd9a355441d99a079fde43baf10d92afae27e227 assets/fossil/models/item/syringe_quagg
 e40f745b8135ab181f36d0dd1854bdbbb5efdec1 assets/fossil/models/item/syringe_smilodon.json
 d7a7cc47c5023728baa9ecf3cfcd6aa8080d1c80 assets/fossil/models/item/syringe_strider.json
 08a1f360eddf72c97ff5fe45b9fb0b79f94772f2 assets/fossil/models/item/syringe_wolf.json
+c31e4b8fddc0167beee46e2b82d11127a0631d35 assets/fossil/models/item/tar_bucket.json
+9f27d2a93e107625def641929b83c57a9c9a4462 assets/fossil/models/item/tar_drop.json
 09435dedd5892b506dae57baa8b9657c2e8eada1 assets/fossil/models/item/therizinosaurus_dna.json
 c868c324008a3ee7076af8bd9cd133b1b3342a39 assets/fossil/models/item/tiktaalik_dna.json
 f863f76cbaabec53fbf29043bb912033029c8db6 assets/fossil/models/item/titanis_dna.json
+8f554f68e69b17e9ebadc6a56432d80e9a4527e5 assets/fossil/models/item/toy_ball.json
 8738aa4662ff748d56c0fe8d688f31af45888896 assets/fossil/models/item/toy_ball_black.json
 a4b5c4eb35b11850a8b795142dfa347d62ddb225 assets/fossil/models/item/toy_ball_blue.json
 1b5f33afba1044a3f822682a958c51c23e595297 assets/fossil/models/item/toy_ball_brown.json
@@ -877,6 +919,7 @@ c34f68005e9eddf28780dce6356df7262a37dbf7 assets/fossil/models/item/toy_ball_lime
 e1ed5670ff98c1d769c87c77456209b7705bf0ff assets/fossil/models/item/toy_ball_red.json
 b8cde98f73c44aeb34edf616b6f19bd02af097ed assets/fossil/models/item/toy_ball_white.json
 10f892da5305d6cee98ffd2584dfcf49600ce113 assets/fossil/models/item/toy_ball_yellow.json
+73e2dead6585257f2f3ef2a606c98ae0448aabdf assets/fossil/models/item/toy_scratching_post.json
 6c1376a527a9266b6d52831acb12f49f43cfe19e assets/fossil/models/item/toy_scratching_post_acacia.json
 b17e8bcf2d04a9e8ee7cec97183a1c45b9bfd3eb assets/fossil/models/item/toy_scratching_post_birch.json
 f1412c515eac71cf3571a82601489377982349f1 assets/fossil/models/item/toy_scratching_post_crimson.json
@@ -886,6 +929,7 @@ f1412c515eac71cf3571a82601489377982349f1 assets/fossil/models/item/toy_scratchin
 bbce03015e623580fe3418e87b5570040373b027 assets/fossil/models/item/toy_scratching_post_oak.json
 29728f8f4689e58e1602d3b0be2211aa4831c748 assets/fossil/models/item/toy_scratching_post_spruce.json
 216f18d500b1e6bc50e78f020c198a2b63af37c8 assets/fossil/models/item/toy_scratching_post_warped.json
+d64672c7faf93b4824b5a43350b49f3762f4d7f9 assets/fossil/models/item/toy_tethered_log.json
 f33135a9bc02b70b502bb3ec6aa8d94b4f0e9272 assets/fossil/models/item/toy_tethered_log_acacia.json
 7631f5e03e8291dc3c292d536bb5096e9e94cace assets/fossil/models/item/toy_tethered_log_birch.json
 8f280599702642d3a206d6d35b26d3ec0859fa4b assets/fossil/models/item/toy_tethered_log_crimson.json
@@ -901,4 +945,6 @@ f848e8544bcbf9c7862e45181a889a8613b49e06 assets/fossil/models/item/turtle_dna.js
 12f4f71a51df9c1baa7f38633ad03317ed8a0df6 assets/fossil/models/item/tyrannosaurus_dna.json
 e17c8ba196157fdcd88af113b55445af1fa933ae assets/fossil/models/item/velociraptor_dna.json
 16af31c38a2abcfa9024ddd453d2fd0f66f39d77 assets/fossil/models/item/walliserops_dna.json
+8d7680c0a49f35290d27bfe69594009bc7303789 assets/fossil/models/item/whip.json
 dec30a74bf0c74ab96fce5e22ca48be2715ea353 assets/fossil/models/item/wolf_dna.json
+ee317e700920d162dc6e40bc8f909a055e15f2cc assets/fossil/models/item/wooden_javelin.json
