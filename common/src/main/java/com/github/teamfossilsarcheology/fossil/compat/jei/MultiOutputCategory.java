@@ -82,12 +82,17 @@ public abstract class MultiOutputCategory<T extends MultiOutputAndSlotsRecipe> i
         List<IRecipeSlotView> slots = recipeSlotsView.getSlotViews(RecipeIngredientRole.OUTPUT);
         for (int i = 0; i < slots.size(); i++) {
             Optional<ItemStack> currentStack = slots.get(i).getDisplayedItemStack();
+            var slotItem = slotItems.get(i);
             if (currentStack.isEmpty()) {
-                break;
+                //Empty = Air = Nothing which is a valid output. We just need to check if there is a probability for nothing
+                slotItem.items.stream().filter(weightedItem -> weightedItem.stack.isEmpty()).findFirst().ifPresent(weightedItem -> {
+                    renderProbability(poseStack, Minecraft.getInstance().font, weightedItem.probability, slotItem.x, slotItem.y);
+                });
+                continue;
             }
-            for (WeightedItem item : slotItems.get(i).items) {
+            for (WeightedItem item : slotItem.items) {
                 if (ItemStack.isSame(currentStack.get(), item.stack)) {
-                    renderProbability(poseStack, Minecraft.getInstance().font, item.probability, slotItems.get(i).x, slotItems.get(i).y);
+                    renderProbability(poseStack, Minecraft.getInstance().font, item.probability, slotItem.x, slotItem.y);
                     break;
                 }
             }
