@@ -73,10 +73,6 @@ public class CultureVatBlockEntity extends EnergyContainerBlockEntity {
         super(ModBlockEntities.CULTURE_VAT.get(), blockPos, blockState);
     }
 
-    public static int getItemFuelTime(ItemStack stack) {
-        return ModRecipes.getCultureVatFuelValue(stack.getItem());
-    }
-
     @Override
     public ContainerData getDataAccess() {
         return dataAccess;
@@ -120,7 +116,7 @@ public class CultureVatBlockEntity extends EnergyContainerBlockEntity {
 
         if (canProcess() && (litTime == 0 || (litTime > 0 && !canProcess(fuel)))) {
             ItemStack fuelStack = items.get(CultureVatMenu.FUEL_SLOT_ID);
-            litDuration = litTime = getItemFuelTime(fuelStack);
+            litDuration = litTime = getRecipeFuelTime(items.get(CultureVatMenu.INPUT_SLOT_ID), fuelStack);
             fuel = fuelStack.copy();
             if (litTime > 0) {
                 dirty = true;
@@ -191,6 +187,14 @@ public class CultureVatBlockEntity extends EnergyContainerBlockEntity {
             return output.isEmpty() || output.sameItem(recipe.getResultItem());
         }
         return false;
+    }
+
+    private int getRecipeFuelTime(ItemStack inputStack, ItemStack fuelStack) {
+        CultureVatRecipe recipe = ModRecipes.getCultureVatRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(inputStack, fuelStack), level);
+        if (recipe != null) {
+            return recipe.getFuelDuration();
+        }
+        return ModRecipes.getCultureVatFuelValue(fuelStack.getItem());
     }
 
     protected boolean canProcess(ItemStack fuelStack) {

@@ -1,7 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.fabric.compat.emi;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
-import com.github.teamfossilsarcheology.fossil.block.entity.CultureVatBlockEntity;
 import com.github.teamfossilsarcheology.fossil.inventory.CultureVatMenu;
 import com.github.teamfossilsarcheology.fossil.recipe.CultureVatRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
@@ -34,10 +33,9 @@ public class CultureVatEmiRecipe extends WithFuelEmiRecipe<CultureVatRecipe> {
     @Override
     public void addWidgets(WidgetHolder widgets) {
         super.addWidgets(widgets);
-        final int duration = CultureVatBlockEntity.getItemFuelTime(fuel.getEmiStacks().get(0).getItemStack());
         widgets.addTexture(EMPTY_FUEL, 41, 20);
-        widgets.addAnimatedTexture(FULL_FUEL, 42, 21, duration, false, true, true).tooltip((mx, my) -> {
-            return List.of(ClientTooltipComponent.create(new TranslatableComponent("emi.cooking.time", duration / 20f).getVisualOrderText()));
+        widgets.addAnimatedTexture(FULL_FUEL, 42, 21, recipe.getFuelDuration(), false, true, true).tooltip((mx, my) -> {
+            return List.of(ClientTooltipComponent.create(new TranslatableComponent("emi.cooking.time", recipe.getFuelDuration() / 20f).getVisualOrderText()));
         });
 
         widgets.addTexture(EMPTY_PROGRESS, 38, 6);

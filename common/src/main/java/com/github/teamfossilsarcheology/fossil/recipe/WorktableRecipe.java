@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.recipe;
 
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
+import com.github.teamfossilsarcheology.fossil.inventory.WorktableMenu;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -9,8 +10,8 @@ import net.minecraft.world.item.crafting.RecipeType;
 import org.jetbrains.annotations.NotNull;
 
 public class WorktableRecipe extends WithFuelRecipe {
-    protected WorktableRecipe(ResourceLocation location, Ingredient input, Ingredient fuel, ItemStack output, int duration) {
-        super(location, input, fuel, output, duration);
+    protected WorktableRecipe(ResourceLocation location, Ingredient input, Ingredient fuel, ItemStack output, int duration, int fuelDuration) {
+        super(location, input, fuel, output, duration, fuelDuration);
     }
 
     @Override
@@ -40,6 +41,16 @@ public class WorktableRecipe extends WithFuelRecipe {
 
         public Serializer(Constructor<WorktableRecipe> constructor) {
             super(constructor);
+        }
+
+        @Override
+        int defaultDuration() {
+            return WorktableMenu.DEFAULT_DURATION;
+        }
+
+        @Override
+        int defaultFuelDuration() {
+            return WorktableMenu.DEFAULT_FUEL_DURATION;
         }
     }
 }

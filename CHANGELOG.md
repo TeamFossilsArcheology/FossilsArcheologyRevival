@@ -2,6 +2,7 @@
 - Missing recipe for Tyrannosaurus tooth dagger
 - Analyzing frozen meat or tar fossils can now return turtle dna
 - Reduced dna rates when analyzing ink sac, string or chicken eggs
+- Fuel duration field to culture vat and worktable recipes
 
 ### Fixed
 - Deinonychus model jaw clipping
