@@ -16,3 +16,4 @@
 - Fixed JEI display for recipes with "nothing" output
 - Added support for EMI
 - Added more items to fabric community tags
+- Fixed Farmers Delight Roast Chicken not being considered meat
