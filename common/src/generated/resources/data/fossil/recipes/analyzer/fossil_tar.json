@@ -6,87 +6,95 @@
   "outputs": [
     {
       "item": "fossil:axolotl_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:bat_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "minecraft:bone_meal",
       "weight": 15.0
     },
     {
+      "item": "fossil:camel_dna",
+      "weight": 1.0869565217391304
+    },
+    {
       "item": "fossil:cat_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:dodo_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:dolphin_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:elasmotherium_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:fox_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:gastornis_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:kelenken_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:mammoth_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:megalania_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:megaloceros_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:megalodon_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:ocelot_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:panda_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:phorusrhacos_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:platybelodon_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:quagga_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:smilodon_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:titanis_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
+    },
+    {
+      "item": "fossil:turtle_dna",
+      "weight": 1.0869565217391304
     },
     {
       "item": "fossil:volcanic_rock",
@@ -94,7 +102,7 @@
     },
     {
       "item": "fossil:wolf_dna",
-      "weight": 1.1904761904761905
+      "weight": 1.0869565217391304
     }
   ]
 }

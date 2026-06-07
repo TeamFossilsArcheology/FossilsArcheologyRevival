@@ -381,7 +381,7 @@
   "pedia.fossil.temperament.scared.desc": "Este animal foge de outros mobs.",
   "pedia.fossil.temperament.water_calm.desc": "Este animal não é assustado por outros mobs.",
   "pedia.fossil.untamed": "Endomado",
-  "category.fossil.rei.sifter": "Peneirando",
+  "emi.category.fossil.sifter": "Peneirando",
   "category.fossil.controls": "Fossils and Archeology",
   "fossil.midnightconfig.title": "Configuração do F/A",
   "fossil.midnightconfig.generateHellShips.tooltip": "\"True\" para que os Navios no Nether serem gerados naturalmente",

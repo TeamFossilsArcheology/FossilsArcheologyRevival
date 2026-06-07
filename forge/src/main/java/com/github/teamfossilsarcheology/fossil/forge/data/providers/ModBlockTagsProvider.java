@@ -101,6 +101,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                         Blocks.VINE, Blocks.GLOW_LICHEN, Blocks.SUNFLOWER, Blocks.LILAC, Blocks.ROSE_BUSH, Blocks.PEONY,
                         Blocks.TALL_GRASS, Blocks.LARGE_FERN, Blocks.HANGING_ROOTS);
         addTag(ModBlockTags.MOOD_BONUS, BlockTags.CROPS, BlockTags.LEAVES, BlockTags.SAPLINGS, BlockTags.SMALL_FLOWERS, ModBlockTags.PLANTS);
+
+
+        addTag(ModBlockTags.C_GLASS_BLOCKS, ANCIENT_GLASS, REINFORCED_GLASS);
     }
 
     @SafeVarargs

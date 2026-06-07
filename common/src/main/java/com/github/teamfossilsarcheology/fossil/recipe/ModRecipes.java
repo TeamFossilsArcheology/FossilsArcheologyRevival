@@ -3,8 +3,9 @@ package com.github.teamfossilsarcheology.fossil.recipe;
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.VanillaEntityInfo;
+import com.github.teamfossilsarcheology.fossil.inventory.CultureVatMenu;
+import com.github.teamfossilsarcheology.fossil.inventory.WorktableMenu;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
-import com.github.teamfossilsarcheology.fossil.util.Version;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
@@ -117,9 +118,9 @@ public class ModRecipes {
             }
         }
 
-        WORKTABLE_FUEL_VALUES.put(ModItems.POTTERY_SHARD.get(), 300);
-        WORKTABLE_FUEL_VALUES.put(ModItems.RELIC_SCRAP.get(), 300);
-        CULTURE_VAT_FUEL_VALUES.put(ModItems.BIO_GOO.get(), Version.debugEnabled() ? 1000 : 6000);
+        WORKTABLE_FUEL_VALUES.put(ModItems.POTTERY_SHARD.get(), WorktableMenu.DEFAULT_FUEL_DURATION);
+        WORKTABLE_FUEL_VALUES.put(ModItems.RELIC_SCRAP.get(), WorktableMenu.DEFAULT_FUEL_DURATION);
+        CULTURE_VAT_FUEL_VALUES.put(ModItems.BIO_GOO.get(), CultureVatMenu.DEFAULT_FUEL_DURATION);
     }
 
     private static void registerAnalyzer(AnalyzerRecipe.Builder recipe) {

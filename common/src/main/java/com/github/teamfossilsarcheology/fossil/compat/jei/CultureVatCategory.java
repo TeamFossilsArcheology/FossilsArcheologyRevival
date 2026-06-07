@@ -36,7 +36,7 @@ public class CultureVatCategory extends WithFuelCategory<CultureVatRecipe> {
 
     @Override
     public @NotNull Component getTitle() {
-        return Component.translatable("category.fossil.rei.culture_vat");
+        return Component.translatable("emi.category.fossil.culture_vat");
     }
 
     @Override
