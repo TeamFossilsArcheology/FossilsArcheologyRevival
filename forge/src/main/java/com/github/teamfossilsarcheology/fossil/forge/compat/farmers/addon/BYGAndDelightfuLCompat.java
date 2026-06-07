@@ -6,7 +6,6 @@ import net.brnbrd.delightful.common.item.DelightfulItems;
 public class BYGAndDelightfuLCompat {
     public static void registerFoodMappings(FoodMappingsManager manager) {
         manager.addPlant(DelightfulItems.SALMONBERRY_PIE_SLICE.get());
-        manager.addPlant(DelightfulItems.PUMPKIN_PIE_SLICE.get());
         manager.addPlant(DelightfulItems.GLOOMGOURD_PIE_SLICE.get());
         manager.addPlant(DelightfulItems.BLUEBERRY_PIE_SLICE.get());
         manager.addPlant(DelightfulItems.GREEN_APPLE_PIE_SLICE.get());

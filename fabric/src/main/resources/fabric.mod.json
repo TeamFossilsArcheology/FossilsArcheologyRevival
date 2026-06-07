@@ -36,6 +36,9 @@
     ],
     "jade": [
       "com.github.teamfossilsarcheology.fossil.fabric.compat.jade.FossilJadePluginFabric"
+    ],
+    "emi": [
+      "com.github.teamfossilsarcheology.fossil.compat.emi.FossilEmiPlugin"
     ]
   },
   "mixins": [
@@ -54,7 +57,8 @@
   },
   "suggests": {
     "cloth_config": ">=10",
-    "roughlyenoughitems": ">=12"
+    "roughlyenoughitems": ">=12",
+    "emi": ">=1.1.22"
   },
   "custom": {
     "cardinal-components": [

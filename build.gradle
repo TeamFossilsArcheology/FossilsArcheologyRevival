@@ -65,6 +65,10 @@ subprojects {
             name = "tterrag maven"
             url =  "https://maven.tterrag.com/"
         }
+        maven {
+            name = "TerraformersMC"
+            url = "https://maven.terraformersmc.com/"
+        }
         maven { url "https://maven.createmod.net" } // Create, Ponder, Flywheel
     }
 

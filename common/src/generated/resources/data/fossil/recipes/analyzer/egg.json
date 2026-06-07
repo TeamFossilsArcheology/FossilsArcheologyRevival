@@ -6,7 +6,8 @@
   "outputs": [
     {
       "item": "fossil:chicken_dna",
-      "weight": 100.0
+      "weight": 25.0
     }
-  ]
+  ],
+  "total": 100.0
 }

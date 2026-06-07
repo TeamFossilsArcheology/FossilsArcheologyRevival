@@ -16,6 +16,7 @@ public class WorktableMenu extends AbstractContainerMenu {
     public static final int FUEL_SLOT_ID = 1;
     public static final int OUTPUT_SLOT_ID = 2;
     public static final int DEFAULT_DURATION = 300;
+    public static final int DEFAULT_FUEL_DURATION = 300;
 
     private final Container container;
     private final ContainerData containerData;

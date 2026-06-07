@@ -41,10 +41,7 @@ public class FarmersDelightCompat {
         manager.addPlant(ModItems.ONION_SOUP.get());
         manager.addPlant(ModItems.MUSHROOM_RICE.get());
         manager.addPlant(ModItems.VEGETABLE_NOODLES.get());
-        manager.addPlant(ModItems.VEGETABLE_NOODLES.get());
         manager.addPlant(ModItems.STUFFED_PUMPKIN.get());
-        manager.addPlant(ModItems.ROAST_CHICKEN.get());
-        manager.addPlant(ModItems.ROAST_CHICKEN.get());
         manager.addPlant(ModItems.CABBAGE_SEEDS.get(), 5);
         manager.addPlant(ModItems.TOMATO_SEEDS.get(), 5);
 

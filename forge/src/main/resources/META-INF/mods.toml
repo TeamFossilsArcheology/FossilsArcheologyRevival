@@ -91,7 +91,7 @@ versionRange = "[0.16.4,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.${modId}]]
+[[dependencies.${mod_id}]]
 modId = "festive_delight"
 mandatory = false
 versionRange = "[2.0.0,)"
@@ -109,6 +109,20 @@ side = "BOTH"
 modId = "delightful"
 mandatory = false
 versionRange = "[3.8,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "emi"
+mandatory = false
+versionRange = "[1.1.22,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "emi"
+mandatory = false
+versionRange = "[1.1.22,)"
 ordering = "NONE"
 side = "BOTH"
 

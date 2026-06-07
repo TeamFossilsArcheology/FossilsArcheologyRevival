@@ -23,13 +23,15 @@ public abstract class WithFuelRecipe implements Recipe<WithFuelRecipe.ContainerW
     private final Ingredient fuel;
     private final ItemStack result;
     private final int duration;
+    private final int fuelDuration;
 
-    protected WithFuelRecipe(ResourceLocation location, Ingredient input, Ingredient fuel, ItemStack result, int duration) {
+    protected WithFuelRecipe(ResourceLocation location, Ingredient input, Ingredient fuel, ItemStack result, int duration, int fuelDuration) {
         this.location = location;
         this.input = input;
         this.fuel = fuel;
         this.result = result;
         this.duration = duration;
+        this.fuelDuration = fuelDuration;
     }
 
     @Override
@@ -91,6 +93,10 @@ public abstract class WithFuelRecipe implements Recipe<WithFuelRecipe.ContainerW
         return duration;
     }
 
+    public int getFuelDuration() {
+        return fuelDuration;
+    }
+
     public static class ContainerWithAnyFuel extends SimpleContainer {
         public final boolean anyFuel;
 
@@ -105,12 +111,16 @@ public abstract class WithFuelRecipe implements Recipe<WithFuelRecipe.ContainerW
         }
     }
 
-    public static class WithFuelRecipeSerializer<T extends WithFuelRecipe> implements RecipeSerializer<T> {
+    public static abstract class WithFuelRecipeSerializer<T extends WithFuelRecipe> implements RecipeSerializer<T> {
         protected final Constructor<T> constructor;
 
         protected WithFuelRecipeSerializer(Constructor<T> constructor) {
             this.constructor = constructor;
         }
+
+        abstract int defaultDuration();
+
+        abstract int defaultFuelDuration();
 
         @Override
         public @NotNull T fromJson(ResourceLocation recipeId, JsonObject serializedRecipe) {
@@ -121,8 +131,9 @@ public abstract class WithFuelRecipe implements Recipe<WithFuelRecipe.ContainerW
             String result = GsonHelper.getAsString(serializedRecipe, "result");
             ItemStack output = new ItemStack(
                     BuiltInRegistries.ITEM.getOptional(new ResourceLocation(result)).orElseThrow(() -> new IllegalStateException("Item: " + result + " does not exist")));
-            int duration = GsonHelper.getAsInt(serializedRecipe, "duration", 300);
-            return constructor.construct(recipeId, input, fuel, output, duration);
+            int duration = GsonHelper.getAsInt(serializedRecipe, "duration", defaultDuration());
+            int fuelDuration = GsonHelper.getAsInt(serializedRecipe, "fuel_duration", defaultFuelDuration());
+            return constructor.construct(recipeId, input, fuel, output, duration, fuelDuration);
         }
 
         @Override
@@ -131,7 +142,8 @@ public abstract class WithFuelRecipe implements Recipe<WithFuelRecipe.ContainerW
             Ingredient fuel = Ingredient.fromNetwork(buffer);
             ItemStack output = buffer.readItem();
             int duration = buffer.readInt();
-            return constructor.construct(recipeId, input, fuel, output, duration);
+            int fuelDuration = buffer.readInt();
+            return constructor.construct(recipeId, input, fuel, output, duration, fuelDuration);
         }
 
         @Override
@@ -140,11 +152,12 @@ public abstract class WithFuelRecipe implements Recipe<WithFuelRecipe.ContainerW
             recipe.fuel.toNetwork(buffer);
             buffer.writeItem(recipe.result);
             buffer.writeInt(recipe.duration);
+            buffer.writeInt(recipe.fuelDuration);
         }
 
         @FunctionalInterface
         public interface Constructor<R> {
-            R construct(ResourceLocation recipeId, Ingredient input, Ingredient fuel, ItemStack output, int duration);
+            R construct(ResourceLocation recipeId, Ingredient input, Ingredient fuel, ItemStack output, int duration, int fuelDuration);
         }
     }
 }
