@@ -11,6 +11,9 @@ public class AlexsMobsCompat {
 		manager.addMeat(AMItemRegistry.COOKED_MOOSE_RIBS.get());
 		manager.addMeat(AMItemRegistry.KANGAROO_MEAT.get());
 		manager.addMeat(AMItemRegistry.COOKED_KANGAROO_MEAT.get());
+		manager.addMeat(AMItemRegistry.BOILED_EMU_EGG.get());
+		manager.addMeat(AMItemRegistry.KANGAROO_BURGER.get());
+		manager.addMeat(AMItemRegistry.SOPA_DE_MACACO.get());
 
 		manager.addFish(AMItemRegistry.LOBSTER_TAIL.get());
 		manager.addFish(AMItemRegistry.COOKED_LOBSTER_TAIL.get());
@@ -20,8 +23,11 @@ public class AlexsMobsCompat {
 		manager.addFish(AMItemRegistry.RAW_CATFISH.get());
 		manager.addFish(AMItemRegistry.COOKED_CATFISH.get());
 		manager.addFish(AMItemRegistry.FLYING_FISH.get());
+		manager.addFish(AMItemRegistry.SHRIMP_FRIED_RICE.get());
 
 		manager.addPlant(AMItemRegistry.BANANA.get());
+		manager.addPlant(AMItemRegistry.GONGYLIDIA.get());
+		manager.addPlant(AMItemRegistry.MOSQUITO_REPELLENT_STEW.get());
 
 		manager.addMeat(AMEntityRegistry.ANTEATER.get(), 10);
 		manager.addMeat(AMEntityRegistry.BALD_EAGLE.get(), 8);
@@ -59,6 +65,20 @@ public class AlexsMobsCompat {
 		manager.addMeat(AMEntityRegistry.MUNGUS.get(), 8);
 		manager.addMeat(AMEntityRegistry.BUNFUNGUS.get(), 40);
 		manager.addMeat(AMEntityRegistry.FROSTSTALKER.get(), 12);
+		manager.addMeat(AMEntityRegistry.RAIN_FROG.get(), 2);
+		manager.addMeat(AMEntityRegistry.POTOO.get(), 4);
+		manager.addMeat(AMEntityRegistry.RHINOCEROS.get(), 35);
+		manager.addMeat(AMEntityRegistry.SUGAR_GLIDER.get(), 2);
+		manager.addMeat(AMEntityRegistry.FARSEER.get(), 20);
+		manager.addMeat(AMEntityRegistry.SKREECHER.get(), 12);
+		manager.addMeat(AMEntityRegistry.UNDERMINER.get(), 18);
+		manager.addMeat(AMEntityRegistry.MURMUR.get(), 16);
+		manager.addMeat(AMEntityRegistry.MURMUR_HEAD.get(), 6);
+		manager.addMeat(AMEntityRegistry.TENDON_SEGMENT.get(), 2);
+		manager.addMeat(AMEntityRegistry.SKUNK.get(), 6);
+		manager.addMeat(AMEntityRegistry.BANANA_SLUG.get(), 3);
+		manager.addMeat(AMEntityRegistry.BLUE_JAY.get(), 3);
+		manager.addMeat(AMEntityRegistry.CAIMAN.get(), 12);
 
 		manager.addFish(AMEntityRegistry.ALLIGATOR_SNAPPING_TURTLE.get(), 9);
 		manager.addFish(AMEntityRegistry.BLOBFISH.get(), 4);
@@ -80,6 +100,8 @@ public class AlexsMobsCompat {
 		manager.addFish(AMEntityRegistry.TERRAPIN.get(), 7);
 		manager.addFish(AMEntityRegistry.ANACONDA.get(), 5);
 		manager.addFish(AMEntityRegistry.CROCODILE.get(), 15);
+		manager.addFish(AMEntityRegistry.MUDSKIPPER.get(), 4);
+		manager.addFish(AMEntityRegistry.TRIOPS.get(), 2);
 
 		manager.addMeat(AMEntityRegistry.COCKROACH.get(), 9);
 		manager.addMeat(AMEntityRegistry.CRIMSON_MOSQUITO.get(), 5);
