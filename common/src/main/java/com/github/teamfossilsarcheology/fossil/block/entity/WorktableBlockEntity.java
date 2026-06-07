@@ -68,10 +68,6 @@ public class WorktableBlockEntity extends MachineContainerBlockEntity {
         super(ModBlockEntities.WORKTABLE.get(), blockPos, blockState);
     }
 
-    public static int getItemFuelTime(ItemStack stack) {
-        return ModRecipes.getWorktableFuelValue(stack.getItem());
-    }
-
     @Override
     public ContainerData getDataAccess() {
         return dataAccess;
@@ -90,7 +86,7 @@ public class WorktableBlockEntity extends MachineContainerBlockEntity {
 
         if (canProcess() && (litTime == 0 || (litTime > 0 && !canProcess(fuel)))) {
             ItemStack fuelStack = items.get(WorktableMenu.FUEL_SLOT_ID);
-            litDuration = litTime = getItemFuelTime(fuelStack);
+            litDuration = litTime = getRecipeFuelTime(items.get(WorktableMenu.INPUT_SLOT_ID), fuelStack);
             cookingTotalTime = timeToSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), fuelStack);
             fuel = fuelStack.copy();
             if (litTime > 0) {
@@ -131,6 +127,14 @@ public class WorktableBlockEntity extends MachineContainerBlockEntity {
             return recipeWorktable.getResultItem();
         }
         return ItemStack.EMPTY;
+    }
+
+    private int getRecipeFuelTime(ItemStack inputStack, ItemStack fuelStack) {
+        WorktableRecipe recipe = ModRecipes.getWorktableRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(inputStack, fuelStack), level);
+        if (recipe != null) {
+            return recipe.getFuelDuration();
+        }
+        return ModRecipes.getWorktableFuelValue(fuelStack.getItem());
     }
 
     protected boolean canProcess(ItemStack fuelStack) {

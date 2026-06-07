@@ -2,6 +2,7 @@
 - Missing recipe for Tyrannosaurus tooth dagger
 - Analyzing frozen meat or tar fossils can now return turtle dna
 - Reduced dna rates when analyzing ink sac, string or chicken eggs
+- Fuel duration field to culture vat and worktable recipes
 - Analyzing goat horns now gives goat dna
 - Analyzing frozen meat or tar fossils can now return camel dna
 
@@ -17,3 +18,4 @@
 - Fixed JEI display for recipes with "nothing" output
 - Added support for EMI
 - Added more items to fabric community tags
+- Fixed Farmers Delight Roast Chicken not being considered meat

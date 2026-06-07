@@ -1,7 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.compat.emi;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
-import com.github.teamfossilsarcheology.fossil.block.entity.WorktableBlockEntity;
 import com.github.teamfossilsarcheology.fossil.recipe.WorktableRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiTexture;
@@ -33,10 +32,9 @@ public class WorktableEmiRecipe extends WithFuelEmiRecipe<WorktableRecipe> {
     @Override
     public void addWidgets(WidgetHolder widgets) {
         super.addWidgets(widgets);
-        final int progress = WorktableBlockEntity.getItemFuelTime(fuel.getEmiStacks().get(0).getItemStack());
         widgets.addTexture(EMPTY_FUEL, 41, 20);
-        widgets.addAnimatedTexture(FULL_FUEL, 41, 20, progress * 20, false, true, true).tooltip((mx, my) -> {
-            return List.of(ClientTooltipComponent.create(Component.translatable("emi.cooking.time", progress / 20f).getVisualOrderText()));
+        widgets.addAnimatedTexture(FULL_FUEL, 41, 20, recipe.getFuelDuration() * 20, false, true, true).tooltip((mx, my) -> {
+            return List.of(ClientTooltipComponent.create(Component.translatable("emi.cooking.time", recipe.getFuelDuration() / 20f).getVisualOrderText()));
         });
 
         widgets.addTexture(EMPTY_PROGRESS, 35, 3);
