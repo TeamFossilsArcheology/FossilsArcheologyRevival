@@ -93,7 +93,7 @@ public abstract class MultiOutputAndSlotsRecipe implements Recipe<Container> {
         return id;
     }
 
-    public static class Serializer<T extends MultiOutputAndSlotsRecipe> implements RecipeSerializer<T> {
+    public static abstract class Serializer<T extends MultiOutputAndSlotsRecipe> implements RecipeSerializer<T> {
         protected final Constructor<T> constructor;
 
         protected Serializer(Constructor<T> constructor) {
