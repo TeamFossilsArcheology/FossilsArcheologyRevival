@@ -1018,7 +1018,7 @@
 				},
 				"upperBody": {
 					"rotation": {
-						"vector": ["math.cos(query.anim_time*720/0.5-60)*2", "math.cos(query.anim_time*360/0.5+)*-2", "math.cos(query.anim_time*360/0.5-60)*-2"]
+						"vector": ["math.cos(query.anim_time*720/0.5-60)*2", "math.cos(query.anim_time*360/0.5)*-2", "math.cos(query.anim_time*360/0.5-60)*-2"]
 					}
 				},
 				"neck": {
