@@ -154,6 +154,7 @@ public abstract class MultiOutputEmiRecipe<T extends MultiOutputAndSlotsRecipe> 
     }
 
     private static class MultiOutputSlotWidget extends SlotWidget {
+        private static final DecimalFormat FORMAT = new DecimalFormat("#.#'%'");
 
         public MultiOutputSlotWidget(EmiIngredient stack, int x, int y) {
             super(stack, x, y);
@@ -173,7 +174,7 @@ public abstract class MultiOutputEmiRecipe<T extends MultiOutputAndSlotsRecipe> 
         private void renderProbability(PoseStack poseStack, Font fr, double probability, int xPosition, int yPosition) {
             poseStack.pushPose();
             poseStack.translate(0.0, 0.0, 100 + 200.0F);
-            String string = new DecimalFormat("#.#'%'").format(probability);
+            String string = FORMAT.format(probability);
             MultiBufferSource.BufferSource bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
             float xOffset = Math.min(11, fr.width(string) / 2f);
             fr.drawInBatch(string, (xPosition + 8 - xOffset), (yPosition + 16 + 1), 4210752, false,

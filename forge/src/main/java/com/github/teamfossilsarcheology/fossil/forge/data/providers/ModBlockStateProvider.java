@@ -258,6 +258,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         simpleBlock(OBSIDIAN_SPIKES.get(), models().crop(key(OBSIDIAN_SPIKES.get()).getPath(), blockTexture(OBSIDIAN_SPIKES.get())));
         simpleBlock(FAKE_OBSIDIAN.get(), models().getExistingFile(blockTexture(Blocks.OBSIDIAN)));
+
+        emptyModel(ASH_VENT.get());
+        emptyModel(INVISIBLE_LEAVES.get());
     }
 
     public void horizontalBlockWithBack(Block block, String top, String front, String side, String back) {
@@ -282,6 +285,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
     public void particleOnly(Block block, ResourceLocation particleTexture) {
         models().registerExistingTexture(particleTexture);
         getVariantBuilder(block).partialState().setModels(new ConfiguredModel(models().particleOnly(key(block).getPath(), particleTexture.toString())));
+    }
+
+    public void emptyModel(Block block) {
+        getVariantBuilder(block).partialState().setModels(new ConfiguredModel(models().getBuilder(key(block).getPath())));
     }
 
     public void registerExistingTextures(Block... blocks) {

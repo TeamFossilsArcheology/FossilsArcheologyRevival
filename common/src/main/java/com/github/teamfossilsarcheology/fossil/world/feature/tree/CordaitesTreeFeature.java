@@ -53,6 +53,7 @@ public class CordaitesTreeFeature extends CustomTreeFeature {
     private void placeBranch(WorldGenLevel level, Random random, BlockPos pos, Direction direction, int length) {
         BlockState log = ModBlocks.CORDAITES_LOG.get().defaultBlockState();
         BlockState leaves = ModBlocks.CORDAITES_LEAVES.get().defaultBlockState();
+        BlockState invis = ModBlocks.INVISIBLE_LEAVES.get().defaultBlockState();
         int yOffset = 0;
         for (int i = 1; i <= length; i++) {
             level.setBlock(pos.relative(direction, i).above(yOffset), log.setValue(RotatedPillarBlock.AXIS, direction.getAxis()), 19);
@@ -63,6 +64,7 @@ public class CordaitesTreeFeature extends CustomTreeFeature {
                 placeLeaf(level, pos.relative(direction, i + 1).above(yOffset).relative(direction.getCounterClockWise()), leaves);
                 placeLeaf(level, pos.relative(direction, i + 1).above(yOffset).relative(direction.getClockWise()), leaves);
                 placeLeaf(level, pos.relative(direction, i + 2).above(yOffset + 1), leaves);
+                placeLeaf(level, pos.relative(direction, i + 1).above(yOffset + 1), invis);
             }
             if (i > 2 && random.nextBoolean()) {
                 yOffset++;

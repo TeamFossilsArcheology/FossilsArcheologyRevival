@@ -2,11 +2,16 @@ package com.github.teamfossilsarcheology.fossil.block.custom_blocks;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.Random;
 
 public class FossilLeavesBlock extends LeavesBlock {
     public FossilLeavesBlock(Properties properties) {
@@ -18,30 +23,37 @@ public class FossilLeavesBlock extends LeavesBlock {
         throw new AssertionError();
     }
 
-    public static void updateInitialDistance(WorldGenLevel level, BlockPos pos, BlockState state) {
-        if (!(state.getBlock() instanceof FossilLeavesBlock)) {
-            return;
-        }
+    @Override
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
+        level.setBlock(pos, updateDistance(state, level, pos), 3);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return updateDistance(this.defaultBlockState().setValue(PERSISTENT, Boolean.TRUE), context.getLevel(), context.getClickedPos());
+    }
+
+    public static BlockState updateDistance(BlockState state, LevelAccessor level, BlockPos pos) {
         int i = 7;
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-        loop:
-        for (int x = -1; x < 2; x++) {
-            for (int y = -1; y < 2; y++) {
-                for (int z = -1; z < 2; z++) {
-                    if (x != 0 || y != 0 || z != 0) {
-                        mutableBlockPos.setWithOffset(pos, x, y, z);
-                        i = Math.min(i, getDistanceAt(level.getBlockState(mutableBlockPos)) + 1);
-                        if (i == 1) break loop;
-                    }
-                }
+
+        for (Direction direction : Direction.values()) {
+            mutableBlockPos.setWithOffset(pos, direction);
+            i = Math.min(i, getDistanceAt(level.getBlockState(mutableBlockPos)) + 1);
+            if (i == 1) {
+                break;
             }
         }
-        level.setBlock(pos, state.setValue(DISTANCE, i), 3);
+
+        return state.setValue(DISTANCE, i);
     }
 
     private static int getDistanceAt(BlockState neighbor) {
         if (neighbor.is(BlockTags.LOGS)) {
             return 0;
+        }
+        if (neighbor.getBlock() instanceof InvisibleLeavesBlock) {
+            return neighbor.getValue(DISTANCE) - 1;
         }
         if (neighbor.getBlock() instanceof LeavesBlock) {
             return neighbor.getValue(DISTANCE);

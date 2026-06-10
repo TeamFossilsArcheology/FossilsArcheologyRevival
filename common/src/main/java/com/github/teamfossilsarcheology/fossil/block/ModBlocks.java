@@ -81,6 +81,8 @@ public class ModBlocks {
                     .requiresCorrectToolForDrops().noOcclusion()));
     public static final RegistrySupplier<VolcanoAshVent> ASH_VENT = registerBlockWithDebugItem("ash_vent",
             VolcanoAshVent::new);
+    public static final RegistrySupplier<InvisibleLeavesBlock> INVISIBLE_LEAVES = registerBlockWithDebugItem("invisible_leaves",
+            InvisibleLeavesBlock::new);
 
     public static final RegistrySupplier<DrumBlock> DRUM = registerBlock("drum",
             () -> new DrumBlock(Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5f)));

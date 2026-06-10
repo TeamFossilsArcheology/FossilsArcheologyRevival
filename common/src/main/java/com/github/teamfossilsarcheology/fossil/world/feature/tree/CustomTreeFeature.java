@@ -27,7 +27,7 @@ public abstract class CustomTreeFeature extends Feature<NoneFeatureConfiguration
         if (placeTree(context)) {
             for (Map.Entry<BlockPos, BlockState> leaf : placedLeaves.entrySet()) {
                 if (context.level().getBlockState(leaf.getKey()).is(leaf.getValue().getBlock())) {
-                    FossilLeavesBlock.updateInitialDistance(context.level(), leaf.getKey(), leaf.getValue());
+                    context.level().setBlock(leaf.getKey(), FossilLeavesBlock.updateDistance(leaf.getValue(), context.level(), leaf.getKey()), 3);
                 }
             }
             return true;
