@@ -456,9 +456,12 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         getAttribute(Attributes.FOLLOW_RANGE).addPermanentModifier(new AttributeModifier("Random spawn bonus", this.random.nextGaussian() * 0.05, AttributeModifier.Operation.MULTIPLY_BASE));
         if (spawnDataIn instanceof PrehistoricGroupData prehistoricGroupData) {
             setAgeInDays(prehistoricGroupData.ageInDays());
+        } else if (spawnDataIn instanceof AgeableMobGroupData ageableMobGroupData) {
+            if (ageableMobGroupData.isShouldSpawnBaby() && random.nextFloat() <= ageableMobGroupData.getBabySpawnChance()) {
+                setAgeInDays(0);
+            }
         } else if (spawnDataIn == null) {
-            spawnDataIn = new PrehistoricGroupData(data().adultAgeDays());
-            setAgeInDays(((PrehistoricGroupData) spawnDataIn).ageInDays);
+            setAgeInDays(data().adultAgeDays());
         }
         updateAbilities();
         setHunger(getMaxHunger() / 2);
@@ -950,6 +953,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     @Override
     public boolean isBaby() {
         return getAgeInDays() < data().teenAgeDays();
+    }
+
+    @Override
+    public void setBaby(boolean baby) {
+        setAgeInDays(baby ? 0 : data().adultAgeDays());
     }
 
     public int getAgeInDays() {
