@@ -131,7 +131,7 @@ public abstract class MultiOutputEmiRecipe<T extends MultiOutputAndSlotsRecipe> 
     }
 
     @ExpectPlatform
-    private static EmiIngredient toIngredient(List<WeightedItem> list) {
+    public static EmiIngredient toIngredient(List<WeightedItem> list) {
         throw new NotImplementedException();
     }
 

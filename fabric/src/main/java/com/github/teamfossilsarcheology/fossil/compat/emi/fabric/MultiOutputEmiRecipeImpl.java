@@ -15,7 +15,7 @@ import java.util.List;
  * @see MultiOutputEmiRecipe
  */
 public class MultiOutputEmiRecipeImpl {
-    private static EmiIngredient toIngredient(List<MultiOutputEmiRecipe.WeightedItem> list) {
+    public static EmiIngredient toIngredient(List<MultiOutputEmiRecipe.WeightedItem> list) {
         if (list.isEmpty()) {
             return EmiStack.EMPTY;
         } else if (list.size() == 1) {
